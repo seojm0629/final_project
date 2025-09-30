@@ -49,8 +49,6 @@
 .login-wrap{
     width: 1200px;
     margin: 0 auto;
-
-    background-color: antiquewhite;
 }
 /* 로그인 제목 */
 .login-input-wrap .login-input-title {
@@ -96,5 +94,26 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-evenly;
+    
+}
+
+/* 회원가입 페이지 */
+/* 회원가입 전체 페이지 감싸는 section*/
+.join-wrap{
+    width:1200px;
+    margin: 0 auto;
+}
+
+.join-input-wrap{
+    width: 800px;
+    margin: 0 auto;
+}
+.join-input-wrap .join-input-title{ 
+    width: 400px;
+    margin: 0 auto;
+}
+.join-input-wrap .join-input-item{
+    width: 400px;
+    margin: 15px auto;
     
 }
