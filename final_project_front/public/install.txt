@@ -1,0 +1,9 @@
+2025-09-30 16:10 서정민
+npm install
+npm install react-router-dom
+npm install axios
+npm install recoil
+npm install recoil-persist
+npm install sweetalert2
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
