@@ -1,12 +1,17 @@
+import { Route, Routes } from "react-router-dom"
+import MemberLogin from "./component/member/MemberLogin"
 
 function App() {
 
 
   return (
     <div>
-      <section class="section">
-        메인페이지
-      </section>
+      <main className="section">
+
+        <Routes>
+          <Route path="/member/login" element={<MemberLogin />} />
+        </Routes>
+      </main>
     </div>
   )
 }

@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 로그인 페이지 */
+.login-wrap{
+    width: 1200px;
+    margin: 0 auto;
+
+    background-color: antiquewhite;
+}
+
+.login{
+    width: 800px;
+    margin : 0 auto;
+    background-color: bisque;
+    
+}
+.login-input-wrap .login-input-title {
+    width: 400px;
+    margin: 0 auto;
+}
+.login-input-wrap .login-input-item{
+    width: 400px;
+    margin: 0 auto;
+}
+
+.login-input-wrap .login-input-item>input{
+    width: 400px;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    text-decoration: underline;
+}
+
+.login>.member-button-zone{
+    width: 400px;
+    margin : 0 auto;
+    text-align: center;
+}
+.login>.member-button-zone>button{
+    width: 100px;
+}
