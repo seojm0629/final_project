@@ -199,11 +199,13 @@
 }
 
 .main-wrap {
-    width: 800px;
+    width: 1200px;
     margin: 0 auto;
 }
 
 .main-tab-board{
+    width: 800px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     gap: 50px;
@@ -211,9 +213,12 @@
 
 .main-board{
     width: 140px;
-    height: 140px;
+    height: 110px;
     border: 1px solid black;
+    border-radius: 20px;
+    background-color: #FEFEF9;
     text-align: center;
+    padding-top: 30px;
     
 }
 
@@ -225,4 +230,51 @@
 .board-title>span{
     font-family: ns-b;
     font-size: 20px;
+}
+
+.board-tab{
+    width: 600px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-bottom: none;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;    
+}
+.board-tab>div{
+    width: calc(100%/3);
+    text-align: center;
+    border-left: 1px solid black;
+}
+.board-tab>div:first-child{
+    border-left: none;
+}
+.board-tab>div{
+    font-family: ns-b;
+}
+.board-list{
+    padding : 20px;
+    border: 1px solid black;
+    border-top: none;
+}
+
+
+
+
+
+
+.board-list{
+    width: 600px;
+    height: 500px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid black;
+    border-top : none;
+    box-sizing: border-box;
+}
+
+.main-board-list{
+    margin-top :50px;
 }
