@@ -65,27 +65,30 @@
 .login-input-wrap .login-input-item>input{
     width: 400px;
     height: 40px;
-    border-radius: 20px;
-    
-    text-decoration: underline;
+    border-radius: 8px;
+    border: 1px solid #333;
+    padding-left : 20px;
+    box-sizing: border-box;
 }
 
 /* 로그인 버튼 */
-.login>.member-button-zone{
+.member-button-zone{
     width: 400px;
     margin : 0 auto;
     text-align: center;
     
 }
-.login>.member-button-zone>button{
+.member-button-zone>button{
     width: 100%;
     height: 40px;
+    margin: 0 auto;
     margin-top: 20px;
     background-color: #2F4E70;
     color: #fff;
     font-size: 20px;
     font-weight: 800;
     border-radius: 20px;
+    
 }
 
 /* 로그인 아이디/비밀번호 찾기 및 회원가입 */
@@ -97,23 +100,94 @@
     
 }
 
+
 /* 회원가입 페이지 */
 /* 회원가입 전체 페이지 감싸는 section*/
 .join-wrap{
     width:1200px;
     margin: 0 auto;
 }
-
-.join-input-wrap{
+.join-page-title{
     width: 800px;
+    height: 50px;
     margin: 0 auto;
+    text-align: center;
+    font-family: ns-b;
+}
+
+.login{
+    width: 600px;
+    
+}
+.join-input-wrap{
+    width: 600px;
+    margin: 0 auto;
+    
 }
 .join-input-wrap .join-input-title{ 
-    width: 400px;
+    width: 350px;
     margin: 0 auto;
 }
 .join-input-wrap .join-input-item{
-    width: 400px;
+    width: 350px;
     margin: 15px auto;
+}
+.join-input-wrap .join-input-item >input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+}
+
+.join-input-wrap .join-input-email {
+    width: 350px;
+    margin: 15px auto;
+    box-sizing: border-box;
+}
+.join-input-wrap .join-input-email > input{
+    width: 140px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+.join-input-wrap .join-input-email > select{
+    width: 100px;
+    margin-left: 5px;
+}
+.join-input-wrap .join-input-email > button{
+    background-color: #2F4E70;
+    color: #fff;
+    width: 81px;    
+    margin-left: 5px;
+}
+
+/* 약관동의 페이지 */
+.agree-wrap{
+    width: 1200px;
+    margin: 0 auto;
+}
+.agree{
+    width: 700px;
+    height: 900px;
+    margin: 10px auto;
+    background-color: #FEFEF9;
+    border: 1px solid black;
+    padding-top: 20px;
+}
+.service-agree{
+    width: 400px;
+    height: 225px;
+    margin: 30px auto;
     
+}
+
+.service-div{
+    width: 100%;
+    height: 200px;
+    
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.service-btn{
+    padding: 5px 0;
 }
