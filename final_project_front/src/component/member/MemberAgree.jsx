@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -9,47 +9,47 @@ const MemberAgree = () => {
     const allRef = useRef(null);
     const navigate = useNavigate();
 
-    const allCheck = () => {
-            if(allRef.current.checked){
-                serviceRef.current.checked  = true;
-                communityRef.current.checked = true;
-                personalRef.current.checked  = true;
 
-                
-            } else {
-                serviceRef.current.checked  = false;
-                communityRef.current.checked = false;
-                personalRef.current.checked  = false;
-            }
+    const [checks, setChecks] = useState({
+        allCheck : false,
+        service : false,
+        community: false,
+        personal: false,
+    });
+
+    const changeChecks = (e) => {
+        const name = e.target.name;
+        console.log(name)
+        const checked = e.target.checked;
         
-            
+        const updated = {...checks, [name]:checked};
+
+        updated.allCheck = updated.service && updated.community && updated.personal;
+
+        setChecks(updated);
+    }
+
+    const allChecks = (e) => {
+        const checked = e.target.checked;
+        setChecks({
+            allCheck : checked,
+            service : checked,
+            community : checked,
+            personal : checked,
+        });
     }
 
     const nextPage = () => {
-        if(allRef.current.checked){
-                serviceRef.current.checked  = true;
-                communityRef.current.checked = true;
-                personalRef.current.checked  = true;
-
-                if(allRef.current.checked || (serviceRef.current.checked && communityRef.current.checked && personalRef.current.checked)){
-                    navigate("/member/join");
-                }
-
-                
-            } else {
-                serviceRef.current.checked  = false;
-                communityRef.current.checked = false;
-                personalRef.current.checked  = false;
-
-                Swal.fire({
-                title : "약관 동의 체크 필수",
-                text : "필수 항목을 체크해주세요.",
+        if(checks.allCheck && checks.service && checks.community && checks.personal){
+            navigate("/member/join");
+        } else {
+            Swal.fire({
+                title : "약관 동의 확인",
+                text : "전체 동의 확인 필요",
                 icon : "info",
             })
-            }
-            
+        }
     }
-    
 
     return(
         <section className="section agree-wrap">
@@ -58,8 +58,9 @@ const MemberAgree = () => {
             <div className="agree">
                 <div className="service-agree">
                     <div className="service-btn">
-                        <input type="checkbox" id="service"
-                        ref={serviceRef}/>
+                        <input type="checkbox" id="service" name="service"
+                        checked={checks.service}
+                        onChange={changeChecks}/>
                         <label htmlFor="service">서비스 이용약관 동의(필수)</label>
                     </div>
                     <div className="service-div">
@@ -163,8 +164,9 @@ const MemberAgree = () => {
 
                 <div className="service-agree">
                     <div className="service-btn">
-                        <input type="checkbox" id="community"
-                        ref={communityRef}
+                        <input type="checkbox" id="community" name="community"
+                        onChange={changeChecks}
+                        checked={checks.community}
                         />
                         <label htmlFor="community">커뮤니티 운영방침 동의(필수)</label>
                     </div>
@@ -224,8 +226,9 @@ const MemberAgree = () => {
 
                 <div className="service-agree">
                     <div className="service-btn">
-                        <input type="checkbox" id="personal"
-                        ref={personalRef}
+                        <input type="checkbox" id="personal" name="personal"
+                        onChange={changeChecks}
+                        checked={checks.personal}
                         />
                         <label htmlFor="personal">개인정보 처리방침 동의(필수)</label>
                     </div>
@@ -294,12 +297,16 @@ const MemberAgree = () => {
 
                     </div>
                     <div className="service-btn">
-                        <input type="checkbox" id="allCheck" ref={allRef} onClick={allCheck}/>
+                        <input type="checkbox" id="allCheck" name="allCheck" 
+                        onChange={allChecks}
+                        checked = {checks.allCheck}/>
                         <label htmlFor="allCheck">전체 동의</label>
                     </div>
 
                     <div className="member-button-zone">
-                        <button type="submit" className="member-btn" onClick={nextPage}>다음</button>
+                        <button type="submit" className="member-btn"
+                        onClick={nextPage}
+                        >다음</button>
                     </div>
                 </div>
 
