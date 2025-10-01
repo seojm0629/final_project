@@ -9,7 +9,7 @@ const Main = () => {
                 <div className="main-tab-board">
                     <div className="main-board">
                         <div className="board-image">
-                            <img src="/image/final_logo.png" />
+                            <img src="/image/transaction.png" />
                         </div>
                         <div className="board-title">
                             <span>중고거래 게시판</span>

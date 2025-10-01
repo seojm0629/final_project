@@ -3,10 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const MemberAgree = () => {
-    const serviceRef = useRef(null);
-    const communityRef = useRef(null);
-    const personalRef = useRef(null);
-    const allRef = useRef(null);
     const navigate = useNavigate();
 
 
