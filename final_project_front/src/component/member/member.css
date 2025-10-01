@@ -23,97 +23,93 @@
   color: var(--main1);
 }
 
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 /* 로그인 페이지 */
 /* 로그인 로고 */
-.login-page-title{
-    width: 800px;
-    margin: 0 auto;
-    text-align: center;
+.login-page-title {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
-.login-page-title>img{
-    width: 140px;
+.login-page-title > img {
+  width: 140px;
 }
 
 /* 로그인 전체 div*/
-.login{
-    width: 800px;
-    margin : 0 auto;
-    
+.login {
+  width: 800px;
+  margin: 0 auto;
 }
 /* 로그인 라벨 및 인풋 감싸는 div*/
-.login-wrap{
-    width: 1200px;
-    margin: 0 auto;
+.login-wrap {
+  width: 1200px;
+  margin: 0 auto;
 }
 /* 로그인 제목 */
 .login-input-wrap .login-input-title {
-    width: 400px;
-    margin: 0 auto;
+  width: 400px;
+  margin: 0 auto;
 }
 
 /* 로그인 인풋 */
-.login-input-wrap .login-input-item{
-    width: 400px;
-    margin: 15px auto;
+.login-input-wrap .login-input-item {
+  width: 400px;
+  margin: 15px auto;
 }
 
-.login-input-wrap .login-input-item>input{
-    width: 400px;
-    height: 40px;
-    border-radius: 20px;
-    
-    text-decoration: underline;
+.login-input-wrap .login-input-item > input {
+  width: 400px;
+  height: 40px;
+  border-radius: 20px;
+
+  text-decoration: underline;
 }
 
 /* 로그인 버튼 */
-.login>.member-button-zone{
-    width: 400px;
-    margin : 0 auto;
-    text-align: center;
-    
+.login > .member-button-zone {
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
 }
-.login>.member-button-zone>button{
-    width: 100%;
-    height: 40px;
-    margin-top: 20px;
-    background-color: #2F4E70;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 800;
-    border-radius: 20px;
+.login > .member-button-zone > button {
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  background-color: #2f4e70;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 20px;
 }
 
 /* 로그인 아이디/비밀번호 찾기 및 회원가입 */
-.login-find{
-    width: 400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-evenly;
-    
+.login-find {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 /* 회원가입 페이지 */
 /* 회원가입 전체 페이지 감싸는 section*/
-.join-wrap{
-    width:1200px;
-    margin: 0 auto;
+.join-wrap {
+  width: 1200px;
+  margin: 0 auto;
 }
 
-.join-input-wrap{
-    width: 800px;
-    margin: 0 auto;
+.join-input-wrap {
+  width: 800px;
+  margin: 0 auto;
 }
-.join-input-wrap .join-input-title{ 
-    width: 400px;
-    margin: 0 auto;
+.join-input-wrap .join-input-title {
+  width: 400px;
+  margin: 0 auto;
 }
-.join-input-wrap .join-input-item{
-    width: 400px;
-    margin: 15px auto;
-    
+.join-input-wrap .join-input-item {
+  width: 400px;
+  margin: 15px auto;
 }
