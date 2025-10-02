@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 const MemberJoin = () => {
+    const [gender, setGender] = useState("1");
     return(
         <section className="section join-wrap">
             <div className="join-page-title">회원가입</div>
@@ -45,6 +48,35 @@ const MemberJoin = () => {
 
                     <div className="join-input-wrap">
                         <div className="join-input-title">
+                            <label htmlFor="memberBirth">생년월일</label>
+                        </div>
+                        <div className="join-input-item">
+                            <input type="text" name="memberBirth" id="memberBirth" />
+                        </div>
+                    </div>
+
+                    <div className="join-input-gender">
+                        <div className="join-input-radio">
+                            <input type="radio" name="memberGender" id="m" value={"1"} 
+                            checked={gender === "1"}
+                            onChange={()=>{
+                                setGender("1");
+                            }}/>
+                            <label htmlFor="m">남</label>
+                        </div>
+                        <div className="join-input-radio">
+                            <input type="radio" name="memberGender" id="f" value={"2"} 
+                            checked={gender === "2"}
+                            onChange={()=>{
+                                setGender("2");
+                            }}
+                            />
+                            <label htmlFor="f">여</label>
+                        </div>
+                    </div>
+
+                    <div className="join-input-wrap">
+                        <div className="join-input-title">
                             <label htmlFor="memberAddr">주소</label>
                         </div>
                         <div className="join-input-item">
@@ -78,7 +110,7 @@ const MemberJoin = () => {
                         </div>
                     </div>
 
-                    <div className="member-button-zone">
+                    <div className="member-button-zone-join">
                         <button type="submit" className="member-btn">회원가입</button>
                     </div>
                 </div>
