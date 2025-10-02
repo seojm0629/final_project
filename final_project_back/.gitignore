@@ -32,8 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-# Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,react,windows,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,react,windows,macos
+# Created by https://www.toptal.com/developers/gitignore/api/java,react,eclipse,windows,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,react,eclipse,windows,macos
 
 ### Eclipse ###
 .metadata
@@ -100,6 +100,19 @@ local.properties
 ### Eclipse Patch ###
 # Spring Boot Tooling
 .sts4-cache/
+
+# 캐시에서 제거
+git rm --cached src/main/resources/application.properties
+
+# 변경사항 commit
+git commit -m "Remove application.properties from repo"
+
+
+
+
+# Spring Boot 설정파일 제외
+src/main/resources/application.properties
+
 
 ### Java ###
 # Compiled class file
@@ -201,4 +214,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/java,eclipse,react,windows,macos
+# End of https://www.toptal.com/developers/gitignore/api/java,react,eclipse,windows,macos
