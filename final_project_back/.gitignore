@@ -101,17 +101,7 @@ local.properties
 # Spring Boot Tooling
 .sts4-cache/
 
-# 캐시에서 제거
-git rm --cached src/main/resources/application.properties
 
-# 변경사항 commit
-git commit -m "Remove application.properties from repo"
-
-
-
-
-# Spring Boot 설정파일 제외
-src/main/resources/application.properties
 
 
 ### Java ###
