@@ -1,0 +1,34 @@
+import { NavLink } from "react-router-dom";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+const NavigateLogin = (props) => {
+    const menus = props.menus;
+    console.log(menus);
+    return(
+        <div className="side-menu">
+            <ul>
+                {menus.map((menu, i) => {
+                    return(
+                        <div className="side-main">
+                            <ul>
+                                <li key={"side-menu-" + i}>
+                                    {/* isActive는 NavLink의 key 값 */}
+                                    <NavLink 
+                                    to={menu.url}
+                                    className={({isActive})=> (isActive ? "active-link" : "")}
+                                    >
+                                        <span>{menu.text}</span>
+                                        <ChevronRightIcon />
+                                    </NavLink>
+                                </li>
+                            </ul>    
+                        </div>    
+                    )
+                })}
+            </ul>
+        </div>
+        
+    )
+}
+
+export default NavigateLogin;

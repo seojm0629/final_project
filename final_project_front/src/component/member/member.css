@@ -333,3 +333,28 @@ input[type="radio"]:checked+label{
 .main-board-list{
     margin-top :50px;
 }
+
+/* 마이페이지 */
+.mypage-wrap{
+    width: 1200px;
+    margin: 0 auto;
+}
+.mypage-side{
+    width: 900px;
+    margin: 0 auto;
+}
+.account-box>div{
+    margin: 30px 0;
+}
+.side-menu{
+    width: 200px;
+    background-color: #2F4E70;
+}
+.side-main>ul>li{
+    color: #fff;
+    margin: 10px 0;
+    text-align: left;
+}
+.side-main>ul>li>span{
+    text-decoration: none;
+}
