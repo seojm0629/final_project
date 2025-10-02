@@ -4,6 +4,7 @@ import MemberJoin from "./component/member/MemberJoin";
 import Main from "./component/common/Main";
 import MemberAgree from "./component/member/MemberAgree";
 import Header from "./component/common/Header";
+import MemberMypage from "./component/member/MemberMypage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/member/login" element={<MemberLogin />} />
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
+          <Route path="/member/mypage" element={<MemberMypage />} />
         </Routes>
       </main>
     </div>

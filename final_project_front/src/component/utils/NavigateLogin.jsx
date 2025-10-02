@@ -9,20 +9,18 @@ const NavigateLogin = (props) => {
             <ul>
                 {menus.map((menu, i) => {
                     return(
-                        <div className="side-main">
-                            <ul>
-                                <li key={"side-menu-" + i}>
-                                    {/* isActive는 NavLink의 key 값 */}
-                                    <NavLink 
-                                    to={menu.url}
-                                    className={({isActive})=> (isActive ? "active-link" : "")}
-                                    >
-                                        <span>{menu.text}</span>
-                                        <ChevronRightIcon />
-                                    </NavLink>
-                                </li>
-                            </ul>    
-                        </div>    
+                                                
+                            <li key={"side-menu-" + i}>
+                                {/* isActive는 NavLink의 key 값 */}
+                                <NavLink 
+                                to={menu.url}
+                                className={({isActive})=> (isActive ? "active-link" : "")}
+                                >
+                                    <span>{menu.text}</span>
+                                    <ChevronRightIcon />
+                                </NavLink>
+                            </li>                      
+                        
                     )
                 })}
             </ul>

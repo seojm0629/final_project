@@ -23,6 +23,20 @@ const MemberMypage = () => {
                     <NavigateLogin menus={menus}/>
                 </section>
             </div>
+
+            <div className="mypage-name">
+                <div className="mypage-info">
+                    <div className="info-img">
+                        <img src="/image/default_img.png" />
+                    </div>
+                    <div className="info-nickname"></div>
+                </div>
+                <div className="mypage-account"></div>
+                <div className="mypage-community"></div>
+                <div className="mypage-agree"></div>
+                <div className="mypage-etc"></div>
+                <div className="mypage-admin"></div>
+            </div>
         </div>
     )
 }

@@ -345,16 +345,44 @@ input[type="radio"]:checked+label{
 }
 .account-box>div{
     margin: 30px 0;
+    width: 180px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #2F4E70;
+    color : #fff;
+    text-align: center;
 }
 .side-menu{
-    width: 200px;
+    width: 180px;
     background-color: #2F4E70;
+}
+.side-menu>ul>li{
+    color: #fff;
 }
 .side-main>ul>li{
     color: #fff;
     margin: 10px 0;
-    text-align: left;
+    text-align: center;
 }
+
+
 .side-main>ul>li>span{
     text-decoration: none;
+    
 }
+.side-menu a {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.side-menu .active-link > span {
+  color: #fff;
+  font-family: ns-b;
+}
+.side-menu .active-link > svg {
+  fill: #fff;
+}
+
+
