@@ -47,6 +47,7 @@
 }
 /* 로그인 라벨 및 인풋 감싸는 div*/
 .login-wrap{
+    min-height: calc(700px - 120px);
     width: 1200px;
     margin: 0 auto;
 }

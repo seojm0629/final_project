@@ -5,6 +5,7 @@ import Main from "./component/common/Main";
 import MemberAgree from "./component/member/MemberAgree";
 import Header from "./component/common/Header";
 import MemberMypage from "./component/member/MemberMypage";
+import Footer from "./component/common/Footer";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/member/mypage" element={<MemberMypage />} />
         </Routes>
       </main>
+      <Footer></Footer>
     </div>
   );
 }
