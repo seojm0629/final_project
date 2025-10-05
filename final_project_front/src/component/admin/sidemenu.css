@@ -1,0 +1,56 @@
+/*사이드 메뉴 기본 서식*/
+.side-menu {
+  width: 200px;
+  background-color: #2f4e70;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.side-menu h2 {
+  margin: 0 0 12px 0;
+  color: #fff;
+  font-size: 16px;
+}
+
+.side-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.side-menu > ul > li {
+  margin: 4px 0;
+}
+
+.side-menu button {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.side-menu button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.side-menu ul > li > ul {
+  margin-left: 10px;
+}
+.side-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.side-menu .material-icons {
+  font-size: 20px;
+}
+
+.side-menu .active {
+  background: #fff;
+  color: #2f4e70;
+  font-weight: 700;
+}
