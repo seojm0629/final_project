@@ -6,6 +6,7 @@ import MemberAgree from "./component/member/MemberAgree";
 import Header from "./component/common/Header";
 import MemberMypage from "./component/member/MemberMypage";
 import Footer from "./component/common/Footer";
+import AdminMain from "./component/admin/AdminMain";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/mypage" element={<MemberMypage />} />
+          <Route path="/admin" element={<AdminMain />} />
         </Routes>
       </main>
       <Footer></Footer>
