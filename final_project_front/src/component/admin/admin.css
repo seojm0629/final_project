@@ -1,12 +1,38 @@
-/*화면 전체 크기 조정*/
 .admin {
-  width: 1200px;
+  width: 1600px;
   margin: 0 auto;
 }
 .admin-head {
   padding: 30px;
 }
-/*타이틀 서식*/
+
 .admin h1 {
   text-align: center;
+}
+
+.admin-body {
+  display: flex;
+
+  gap: 24px;
+}
+
+.admin-content-wrap {
+  min-height: 360px;
+  border: 1px solid #e6e8ee;
+  border-radius: 5px;
+  padding: 20px;
+  width: 1200px;
+}
+
+.content-head {
+  padding: 20px;
+}
+.title {
+  color: #1f3956;
+  text-shadow: 1px 1px 3px #1f3956;
+  padding: 10px;
+}
+
+.title.m {
+  font-size: 20px;
 }

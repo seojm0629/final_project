@@ -27,7 +27,7 @@ const SideMenu = ({ active, setActive }) => {
             </button>
   */
 
-  //[클릭한 메뉴를 하이트라이트]
+  //[클릭한 메뉴를 하이라이트]
   // 1. 현재 클릭된 카테고리를 구분하기 위해 클래스 이름을 저장할 setState 를 생성한다.
   // 최상위 컴포넌트 AdminMain 으로 이동 const [active, setActive] = useState();
 
@@ -44,76 +44,74 @@ const SideMenu = ({ active, setActive }) => {
   // 3. 각 버튼들에서는 현재 자신의 가명과 일치하는지 확인하고, 일치하면 active 클래스를 추가한다.
 
   return (
-    <div>
+    <aside className="side-menu">
       {/*시멘틱 태그로 영역 구분*/}
-      <aside className="side-menu">
-        <h2>관리자용 메뉴</h2>
-        <ul>
-          <li>
-            <button
-              onClick={() => setActive("member")}
-              className={active === "member" ? "active" : ""}
-            >
-              회원 관리
-              <span className="material-icons">navigate_next</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setActive("board")}
-              className={active === "board" ? "active" : ""}
-            >
-              게시물 관리
-              <span className="material-icons">navigate_next</span>
-            </button>
-          </li>
-          <li>
-            <button onClick={toggleCategory}>
-              페이지 관리
-              <span className="material-icons">
-                {openCategory ? "remove" : "add"}
-              </span>
-            </button>
-            <ul hidden={!openCategory}>
-              <li>
-                <button
-                  onClick={() => setActive("free-board")}
-                  className={active === "free-board" ? "active" : ""}
-                >
-                  자유 게시판
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => setActive("deal-board")}
-                  className={active === "deal-board" ? "active" : ""}
-                >
-                  중고 거래 게시판
-                </button>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <button
-              onClick={() => setActive("test")}
-              className={active === "test" ? "active" : ""}
-            >
-              테스트용 기능
-              <span className="material-icons">navigate_next</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setActive("site")}
-              className={active === "site" ? "active" : ""}
-            >
-              사이트 관리
-              <span className="material-icons">navigate_next</span>
-            </button>
-          </li>
-        </ul>
-      </aside>
-    </div>
+      <h2>관리자용 메뉴</h2>
+      <ul>
+        <li>
+          <button
+            onClick={() => setActive("member")}
+            className={active === "member" ? "active" : ""}
+          >
+            회원 관리
+            <span className="material-icons">navigate_next</span>
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => setActive("board")}
+            className={active === "board" ? "active" : ""}
+          >
+            게시물 관리
+            <span className="material-icons">navigate_next</span>
+          </button>
+        </li>
+        <li>
+          <button onClick={toggleCategory}>
+            페이지 관리
+            <span className="material-icons">
+              {openCategory ? "remove" : "add"}
+            </span>
+          </button>
+          <ul hidden={!openCategory}>
+            <li>
+              <button
+                onClick={() => setActive("free-board")}
+                className={active === "free-board" ? "active" : ""}
+              >
+                자유 게시판
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActive("deal-board")}
+                className={active === "deal-board" ? "active" : ""}
+              >
+                중고 거래 게시판
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <button
+            onClick={() => setActive("test")}
+            className={active === "test" ? "active" : ""}
+          >
+            테스트용 기능
+            <span className="material-icons">navigate_next</span>
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => setActive("site")}
+            className={active === "site" ? "active" : ""}
+          >
+            사이트 관리
+            <span className="material-icons">navigate_next</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
   );
 };
 

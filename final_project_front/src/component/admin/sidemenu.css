@@ -1,6 +1,7 @@
 /*사이드 메뉴 기본 서식*/
 .side-menu {
-  width: 200px;
+  width: 260px;
+  height: 360px;
   background-color: #2f4e70;
   color: #ffffff;
   border-radius: 5px;
