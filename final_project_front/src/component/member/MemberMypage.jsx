@@ -1,9 +1,10 @@
 import { useState } from "react";
 import NavigateLogin from "../utils/NavigateLogin";
+import { Route, Routes } from "react-router-dom";
 
 const MemberMypage = () => {
     const [menus, setMenus] = useState([
-        {url : "/member/info", text: "내 정보"},
+        {url : "/member/info", text: "내 정보" },
         {url : "/member/account", text: "계정"},
         {url : "/member/commninty", text : "커뮤니티"},
         {url : "/member/myagree", text:"이용약관"},
@@ -13,6 +14,7 @@ const MemberMypage = () => {
     ]);
     return(
         <div className="mypage-wrap">
+
             <div className="mypage-side">
                 <section className="section account-box">
                     <div>
@@ -25,18 +27,21 @@ const MemberMypage = () => {
             </div>
 
             <div className="mypage-name">
-                <div className="mypage-info">
-                    <div className="info-img">
-                        <img src="/image/default_img.png" />
-                    </div>
-                    <div className="info-nickname"></div>
-                </div>
-                <div className="mypage-account"></div>
-                <div className="mypage-community"></div>
-                <div className="mypage-agree"></div>
-                <div className="mypage-etc"></div>
-                <div className="mypage-admin"></div>
+                {menus.map((page, i)=>{
+                    
+                })}
             </div>
+        </div>
+    )
+}
+
+const MemberInfo = () => {
+    return(
+        <div className="mypage-info">
+            <div className="info-img">
+                <img src="/image/default_img.png" />
+            </div>
+            <div className="info-nickname"></div>
         </div>
     )
 }

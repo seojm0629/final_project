@@ -5,7 +5,7 @@ const NavigateLogin = (props) => {
     const menus = props.menus;
     console.log(menus);
     return(
-        <div className="side-menu">
+        <div className="side-menu-login">
             <ul>
                 {menus.map((menu, i) => {
                     return(
