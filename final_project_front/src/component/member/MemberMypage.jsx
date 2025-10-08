@@ -27,9 +27,11 @@ const MemberMypage = () => {
             </div>
 
             <div className="mypage-name">
-                {menus.map((page, i)=>{
-                    
-                })}
+                <section className="section site-path">
+                    <Routes>
+                        <Route path="info" element={<MemberInfo />} />
+                    </Routes>
+                </section>
             </div>
         </div>
     )
@@ -41,9 +43,20 @@ const MemberInfo = () => {
             <div className="info-img">
                 <img src="/image/default_img.png" />
             </div>
-            <div className="info-nickname"></div>
+            <div className="info-nickname">
+                <div>member.nickname</div>
+            </div>
         </div>
     )
 }
+
+const MemberAccount = () => {
+    return(
+        <div className="mypage-account">
+            
+        </div>
+    )
+}
+
 
 export default MemberMypage;
