@@ -1,0 +1,24 @@
+package kr.co.iei.admin.model.dto;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Alias(value="adminMember")
+public class AdminMemberDTO {
+	private int rnum;
+	private int memberNo;
+	private String memberId;
+	private String memberEmail;
+	private int totalClaimCnt;
+	private int totalLikeCnt;
+	private int totalPostCnt;
+	private int totalCommentCnt;
+	private String memberDate;
+	private String isBen;
+}
