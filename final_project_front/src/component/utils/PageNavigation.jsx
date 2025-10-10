@@ -6,16 +6,8 @@ const PageNavigation = (props) => {
 
   /*
  *  const [reqPageInfo, setReqPageInfo] = useState({
-     order: 1, //어떤 정렬을 요청할건데??
-     // 1: 아이디 오름차순
-     // 2: 아이디 내림차순
-     // 3: 회원가입일 오름차순
-     // 4: 회원가입일 내림차순
-     // 5: 회원 정지 오름차순
-     // 6: 회원 정지 내림차
-     pageNo: 1, //몇번째 페이지를 요청하는데?
-     search: "", //어떤 검색어를 요청하는데??
-     listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데?
+     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+     listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
    });
  
    const [totalListCount, setTotalListCount] = useState(0); 
