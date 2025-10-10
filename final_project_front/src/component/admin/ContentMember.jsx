@@ -2,37 +2,42 @@ import { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 const ContentMember = () => {
-  const [memberList, setMemberList] = useState([{}]);
+  const [memberList, setMemberList] = useState([]);
 
-  const [info, setInfo] = useState({
-    order: 1,
+  const [reqPageInfo, setReqPageInfo] = useState({
+    order: 1, //어떤 정렬을 요청할건데??
     // 1: 아이디 오름차순
     // 2: 아이디 내림차순
     // 3: 회원가입일 오름차순
     // 4: 회원가입일 내림차순
     // 5: 회원 정지 오름차순
     // 6: 회원 정지 내림차
-    reqPage: 1,
-    search: "",
+    pageNo: 1, //몇번째 페이지를 요청하는데?
+    search: "", //어떤 검색어를 요청하는데??
+    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데?
   });
 
+  const [totalListCount, setTotalListCount] = useState(0);
+
   useEffect(() => {
-    console.log("info : ");
-    console.log(info);
+    console.log("pageInfo : ");
+    console.log(reqPageInfo);
     axios
       .get(
         `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
-          info.order
-        }&reqPage=${info.reqPage}&search=${info.search}`
+          reqPageInfo.order
+        }&pageNo=${reqPageInfo.pageNo}&search=${reqPageInfo.search}&listCnt=${
+          reqPageInfo.listCnt
+        }`
       )
       .then((res) => {
-        console.log(res.data);
-        setMemberList(res.data);
+        console.log(res.data.pageList);
+        setMemberList(res.data.pageList);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [info]);
+  }, [reqPageInfo]);
 
   return (
     <div>
@@ -49,7 +54,8 @@ const ContentMember = () => {
           <table>
             <thead>
               <tr>
-                <th>번호</th> {/* MEMBER_TBL */}
+                <th>순서</th>
+                <th>회원 번호</th> {/* MEMBER_TBL */}
                 <th>아이디</th> {/* MEMBER_TBL */}
                 <th>이메일</th> {/* MEMBER_TBL */}
                 <th>신고</th>{" "}
@@ -65,20 +71,60 @@ const ContentMember = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>USER01</td>
-                <td>USER01@NAVER.COM</td>
-                <td>500</td>
-                <td>400</td>
-                <td>200</td>
-                <td>400</td>
-                <td>2022-08-22</td>
-                <td>정지</td>
-                <td>돋보기</td>
-                <td>쪽지</td>
-              </tr>
+              {memberList.length === 0 ? (
+                <tr>
+                  <td colSpan={12}>데이터가 없습니다.</td>
+                </tr>
+              ) : (
+                memberList.map((m, i) => (
+                  <tr key={"member" + m.memberNo}>
+                    <td>{m.rnum}</td>
+                    <td>{m.memberNo}</td>
+                    <td>{m.memberId}</td>
+                    <td>{m.memberEmail}</td>
+                    <td>{m.totalClaimCnt}</td>
+                    <td>{m.totalLikeCnt}</td>
+                    <td>{m.totalPostCnt}</td>
+                    <td>{m.totalCommentCnt}</td>
+                    <td>{m.memberDate}</td>
+                    <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
+                    <td>돋보기</td>
+                    <td>쪽지</td>
+                  </tr>
+                ))
+              )}
             </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan={12}>
+                  <div>
+                    <button
+                      onClick={() => {
+                        setReqPageInfo(() => ({
+                          ...reqPageInfo,
+                          pageNo: reqPageInfo.pageNo - 1,
+                        }));
+                      }}
+                    >
+                      이전
+                    </button>
+                    <button
+                      onClick={() => {
+                        setReqPageInfo(() => ({
+                          ...reqPageInfo,
+                          pageNo: reqPageInfo.pageNo + 1,
+                        }));
+                      }}
+                    >
+                      다음
+                    </button>
+                  </div>
+                </td>
+                {/*
+                
+                */}
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
