@@ -191,10 +191,15 @@ input[type="radio"]:checked+label{
     font-weight: 800;
     cursor: pointer;
 }
-
-
 .join-input-radio>input{
     display: none;
+}
+
+.input-msg{
+    width: 350px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 14px;
 }
 
 
