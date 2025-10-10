@@ -23,9 +23,12 @@ public class AdminService {
 		listInfo.put("endRow", endRow);
 		
 		List<AdminMemberDTO> pageList =  adminDao.memberList(listInfo);
+		int totalListCount = adminDao.totalListCount();
 		
 		HashMap<String,Object> memberMap = new HashMap<>();
 		memberMap.put("pageList",pageList );
+		memberMap.put("totalListCount",totalListCount);
+		
 		return memberMap;
 	}
 }
