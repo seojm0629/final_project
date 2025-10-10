@@ -15,7 +15,7 @@ const MemberAgree = () => {
 
     const changeChecks = (e) => {
         const name = e.target.name;
-        console.log(name)
+        
         const checked = e.target.checked;
         
         const updated = {...checks, [name]:checked};

@@ -398,3 +398,10 @@ input[type="radio"]:checked+label{
 .info-nickname > div {
     line-height: 104.5px;   
 }
+
+/* member-account */
+.mypage-account{
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
