@@ -9,7 +9,6 @@ import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
 import BoardContent from "./component/utils/BoardContent";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
-import BoardContent from "./component/freeboard/BoardContent";
 
 function App() {
   return (
