@@ -1,4 +1,4 @@
-import "./sidemenu.css";
+import "./adminSideMenu.css";
 import { useState } from "react";
 
 const SideMenu = ({ active, setActive }) => {
