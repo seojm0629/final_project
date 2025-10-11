@@ -23,11 +23,13 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@GetMapping(value="memberList")
-	public ResponseEntity<HashMap<String, Object>> memberList(@RequestParam int order, @RequestParam int pageNo, @RequestParam String search,@RequestParam int listCnt){
-		System.out.println(order);
-		System.out.println(pageNo);
-		System.out.println(search=="");
-		System.out.println(listCnt);
+	public ResponseEntity<HashMap<String, Object>> memberList(@RequestParam int order, @RequestParam int pageNo, @RequestParam String searchText,@RequestParam String searchType,@RequestParam int listCnt){
+		System.out.println("정렬 : "+order);
+		System.out.println("페이지번호 : "+pageNo);
+		System.out.println("검색어 : "+searchText);
+		System.out.println("검색타입 : "+searchType);
+		System.out.println("리스트개수 : "+listCnt);
+		System.out.println("검색어 비교 : "+(searchText==""));
 		//시작 번호
 		//1페이지를 요청하면 1번부터 10번
 		//2페이지 -> 11번부터 20번
@@ -35,7 +37,7 @@ public class AdminController {
 		int startRow = (pageNo-1)*listCnt+1;
 		int endRow = pageNo * listCnt;
 		//리스트랑 토탈 리스트 카운트 받아야 함
-		HashMap<String, Object> memberMap =adminService.memberList(startRow,endRow);  
+		HashMap<String, Object> memberMap =adminService.memberList(startRow,endRow,searchType,searchText);  
 		
 		System.out.println(memberMap);
 		return ResponseEntity.ok(memberMap);

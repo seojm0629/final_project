@@ -16,10 +16,13 @@ const ContentMember = () => {
     // 5: 회원 정지 오름차순
     // 6: 회원 정지 내림차
     pageNo: 1, //몇번째 페이지를 요청하는데?
-    search: "", //어떤 검색어를 요청하는데??
-    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데?
-  });
 
+    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데?
+    searchType: "no",
+    searchText: "",
+  });
+  const [searchType, setSearchType] = useState("no");
+  const [searchText, setSearchText] = useState("");
   const [totalListCount, setTotalListCount] = useState(0);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
@@ -37,9 +40,9 @@ const ContentMember = () => {
       .get(
         `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
           reqPageInfo.order
-        }&pageNo=${reqPageInfo.pageNo}&search=${reqPageInfo.search}&listCnt=${
-          reqPageInfo.listCnt
-        }`
+        }&pageNo=${reqPageInfo.pageNo}&searchText=${
+          reqPageInfo.searchText
+        }&searchType=${reqPageInfo.searchType}&listCnt=${reqPageInfo.listCnt}`
       )
       .then((res) => {
         console.log(res.data.pageList);
@@ -55,6 +58,25 @@ const ContentMember = () => {
   // Back 호출하고 리턴 받기
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
+  const searchPlaceholder = {
+    no: "회원 번호로 검색",
+    id: "아이디로 검색",
+    email: "이메일로 검색",
+  };
+
+  const inputData = (e) => {
+    const value = e.target.value;
+    setSearchText(value);
+  };
+
+  const search = () => {
+    setReqPageInfo({
+      ...reqPageInfo,
+      searchType: searchType,
+      searchText: searchText,
+      pageNo: 1,
+    });
+  };
   return (
     <div>
       <div className="admin-content-wrap">
@@ -63,9 +85,71 @@ const ContentMember = () => {
           <div className="title s">
             실시간 회원 정보 (전체 회원 수 : {totalListCount})
           </div>
+
           <form className="search">
-            <input placeholder="아이디/이메일 검색" />
-            <button type="submit">검색</button>
+            <div className="search-box">
+              <div className="search-type">
+                <input
+                  type="radio"
+                  name="searchType"
+                  id="no"
+                  value="no"
+                  checked={searchType === "no"}
+                  onChange={(e) => {
+                    const type = e.target.value;
+                    console.log(type);
+                    setSearchType(type);
+                  }}
+                />
+                <label htmlFor="no">회원 번호</label>
+
+                <input
+                  type="radio"
+                  name="searchType"
+                  id="id"
+                  value="id"
+                  checked={searchType === "id"}
+                  onChange={(e) => {
+                    const type = e.target.value;
+                    console.log(type);
+                    setSearchType(type);
+                  }}
+                />
+                <label htmlFor="id">아이디</label>
+
+                <input
+                  type="radio"
+                  name="searchType"
+                  id="email"
+                  value="email"
+                  checked={searchType === "email"}
+                  onChange={(e) => {
+                    const type = e.target.value;
+                    console.log(type);
+                    setSearchType(type);
+                  }}
+                />
+                <label htmlFor="email">이메일</label>
+              </div>
+              <div className="search-text">
+                <input
+                  placeholder={searchPlaceholder[searchType]}
+                  type="text"
+                  name="searchText"
+                  value={searchText}
+                  onChange={inputData}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && searchText !== "") {
+                      e.preventDefault();
+                      search();
+                    }
+                  }}
+                />
+                <button type="button" onClick={search}>
+                  검색
+                </button>
+              </div>
+            </div>
           </form>
         </div>
         <div className="content-body">
