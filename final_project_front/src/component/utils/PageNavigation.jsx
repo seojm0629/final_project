@@ -67,60 +67,65 @@ const PageNavigation = (props) => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   return (
     <div className="page-nav">
-      {reqPageInfo.pageNo !== 1 && (
-        <button
-          onClick={() => {
-            setReqPageInfo({ ...reqPageInfo, pageNo: 1 });
-          }}
-        >
-          처음으로
-        </button>
-      )}
-      {reqPageInfo.pageNo !== 1 && (
-        <button
-          onClick={() => {
-            setReqPageInfo({
-              ...reqPageInfo,
-              pageNo: reqPageInfo.pageNo - 1,
-            });
-          }}
-        >
-          이전
-        </button>
-      )}
-
-      {pages.map((p, i) => (
-        <button
-          key={p}
-          className={p === reqPageInfo.pageNo ? "active" : ""}
-          onClick={() => {
-            setReqPageInfo({ ...reqPageInfo, pageNo: p });
-          }}
-        >
-          {p}
-        </button>
-      ))}
-      {reqPageInfo.pageNo !== lastPage && (
-        <button
-          onClick={() => {
-            setReqPageInfo({
-              ...reqPageInfo,
-              pageNo: reqPageInfo.pageNo + 1,
-            });
-          }}
-        >
-          다음
-        </button>
-      )}
-      {reqPageInfo.pageNo !== lastPage && (
-        <button
-          onClick={() => {
-            setReqPageInfo({ ...reqPageInfo, pageNo: lastPage });
-          }}
-        >
-          끝으로
-        </button>
-      )}
+      <div className="left">
+        {reqPageInfo.pageNo !== 1 && (
+          <button
+            onClick={() => {
+              setReqPageInfo({ ...reqPageInfo, pageNo: 1 });
+            }}
+          >
+            처음으로
+          </button>
+        )}
+        {reqPageInfo.pageNo !== 1 && (
+          <button
+            onClick={() => {
+              setReqPageInfo({
+                ...reqPageInfo,
+                pageNo: reqPageInfo.pageNo - 1,
+              });
+            }}
+          >
+            이전
+          </button>
+        )}
+      </div>
+      <div className="center">
+        {pages.map((p, i) => (
+          <button
+            key={p}
+            className={p === reqPageInfo.pageNo ? "active" : ""}
+            onClick={() => {
+              setReqPageInfo({ ...reqPageInfo, pageNo: p });
+            }}
+          >
+            {p}
+          </button>
+        ))}
+      </div>
+      <div className="right">
+        {reqPageInfo.pageNo !== lastPage && (
+          <button
+            onClick={() => {
+              setReqPageInfo({
+                ...reqPageInfo,
+                pageNo: reqPageInfo.pageNo + 1,
+              });
+            }}
+          >
+            다음
+          </button>
+        )}
+        {reqPageInfo.pageNo !== lastPage && (
+          <button
+            onClick={() => {
+              setReqPageInfo({ ...reqPageInfo, pageNo: lastPage });
+            }}
+          >
+            끝으로
+          </button>
+        )}
+      </div>
     </div>
   );
 };

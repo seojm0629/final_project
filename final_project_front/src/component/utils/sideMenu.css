@@ -1,31 +1,51 @@
-.side-menu{
-    background-color: #fff;
-    color: #2f4e70;
-    width: 200px;
-    height: 700px;
-    padding: 10px;
+.side-menu {
+  background-color: #fff;
+  color: #2f4e70;
+  width: 200px;
+  height: 700px;
+  padding: 10px;
 }
-.menu-title{
-    font-weight: bold;
-    color: #2f4e70;
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    gap: 50px;
+.side-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #2f4e70;
 }
-.menu-title>span{
-    text-decoration: none;
+.side-header p {
+  margin-left: 5px;
 }
-.menu-title a{
-    display: flex;
+.side-header span {
+  margin: 0px 0px 10px 8px;
 }
-.menu-down{
-    margin-top: 10px;
-    padding-left: 20px;
+.header-title {
+  font-weight: 600;
+  margin: 20px 0px 0px 5px;
 }
-.side-menuDown{
-    margin: 4px 0px;
+.category {
+  margin: 30px 10px 0px 10px;
 }
-.active-link{
-    color: #002e63;
+.menu-title {
+  font-weight: bold;
+  color: #2f4e70;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.5px solid #2f4e70;
+  padding: 4px 8px;
+  margin-top: 20px;
+}
+.menu-title > span {
+  text-decoration: none;
+}
+.menu-down {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+.menu-down a {
+  text-decoration: none;
+  gap: 40px;
+}
+.side-menuDown {
+  margin: 15px 0px;
+}
+.active-link {
+  color: #002e63;
 }

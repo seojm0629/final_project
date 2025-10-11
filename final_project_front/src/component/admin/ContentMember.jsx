@@ -72,16 +72,16 @@ const ContentMember = () => {
           <table>
             <thead>
               <tr>
-                <th>순서</th>
+                <th>행</th>
                 <th>회원 번호</th> {/* MEMBER_TBL */}
                 <th>아이디</th> {/* MEMBER_TBL */}
                 <th>이메일</th> {/* MEMBER_TBL */}
-                <th>신고</th>{" "}
+                <th>신고 받은 수</th>{" "}
                 {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
-                <th>좋아요</th>{" "}
+                <th>좋아요 받은 수</th>{" "}
                 {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
-                <th>작성 게시글</th> {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
-                <th>작성 댓글</th> {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
+                <th>작성 게시글 수</th> {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
+                <th>작성 댓글 수</th> {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
                 <th>회원가입일</th> {/* MEMBER_TBL */}
                 <th>회원 정지</th> {/* MEMBER_BEN_TBL */}
                 <th>상세 보기</th>
