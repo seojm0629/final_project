@@ -65,3 +65,10 @@
   gap: 5px;
   align-items: center;
 }
+
+.admin .MuiTableSortLabel-root.Mui-active {
+  color: #def0ff;
+}
+.admin .MuiTableSortLabel-root.Mui-active .MuiTableSortLabel-icon {
+  color: #def0ff;
+}
