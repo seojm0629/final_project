@@ -7,3 +7,6 @@ npm install recoil-persist
 npm install sweetalert2
 npm install @mui/material @emotion/react @emotion/styled
 npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+
+2025-10-11 15:35 전현우
+npm install react-modal

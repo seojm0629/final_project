@@ -7,7 +7,7 @@ import Header from "./component/common/Header";
 import MemberMypage from "./component/member/MemberMypage";
 import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
-import BoardContent from "./component/freeboard/BoardContent";
+import BoardContent from "./component/utils/BoardContent";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/mypage" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
-          <Route path="/freeboard/content" element={<BoardContent />} />
+          <Route path="/utils/content" element={<BoardContent />} />
         </Routes>
       </main>
       <Footer></Footer>
