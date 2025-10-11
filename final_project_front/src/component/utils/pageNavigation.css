@@ -30,6 +30,20 @@
 .page-nav > .center,
 .page-nav > .right {
   display: flex;
-  justify-content: center;
+
   gap: 5px;
+}
+
+.page-nav > .left {
+  width: 35%;
+  justify-content: right;
+}
+.page-nav > .center {
+  width: 30%;
+  justify-content: center;
+}
+
+.page-nav > .right {
+  width: 35%;
+  justify-content: left;
 }
