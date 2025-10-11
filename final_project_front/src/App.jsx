@@ -8,6 +8,8 @@ import MemberMypage from "./component/member/MemberMypage";
 import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
 import BoardContent from "./component/utils/BoardContent";
+import FreeBoardMain from "./component/free_board/FreeBoardMain";
+import BoardContent from "./component/freeboard/BoardContent";
 
 function App() {
   return (
@@ -22,6 +24,11 @@ function App() {
           <Route path="/member/mypage" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/utils/content" element={<BoardContent />} />
+          <Route
+            path="/freeBoard/mainPage"
+            element={<FreeBoardMain></FreeBoardMain>}
+          ></Route>
+          <Route path="/freeboard/content" element={<BoardContent />} />
         </Routes>
       </main>
       <Footer></Footer>
