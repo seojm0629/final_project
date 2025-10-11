@@ -32,6 +32,7 @@ const ContentMember = () => {
   const [searchType, setSearchType] = useState("no");
   const [searchText, setSearchText] = useState("");
   const [totalListCount, setTotalListCount] = useState(0);
+
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
   // memberList : Back -> Client
@@ -99,7 +100,7 @@ const ContentMember = () => {
         <div className="content-head">
           <div className="title m">회원 관리 페이지</div>
           <div className="title s">
-            실시간 회원 정보 (전체 회원 수 : {totalListCount})
+            실시간 회원 정보 (조회된 회원 수 : {totalListCount})
           </div>
 
           <form className="search">
