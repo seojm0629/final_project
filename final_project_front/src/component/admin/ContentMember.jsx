@@ -3,6 +3,7 @@ import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import { TableSortLabel } from "@mui/material";
+import Swal from "sweetalert2";
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
@@ -77,12 +78,20 @@ const ContentMember = () => {
   };
 
   const search = () => {
-    setReqPageInfo({
-      ...reqPageInfo,
-      searchType: searchType,
-      searchText: searchText,
-      pageNo: 1,
-    });
+    if (searchText == "") {
+      Swal.fire({
+        title: "알림",
+        text: `${searchPlaceholder[searchType]}어를 입력하세요!`,
+        icon: "warning",
+      });
+    } else {
+      setReqPageInfo({
+        ...reqPageInfo,
+        searchType: searchType,
+        searchText: searchText,
+        pageNo: 1,
+      });
+    }
   };
   return (
     <div>
@@ -147,7 +156,7 @@ const ContentMember = () => {
                   value={searchText}
                   onChange={inputData}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter" && searchText !== "") {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       search();
                     }
