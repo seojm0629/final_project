@@ -30,6 +30,7 @@ const MemberMypage = () => {
                 <section className="section site-path">
                     <Routes>
                         <Route path="info" element={<MemberInfo />} />
+                        <Route path="account" element={<MemberAccount />}/>
                     </Routes>
                 </section>
             </div>
@@ -52,8 +53,16 @@ const MemberInfo = () => {
 
 const MemberAccount = () => {
     return(
-        <div className="mypage-account">
-            
+        <div className="mypage-account-wrap">
+            <div className="mypage-account">
+                <div className="account-name">
+                    <span>memberId</span>
+                </div>
+                <div className="account-changePw">
+                    
+                </div>
+                <div className="account-changeEmail"></div>
+            </div>
         </div>
     )
 }

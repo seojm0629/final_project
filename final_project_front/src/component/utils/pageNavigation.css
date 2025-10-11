@@ -1,0 +1,35 @@
+.page-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+}
+
+.page-nav button {
+  min-width: 40px;
+  padding: 3px 10px;
+  height: 40px;
+  border: none;
+  background-color: #def0ff;
+  font-size: 15px;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+}
+
+.page-nav button:hover:not(.active) {
+  background-color: #e1deff;
+}
+
+.page-nav .active {
+  background-color: #2f4e70;
+  color: aliceblue;
+}
+.page-nav > .left,
+.page-nav > .center,
+.page-nav > .right {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}

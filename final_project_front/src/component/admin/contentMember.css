@@ -35,3 +35,13 @@ tbody tr {
   border-radius: 5px;
   cursor: pointer;
 }
+.th-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit; /* 테이블 글꼴과 동일 */
+  padding: 0; /* 버튼 기본 여백 제거 */
+}
+.th-btn:hover {
+  text-decoration: underline;
+}
