@@ -1,5 +1,6 @@
 package kr.co.iei.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,22 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@GetMapping(value="memberList")
-	public ResponseEntity<List> memberList(@RequestParam int order, @RequestParam int reqPage, @RequestParam String search){
+	public ResponseEntity<HashMap<String, Object>> memberList(@RequestParam int order, @RequestParam int pageNo, @RequestParam String search,@RequestParam int listCnt){
 		System.out.println(order);
-		System.out.println(reqPage);
+		System.out.println(pageNo);
 		System.out.println(search=="");
+		System.out.println(listCnt);
+		//시작 번호
+		//1페이지를 요청하면 1번부터 10번
+		//2페이지 -> 11번부터 20번
+		//3페이지를 요청하면 31번부터 40번
+		int startRow = (pageNo-1)*listCnt+1;
+		int endRow = pageNo * listCnt;
+		//리스트랑 토탈 리스트 카운트 받아야 함
+		HashMap<String, Object> memberMap =adminService.memberList(startRow,endRow);  
 		
-		List list = adminService.memberList(order,reqPage,search);
-		System.out.println(list);
-		return ResponseEntity.ok(list);
+		System.out.println(memberMap);
+		return ResponseEntity.ok(memberMap);
 	}
 	
 }
