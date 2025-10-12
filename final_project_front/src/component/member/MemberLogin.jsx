@@ -18,6 +18,7 @@ const MemberLogin = () => {
 
     const navigate = useNavigate();
 
+    /*
     const login = () => {
         if(member.memberId !== "" && member.memberPw !== ""){
             const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -31,6 +32,7 @@ const MemberLogin = () => {
             })
         }
     }
+    */
     return(
         <section className="section login-wrap">
             <div className="login-page-title">
@@ -38,7 +40,7 @@ const MemberLogin = () => {
             </div>
             <form onSubmit={(e)=>{
                 e.preventDefault;
-                login();
+                //login();
             }}>
                 <div className="login">
                     <div className="login-input-wrap">

@@ -163,6 +163,26 @@
     width: 81px;    
     margin-left: 5px;
 }
+.join-input-wrap .join-input-code {
+    width: 350px;
+    margin: 10px auto;
+}
+.join-input-wrap .join-input-code>input{
+    width: 255px;
+    border:none;
+    border-bottom: 1px solid #ccc;
+    padding-left: 5px;
+}
+.join:last-child > .join-input-wrap > .join-input-title{
+    margin-top: 10px;
+}
+
+.join-input-code > button{
+    background-color: #2F4E70;
+    color: #fff;
+    width: 81px;    
+    margin-left: 5px;
+}
 /* 성별버튼 */
 .join-input-gender{
     width: 350px;

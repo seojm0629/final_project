@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const MemberJoin = () => {
@@ -12,7 +12,51 @@ const MemberJoin = () => {
         memberPhone : "",
         memberEmail : "",
     })
+    
+    // ---------- 이메일 -----------
+    //인증코드를 입력하기 위한 창의 초기값을 false로 설정하여 보이지 않게 적용
+    const [showCodeInput, setShowCodeInput] = useState(false);
+    //이메일 인증 코드를 받기 위한 state 설정
+    const [code, setCode] = useState("");
+    //시간 제한
+    const [time, setTime] = useState(180);
+    //실제 인증 로직 넣을 수 있도록
+    const submitCode = () => {
+        alert(`입력한 인증코드 : ${code}`);
+    }
+    //인증하기 버튼 클릭시 인증 코드 입력창을 보이게 설정
+    const clickConfirm = () => {
+        setShowCodeInput(true);
+    }
+    //타이머
+    useEffect(()=>{
+        const timer = setInterval(()=>{
+            //남은 시간이 0보다 크면 1초씩 감소시킴.
+            if(time > 0){
+                setTime((prevTime)=>prevTime - 1); //해당 구문 이해 필요 
+            } else {
+                //남은 시간이 0이 되면 타이머 정지.
+                clearInterval(timer);
+            }
+        }, 1000);
 
+        //컴포넌트가 언마운트되면 타이머 정지
+        return () => clearInterval(timer);
+    },[time]); //time이 변경될 때마다 useEffect가 다시 실행
+
+    //시간을 분과 초로 변환하는 함수 정의
+    const formatTime = (s) => {
+        
+        const min = Math.floor(s / 60);
+        const sec = s % 60;
+        const formatSec = sec < 10 ? "0"+sec: sec;
+        return `${min}:${formatSec}`;
+    }
+
+    
+    
+
+    // ---------- 성별 ------------
     //성별 선택을 위한 State
     const [gender, setGender] = useState("1");    
 
@@ -180,9 +224,30 @@ const MemberJoin = () => {
                                 <option value="daum.net">daum.net</option>
                                 <option value="직접 작성">직접 작성</option>
                             </select>
-                            <button>인증하기</button>
+                            <button type="button" onClick={clickConfirm}>이메일 인증</button>
                         </div>
                     </div>
+
+                    {showCodeInput && (
+                        <>
+                            <div className="join-input-wrap">
+                                <div className="join-input-title">
+                                    <label htmlFor="confirmNo">인증코드</label>
+                                </div>
+                                <div className="join-input-code">
+                                    <input type="text" name="confirmNo" id="confirmNo" 
+                                    placeholder="인증번호를 입력하세요."/>
+                                    <button onClick={submitCode}>인증확인</button>
+                                    <div className="format-time">
+                                        <span>남은시간 : {formatTime(time)}</span>
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                        </>
+                    )}
+                    
 
                     <div className="member-button-zone-join">
                         <button type="submit" className="member-btn">회원가입</button>
