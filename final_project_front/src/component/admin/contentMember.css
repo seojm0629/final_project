@@ -29,3 +29,18 @@
 .admin .row:hover {
   background-color: rgba(186, 245, 255, 0.2);
 }
+
+.admin .row button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.admin .row button:hover {
+  color: #417ab6;
+}

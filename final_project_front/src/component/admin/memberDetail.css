@@ -1,0 +1,20 @@
+.memberDetail {
+  display: flex;
+  gap: 24px;
+}
+
+.detailLeft {
+  width: 300px;
+  border: 1px solid #e6e8ee;
+  border-radius: 5px;
+  min-height: 320px;
+  padding: 16px;
+}
+
+.detailRight {
+  width: 100%;
+  border: 1px solid #e6e8ee;
+  border-radius: 5px;
+  min-height: 320px;
+  padding: 16px;
+}
