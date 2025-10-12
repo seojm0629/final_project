@@ -148,6 +148,15 @@ const ContentMember = () => {
         : setReqPageInfo({ ...reqPageInfo, order: 11 });
     }
   };
+
+  const [userDetailInfo, setUserDetailInfo] = useState({
+    no: "",
+    name: "이름",
+  });
+  const reqUserInfo = (memberNo) => {
+    console.log(memberNo);
+    setUserDetailInfo({ ...userDetailInfo, no: memberNo });
+  };
   return (
     <div>
       <div className="admin-content-wrap">
@@ -363,7 +372,6 @@ const ContentMember = () => {
                 </th>{" "}
                 {/* MEMBER_BEN_TBL */}
                 <th>상세 보기</th>
-                <th>쪽지</th>
               </tr>
             </thead>
             <tbody>
@@ -384,8 +392,15 @@ const ContentMember = () => {
                       <td>{m.totalCommentCnt}</td>
                       <td>{m.memberDate}</td>
                       <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
-                      <td>돋보기</td>
-                      <td>쪽지</td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            reqUserInfo(m.memberNo);
+                          }}
+                        >
+                          돋보기
+                        </button>
+                      </td>
                     </tr>
                   );
                 })
@@ -411,7 +426,7 @@ const ContentMember = () => {
       <div className="admin-content-wrap">
         <div className="content-head">
           <div className="title m">사용자 상세 정보</div>
-          <div className="title s">유저명</div>
+          <div className="title s">{userDetailInfo.no}</div>
         </div>
       </div>
     </div>
