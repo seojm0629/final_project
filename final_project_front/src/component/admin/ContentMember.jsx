@@ -234,9 +234,8 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      reqPageInfo.order === 1 || reqPageInfo.order === 2
-                        ? "true"
-                        : ""
+                      (reqPageInfo.order === 1 || reqPageInfo.order === 2) &&
+                      "true"
                     }
                     direction={
                       reqPageInfo.order === 1
@@ -260,9 +259,8 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      reqPageInfo.order === 3 || reqPageInfo.order === 4
-                        ? "true"
-                        : ""
+                      (reqPageInfo.order === 3 || reqPageInfo.order === 4) &&
+                      "true"
                     }
                     direction={
                       reqPageInfo.order === 3
@@ -282,9 +280,8 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      reqPageInfo.order === 5 || reqPageInfo.order === 6
-                        ? "true"
-                        : ""
+                      (reqPageInfo.order === 5 || reqPageInfo.order === 6) &&
+                      "true"
                     }
                     direction={
                       reqPageInfo.order === 5
@@ -304,9 +301,8 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      reqPageInfo.order === 7 || reqPageInfo.order === 8
-                        ? "true"
-                        : ""
+                      (reqPageInfo.order === 7 || reqPageInfo.order === 8) &&
+                      "true"
                     }
                     direction={
                       reqPageInfo.order === 7
@@ -326,9 +322,8 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      reqPageInfo.order === 9 || reqPageInfo.order === 10
-                        ? "true"
-                        : ""
+                      (reqPageInfo.order === 9 || reqPageInfo.order === 10) &&
+                      "true"
                     }
                     direction={
                       reqPageInfo.order === 9
@@ -349,9 +344,8 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      reqPageInfo.order === 11 || reqPageInfo.order === 12
-                        ? "true"
-                        : ""
+                      (reqPageInfo.order === 11 || reqPageInfo.order === 12) &&
+                      "true"
                     }
                     direction={
                       reqPageInfo.order === 11
@@ -378,21 +372,23 @@ const ContentMember = () => {
                   <td colSpan={12}>데이터가 없습니다.</td>
                 </tr>
               ) : (
-                memberList.map((m, i) => (
-                  <tr key={"member" + m.memberNo}>
-                    <td>{m.memberNo}</td>
-                    <td>{m.memberId}</td>
-                    <td>{m.memberEmail}</td>
-                    <td>{m.totalClaimCnt}</td>
-                    <td>{m.totalLikeCnt}</td>
-                    <td>{m.totalPostCnt}</td>
-                    <td>{m.totalCommentCnt}</td>
-                    <td>{m.memberDate}</td>
-                    <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
-                    <td>돋보기</td>
-                    <td>쪽지</td>
-                  </tr>
-                ))
+                memberList.map((m, i) => {
+                  return (
+                    <tr key={"member-" + m.memberNo} className="row">
+                      <td>{m.memberNo}</td>
+                      <td>{m.memberId}</td>
+                      <td>{m.memberEmail}</td>
+                      <td>{m.totalClaimCnt}</td>
+                      <td>{m.totalLikeCnt}</td>
+                      <td>{m.totalPostCnt}</td>
+                      <td>{m.totalCommentCnt}</td>
+                      <td>{m.memberDate}</td>
+                      <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
+                      <td>돋보기</td>
+                      <td>쪽지</td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
             <tfoot>

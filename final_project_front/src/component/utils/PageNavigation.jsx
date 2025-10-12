@@ -91,17 +91,19 @@ const PageNavigation = (props) => {
         )}
       </div>
       <div className="center">
-        {pages.map((p, i) => (
-          <button
-            key={p}
-            className={p === reqPageInfo.pageNo ? "active" : ""}
-            onClick={() => {
-              setReqPageInfo({ ...reqPageInfo, pageNo: p });
-            }}
-          >
-            {p}
-          </button>
-        ))}
+        {pages.map((p, i) => {
+          return (
+            <button
+              key={p}
+              className={p === reqPageInfo.pageNo ? "active" : ""}
+              onClick={() => {
+                setReqPageInfo({ ...reqPageInfo, pageNo: p });
+              }}
+            >
+              {p}
+            </button>
+          );
+        })}
       </div>
       <div className="right">
         {reqPageInfo.pageNo !== lastPage && (

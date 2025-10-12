@@ -75,3 +75,7 @@
 .admin .MuiTableSortLabel-root:hover {
   color: #00e1ff;
 }
+
+.admin .row:hover {
+  background-color: rgba(186, 245, 255, 0.2);
+}
