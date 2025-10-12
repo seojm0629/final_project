@@ -94,6 +94,21 @@ const ContentMember = () => {
       });
     }
   };
+  const reset = () => {
+    setSearchText("");
+    setSearchType("no");
+    const resetData = {
+      order: 2, //어떤 정렬을 요청할건데??
+
+      pageNo: 1, //몇번째 페이지를 요청하는데?
+
+      listCnt: 15, //한 페이지에 몇개 리스트를 보여줄건데?
+      searchType: "no",
+      searchText: "",
+    };
+
+    setReqPageInfo(resetData);
+  };
   const sortSelect = (x) => {
     // 1: 회원 번호 오름차순
     // 2: 회원 번호 내림차순
@@ -204,6 +219,9 @@ const ContentMember = () => {
                 />
                 <button type="button" onClick={search}>
                   검색
+                </button>
+                <button type="button" onClick={reset}>
+                  초기화
                 </button>
               </div>
             </div>
