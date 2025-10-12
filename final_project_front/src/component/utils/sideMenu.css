@@ -4,6 +4,7 @@
   width: 200px;
   height: 700px;
   padding: 10px;
+  border-right: 0.1px solid #2f4e70;
 }
 .side-header {
   padding-bottom: 10px;
