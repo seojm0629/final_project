@@ -15,15 +15,17 @@ public class AdminService {
 	@Autowired
 	private AdminDao adminDao;
 
-	public HashMap<String, Object> memberList(int startRow,int endRow) {
+	public HashMap<String, Object> memberList(int startRow,int endRow, String searchType, String searchText) {
 		//List<AdminMemberDTO> list = adminDao.memberList(order,reqPage,search);
 		//일단 기본 10개만 조회해보기
 		HashMap<String, Object> listInfo = new HashMap<>();
 		listInfo.put("startRow", startRow);
 		listInfo.put("endRow", endRow);
+		listInfo.put("searchType", searchType);
+		listInfo.put("searchText", searchText);
 		
 		List<AdminMemberDTO> pageList =  adminDao.memberList(listInfo);
-		int totalListCount = adminDao.totalListCount();
+		int totalListCount = adminDao.totalListCount(listInfo);
 		
 		HashMap<String,Object> memberMap = new HashMap<>();
 		memberMap.put("pageList",pageList );

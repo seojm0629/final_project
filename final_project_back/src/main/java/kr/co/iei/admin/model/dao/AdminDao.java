@@ -12,6 +12,6 @@ public interface AdminDao {
 
 	List<AdminMemberDTO> memberList(HashMap<String, Object> listInfo);
 
-	int totalListCount();
+	int totalListCount(HashMap<String, Object> listInfo);
 
 }

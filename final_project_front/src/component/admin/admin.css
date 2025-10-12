@@ -24,15 +24,15 @@
   width: 1450px;
 }
 
-.content-head {
+.admin .content-head {
   padding: 20px;
 }
-.title {
+.admin .title {
   color: #1f3956;
   text-shadow: 1px 1px 1px #1f3956;
   padding: 10px;
 }
 
-.title.m {
+.admin .title.m {
   font-size: 20px;
 }

@@ -1,32 +1,43 @@
-.content-body table {
+.admin .content-body table {
   width: 100%;
   border-spacing: 0;
   text-align: center;
 }
-.content-body thead {
+.admin .content-body thead {
   height: 40px;
   background-color: #2f4e70;
   color: #ffffff;
 }
-.content-body th {
+.admin .content-body th {
   font-weight: 100;
 }
 
-tbody tr {
+.admin tbody tr {
   height: 40px;
 }
-.search {
+.admin .search {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
 }
-.search input {
+.admin .search .search-text input {
   height: 32px;
+  margin: 9px 0;
   padding: 0 10px;
   border: 1px solid #bcc1c9;
   border-radius: 5px;
 }
-.search button {
+.admin .search > .search-box {
+  display: flex;
+  background-color: #def0ff;
+  padding: 10px 80px;
+  border-radius: 5px;
+  height: 50px;
+  gap: 20px;
+}
+.admin .search-text button {
   height: 32px;
   padding: 0 12px;
   border: 1px solid #2f4e70;
@@ -35,13 +46,29 @@ tbody tr {
   border-radius: 5px;
   cursor: pointer;
 }
-.th-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font: inherit; /* 테이블 글꼴과 동일 */
-  padding: 0; /* 버튼 기본 여백 제거 */
+
+.admin .search .search-type {
+  display: flex;
+  gap: 10px;
 }
-.th-btn:hover {
-  text-decoration: underline;
+
+.admin .search-type > label {
+  line-height: 50px;
+}
+.admin input[type="radio"]:checked + label {
+  background-color: transparent;
+  color: #2f4e70;
+}
+
+.admin .search-text {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.admin .MuiTableSortLabel-root.Mui-active {
+  color: #def0ff;
+}
+.admin .MuiTableSortLabel-root.Mui-active .MuiTableSortLabel-icon {
+  color: #def0ff;
 }
