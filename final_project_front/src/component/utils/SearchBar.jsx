@@ -1,3 +1,4 @@
+import "./searchBar.css";
 const SearchBar = (props) => {
   const searchType = props.searchType;
   const setSearchType = props.setSearchType;
