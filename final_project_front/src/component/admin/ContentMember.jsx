@@ -4,6 +4,7 @@ import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import { TableSortLabel } from "@mui/material";
 import Swal from "sweetalert2";
+import SearchBar from "../utils/SearchBar";
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
@@ -29,8 +30,7 @@ const ContentMember = () => {
     searchType: "no",
     searchText: "",
   });
-  const [searchType, setSearchType] = useState("no");
-  const [searchText, setSearchText] = useState("");
+
   const [totalListCount, setTotalListCount] = useState(0);
 
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
@@ -66,6 +66,10 @@ const ContentMember = () => {
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Back 호출하고 리턴 받기
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+  //아래는 SearchBar 컴포넌트로 분리했음
+  const [searchType, setSearchType] = useState("no");
+  const [searchText, setSearchText] = useState("");
 
   const searchPlaceholder = {
     no: "회원 번호로 검색",
@@ -109,6 +113,8 @@ const ContentMember = () => {
 
     setReqPageInfo(resetData);
   };
+  //위는 SearchBar 컴포넌트로 분리했음
+
   const sortSelect = (x) => {
     // 1: 회원 번호 오름차순
     // 2: 회원 번호 내림차순
@@ -165,76 +171,15 @@ const ContentMember = () => {
           <div className="title s">
             실시간 회원 정보 (조회된 회원 수 : {totalListCount})
           </div>
-
-          <form className="search">
-            <div></div>
-            <div className="search-box">
-              <div className="search-type">
-                <input
-                  type="radio"
-                  name="searchType"
-                  id="no"
-                  value="no"
-                  checked={searchType === "no"}
-                  onChange={(e) => {
-                    const type = e.target.value;
-                    console.log(type);
-                    setSearchType(type);
-                  }}
-                />
-                <label htmlFor="no">회원 번호</label>
-
-                <input
-                  type="radio"
-                  name="searchType"
-                  id="id"
-                  value="id"
-                  checked={searchType === "id"}
-                  onChange={(e) => {
-                    const type = e.target.value;
-                    console.log(type);
-                    setSearchType(type);
-                  }}
-                />
-                <label htmlFor="id">아이디</label>
-
-                <input
-                  type="radio"
-                  name="searchType"
-                  id="email"
-                  value="email"
-                  checked={searchType === "email"}
-                  onChange={(e) => {
-                    const type = e.target.value;
-                    console.log(type);
-                    setSearchType(type);
-                  }}
-                />
-                <label htmlFor="email">이메일</label>
-              </div>
-              <div className="search-text">
-                <input
-                  placeholder={searchPlaceholder[searchType]}
-                  type="text"
-                  name="searchText"
-                  value={searchText}
-                  onChange={inputData}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      search();
-                    }
-                  }}
-                />
-                <button type="button" onClick={search}>
-                  검색
-                </button>
-                <button type="button" onClick={reset}>
-                  초기화
-                </button>
-              </div>
-            </div>
-          </form>
+          <SearchBar
+            searchType={searchType}
+            setSearchType={setSearchType}
+            searchText={searchText}
+            searchPlaceholder={searchPlaceholder}
+            inputData={inputData}
+            search={search}
+            reset={reset}
+          />
         </div>
         <div className="content-body">
           <table>
