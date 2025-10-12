@@ -67,8 +67,15 @@
 }
 
 .admin .MuiTableSortLabel-root.Mui-active {
-  color: #def0ff;
+  color: #00e1ff;
 }
 .admin .MuiTableSortLabel-root.Mui-active .MuiTableSortLabel-icon {
-  color: #def0ff;
+  color: #00e1ff;
+}
+.admin .MuiTableSortLabel-root:hover {
+  color: #00e1ff;
+}
+
+.admin .row:hover {
+  background-color: rgba(186, 245, 255, 0.2);
 }

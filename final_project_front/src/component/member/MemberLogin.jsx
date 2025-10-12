@@ -1,7 +1,32 @@
 import { Link } from "react-router-dom";
 import "./member.css";
+import { useState } from "react";
+import axios from "axios";
 
 const MemberLogin = () => {
+    //member 로그인 시 초기값 세팅
+    const [member, setMember] = useState({
+        memberId : "",
+        memberPw : "",
+    })
+
+    //member input 태그 입력 데이터 전송 위한 함수
+    const inputLoginData = (e) => {
+        setMember({...member, [e.target.name] : e.target.value});
+    }
+
+    const login = () => {
+        if(member.memberId !== "" && member.memberPw !== ""){
+            const backServer = import.meta.env.VITE_BACK_SERVER;
+
+            axios.post(`${backServer}/member/login`, member).then((res)=>{
+                console.log(res);
+                
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+    }
     return(
         <section className="section login-wrap">
             <div className="login-page-title">
@@ -9,6 +34,7 @@ const MemberLogin = () => {
             </div>
             <form onSubmit={(e)=>{
                 e.preventDefault;
+                login();
             }}>
                 <div className="login">
                     <div className="login-input-wrap">
@@ -16,7 +42,8 @@ const MemberLogin = () => {
                             <label htmlFor="memberId">아이디</label>
                         </div>
                         <div className="login-input-item">
-                            <input type="text" name="memberId" id="memberId" />
+                            <input type="text" name="memberId" id="memberId" 
+                            value={member.memberId} onChange={inputLoginData}/>
                         </div>
                     </div>
 
@@ -25,7 +52,8 @@ const MemberLogin = () => {
                             <label htmlFor="memberPw">비밀번호</label>
                         </div>
                         <div className="login-input-item">
-                            <input type="password" name="memberPw" id="memberPw" />
+                            <input type="password" name="memberPw" id="memberPw" 
+                            value={member.memberPw} onChange={inputLoginData}/>
                         </div>
                     </div>
                 

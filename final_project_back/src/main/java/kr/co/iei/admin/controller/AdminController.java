@@ -37,7 +37,7 @@ public class AdminController {
 		int startRow = (pageNo-1)*listCnt+1;
 		int endRow = pageNo * listCnt;
 		//리스트랑 토탈 리스트 카운트 받아야 함
-		HashMap<String, Object> memberMap =adminService.memberList(startRow,endRow,searchType,searchText);  
+		HashMap<String, Object> memberMap =adminService.memberList(startRow,endRow,searchType,searchText,order);  
 		
 		System.out.println(memberMap);
 		return ResponseEntity.ok(memberMap);

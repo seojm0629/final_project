@@ -8,6 +8,7 @@
 
 .admin h1 {
   text-align: center;
+  text-shadow: 1px 1px 30px #b0b0b1;
 }
 
 .admin-body {
@@ -29,10 +30,11 @@
 }
 .admin .title {
   color: #1f3956;
-  text-shadow: 1px 1px 1px #1f3956;
+  text-shadow: 1px 1px 3px #7a94b3;
   padding: 10px;
+  text-align: center;
 }
 
 .admin .title.m {
-  font-size: 20px;
+  font-size: 25px;
 }
