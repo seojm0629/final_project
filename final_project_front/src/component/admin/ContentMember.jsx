@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
-import { TableSortLabel } from "@mui/material";
+import { Icon, TableSortLabel } from "@mui/material";
 import Swal from "sweetalert2";
 import SearchBar from "../utils/SearchBar";
+import SearchIcon from "@mui/icons-material/Search";
+import MemberDetail from "./MemberDetail";
+
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
@@ -163,6 +166,7 @@ const ContentMember = () => {
     console.log(memberNo);
     setUserDetailInfo({ ...userDetailInfo, no: memberNo });
   };
+
   return (
     <div>
       <div className="admin-content-wrap">
@@ -343,7 +347,7 @@ const ContentMember = () => {
                             reqUserInfo(m.memberNo);
                           }}
                         >
-                          돋보기
+                          <SearchIcon />
                         </button>
                       </td>
                     </tr>
@@ -372,6 +376,11 @@ const ContentMember = () => {
         <div className="content-head">
           <div className="title m">사용자 상세 정보</div>
           <div className="title s">{userDetailInfo.no}</div>
+          <MemberDetail
+            reqPageInfo={reqPageInfo}
+            setReqPageInfo={setReqPageInfo}
+            totalListCount={totalListCount}
+          ></MemberDetail>
         </div>
       </div>
     </div>
