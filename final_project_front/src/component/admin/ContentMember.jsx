@@ -231,7 +231,6 @@ const ContentMember = () => {
           <table>
             <thead>
               <tr>
-                <th>행</th>
                 <th>
                   <TableSortLabel
                     active={
@@ -381,7 +380,6 @@ const ContentMember = () => {
               ) : (
                 memberList.map((m, i) => (
                   <tr key={"member" + m.memberNo}>
-                    <td>{m.rnum}</td>
                     <td>{m.memberNo}</td>
                     <td>{m.memberId}</td>
                     <td>{m.memberEmail}</td>
