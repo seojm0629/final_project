@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./member.css";
 import { useState } from "react";
 import axios from "axios";
@@ -13,15 +13,19 @@ const MemberLogin = () => {
     //member input 태그 입력 데이터 전송 위한 함수
     const inputLoginData = (e) => {
         setMember({...member, [e.target.name] : e.target.value});
+        console.log(member);
     }
+
+    const navigate = useNavigate();
 
     const login = () => {
         if(member.memberId !== "" && member.memberPw !== ""){
             const backServer = import.meta.env.VITE_BACK_SERVER;
 
             axios.post(`${backServer}/member/login`, member).then((res)=>{
-                console.log(res);
-                
+                console.log(res.data);
+                setMember(res.data);
+                navigate("/");
             }).catch((err)=>{
                 console.log(err);
             })
