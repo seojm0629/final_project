@@ -57,7 +57,11 @@
   color: #2f4e70;
 }
 
-.content-body table .row {
+.admin .content-body table .row {
   animation-duration: 0.5s;
   animation-name: spark;
+}
+
+.admin .content-body select:hover {
+  background-color: #00e1ff;
 }
