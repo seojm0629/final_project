@@ -19,8 +19,8 @@ public class MemberDTO {
 	private String memberPhone;
 	private String memberEmail;
 	private int memberGender;
-	private String memberBirth;
+	private int memberBirth;
 	private String memberDate;
 	private int memberType;
-	private String memberBanType;
+	
 }

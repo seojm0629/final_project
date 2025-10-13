@@ -5,14 +5,12 @@
 SELECT * FROM (
 SELECT  ROWNUM RNUM,A.* FROM (
 SELECT 
-        M.MEMBER_NO,
-        M.MEMBER_ID,
-        M.MEMBER_EMAIL,
+        M.*,
         NVL(TCC.TOTAL_CLAIM_CNT,0) TOTAL_CLAIM_CNT,
         NVL(TLC.TOTAL_LIKE_CNT,0) TOTAL_LIKE_CNT,
         NVL(TPC.TOTAL_POST_CNT,0) TOTAL_POST_CNT,
         NVL(TCMC.TOTAL_COMMENT_CNT,0) TOTAL_COMMENT_CNT, 
-        M.MEMBER_DATE,
+
         DECODE(
             (SELECT COUNT(*) FROM MEMBER_BEN_TBL B WHERE (B.MEMBER_NO = M.MEMBER_NO) AND (SYSDATE BETWEEN B.MEMBER_BEN_START_DATE AND B.MEMBER_BEN_FINISH_DATE)),
                 0,
@@ -51,8 +49,8 @@ SELECT
                         -- ② 거래 게시글별 신고 수
                         SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
                             -- ① 거래 게시글 신고 수
-                            SELECT BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_CLAIM_TBL GROUP BY BOARD_CATEGORY_NO, TRADE_BOARD_NO
-                        ) USING (BOARD_CATEGORY_NO, TRADE_BOARD_NO)
+                            SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_CLAIM_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
+                        ) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
                     ) GROUP BY MEMBER_NO
                     
                     UNION ALL
@@ -97,8 +95,8 @@ SELECT
                         -- ② 거래 게시글별 좋아요 수
                         SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
                             -- ① 거래 게시글 좋아요 수
-                            SELECT BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_LIKE_TBL GROUP BY BOARD_CATEGORY_NO, TRADE_BOARD_NO
-                        ) USING (BOARD_CATEGORY_NO, TRADE_BOARD_NO)
+                            SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_LIKE_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
+                        ) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
                     ) GROUP BY MEMBER_NO
                     
                     UNION ALL
@@ -188,6 +186,14 @@ SELECT
             ORDER BY IS_BEN DESC
             </if>
             
+            <if test = "order == 13">
+            ORDER BY MEMBER_TYPE ASC
+            </if>
+            
+            <if test = "order == 14">
+            ORDER BY MEMBER_TYPE DESC
+            </if>
+            
             ) A
             <if test = "searchText!=''">
 	WHERE 
@@ -222,4 +228,8 @@ SELECT
 	</if>
 
 	</select>
+	
+	<update id="memberTypeUpdate">
+	UPDATE MEMBER_TBL SET MEMBER_TYPE=#{memberType} WHERE MEMBER_NO=#{memberNo} 
+	</update>
 </mapper>

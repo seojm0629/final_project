@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
-import { TableSortLabel } from "@mui/material";
+import { Icon, TableSortLabel } from "@mui/material";
 import Swal from "sweetalert2";
 import SearchBar from "../utils/SearchBar";
+import SearchIcon from "@mui/icons-material/Search";
+import MemberDetail from "./MemberDetail";
+import Switch from "@mui/material/Switch";
+
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
@@ -25,7 +29,28 @@ const ContentMember = () => {
     // 11: 회원 정지 오름차순
     // 12: 회원 정지 내림차순
     pageNo: 1, //몇번째 페이지를 요청하는데?
+    sideBtnCount: 3,
+    listCnt: 15, //한 페이지에 몇개 리스트를 보여줄건데?
+    searchType: "no",
+    searchText: "",
+  });
 
+  const [reqDetailInfo, setReqDetailInfo] = useState({
+    order: 2, //어떤 정렬을 요청할건데??
+    // 1: 회원 번호 오름차순
+    // 2: 회원 번호 내림차순
+    // 3: 신고 받은 수 오름차순
+    // 4: 신고 받은 수 내림차순
+    // 5: 좋아요 받은 수 오름차순
+    // 6: 좋아요 받은 수 내림차순
+    // 7: 작성 게시글 수 오름차순
+    // 8: 작성 게시글 수 내림차순
+    // 9 : 작성 댓글 수 오름차순
+    // 10 : 작성 댓글 수 내림차순
+    // 11: 회원 정지 오름차순
+    // 12: 회원 정지 내림차순
+    pageNo: 1, //몇번째 페이지를 요청하는데?
+    sideBtnCount: 2,
     listCnt: 15, //한 페이지에 몇개 리스트를 보여줄건데?
     searchType: "no",
     searchText: "",
@@ -45,6 +70,7 @@ const ContentMember = () => {
   useEffect(() => {
     console.log("pageInfo : ");
     console.log(reqPageInfo);
+
     axios
       .get(
         `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
@@ -56,6 +82,9 @@ const ContentMember = () => {
       .then((res) => {
         console.log(res.data.pageList);
         console.log(res.data.totalListCount);
+        console.log("확인");
+        console.log(userDetailInfo);
+        console.log(userDetailInfo.length);
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
       })
@@ -67,6 +96,38 @@ const ContentMember = () => {
   // Back 호출하고 리턴 받기
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
+  const [updateMemberType, setUpdateMemberType] = useState();
+
+  useEffect(() => {
+    console.log("updateMemberType");
+
+    console.log(updateMemberType !== undefined);
+    updateMemberType !== undefined &&
+      axios
+        .patch(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/memberTypeUpdate`,
+          updateMemberType
+        )
+        .then((res) => {
+          if (res.data === 1) {
+            Swal.fire({
+              title: "알림",
+              text: `등급 변경이 완료되었습니다.`,
+
+              icon: "success",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            title: "경고",
+            text: `등급 변경 실패되었습니다.`,
+
+            icon: "error",
+          });
+        });
+  }, [updateMemberType]);
   //아래는 SearchBar 컴포넌트로 분리했음
   const [searchType, setSearchType] = useState("no");
   const [searchText, setSearchText] = useState("");
@@ -105,7 +166,7 @@ const ContentMember = () => {
       order: 2, //어떤 정렬을 요청할건데??
 
       pageNo: 1, //몇번째 페이지를 요청하는데?
-
+      sideBtnCount: 3,
       listCnt: 15, //한 페이지에 몇개 리스트를 보여줄건데?
       searchType: "no",
       searchText: "",
@@ -128,6 +189,8 @@ const ContentMember = () => {
     // 10 : 작성 댓글 수 내림차순
     // 11: 회원 정지 오름차순
     // 12: 회원 정지 내림차순
+    // 13: 회원 등급 오름차순
+    // 14: 회원 등급 내림차순
     if (x === "no") {
       reqPageInfo.order === 1
         ? setReqPageInfo({ ...reqPageInfo, order: 2 })
@@ -152,19 +215,22 @@ const ContentMember = () => {
       reqPageInfo.order === 11
         ? setReqPageInfo({ ...reqPageInfo, order: 12 })
         : setReqPageInfo({ ...reqPageInfo, order: 11 });
+    } else if (x === "grade") {
+      reqPageInfo.order === 13
+        ? setReqPageInfo({ ...reqPageInfo, order: 14 })
+        : setReqPageInfo({ ...reqPageInfo, order: 13 });
     }
   };
 
-  const [userDetailInfo, setUserDetailInfo] = useState({
-    no: "",
-    name: "이름",
-  });
-  const reqUserInfo = (memberNo) => {
-    console.log(memberNo);
-    setUserDetailInfo({ ...userDetailInfo, no: memberNo });
+  const [userDetailInfo, setUserDetailInfo] = useState({});
+  const reqUserInfo = (member) => {
+    console.log(member);
+    setUserDetailInfo({ ...userDetailInfo, member: member });
   };
+  console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
+
   return (
-    <div>
+    <div className="admin-right">
       <div className="admin-content-wrap">
         <div className="content-head">
           <div className="title m">회원 관리 페이지</div>
@@ -182,7 +248,9 @@ const ContentMember = () => {
           />
         </div>
         <div className="content-body">
-          <table>
+          <table
+            key={"list" + (memberList.length !== 0 && memberList[0].memberNo)}
+          >
             <thead>
               <tr>
                 <th>
@@ -298,6 +366,26 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
+                      (reqPageInfo.order === 13 || reqPageInfo.order === 14) &&
+                      "true"
+                    }
+                    direction={
+                      reqPageInfo.order === 13
+                        ? "asc"
+                        : reqPageInfo.order === 14
+                        ? "desc"
+                        : ""
+                    }
+                    onClick={() => {
+                      sortSelect("grade");
+                    }}
+                  >
+                    회원 등급
+                  </TableSortLabel>
+                </th>
+                <th>
+                  <TableSortLabel
+                    active={
                       (reqPageInfo.order === 11 || reqPageInfo.order === 12) &&
                       "true"
                     }
@@ -336,14 +424,28 @@ const ContentMember = () => {
                       <td>{m.totalPostCnt}</td>
                       <td>{m.totalCommentCnt}</td>
                       <td>{m.memberDate}</td>
+                      <td>
+                        <select
+                          defaultValue={m.memberType}
+                          onChange={(e) => {
+                            setUpdateMemberType({
+                              memberType: e.target.value,
+                              memberNo: m.memberNo,
+                            });
+                          }}
+                        >
+                          <option value="1">관리자</option>
+                          <option value="2">일반</option>
+                        </select>
+                      </td>
                       <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
                       <td>
                         <button
                           onClick={() => {
-                            reqUserInfo(m.memberNo);
+                            reqUserInfo(m);
                           }}
                         >
-                          돋보기
+                          <SearchIcon />
                         </button>
                       </td>
                     </tr>
@@ -368,11 +470,22 @@ const ContentMember = () => {
           </table>
         </div>
       </div>
-      <div className="admin-content-wrap">
-        <div className="content-head">
-          <div className="title m">사용자 상세 정보</div>
-          <div className="title s">{userDetailInfo.no}</div>
-        </div>
+      <div className="admin-detail-content-wrap">
+        {userDetailInfo.member != null && (
+          <div className="content-head">
+            <div className="title m">사용자 상세 정보</div>
+            <div className="title s">{userDetailInfo.no}</div>
+            <MemberDetail
+              reqPageInfo={reqDetailInfo}
+              setReqPageInfo={setReqDetailInfo}
+              totalListCount={totalListCount}
+              userDetailInfo={userDetailInfo}
+            ></MemberDetail>
+          </div>
+        )}
+        {userDetailInfo.member == null && (
+          <div className="nullMsg">상세보기를 클릭해보세요.</div>
+        )}
       </div>
     </div>
   );

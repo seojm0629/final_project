@@ -8,7 +8,7 @@
 
 .admin h1 {
   text-align: center;
-  text-shadow: 1px 1px 30px #b0b0b1;
+  text-shadow: 1px 1px 3px #b0b0b1;
 }
 
 .admin-body {
@@ -17,24 +17,40 @@
   gap: 24px;
 }
 
-.admin-content-wrap {
+.admin-right {
+  width: 1400px;
+}
+.admin-content-wrap,
+.admin-detail-content-wrap {
   min-height: 360px;
   border: 1px solid #e6e8ee;
   border-radius: 5px;
 
-  width: 1450px;
+  width: 100%;
 }
 
 .admin .content-head {
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 .admin .title {
   color: #1f3956;
-  text-shadow: 1px 1px 3px #7a94b3;
+  font-weight: 900;
   padding: 10px;
   text-align: center;
+  width: 100%;
 }
 
 .admin .title.m {
   font-size: 25px;
+}
+
+@keyframes spark {
+  from {
+    background-color: #e2eaf3;
+  }
+  to {
+    background-color: transparent;
+  }
 }
