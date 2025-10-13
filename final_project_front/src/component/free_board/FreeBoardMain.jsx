@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
-
 const FreeBoardMain = () => {
   {
     /*

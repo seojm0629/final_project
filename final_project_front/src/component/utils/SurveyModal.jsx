@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./SurveyModal.css";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
-const SurveyContent = ({ onClose }) => {
+const SurveyContent = ({ onClose, onSubmit }) => {
   //컴포넌트에 onClose 함수 받아오기 (모달닫기)
   const [surveyTitle, setSurveyTitle] = useState("");
   const [options, setOptions] = useState(["", ""]); //기본 2개 항목
@@ -25,13 +25,42 @@ const SurveyContent = ({ onClose }) => {
     console.log(newOptions);
   };
 
-  const check = () => {
-    console.log({
+  let optionsCount = 0;
+  //확인누를때 값 저장
+  const checkSubmit = () => {
+    const data = {
       title: surveyTitle,
-      options: options,
-      endDate: endDate,
-      endTime: endTime,
-    });
+      options,
+      endDate,
+      endTime,
+    };
+    if (data.title === "") {
+      alert("제목을 입력하세요");
+      return;
+    }
+    //내용 2개이상 될때만 만들기
+    for (let i = 0; i < data.options.length; i++) {
+      if (data.options[i].trim() === "") {
+        alert("모든 항목을 비칸 없이 입력하세요");
+        return;
+      } else {
+        optionsCount++;
+      }
+    }
+    if (optionsCount < 2) {
+      alert("항목을 2개 이상 입력하세요");
+      return;
+    }
+
+    if (data.endDate === "") {
+      alert("날짜를 설정하세요");
+      return;
+    }
+    if (data.endTime === "") {
+      alert("시간을 설정하세요");
+      return;
+    }
+    onSubmit(data); // 값 전달
     onClose();
   };
 
@@ -56,14 +85,31 @@ const SurveyContent = ({ onClose }) => {
             </div>
             <div className="survey-options">
               {options.map((option, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  placeholder={`${index + 1}. 항목을 입력하세요`}
-                  value={option}
-                  onChange={(e) => optionChange(index, e.target.value)}
-                  className="option-input"
-                />
+                <div key={index} className="survey-item">
+                  <input
+                    type="text"
+                    placeholder={`${index + 1}. 항목을 입력하세요`}
+                    value={option}
+                    onChange={(e) => optionChange(index, e.target.value)}
+                    className="option-input"
+                  ></input>
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={() => {
+                      if (options.length <= 2) {
+                        alert("항목은 최소 2개입니다");
+                        return;
+                      }
+                      const newOption = options.filter((item, i) => {
+                        return i !== index;
+                      });
+                      setOptions(newOption);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
               ))}
             </div>
           </div>
@@ -86,7 +132,7 @@ const SurveyContent = ({ onClose }) => {
             </div>
           </div>
           <div className="check-btns">
-            <button onClick={check}>확인</button>
+            <button onClick={checkSubmit}>확인</button>
             <button onClick={onClose}>취소</button>
           </div>
         </div>
