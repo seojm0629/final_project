@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
-import { Icon, TableSortLabel } from "@mui/material";
+import { TableSortLabel } from "@mui/material";
 import Swal from "sweetalert2";
 import SearchBar from "../utils/SearchBar";
 import SearchIcon from "@mui/icons-material/Search";
 import MemberDetail from "./MemberDetail";
-import Switch from "@mui/material/Switch";
 
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -68,8 +67,8 @@ const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
   useEffect(() => {
-    console.log("pageInfo : ");
-    console.log(reqPageInfo);
+    //console.log("pageInfo : ");
+    //console.log(reqPageInfo);
 
     axios
       .get(
@@ -80,11 +79,11 @@ const ContentMember = () => {
         }&searchType=${reqPageInfo.searchType}&listCnt=${reqPageInfo.listCnt}`
       )
       .then((res) => {
-        console.log(res.data.pageList);
-        console.log(res.data.totalListCount);
-        console.log("확인");
-        console.log(userDetailInfo);
-        console.log(userDetailInfo.length);
+        //console.log(res.data.pageList);
+        //console.log(res.data.totalListCount);
+        //console.log("확인");
+        //console.log(userDetailInfo);
+        //console.log(userDetailInfo.length);
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
       })
@@ -99,9 +98,9 @@ const ContentMember = () => {
   const [updateMemberType, setUpdateMemberType] = useState();
 
   useEffect(() => {
-    console.log("updateMemberType");
+    //console.log("updateMemberType");
 
-    console.log(updateMemberType !== undefined);
+    //console.log(updateMemberType !== undefined);
     updateMemberType !== undefined &&
       axios
         .patch(
@@ -144,7 +143,7 @@ const ContentMember = () => {
   };
   //test
   const search = () => {
-    if (searchText == "") {
+    if (searchText === "") {
       Swal.fire({
         title: "알림",
         text: `${searchPlaceholder[searchType]}어를 입력하세요!`,
@@ -224,10 +223,10 @@ const ContentMember = () => {
 
   const [userDetailInfo, setUserDetailInfo] = useState({});
   const reqUserInfo = (member) => {
-    console.log(member);
+    //console.log(member);
     setUserDetailInfo({ ...userDetailInfo, member: member });
   };
-  console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
+  //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
 
   return (
     <div className="admin-right">
