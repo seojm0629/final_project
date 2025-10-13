@@ -48,15 +48,15 @@ const FreeBoardSideMenu = (props) => {
                           <li
                             key={"side-menuDown" + j}
                             className="side-menuDown"
+                            onClick={() => {
+                              setSelectMenu(menus2.text);
+                            }}
                           >
                             <NavLink
                               to={menus2.url}
                               className={({ isActive }) =>
                                 isActive ? "active-link" : ""
                               }
-                              onClick={() => {
-                              setSelectMenu(menus2.text);
-                            }}
                             >
                               <CircleOutlinedIcon
                                 style={{
