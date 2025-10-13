@@ -54,7 +54,10 @@ const MemberJoin = () => {
     }
 
     //---------- 이메일 인증 구현 -----------
-    
+    let mailCode = null;
+    const sendMail = () => {
+        const receiver = {memberEmail};
+    }
     
     
 
