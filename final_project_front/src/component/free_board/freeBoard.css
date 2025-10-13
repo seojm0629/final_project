@@ -1,3 +1,195 @@
-.main-wrap{
-    height: 700px;
+.main-header {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+.search-div {
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.search-div input {
+  width: 400px;
+  padding: 8px 12px;
+  border: none;
+  font-size: 14px;
+  border-left: 1px solid #ccc;
+}
+.search-menu {
+  width: 140px;
+  margin: 8px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.search-menu svg {
+  margin: 1px 0px 0px 4px;
+}
+.search-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.search-btn:hover {
+  color: #2f4e70;
+}
+.status-box {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.status-bar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.menu-tag {
+  display: flex;
+  align-items: center;
+  background-color: #43688f;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  flex-wrap: wrap;
+  width: max-content;
+  user-select: none;
+  justify-content: center;
+}
+.menu-tag svg {
+  margin-left: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.menu-tag svg:hover {
+  color: #000;
+}
+/*메인페이지 글 목록 css*/
+.main-page {
+  display: flex;
+}
+.section-company {
+  width: 70%;
+}
+.main-content {
+  width: 50%;
+  height: 850px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: content-box;
+}
+.free-board {
+  width: 95%;
+  height: 89%;
+  border-top: 1px solid #ccc;
+}
+.write-div {
+  width: 60px;
+  height: 30px;
+  margin-left: 830px;
+  margin-bottom: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #2f4e70;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  flex-wrap: wrap;
+}
+.board-div {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  display: flex;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.board-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.board-status {
+  width: max-content;
+  user-select: none;
+  background-color: #2f4e70;
+  color: white;
+  margin: 20px 0px 0px 25px;
+  border-radius: 3px;
+}
+.board-title {
+  width: max-content;
+  font-size: 25px;
+  margin: 15px 0px 5px 45px;
+  font-weight: 600;
+}
+.board-content {
+  max-width: 330px;
+  max-height: 48px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 10px 0px 20px 90px;
+  box-sizing: content-box;
+}
+.nickname-id {
+  font-weight: 500;
+  margin: 0px 0px 10px 25px;
+  display: flex;
+  gap: 6px;
+  font-size: 13px;
+}
+.view-heart {
+  display: flex;
+  margin: 5px 25px 15px 25px;
+  gap: 12px;
+  font-size: 13px;
+}
+.view {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.view svg {
+  font-size: 20px;
+}
+.heart {
+  width: max-content;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.heart svg {
+  font-size: 18px;
+}
+.hour {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.hour svg {
+  font-size: 18px;
 }

@@ -4,12 +4,13 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginIdState, memberTypeState } from "../utils/RecoilData";
 
 const MemberLogin = () => {
     //recoil에 선언한 데이터(state)를 가져오는 방법
     const [memberId, setMemberId] = useRecoilState(loginIdState);
     const [memberType, setMemberType] = useRecoilState(memberTypeState);
+    console.log(memberId, memberType);
 
     //member 로그인 시 초기값 세팅
     const [member, setMember] = useState({

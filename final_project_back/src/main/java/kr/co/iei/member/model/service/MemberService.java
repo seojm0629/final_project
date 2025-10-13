@@ -3,6 +3,7 @@ package kr.co.iei.member.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
@@ -23,10 +24,21 @@ public class MemberService {
 	@Autowired
 	private JwtUtils jwtUtil;
 
+	@Transactional
+	public int join(MemberDTO member) {
+		String memberPw = member.getMemberPw();
+		String encPw = encoder.encode(memberPw);
+		member.setMemberPw(encPw);
+		
+		int result = memberDao.join(member);
+		return result;
+	}
+	
 	public LoginMemberDTO login(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
+		System.out.println(m);
 		
-		if(m != null && encoder.matches(member.getMemberPw(), member.getMemberPw())) {
+		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
 			String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType());
 			String refreshToken = jwtUtil.createRefreshToken(m.getMemberId(), m.getMemberType());
 			
@@ -36,6 +48,17 @@ public class MemberService {
 		}
 		return null;
 	}
+
+	public int exists(String memberId) {
+		int result = memberDao.exists(memberId);
+		return result;
+	}
+
+	public int nickname(String memberNickname) {
+		int result = memberDao.nickname(memberNickname);
+		return result;
+	}
+
 
 	
 }

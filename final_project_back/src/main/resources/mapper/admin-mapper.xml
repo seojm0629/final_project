@@ -49,8 +49,8 @@ SELECT
                         -- ② 거래 게시글별 신고 수
                         SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
                             -- ① 거래 게시글 신고 수
-                            SELECT BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_CLAIM_TBL GROUP BY BOARD_CATEGORY_NO, TRADE_BOARD_NO
-                        ) USING (BOARD_CATEGORY_NO, TRADE_BOARD_NO)
+                            SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_CLAIM_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
+                        ) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
                     ) GROUP BY MEMBER_NO
                     
                     UNION ALL
@@ -95,8 +95,8 @@ SELECT
                         -- ② 거래 게시글별 좋아요 수
                         SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
                             -- ① 거래 게시글 좋아요 수
-                            SELECT BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_LIKE_TBL GROUP BY BOARD_CATEGORY_NO, TRADE_BOARD_NO
-                        ) USING (BOARD_CATEGORY_NO, TRADE_BOARD_NO)
+                            SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_LIKE_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
+                        ) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
                     ) GROUP BY MEMBER_NO
                     
                     UNION ALL
@@ -228,4 +228,8 @@ SELECT
 	</if>
 
 	</select>
+	
+	<update id="memberTypeUpdate">
+	UPDATE MEMBER_TBL SET MEMBER_TYPE=#{memberType} WHERE MEMBER_NO=#{memberNo} 
+	</update>
 </mapper>

@@ -96,6 +96,38 @@ const ContentMember = () => {
   // Back 호출하고 리턴 받기
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
+  const [updateMemberType, setUpdateMemberType] = useState();
+
+  useEffect(() => {
+    console.log("updateMemberType");
+
+    console.log(updateMemberType !== undefined);
+    updateMemberType !== undefined &&
+      axios
+        .patch(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/memberTypeUpdate`,
+          updateMemberType
+        )
+        .then((res) => {
+          if (res.data === 1) {
+            Swal.fire({
+              title: "알림",
+              text: `등급 변경이 완료되었습니다.`,
+
+              icon: "success",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            title: "경고",
+            text: `등급 변경 실패되었습니다.`,
+
+            icon: "error",
+          });
+        });
+  }, [updateMemberType]);
   //아래는 SearchBar 컴포넌트로 분리했음
   const [searchType, setSearchType] = useState("no");
   const [searchText, setSearchText] = useState("");
@@ -394,10 +426,16 @@ const ContentMember = () => {
                       <td>{m.memberDate}</td>
                       <td>
                         <select
-                          defaultValue={m.memberType === 1 ? "관리자" : "일반"}
+                          defaultValue={m.memberType}
+                          onChange={(e) => {
+                            setUpdateMemberType({
+                              memberType: e.target.value,
+                              memberNo: m.memberNo,
+                            });
+                          }}
                         >
-                          <option value="관리자">관리자</option>
-                          <option value="일반">일반</option>
+                          <option value="1">관리자</option>
+                          <option value="2">일반</option>
                         </select>
                       </td>
                       <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>

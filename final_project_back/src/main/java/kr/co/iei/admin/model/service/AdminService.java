@@ -35,4 +35,9 @@ public class AdminService {
 		
 		return memberMap;
 	}
+
+	public int memberTypeUpdate(AdminMemberDTO m) {
+		int result = adminDao.memberTypeUpdate(m);
+		return result;
+	}
 }

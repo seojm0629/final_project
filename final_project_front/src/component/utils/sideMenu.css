@@ -2,8 +2,9 @@
   background-color: #fff;
   color: #2f4e70;
   width: 200px;
-  height: 700px;
+  height: 780px;
   padding: 10px;
+  border-right: 0.1px solid #2f4e70;
 }
 .side-header {
   padding-bottom: 10px;
