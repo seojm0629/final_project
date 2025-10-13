@@ -28,10 +28,16 @@ public class AdminService {
 		List<AdminMemberDTO> pageList =  adminDao.memberList(listInfo);
 		int totalListCount = adminDao.totalListCount(listInfo);
 		
+		System.out.println(pageList);
 		HashMap<String,Object> memberMap = new HashMap<>();
 		memberMap.put("pageList",pageList );
 		memberMap.put("totalListCount",totalListCount);
 		
 		return memberMap;
+	}
+
+	public int memberTypeUpdate(AdminMemberDTO m) {
+		int result = adminDao.memberTypeUpdate(m);
+		return result;
 	}
 }
