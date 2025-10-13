@@ -142,7 +142,7 @@ const ContentMember = () => {
     const value = e.target.value;
     setSearchText(value);
   };
-  //테스트
+  //test
   const search = () => {
     if (searchText == "") {
       Swal.fire({
