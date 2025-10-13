@@ -211,7 +211,7 @@ const ContentMember = () => {
       reqPageInfo.order === 9
         ? setReqPageInfo({ ...reqPageInfo, order: 10 })
         : setReqPageInfo({ ...reqPageInfo, order: 9 });
-    } else if (x === "date") {
+    } else if (x === "ban") {
       reqPageInfo.order === 11
         ? setReqPageInfo({ ...reqPageInfo, order: 12 })
         : setReqPageInfo({ ...reqPageInfo, order: 11 });
@@ -380,7 +380,7 @@ const ContentMember = () => {
                         : undefined
                     }
                     onClick={() => {
-                      sortSelect("date");
+                      sortSelect("ban");
                     }}
                   >
                     회원 정지
