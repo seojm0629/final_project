@@ -255,10 +255,7 @@ const ContentMember = () => {
               <tr>
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 1 || reqPageInfo.order === 2) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 1 || reqPageInfo.order === 2}
                     direction={
                       reqPageInfo.order === 1
                         ? "asc"
@@ -280,10 +277,7 @@ const ContentMember = () => {
                 <th>이메일</th> {/* MEMBER_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 3 || reqPageInfo.order === 4) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 3 || reqPageInfo.order === 4}
                     direction={
                       reqPageInfo.order === 3
                         ? "asc"
@@ -301,10 +295,7 @@ const ContentMember = () => {
                 {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 5 || reqPageInfo.order === 6) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 5 || reqPageInfo.order === 6}
                     direction={
                       reqPageInfo.order === 5
                         ? "asc"
@@ -322,10 +313,7 @@ const ContentMember = () => {
                 {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 7 || reqPageInfo.order === 8) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 7 || reqPageInfo.order === 8}
                     direction={
                       reqPageInfo.order === 7
                         ? "asc"
@@ -343,10 +331,7 @@ const ContentMember = () => {
                 {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 9 || reqPageInfo.order === 10) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 9 || reqPageInfo.order === 10}
                     direction={
                       reqPageInfo.order === 9
                         ? "asc"
@@ -366,8 +351,7 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      (reqPageInfo.order === 13 || reqPageInfo.order === 14) &&
-                      "true"
+                      reqPageInfo.order === 13 || reqPageInfo.order === 14
                     }
                     direction={
                       reqPageInfo.order === 13
@@ -386,8 +370,7 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      (reqPageInfo.order === 11 || reqPageInfo.order === 12) &&
-                      "true"
+                      reqPageInfo.order === 11 || reqPageInfo.order === 12
                     }
                     direction={
                       reqPageInfo.order === 11
