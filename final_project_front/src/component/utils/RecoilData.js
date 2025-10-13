@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 
-const persistAtom = recoilPersist();
+const { persistAtom } = recoilPersist();
 
 
 //key : atom 중 구별할 식별표
