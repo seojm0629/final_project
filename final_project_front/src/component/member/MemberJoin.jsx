@@ -54,38 +54,8 @@ const MemberJoin = () => {
     }
 
     //---------- 이메일 인증 구현 -----------
-    //1. 이메일 유효성 검사 및 메세지 저장을 위한 state를 작성
-    const [email, setEmail]  = useState("");                        //입력 받는 이메일 저장
-    const [emailIsPress, setEmailIsPress] = useState(false);        //text input이 눌렸는지
-    const [isEmailCheck, setIsEmailCheck] = useState(false);        //이메일 validation 검증
-    const [emailMessage, setEmailMessage] = useState("");           //이메일 유효성 검증 여부에 따른 메세지 저장
-    const [isDuplication, setIsDuplication] = useState(false);      //이메일 중복 여부 검증
-    const [finalEmailCheck, setFinalEmailCheck] = useState(false);  //이메일 input editable을 위한 state
-
-    //2. 이메일을 입력받아 유효성 검증을 하는 함수 작성
-    const onChangeEmail = (emailText) => {
-        setEmail(emailText);    //prop으로 받은 text email로 저장
-
-        //이메일 유효성 검증 코드
-        const emailReg = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-
-        //이메일 유효성 검증 여부에 따른 메세지 저장
-        if(!emailReg.test(emailText)){
-            setEmailMessage("올바른 이메일 형식을 입력해주세요.");
-            setIsEmailCheck(false);
-        } else {
-            setEmailMessage("올바른 이메일 형식입니다.");
-            setIsEmailCheck(true);
-        }
-    };
-
-    //3. input 적용
-    //4. 이메일 중복을 검사하는 함수를 작성
-    const checkEmail = () => {
-        //기존 가입되어 있는 이메일과 중복인 경우
-        
-
-    }
+    
+    
     
 
     
@@ -250,20 +220,7 @@ const MemberJoin = () => {
                         </div>
                         <div className="join-input-email">
                             <input type="text" name="memberEmail" id="memberEmail" 
-                            value={member.memberEmail} onChange={onChangeEmail}
-                            autoCorrect={false}     
-                            spellCheck={false}
-                            autoCapitalize="none"
-                            autoFocus
-                            returnKeyType="next"
-                            inputMode="email"
-                            onFocus={()=>{
-                                setEmailIsPress(true);
-                            }}
-                            onBlur={()=>{
-                                setEmailIsPress(false);
-                            }}
-                            editable={finalEmailCheck ? false : true}
+                            value={member.memberEmail} onChange={onChangeEmail}                           
                             />
 
                             
