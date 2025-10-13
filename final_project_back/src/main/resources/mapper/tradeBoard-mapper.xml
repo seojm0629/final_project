@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.tradeBoard.model.dao.TradeBoardDao">
+
+	<select id="totalCount" resultType="int">
+		select count(*) from trade_board_tbl where trade_board_status = 1
+	</select>
+	
+	<select id="selectTradeBoardList" resultType="tradeBoard">
+	  	select * from
+	    (select rownum as rnum, b.*
+	        from
+	            (select
+	                trade_thumbnail_path,
+	                trade_board_title,
+	                trade_board_price
+	            from trade_board_tbl where trade_board_status = 1 order by trade_board_no desc)b)
+	    where rnum BETWEEN #{startRow} and #{endRow}
+   </select>
+   
+</mapper>

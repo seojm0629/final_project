@@ -7,6 +7,7 @@ import "./sideMenu.css";
 
 const FreeBoardSideMenu = (props) => {
   const menus = props.menus;
+  const setSelectMenu = props.setSelectMenu;
   const [naviDown, setNaviDown] = useState(null);
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
@@ -40,13 +41,16 @@ const FreeBoardSideMenu = (props) => {
                     <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                   )}
                 </div>
-                <div className="menu-down">
+                <ul className="menu-down">
                   {naviDown === i
                     ? menus1.children.map((menus2, j) => {
                         return (
                           <li
                             key={"side-menuDown" + j}
                             className="side-menuDown"
+                            onClick={() => {
+                              setSelectMenu(menus2.text);
+                            }}
                           >
                             <NavLink
                               to={menus2.url}
@@ -68,7 +72,7 @@ const FreeBoardSideMenu = (props) => {
                         );
                       })
                     : null}
-                </div>
+                </ul>
               </li>
             );
           })}

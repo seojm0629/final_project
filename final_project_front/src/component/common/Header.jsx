@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./common.css";
 import { useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { useRecoilState } from "recoil";
+import { loginIdState, memberTypeState } from "../utils/RecoilData";
 const Header = () => {
   return (
     <header className="header">
@@ -47,7 +49,7 @@ const MainNavi = () => {
           {naviDown === "trade" ? (
             <ul className="navi-down">
               <li>
-                <Link to="/">메인페이지</Link>
+                <Link to="/tradeBoard/list">메인페이지</Link>
               </li>
               {/*임의로 넣어놓음*/}
               <li>
@@ -95,14 +97,41 @@ const MainNavi = () => {
   );
 };
 const HeaderLink = () => {
+  const [memberId, setMemberId] = useRecoilState(loginIdState);
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+
+  const navigate = useNavigate();
+  const logout = () => {
+    setMemberId("");
+    setMemberType(0);
+    delete axios.defaults.headers.common["Authorization"];
+    window.localStorage.removeItem("refreshToken");
+    navigate("/")
+  }
+
   return (
     <ul className="header-user">
-      <li>
-        <Link to="/member/login">로그인</Link>
-      </li>
-      <li>
-        <Link to="/member/join">회원가입</Link>
-      </li>
+      {memberId != "" && memberType !== 0 ?(
+        <>
+          <li>
+            <Link to="member/mypage">{memberId}</Link>
+          </li>
+          <li>
+            <Link to="/" onClick={logout}>
+              로그아웃
+            </Link>
+          </li>
+        </>  
+      ) : (
+        <>
+        <li>
+          <Link to="/member/login">로그인</Link>
+        </li>
+        <li>
+          <Link to="/member/join">회원가입</Link>
+        </li>
+      </>
+      )}
     </ul>
   );
 };
