@@ -18,11 +18,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@PostMapping(value="/login")
-	public ResponseEntity<MemberDTO> login(@RequestBody MemberDTO member){
-		MemberDTO m = memberService.login(member);
-		return ResponseEntity.ok(m);
-	}
+	
 	
 
 }

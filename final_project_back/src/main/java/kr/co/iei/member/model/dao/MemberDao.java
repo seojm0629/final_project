@@ -7,7 +7,7 @@ import kr.co.iei.member.model.dto.MemberDTO;
 @Mapper
 public interface MemberDao {
 
-	MemberDTO login(MemberDTO member);
+	
 
 	
 }

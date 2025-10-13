@@ -10,8 +10,5 @@ public class MemberService {
 
 	private MemberDao memberDao;
 
-	public MemberDTO login(MemberDTO member) {
-		MemberDTO m = memberDao.login(member);
-		return m;
-	}
+	
 }
