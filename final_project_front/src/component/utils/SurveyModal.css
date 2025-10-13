@@ -70,15 +70,21 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  line-height: 1;
 }
-
+.delete-button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
 .option-input {
-  width: 600px;
+  width: 570px;
   height: 45px;
   background-color: rgb(218, 218, 218);
   border: none;
   padding-left: 30px;
   font-size: 15px;
+  overflow: hidden;
 }
 .survey-addbutton {
   display: flex;
@@ -122,4 +128,6 @@
   border: none;
   cursor: pointer;
   width: 100px;
+  background-color: #2f4e70;
+  color: white;
 }

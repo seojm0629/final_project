@@ -185,6 +185,7 @@ const MemberJoin = () => {
             pwMsgRef.current.innerText="비밀번호가 일치합니다.";
             pwMsgRef.current.style.color = "blue";
         } else {
+
             pwMsgRef.current.innerText = "비밀번호가 일치하지 않습니다."
             pwMsgRef.current.style.color = "red";
         }

@@ -49,7 +49,7 @@ const MainNavi = () => {
           {naviDown === "trade" ? (
             <ul className="navi-down">
               <li>
-                <Link to="/">메인페이지</Link>
+                <Link to="/tradeBoard/list">메인페이지</Link>
               </li>
               {/*임의로 넣어놓음*/}
               <li>
