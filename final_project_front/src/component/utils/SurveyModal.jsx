@@ -117,7 +117,7 @@ const SurveyContent = ({ onClose, onSubmit }) => {
             <button onClick={addOption}>+ 항목 추가</button>
           </div>
           <div className="survey-date">
-            종료일,시간 설정
+            종료일,시간 설정ㅇㅇ
             <div className="date-time-box">
               <input
                 type="date"
