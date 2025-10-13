@@ -22,9 +22,13 @@ function App() {
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/mypage" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
-          <Route path="/utils/content" element={<BoardContent />} />
           <Route
             path="/freeBoard/mainPage"
+            element={<FreeBoardMain></FreeBoardMain>}
+          ></Route>
+          <Route path="/utils/content" element={<BoardContent />} />
+          <Route
+            path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
           ></Route>
           <Route path="/freeboard/content" element={<BoardContent />} />
