@@ -1,20 +1,45 @@
-.memberDetail {
+.admin .memberDetail {
   display: flex;
   gap: 24px;
-}
-
-.detailLeft {
-  width: 300px;
-  border: 1px solid #e6e8ee;
-  border-radius: 5px;
-  min-height: 320px;
-  padding: 16px;
-}
-
-.detailRight {
   width: 100%;
+}
+
+.admin .detailLeft {
+  width: 500px;
   border: 1px solid #e6e8ee;
   border-radius: 5px;
   min-height: 320px;
   padding: 16px;
+  box-sizing: border-box;
+}
+
+.admin .detailRight {
+  width: 850px;
+  border: 1px solid #e6e8ee;
+  border-radius: 5px;
+  min-height: 320px;
+  padding: 16px;
+}
+
+.admin .detailLeft > table {
+  width: 450px;
+  border-spacing: 0;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.admin .detailLeft th {
+  background-color: #2f4e70;
+  color: #ffffff;
+  font-weight: 400;
+  padding: 10px 20px;
+
+  border-bottom: 0.1px solid #dde6f0;
+}
+
+.admin .detailLeft td {
+  animation-duration: 0.5s;
+  animation-name: spark;
+
+  border-bottom: 0.1px solid #dde6f0;
 }

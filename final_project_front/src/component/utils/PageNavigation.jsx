@@ -3,7 +3,7 @@ const PageNavigation = (props) => {
   const reqPageInfo = props.reqPageInfo;
   const setReqPageInfo = props.setReqPageInfo;
   const totalListCount = props.totalListCount;
-
+  const sideBtnCount = props.reqPageInfo.sideBtnCount;
   /*
  *  const [reqPageInfo, setReqPageInfo] = useState({
      pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
@@ -21,7 +21,6 @@ const PageNavigation = (props) => {
       ? 1
       : Math.ceil(totalListCount / reqPageInfo.listCnt);
   //양쪽에 버튼을 몇개씩 둘건지?
-  const sideBtnCount = 3;
 
   //시작 버튼과 끝 버튼 계산
   let startPage = reqPageInfo.pageNo - sideBtnCount;

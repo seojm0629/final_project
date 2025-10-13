@@ -44,3 +44,20 @@
 .admin .row button:hover {
   color: #417ab6;
 }
+
+.admin .admin-detail-content-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin .nullMsg {
+  font-size: 30px;
+  font-weight: 900;
+  color: #2f4e70;
+}
+
+.content-body table .row {
+  animation-duration: 0.5s;
+  animation-name: spark;
+}

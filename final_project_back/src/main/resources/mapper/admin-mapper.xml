@@ -5,14 +5,12 @@
 SELECT * FROM (
 SELECT  ROWNUM RNUM,A.* FROM (
 SELECT 
-        M.MEMBER_NO,
-        M.MEMBER_ID,
-        M.MEMBER_EMAIL,
+        M.*,
         NVL(TCC.TOTAL_CLAIM_CNT,0) TOTAL_CLAIM_CNT,
         NVL(TLC.TOTAL_LIKE_CNT,0) TOTAL_LIKE_CNT,
         NVL(TPC.TOTAL_POST_CNT,0) TOTAL_POST_CNT,
         NVL(TCMC.TOTAL_COMMENT_CNT,0) TOTAL_COMMENT_CNT, 
-        M.MEMBER_DATE,
+
         DECODE(
             (SELECT COUNT(*) FROM MEMBER_BEN_TBL B WHERE (B.MEMBER_NO = M.MEMBER_NO) AND (SYSDATE BETWEEN B.MEMBER_BEN_START_DATE AND B.MEMBER_BEN_FINISH_DATE)),
                 0,
@@ -186,6 +184,14 @@ SELECT
             
             <if test = "order == 12">
             ORDER BY IS_BEN DESC
+            </if>
+            
+            <if test = "order == 13">
+            ORDER BY MEMBER_TYPE ASC
+            </if>
+            
+            <if test = "order == 14">
+            ORDER BY MEMBER_TYPE DESC
             </if>
             
             ) A
