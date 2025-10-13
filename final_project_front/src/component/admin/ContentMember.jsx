@@ -457,7 +457,7 @@ const ContentMember = () => {
         {userDetailInfo.member != null && (
           <div className="content-head">
             <div className="title m">사용자 상세 정보</div>
-            <div className="title s">{userDetailInfo.no}</div>
+
             <MemberDetail
               reqPageInfo={reqDetailInfo}
               setReqPageInfo={setReqDetailInfo}
