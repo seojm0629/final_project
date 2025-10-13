@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.service.MemberService;
 
@@ -20,9 +21,13 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@PostMapping(value="/login")
-	public ResponseEntity<MemberDTO> login(@RequestBody MemberDTO member){
-		MemberDTO m = memberService.login(member);
-		return ResponseEntity.ok(m);
+	public ResponseEntity<LoginMemberDTO> login(@RequestBody MemberDTO member){
+		LoginMemberDTO m = memberService.login(member);
+		if(m != null) {
+			return ResponseEntity.ok(m);			
+		} else {
+			return ResponseEntity.status(400).build();
+		}
 	}
 	
 
