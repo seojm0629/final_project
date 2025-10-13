@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +43,17 @@ public class AdminController {
 		
 		System.out.println(memberMap);
 		return ResponseEntity.ok(memberMap);
+	}
+	
+	@PatchMapping(value="memberTypeUpdate")
+	public ResponseEntity<Integer> memberTypeUpdate(@RequestBody AdminMemberDTO m){
+		System.out.println(m);
+		
+		int result = adminService.memberTypeUpdate(m);
+		
+		System.out.println(m);
+		System.out.println(result);
+		return ResponseEntity.ok(result);
 	}
 	
 }
