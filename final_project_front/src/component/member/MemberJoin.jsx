@@ -61,8 +61,8 @@ const MemberJoin = () => {
     }
 
     //---------- 이메일 인증 구현 -----------
+    //const [memberEmail, setMemberEmail] = useState("");
     const [mailCode, setMailCode] = useState(null);
-    const [memberEmail, setMemberEmail] = useState("");
     const [domain, setDomain] = useState("naver.com") //기본도메인
     const [customDomain, setCustomDomain] = useState("");
     
@@ -181,14 +181,10 @@ const MemberJoin = () => {
     const pwMsgRef = useRef(null);
     //비밀번호 메세지 
     const checkPw = () => {
-        pwMsgRef.current.classList.remove("valid")
-        pwMsgRef.current.classList.remove("HighlightOffIcon")
         if(member.memberPw === memberPwRe){
-            pwMsgRef.current.classList.add("valid")
             pwMsgRef.current.innerText="비밀번호가 일치합니다.";
             pwMsgRef.current.style.color = "blue";
         } else {
-            pwMsgRef.current.classList.add("HighlightOffIcon")
             pwMsgRef.current.innerText = "비밀번호가 일치하지 않습니다."
             pwMsgRef.current.style.color = "red";
         }
@@ -198,7 +194,8 @@ const MemberJoin = () => {
     const joinMember = () => {
         if(member.memberNickname !== "" && member.memberPhone !== ""
             && member.memberAddr !== "" 
-            && confirmNo === mailCode && idCheck === 1 && nicknameCheck === 1         
+            && confirmNo === mailCode && idCheck === 1 && nicknameCheck === 1     
+
         ){
             axios
             .post(`${backServer}/member`, member)
