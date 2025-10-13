@@ -261,7 +261,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 2
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("no");
@@ -283,7 +283,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 4
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("claim");
@@ -301,7 +301,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 6
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("like");
@@ -319,7 +319,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 8
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("board");
@@ -337,7 +337,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 10
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("comment");
@@ -358,7 +358,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 14
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("grade");
@@ -377,7 +377,7 @@ const ContentMember = () => {
                         ? "asc"
                         : reqPageInfo.order === 12
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("date");
