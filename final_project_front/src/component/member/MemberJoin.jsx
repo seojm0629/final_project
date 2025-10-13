@@ -220,7 +220,7 @@ const MemberJoin = () => {
                         </div>
                         <div className="join-input-email">
                             <input type="text" name="memberEmail" id="memberEmail" 
-                            value={member.memberEmail} onChange={onChangeEmail}                           
+                            value={member.memberEmail} onChange={inputMemberData}                           
                             />
 
                             
@@ -231,7 +231,7 @@ const MemberJoin = () => {
                                 <option value="daum.net">daum.net</option>
                                 <option value="직접 작성">직접 작성</option>
                             </select>
-                            <button type="button" onClick={clickConfirm}>이메일 인증</button>
+                            <button type="button" >이메일 인증</button>
                         </div>
                     </div>
 
