@@ -9,7 +9,7 @@ const TradeBoardList = () => {
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
-    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    listCnt: 16, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
   });
   const [totalListCount, setTotalListCount] = useState(10);
   useEffect(() => {
