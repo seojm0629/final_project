@@ -49,9 +49,9 @@ const MemberAgree = () => {
 
     return(
         <section className="section agree-wrap">
-            <div className="join-page-title">약관동의</div>
 
             <div className="agree">
+                <div className="join-page-title">약관동의</div> 
                 <div className="service-agree">
                     <div className="service-btn">
                         <input type="checkbox" id="service" name="service"
@@ -304,6 +304,7 @@ const MemberAgree = () => {
                         onClick={nextPage}
                         >다음</button>
                     </div>
+                    
                 </div>
 
 

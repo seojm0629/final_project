@@ -112,13 +112,14 @@
 
 .main-board-list{
   width: 750px;
-  height: 450px;
+  height: 421px;
   padding-left: 10px;
   padding-top : 10px;
   box-sizing: border-box;
   margin-left: 20px;
   display: flex;
-  justify-content: space-between;
+  gap: 23px;
+  
 }
 
 /* 중고거래 게시판, 자유 */
@@ -133,17 +134,18 @@
 }
 
 .first>div h4{
-  padding-left: 5px;
+  padding-left: 7px;
+  
   padding-top : 10px;
   font-size: 20px;
 }
 
 .main-board-content{
-  padding-left: 5px;
+  padding-left: 7px;
   padding-top : 10px;
   display: flex;
   justify-content: flex-start;
-  gap: 160px;
+  gap: 150px;
 }
 
 .transaction-list-right{
