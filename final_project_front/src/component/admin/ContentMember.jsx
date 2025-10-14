@@ -58,12 +58,72 @@ const ContentMember = () => {
 
   const [totalListCount, setTotalListCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [updateMemberType, setUpdateMemberType] = useState();
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
   // memberList : Back -> Client
   // reqPageInfo : Client -> Back
   // totalListCount : Back -> Client
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+  useEffect(() => {
+    //console.log("updateMemberType");
+    console.log("리스트 가져오기 시작");
+    setLoading(true);
+    //console.log(updateMemberType !== undefined);
+    updateMemberType !== undefined &&
+      axios
+        .patch(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/memberTypeUpdate`,
+          updateMemberType
+        )
+        .then((res) => {
+          axios
+            .get(
+              `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
+                reqPageInfo.order
+              }&pageNo=${reqPageInfo.pageNo}&searchText=${
+                reqPageInfo.searchText
+              }&searchType=${reqPageInfo.searchType}&listCnt=${
+                reqPageInfo.listCnt
+              }`
+            )
+            .then((res) => {
+              //console.log(res.data.pageList);
+              //console.log(res.data.totalListCount);
+              //console.log("확인");
+              //console.log(userDetailInfo);
+              //console.log(userDetailInfo.length);
+              setMemberList(res.data.pageList);
+              setTotalListCount(res.data.totalListCount);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          if (res.data === 1) {
+            Swal.fire({
+              title: "알림",
+              text: `등급 변경이 완료되었습니다.`,
+
+              icon: "success",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                console.log("리스트 가져오기 끝");
+                setLoading(false);
+              }
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            title: "경고",
+            text: `등급 변경 실패되었습니다.`,
+
+            icon: "error",
+          });
+        });
+  }, [updateMemberType]);
 
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
@@ -99,40 +159,6 @@ const ContentMember = () => {
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Back 호출하고 리턴 받기
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-
-  const [updateMemberType, setUpdateMemberType] = useState();
-
-  useEffect(() => {
-    //console.log("updateMemberType");
-
-    //console.log(updateMemberType !== undefined);
-    updateMemberType !== undefined &&
-      axios
-        .patch(
-          `${import.meta.env.VITE_BACK_SERVER}/admin/memberTypeUpdate`,
-          updateMemberType
-        )
-        .then((res) => {
-          if (res.data === 1) {
-            Swal.fire({
-              title: "알림",
-              text: `등급 변경이 완료되었습니다.`,
-
-              icon: "success",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          Swal.fire({
-            title: "경고",
-            text: `등급 변경 실패되었습니다.`,
-
-            icon: "error",
-          });
-        });
-  }, [updateMemberType]);
-  //아래는 SearchBar 컴포넌트로 분리했음
   const [searchType, setSearchType] = useState("no");
   const [searchText, setSearchText] = useState("");
 
