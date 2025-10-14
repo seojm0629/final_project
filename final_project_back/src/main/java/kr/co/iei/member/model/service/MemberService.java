@@ -78,6 +78,7 @@ public class MemberService {
 		
 	}
 
+	@Transactional
 	public int changePw(MemberDTO member) {
 		String encPw = encoder.encode(member.getMemberPw());
 		member.setMemberPw(encPw);
@@ -86,6 +87,23 @@ public class MemberService {
 		
 	}
 
+	public int email(MemberDTO member) {
+		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
+		if(m != null) {
+			return 1;
+		} else {
+			return 0;
+		}
+		
+	}
+	
+	@Transactional
+	public int changeEmail(MemberDTO member) {
+		int result = memberDao.changeEmail(member);
+		return result;
+	}
+
+	
 	
 
 

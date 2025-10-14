@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { authReadyState, loginIdState, memberTypeState } from "../utils/RecoilData";
 import axios from "axios";
 import ChangePw from "./ChangePw";
+import ChangeEmail from "./ChangeEmail";
 
 const MemberMypage = () => {
     const [memberId, setMemberId] = useRecoilState(loginIdState);
@@ -64,8 +65,7 @@ const MemberMypage = () => {
                 <section className="section site-path">
                     <Routes>
                         <Route path="info" element={<MemberInfo member={member} memberId={memberId}/>} />
-                        <Route path="account" element={<MemberAccount memberId={memberId} />}/>
-                        
+                        <Route path="account" element={<MemberAccount memberId={memberId} />}/>                    
                     </Routes>
                 </section>
             </div>
@@ -100,7 +100,9 @@ const MemberAccount = (props) => {
                 <div className="account-changePw">
                     <ChangePw />
                 </div>
-                <div className="account-changeEmail"></div>
+                <div className="account-changeEmail">
+                    <ChangeEmail />
+                </div>
             </div>
         </div>
     )
