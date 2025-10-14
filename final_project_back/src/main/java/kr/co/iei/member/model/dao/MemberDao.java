@@ -17,6 +17,10 @@ public interface MemberDao {
 
 	int join(MemberDTO member);
 
+	int changePw(MemberDTO member);
+
+	
+
 	
 
 	
