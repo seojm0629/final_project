@@ -98,3 +98,116 @@
   margin-top: 50px;
   position: absolute;
 }
+
+/* 메인페이지 */
+
+.main-wrap{
+  width: 1200px;
+  margin: 0 auto;
+  
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.main-board-list{
+  width: 750px;
+  height: 450px;
+  padding-left: 10px;
+  padding-top : 10px;
+  box-sizing: border-box;
+  margin-left: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 중고거래 게시판, 자유 */
+
+.main-board-list .first{
+  width: 350px;
+  height: 450px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+
+}
+
+.first>div h4{
+  padding-left: 5px;
+  padding-top : 10px;
+  font-size: 20px;
+}
+
+.main-board-content{
+  padding-left: 5px;
+  padding-top : 10px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 160px;
+}
+
+.transaction-list-right{
+  display: flex;
+  gap: 10px;
+}
+
+/* 스포츠, 게임 게시판*/
+.pre-board-content{
+  text-align: center;
+  line-height: 330px;
+}
+
+/* 로그인 */
+
+/* 로그인 박스*/
+.main-login-box{
+  width: 750px;
+  margin-left: 20px;
+  margin-top : 60px;
+}
+
+.main-login{
+  width: 350px;
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.login-btn{
+  width: 350px;
+  text-align: center;
+}
+
+.login-btn>button{
+  width: 280px;
+  height: 50px;
+  background-color: #2f4e70;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 30px;
+  margin : 30px 0;
+  cursor: pointer;
+}
+
+.login-find{
+  width: 350px;
+}
+
+/* 컨텐츠 박스 */
+.main-topic{
+  width: 350px;
+  height: 450px;
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.main-topic>h3{
+  padding-left: 10px;
+  padding-top : 10px;
+}
+
+.main-topic .topic-list{
+  text-align: center;
+  line-height: 330px;
+}
