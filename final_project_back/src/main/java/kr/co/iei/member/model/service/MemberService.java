@@ -36,7 +36,7 @@ public class MemberService {
 	
 	public LoginMemberDTO login(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
-		System.out.println(m);
+		
 		
 		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
 			String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType());
@@ -58,6 +58,35 @@ public class MemberService {
 		int result = memberDao.nickname(memberNickname);
 		return result;
 	}
+
+	
+	public MemberDTO selectOneMember(String memberId) {
+		MemberDTO m = memberDao.selectOneMember(memberId);
+		m.setMemberPw(null);
+		
+		return m;
+	}
+
+	public int checkPw(MemberDTO member) {
+		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
+		//조회한 memberId에 해당하는 암호화 패스워드를 가져오기 위해 사용하는 구문
+		if(encoder.matches(member.getMemberPw(), m.getMemberPw())) {
+			return 1;
+		} else {
+			return 0;
+		}
+		
+	}
+
+	public int changePw(MemberDTO member) {
+		String encPw = encoder.encode(member.getMemberPw());
+		member.setMemberPw(encPw);
+		int result = memberDao.changePw(member);
+		return result;
+		
+	}
+
+	
 
 
 	

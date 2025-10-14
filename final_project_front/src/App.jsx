@@ -10,6 +10,7 @@ import AdminMain from "./component/admin/AdminMain";
 import BoardContent from "./component/utils/BoardContent";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
 import TradeBoardList from "./component/trade_board/TradeBoardList";
+import ChangePw from "./component/member/ChangePw";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path="/member/login" element={<MemberLogin />} />
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
-          <Route path="/member/mypage" element={<MemberMypage />} />
+          <Route path="/member/*" element={<MemberMypage />} />
+          <Route path="/member/changePw" element={<ChangePw />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route
             path="/freeBoard/mainPage"
