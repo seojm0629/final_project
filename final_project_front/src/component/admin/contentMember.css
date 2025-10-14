@@ -40,9 +40,6 @@
   height: 100%;
   cursor: pointer;
 }
-.admin .loadingMsg {
-  color: red;
-}
 
 .admin .row td:nth-of-type(1) {
   width: 7%;
@@ -102,6 +99,7 @@
 .admin .content-body select {
   border: none;
   padding: 10px;
+  background-color: transparent;
 }
 
 .admin .content-body select:hover {
@@ -137,4 +135,16 @@
 .admin .banMode button:nth-of-type(2):hover {
   background-color: #2f7070;
   color: antiquewhite;
+}
+
+.admin .loadingMsg {
+  height: 600px;
+  line-height: 600px;
+  font-size: 20px;
+}
+
+.admin .loadingMsg .loadingBtn {
+  height: 600px;
+  line-height: 600px;
+  font-size: 30px;
 }
