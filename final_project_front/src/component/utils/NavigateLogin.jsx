@@ -3,7 +3,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const NavigateLogin = (props) => {
     const menus = props.menus;
-    console.log(menus);
+    
     return(
         <div className="side-menu-login">
             <ul>

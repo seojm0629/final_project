@@ -65,30 +65,70 @@ const MemberJoin = () => {
     const [mailCode, setMailCode] = useState(null);
     const [domain, setDomain] = useState("naver.com") //기본도메인
     const [customDomain, setCustomDomain] = useState("");
+    const [timerActive, setTimerActive] = useState(false); //타이머 작동 여부 state 추가
+    const timerRef = useRef(null);  //타이머를 useRef로 관리
     
     
 
     const sendMail = () => {
+        //이메일 입력 여부 확인(member.memberEmail이 false 또는 비어있을 때)
+        if(!member.memberEmail || member.memberEmail.trim() === ""){
+            Swal.fire({
+                title : "이메일 입력 필수",
+                text : "이메일을 먼저 입력해주세요.",
+                icon : "warning",
+            })
+            return;
+        }
+
         //도메인 선택값 확인
+        //emailDomain = domain이 직접 작성일 때, customDomain(직접 입력) : 기본도메인
         const emailDomain = domain === "직접 작성" ? customDomain : domain;
         const receiver = `${member.memberEmail}@${emailDomain}`;
 
         axios
         .get(`${backServer}/api/sendCode`,{params : {receiver}})
         .then((res)=>{
-            console.log(res.data);
+            console.log(res.data);  //인증코드 반환 console 구현 완료시 삭제 필요
             setMailCode(res.data);
-            clickConfirm();
-            formatTime();
+            //clickConfirm();
+            //formatTime();
+            setShowCodeInput(true);     //인증번호 입력 창 메일 전송 시 보일 수 있게 true로 변경
+            clearInterval(timerRef.current);
+            setTime(180);               //시간 3분 설정
+            setTimerActive(true);       //타이머 시작
+            setIsVerified(false);       //재전송시 인증 초기화
+            setErrorMessage("");        //에러 발생 시 빈칸 유지
             
         })
         .catch((err)=>{
             console.log(err);
         })
-        
-        
-        
     }
+
+    //타이머 useEffect 사용
+    useEffect(()=>{
+        if(timerActive && time > 0){
+            //새로운 타이머 실행 전에 기존 타이머 제거
+            clearInterval(timerRef.current);
+
+            timerRef.current = setInterval(()=>{
+                setTime((pTime)=>{
+                    if (pTime <= 1){
+                        clearInterval(timerRef.current);
+                        setTimerActive(false);
+                        return 0;
+                    }
+                    return pTime - 1;
+                })
+            },1000);
+        }
+
+        const initialTime = () =>{ 
+            clearInterval(timerRef.current);
+        }
+        return initialTime;
+    },[timerActive]);
     
     //실제 인증 로직 넣을 수 있도록
     const [confirmNo, setConfirmNo] = useState("");
@@ -106,12 +146,15 @@ const MemberJoin = () => {
 
         if(confirmNo === mailCode){
             alert("이메일 인증이 완료되었습니다!");
-            setIsVerified(true);
-            setErrorMessage("");
 
-            
-            
+            setIsVerified(true);
+            setErrorMessage("");                   
+            clearInterval(timerRef.current);
+            setTimerActive(false); //인증 성공 시 타이머 정지
+            setTime(0);
+
         } else {
+            //틀린 경우 타이머 유지
             setErrorMessage("인증번호가 일치하지 않습니다.");
         }
     }  
@@ -185,7 +228,6 @@ const MemberJoin = () => {
             pwMsgRef.current.innerText="비밀번호가 일치합니다.";
             pwMsgRef.current.style.color = "blue";
         } else {
-
             pwMsgRef.current.innerText = "비밀번호가 일치하지 않습니다."
             pwMsgRef.current.style.color = "red";
         }
@@ -193,13 +235,18 @@ const MemberJoin = () => {
 
     
     const joinMember = () => {
+        const emailDomain = domain === "직접 작성" ? customDomain : domain;
+        const fullEmail = `${member.memberEmail}@${emailDomain}`;
+
+        const sendData = {...member, memberEmail : fullEmail};
+
         if(member.memberNickname !== "" && member.memberPhone !== ""
             && member.memberAddr !== "" 
             && confirmNo === mailCode && idCheck === 1 && nicknameCheck === 1     
 
         ){
             axios
-            .post(`${backServer}/member`, member)
+            .post(`${backServer}/member`, sendData)
             .then((res)=>{
                 setMember(res.data);
                 navigate("/");
@@ -389,9 +436,18 @@ const MemberJoin = () => {
                                     disabled={isVerified}
                                     />
                                     <button onClick={submitCode}>인증확인</button>
-                                    <div className="format-time">
-                                        <span> 남은시간 : {formatTime(time)}</span>
-                                    </div>                                   
+
+                                    {!isVerified && (
+                                        <button type="button" onClick={sendMail}>
+                                            재전송
+                                        </button>
+                                    )}
+
+                                    {!isVerified && (
+                                        <div className="format-time">
+                                            <span>남은시간 :  {formatTime(time)}</span>
+                                        </div>           
+                                    )}                        
 
                                     {errorMessage && (<p style={{color:"red", marginTop : "5px"}}>{errorMessage}</p>)}
 

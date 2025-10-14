@@ -10,7 +10,8 @@ import AdminMain from "./component/admin/AdminMain";
 import BoardContent from "./component/utils/BoardContent";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
 import TradeBoardList from "./component/trade_board/TradeBoardList";
-import FreeBoardContent from "./component/utils/BoardContent";
+import ChangePw from "./component/member/ChangePw";
+import ChangeEmail from "./component/member/ChangeEmail";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path="/member/login" element={<MemberLogin />} />
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
-          <Route path="/member/mypage" element={<MemberMypage />} />
+          <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/utils/content" element={<BoardContent />} />
           <Route
