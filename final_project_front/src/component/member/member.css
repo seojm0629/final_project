@@ -432,8 +432,15 @@ input[type="radio"]:checked+label{
 }
 
 /* member-account */
+.mypage-account-wrap{
+    width: 500px;
+    height: 400px;
+    margin-left : 90px;
+    padding-top: 25px;
+    border: 1px solid #ccc;
+}
 .mypage-account{
-    width: 600px;
+    width: 500px;
     margin: 0 auto;
     text-align: center;
 }
@@ -441,30 +448,48 @@ input[type="radio"]:checked+label{
 
 /* 비밀번호 변경 */
 .changePw-wrap{
-    width: 800px;
+    width: 500px;
     margin: 0 auto;
     
 }
 .mypage-changePw-wrap{
-    width: 500px;
+    width: 300px;
     margin: 0 auto;
+    line-height: 30px;
     display: flex;
-    gap : 20px;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.mypage-changePw-wrap-update{
+    width: 300px;
+    margin: 0 auto;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.changePw-wrap > form{
+    width: 400px;
 }
 
 .mypage-changePw-item>input{
     width: 250px;
     height: 30px;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 .mypage-changePw-btn-box{
     width: 200px;
+    margin: 0 auto;
 }
 
 .mypage-changePw-btn-box>button{
-    width: 100px;
-    height: 35px;
+    width: 50px;
+    height: 30px;
     background-color: #2F4E70;
     color: #fff;
     font-size: 18px;
@@ -473,7 +498,45 @@ input[type="radio"]:checked+label{
 }
 
 
+.mypage-account{
+    width: 400px;
+    margin: 0 auto;
+}
+.account-name{
+    width: 400px;
+    height: 50px;
+    line-height: 50px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+}
+.account-changePw{
+    width: 400px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    
+}
 
+/* 이메일 변경 */
+.mypage-changeEmail-wrap{
+    width: 800px;    
+}
+.changeEmail{
+    width: 400px;
+    border: 1px solid #ccc;
+    text-align: center;
+    padding : 20px 0;
+    
+}
+
+.changeEmail button{
+    background-color: #2F4E70;
+    color: #fff;
+    width: 81px;    
+    margin-left: 5px;
+}
+.mypage-changeEmail-btn-box{
+    text-align: center;
+}
 /*
 .member-button-zone{
     width: 400px;

@@ -19,6 +19,8 @@ public interface MemberDao {
 
 	int changePw(MemberDTO member);
 
+	int changeEmail(MemberDTO member);
+
 	
 
 	

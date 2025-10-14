@@ -80,7 +80,17 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping
+	public ResponseEntity<Integer> email(@RequestBody MemberDTO member){
+		int result = memberService.email(member);
+		return ResponseEntity.ok(result);
+	}
 	
+	@PatchMapping(value="/email")
+	public ResponseEntity<Integer> changeEmail(@RequestBody MemberDTO member){
+		int result = memberService.changeEmail(member);
+		return ResponseEntity.ok(result);
+	}
 	
 	
 	

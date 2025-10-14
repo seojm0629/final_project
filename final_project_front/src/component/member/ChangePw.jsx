@@ -77,7 +77,7 @@ const ChangePw = () => {
                     e.preventDefault();
                     changePw();
                 }}>
-                    <div className="mypage-changePw-wrap">
+                    <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
                             <input type="text" name="memberPw" id="memberPw"
                             value={""}
@@ -89,7 +89,7 @@ const ChangePw = () => {
                         
                     </div>
 
-                    <div className="mypage-changePw-wrap">
+                    <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
                             <input type="text" name="changePw" id="changePw" 
                             value={member.memberPw}
@@ -99,7 +99,7 @@ const ChangePw = () => {
                         </div>
                     </div>
 
-                    <div className="mypage-changePw-wrap">
+                    <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
                             <input type="text" name="changePwRe" id="changePwRe"
                             value={memberPwRe}
@@ -107,9 +107,9 @@ const ChangePw = () => {
                             placeholder="새 비밀번호 확인 입력"
                             />
                         </div>
-                        <div className="mypage-changePw-btn-box">
-                        <button className="btn-zone">수정</button>
                     </div>
+                    <div className="mypage-changePw-btn-box">
+                        <button className="btn-zone">수정</button>
                     </div>
 
                     
@@ -130,6 +130,29 @@ const ChangePw = () => {
                             <button className="btn-zone">확인</button>
                         </div>
                     </div>
+
+                    <div className="mypage-changePw-wrap">
+                        <div className="mypage-changePw-item">
+                            <input type="text" name="changePw" id="changePw" 
+                            value={""}
+                            onChange={inputPw}
+                            placeholder="새 비밀번호 입력"
+                            disabled
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mypage-changePw-wrap">
+                        <div className="mypage-changePw-item">
+                            <input type="text" name="changePwRe" id="changePwRe"
+                            value={memberPwRe}
+                            onChange={inputPwRe}
+                            placeholder="새 비밀번호 확인 입력"
+                            disabled
+                            />
+                        </div>
+                    </div>
+                    
                 </form>)}
                 
             </div>
