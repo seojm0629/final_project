@@ -19,7 +19,7 @@ public class MemberDTO {
 	private String memberPhone;
 	private String memberEmail;
 	private int memberGender;
-	private int memberBirth;
+	private String memberBirth;
 	private String memberDate;
 	private int memberType;
 	
