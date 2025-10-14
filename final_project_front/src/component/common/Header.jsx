@@ -5,6 +5,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberTypeState } from "../utils/RecoilData";
+import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
 const Header = () => {
   return (
     <header className="header">
@@ -113,6 +114,11 @@ const HeaderLink = () => {
     <ul className="header-user">
       {memberId != "" && memberType !== 0 ? (
         <>
+          <li>
+            <Link to="">
+              <MarkAsUnreadOutlinedIcon></MarkAsUnreadOutlinedIcon>
+            </Link>
+          </li>
           <li>
             <Link to="member/mypage">{memberId}</Link>
           </li>

@@ -5,9 +5,10 @@
   padding: 10px 20px;
 }
 .search-div {
-  width: 500px;
+  width: max-content;
   margin: 0 auto;
   display: flex;
+  flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -27,8 +28,11 @@
   justify-content: center;
   cursor: pointer;
 }
+.search-menu span {
+  width: max-content;
+}
 .search-menu svg {
-  margin: 1px 0px 0px 4px;
+  margin: 1px 0px 0px 10px;
 }
 .search-btn {
   background-color: transparent;

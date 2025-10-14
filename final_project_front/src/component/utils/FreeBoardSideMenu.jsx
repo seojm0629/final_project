@@ -9,6 +9,7 @@ const FreeBoardSideMenu = (props) => {
   const menus = props.menus;
   const setSelectMenu = props.setSelectMenu;
   const [naviDown, setNaviDown] = useState(null);
+  const [menuNavi, setMenuNavi] = useState(""); //카테고리 밑 메뉴 네비
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
   };
@@ -16,8 +17,7 @@ const FreeBoardSideMenu = (props) => {
     <div className="side-menu">
       <section className="side-header">
         <p style={{ fontWeight: "600" }}>카테고리</p>
-        <span>홈 &gt; 자유게시판 &gt; 직장</span>
-        {/*backend 처리 후 클릭 시 변경되도록할 예정*/}
+        <span>홈 &gt; 자유게시판 &gt; {menuNavi}</span>
       </section>
       <div className="header-title">
         <span>자유게시판</span>
@@ -32,6 +32,7 @@ const FreeBoardSideMenu = (props) => {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     downMenu(i);
+                    setMenuNavi(menuNavi !== i && menus1.text);
                   }}
                 >
                   <span>{menus1.text}</span>

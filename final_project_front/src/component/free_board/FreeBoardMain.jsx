@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -14,6 +14,7 @@ import PageNavigation from "../utils/PageNavigation";
 
 const FreeBoardMain = () => {
   const [selectMenu, setSelectMenu] = useState([]); //클릭 시 선택된 글씨가 나타나도록 구현하는 state
+  const backServer = import.meta.env.VITE_BACK_SERVER;
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
       setSelectMenu([...selectMenu, menu]);
@@ -32,11 +33,12 @@ const FreeBoardMain = () => {
             menu는 관리자가 직접 추가 삭제가능하도록 backend 처리해야함 (axios로 카테고리와 하위 카테고리)
         */
   }
+
   const [menus, setMenus] = useState([
     {
       text: "직장",
       children: [
-        { url: "/freeBoard/company", text: "회사생활" },
+        { url: "/freeBoard/content", text: "회사생활" },
         { url: "/freeBoard/document", text: "서류/면접 팁" },
         { url: "/freeBoard/quit", text: "퇴사팁" },
       ],
@@ -50,13 +52,38 @@ const FreeBoardMain = () => {
       ],
     },
   ]);
-  /* 페이징 처리
+
+  /*
+  const [menus, setMenus] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${backServer}/freeBoard/mainPage`, menus)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+*/
+  /*
   const [reqPageInfo, setReqPageInfo] = useState({
-    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
-    listCnt: 6, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
-  });
+  pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+  listCnt: 6, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    });
   const [totalListCount, setTotalListCount] = useState(0);
   */
+  const [freeBoardTitle, setFreeBoardTitle] = useState("");
+  const searchTitle = (e) => {
+    if (e.target.text !== null) {
+      //axios.get()
+      /*
+        id="freeBoardTitle"
+              name="freeBoardTitle"
+              value={freeBoardTitle}
+      */
+    }
+  };
   return (
     <div className="main-wrap">
       <div className="main-header">
@@ -65,11 +92,17 @@ const FreeBoardMain = () => {
             <span>자유게시판</span>
             <KeyboardDoubleArrowDownIcon></KeyboardDoubleArrowDownIcon>
           </div>
-          <input type="text" placeholder="검색어를 입력해주세요" />
-          <button className="search-btn" onClick={() => {}}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              searchTitle(e);
+            }}
+            className="search-btn"
+          >
+            <input type="text" placeholder="검색어를 입력해주세요" />
             {/*클릭 시 axios search되도록*/}
             <ManageSearchIcon></ManageSearchIcon>
-          </button>
+          </form>
         </div>
         <div className="status-box">
           <div className="status-bar">
@@ -104,8 +137,8 @@ const FreeBoardMain = () => {
           <section className="section free-board">
             <Routes>
               <Route
-                path="company"
-                element={<FreeBoardCompany></FreeBoardCompany>}
+                path="mainPage"
+                element={<FreeBoardContent></FreeBoardContent>}
               ></Route>
             </Routes>
           </section>
@@ -121,7 +154,7 @@ const FreeBoardMain = () => {
 };
 
 //각 카테고리별 하위카테고리를 눌렀을 때 뜨도록하는 페이지 관리자 페이지에서 추가될때 마다 생성되도록 구현 필요
-const FreeBoardCompany = () => {
+const FreeBoardContent = () => {
   return (
     <section className="freeBoard-section">
       <div className="board-div">
