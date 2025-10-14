@@ -168,7 +168,8 @@
 
 .main-login{
   width: 350px;
-  height: 150px;
+  height: 170px;
+  padding-top: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
 }
