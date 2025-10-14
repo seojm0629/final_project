@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value="/survey")
+@RequestMapping(value="/utils")
 public class SurveyController {
 
 }
