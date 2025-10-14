@@ -56,7 +56,7 @@ const ContentMember = () => {
   });
 
   const [totalListCount, setTotalListCount] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
   // memberList : Back -> Client
@@ -69,6 +69,8 @@ const ContentMember = () => {
   useEffect(() => {
     //console.log("pageInfo : ");
     //console.log(reqPageInfo);
+    console.log("리스트 가져오기 시작");
+    setLoading(true);
 
     axios
       .get(
@@ -86,6 +88,8 @@ const ContentMember = () => {
         //console.log(userDetailInfo.length);
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
+        console.log("리스트 가져오기 끝");
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -227,7 +231,7 @@ const ContentMember = () => {
     setUserDetailInfo({ ...userDetailInfo, member: member });
   };
   //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
-
+  const [benMode, setBenMode] = useState(false);
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">
@@ -251,143 +255,159 @@ const ContentMember = () => {
             key={"list" + (memberList.length !== 0 && memberList[0].memberNo)}
           >
             <thead>
-              <tr>
-                <th>
-                  <TableSortLabel
-                    active={reqPageInfo.order === 1 || reqPageInfo.order === 2}
-                    direction={
-                      reqPageInfo.order === 1
-                        ? "asc"
-                        : reqPageInfo.order === 2
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("no");
-                    }}
-                  >
-                    회원 번호
-                  </TableSortLabel>
-                </th>{" "}
-                {/* MEMBER_TBL */}
-                <th>아이디</th>
-                {/*" https://mui.com/material-ui/api/table-sort-label/"*/}
-                {/* MEMBER_TBL */}
-                <th>이메일</th> {/* MEMBER_TBL */}
-                <th>
-                  <TableSortLabel
-                    active={reqPageInfo.order === 3 || reqPageInfo.order === 4}
-                    direction={
-                      reqPageInfo.order === 3
-                        ? "asc"
-                        : reqPageInfo.order === 4
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("claim");
-                    }}
-                  >
-                    신고 받은 수
-                  </TableSortLabel>
-                </th>
-                {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
-                <th>
-                  <TableSortLabel
-                    active={reqPageInfo.order === 5 || reqPageInfo.order === 6}
-                    direction={
-                      reqPageInfo.order === 5
-                        ? "asc"
-                        : reqPageInfo.order === 6
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("like");
-                    }}
-                  >
-                    좋아요 받은 수
-                  </TableSortLabel>
-                </th>
-                {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
-                <th>
-                  <TableSortLabel
-                    active={reqPageInfo.order === 7 || reqPageInfo.order === 8}
-                    direction={
-                      reqPageInfo.order === 7
-                        ? "asc"
-                        : reqPageInfo.order === 8
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("board");
-                    }}
-                  >
-                    작성 게시글 수
-                  </TableSortLabel>
-                </th>{" "}
-                {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
-                <th>
-                  <TableSortLabel
-                    active={reqPageInfo.order === 9 || reqPageInfo.order === 10}
-                    direction={
-                      reqPageInfo.order === 9
-                        ? "asc"
-                        : reqPageInfo.order === 10
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("comment");
-                    }}
-                  >
-                    작성 댓글 수
-                  </TableSortLabel>
-                </th>{" "}
-                {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
-                <th>회원가입일</th> {/* MEMBER_TBL */}
-                <th>
-                  <TableSortLabel
-                    active={
-                      reqPageInfo.order === 13 || reqPageInfo.order === 14
-                    }
-                    direction={
-                      reqPageInfo.order === 13
-                        ? "asc"
-                        : reqPageInfo.order === 14
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("grade");
-                    }}
-                  >
-                    회원 등급
-                  </TableSortLabel>
-                </th>
-                <th>
-                  <TableSortLabel
-                    active={
-                      reqPageInfo.order === 11 || reqPageInfo.order === 12
-                    }
-                    direction={
-                      reqPageInfo.order === 11
-                        ? "asc"
-                        : reqPageInfo.order === 12
-                        ? "desc"
-                        : undefined
-                    }
-                    onClick={() => {
-                      sortSelect("ban");
-                    }}
-                  >
-                    회원 정지
-                  </TableSortLabel>
-                </th>{" "}
-                {/* MEMBER_BEN_TBL */}
-                <th>상세 보기</th>
-              </tr>
+              {loading ? (
+                <tr>
+                  <td colSpan={12}>로딩 중입니다. 잠시만 기다려주세요</td>
+                </tr>
+              ) : (
+                <tr>
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 1 || reqPageInfo.order === 2
+                      }
+                      direction={
+                        reqPageInfo.order === 1
+                          ? "asc"
+                          : reqPageInfo.order === 2
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("no");
+                      }}
+                    >
+                      회원 번호
+                    </TableSortLabel>
+                  </th>{" "}
+                  {/* MEMBER_TBL */}
+                  <th>아이디</th>
+                  {/*" https://mui.com/material-ui/api/table-sort-label/"*/}
+                  {/* MEMBER_TBL */}
+                  <th>이메일</th> {/* MEMBER_TBL */}
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 3 || reqPageInfo.order === 4
+                      }
+                      direction={
+                        reqPageInfo.order === 3
+                          ? "asc"
+                          : reqPageInfo.order === 4
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("claim");
+                      }}
+                    >
+                      받은 신고
+                    </TableSortLabel>
+                  </th>
+                  {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 5 || reqPageInfo.order === 6
+                      }
+                      direction={
+                        reqPageInfo.order === 5
+                          ? "asc"
+                          : reqPageInfo.order === 6
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("like");
+                      }}
+                    >
+                      받은 좋아요
+                    </TableSortLabel>
+                  </th>
+                  {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 7 || reqPageInfo.order === 8
+                      }
+                      direction={
+                        reqPageInfo.order === 7
+                          ? "asc"
+                          : reqPageInfo.order === 8
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("board");
+                      }}
+                    >
+                      작성 게시글
+                    </TableSortLabel>
+                  </th>{" "}
+                  {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 9 || reqPageInfo.order === 10
+                      }
+                      direction={
+                        reqPageInfo.order === 9
+                          ? "asc"
+                          : reqPageInfo.order === 10
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("comment");
+                      }}
+                    >
+                      작성 댓글
+                    </TableSortLabel>
+                  </th>{" "}
+                  {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
+                  <th>회원가입일</th> {/* MEMBER_TBL */}
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 13 || reqPageInfo.order === 14
+                      }
+                      direction={
+                        reqPageInfo.order === 13
+                          ? "asc"
+                          : reqPageInfo.order === 14
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("grade");
+                      }}
+                    >
+                      회원 등급
+                    </TableSortLabel>
+                  </th>
+                  <th>
+                    <TableSortLabel
+                      active={
+                        reqPageInfo.order === 11 || reqPageInfo.order === 12
+                      }
+                      direction={
+                        reqPageInfo.order === 11
+                          ? "asc"
+                          : reqPageInfo.order === 12
+                          ? "desc"
+                          : undefined
+                      }
+                      onClick={() => {
+                        sortSelect("ban");
+                      }}
+                    >
+                      회원 정지
+                    </TableSortLabel>
+                  </th>{" "}
+                  {/* MEMBER_BEN_TBL */}
+                  <th>상세 보기</th>
+                </tr>
+              )}
             </thead>
             <tbody>
               {memberList.length === 0 ? (
@@ -406,7 +426,7 @@ const ContentMember = () => {
                       <td>{m.totalPostCnt}</td>
                       <td>{m.totalCommentCnt}</td>
                       <td>{m.memberDate}</td>
-                      <td>
+                      <td key={"select-" + m.memberNo}>
                         <select
                           defaultValue={m.memberType}
                           onChange={(e) => {
@@ -420,7 +440,26 @@ const ContentMember = () => {
                           <option value="2">일반</option>
                         </select>
                       </td>
-                      <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
+                      <td
+                        onMouseOver={() => {
+                          setBenMode(true);
+                        }}
+                        onMouseOut={() => {
+                          setBenMode(false);
+                        }}
+                        key={"claim-" + m.memberNo}
+                      >
+                        {benMode ? (
+                          <div className="banMode">
+                            <button>정지</button>
+                            <button>선택</button>
+                          </div>
+                        ) : (
+                          <div>
+                            {m.isBen === "FALSE" ? "정상" : `${m.isBen}`}
+                          </div>
+                        )}
+                      </td>
                       <td>
                         <button
                           onClick={() => {
@@ -444,9 +483,6 @@ const ContentMember = () => {
                     totalListCount={totalListCount}
                   />
                 </td>
-                {/*
-                
-                */}
               </tr>
             </tfoot>
           </table>
