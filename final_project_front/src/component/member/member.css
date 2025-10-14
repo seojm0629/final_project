@@ -372,7 +372,7 @@ input[type="radio"]:checked+label{
     
 
 .mypage-wrap{
-    width: 800px;
+    width: 900px;
     margin: 0 auto;
     display: flex;
     
@@ -408,20 +408,27 @@ input[type="radio"]:checked+label{
 
 /* member-info */
 .mypage-info{
-    width: 600px;
-    margin: 0 auto;
+    width: 500px;
+    margin-left: 90px;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 30px;
-}
-.info-img{
-    width: 100px;
+    border: 1px solid #ccc;
 }
 .info-img > img{
     width: 100px;
 }
+
+.info-nickname{
+    width: 200px;
+    text-align: center;
+}
+
 .info-nickname > div {
-    line-height: 104.5px;   
+    height: 50px;
+    line-height: 50px;   
+    border: 1px solid #ccc;
 }
 
 /* member-account */
@@ -430,3 +437,60 @@ input[type="radio"]:checked+label{
     margin: 0 auto;
     text-align: center;
 }
+
+
+/* 비밀번호 변경 */
+.changePw-wrap{
+    width: 800px;
+    margin: 0 auto;
+    
+}
+.mypage-changePw-wrap{
+    width: 500px;
+    margin: 0 auto;
+    display: flex;
+    gap : 20px;
+}
+
+.mypage-changePw-item>input{
+    width: 250px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.mypage-changePw-btn-box{
+    width: 200px;
+}
+
+.mypage-changePw-btn-box>button{
+    width: 100px;
+    height: 35px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+
+
+/*
+.member-button-zone{
+    width: 400px;
+    margin : 0 auto;
+    text-align: center;
+    
+}
+.member-button-zone>button{
+    width: 100%;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 20px;
+    
+}
+*/

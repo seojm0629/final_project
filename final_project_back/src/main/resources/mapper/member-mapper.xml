@@ -27,4 +27,9 @@
 	<select id="nickname" resultType="int">
 		select count(*) from member_tbl where member_nickname = #{memberNickname}
 	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="changePw">
+		update member_tbl set member_pw = #{memberPw} where member_id = #{memberId}
+	</update>
 </mapper>
