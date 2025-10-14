@@ -7,9 +7,9 @@ import Header from "./component/common/Header";
 import MemberMypage from "./component/member/MemberMypage";
 import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
-import BoardContent from "./component/utils/BoardContent";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
 import TradeBoardList from "./component/trade_board/TradeBoardList";
+import SurveyContent from "./component/survey/SurveyContent";
 
 function App() {
   return (
@@ -27,12 +27,12 @@ function App() {
             path="/freeBoard/mainPage"
             element={<FreeBoardMain></FreeBoardMain>}
           ></Route>
-          <Route path="/utils/content" element={<BoardContent />} />
+          <Route path="/survey/content" element={<SurveyContent />} />
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
           ></Route>
-          <Route path="/freeboard/content" element={<BoardContent />} />
+
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
         </Routes>
       </main>
