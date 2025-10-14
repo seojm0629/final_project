@@ -2,6 +2,7 @@
   width: 100%;
   border-spacing: 0;
   text-align: center;
+  min-height: 720px;
 }
 .admin .content-body thead {
   height: 40px;
