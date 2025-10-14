@@ -26,14 +26,13 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route
-            path="/freeBoard/mainPage"
-            element={<FreeBoardMain></FreeBoardMain>}
-          ></Route>
-          <Route path="/survey/content" element={<SurveyContent />} />
-          <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
           ></Route>
+          <Route
+            path="/survey/content"
+            element={<SurveyContent></SurveyContent>}
+          />
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
         </Routes>
       </main>
