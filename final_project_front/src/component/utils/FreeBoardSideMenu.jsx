@@ -6,14 +6,36 @@ import { useState } from "react";
 import "./sideMenu.css";
 
 const FreeBoardSideMenu = (props) => {
+  console.log(props);
   const menus = props.menus;
-  const setSelectMenu = props.setSelectMenu;
-  const [naviDown, setNaviDown] = useState(null);
-  const [menuNavi, setMenuNavi] = useState(""); //카테고리 밑 메뉴 네비
-  const downMenu = (menu) => {
-    setNaviDown(naviDown === menu ? null : menu);
-  };
+  console.log(menus);
+  //const setSelectMenu = props.setSelectMenu;
+  //const [naviDown, setNaviDown] = useState(null);
+  //const [menuNavi, setMenuNavi] = useState(""); //카테고리 밑 메뉴 네비
+  //const downMenu = (menu) => {
+  //  setNaviDown(naviDown === menu ? null : menu);
+  //};
   return (
+    <div>
+      <ul>
+        {menus.map((m, i) => {
+          return (
+            <li>
+              {m.freeBoardCategory}
+              <ul>
+                {m.freeBoardSubcategory.map((n, i) => {
+                  return <li>{n}</li>;
+                })}
+              </ul>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+{
+  /**
     <div className="side-menu">
       <section className="side-header">
         <p style={{ fontWeight: "600" }}>카테고리</p>
@@ -23,6 +45,12 @@ const FreeBoardSideMenu = (props) => {
         <span>자유게시판</span>
       </div>
       <ul>
+        <li>
+          {menus.map((m, i) => {
+            return <div>{m}</div>;
+          })}
+        </li>
+        
         <div className="category">
           {menus.map((menus1, i) => {
             return (
@@ -32,10 +60,10 @@ const FreeBoardSideMenu = (props) => {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     downMenu(i);
-                    setMenuNavi(menuNavi !== i && menus1.text);
+                    setMenuNavi(menuNavi !== i && menus1.freeBoardCategory);
                   }}
                 >
-                  <span>{menus1.text}</span>
+                  <span>{menus1.freeBoardCategory}</span>
                   {naviDown === i ? (
                     <KeyboardArrowRightOutlinedIcon></KeyboardArrowRightOutlinedIcon>
                   ) : (
@@ -44,17 +72,17 @@ const FreeBoardSideMenu = (props) => {
                 </div>
                 <ul className="menu-down">
                   {naviDown === i
-                    ? menus1.children.map((menus2, j) => {
+                    ? menus1.freeBoardSubcategory.map((menus2, j) => {
                         return (
                           <li
                             key={"side-menuDown" + j}
                             className="side-menuDown"
                             onClick={() => {
-                              setSelectMenu(menus2.text);
+                              setSelectMenu(menus2);
                             }}
                           >
                             <NavLink
-                              to={menus2.url}
+                              to={menus2}
                               className={({ isActive }) =>
                                 isActive ? "active-link" : ""
                               }
@@ -78,9 +106,10 @@ const FreeBoardSideMenu = (props) => {
             );
           })}
         </div>
+        
       </ul>
     </div>
-  );
-};
+     */
+}
 
 export default FreeBoardSideMenu;

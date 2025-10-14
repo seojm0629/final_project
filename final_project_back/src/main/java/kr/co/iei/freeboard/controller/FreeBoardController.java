@@ -1,5 +1,6 @@
 package kr.co.iei.freeboard.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
 
@@ -24,10 +26,18 @@ public class FreeBoardController {
 	@Autowired
 	private FreeBoardService freeBoardService;
 	
+	/*
 	@GetMapping(value = "/mainPage")
 	public ResponseEntity<List<FreeBoardDTO>> categoryList(@RequestBody FreeBoardDTO menus){
 		List<FreeBoardDTO> boardList = freeBoardService.selectCategoryList(menus);
 		System.out.println(boardList);
 		return ResponseEntity.ok(boardList);
+	}
+	*/
+	@GetMapping(value = "/mainPage")
+	public ResponseEntity<List<Map<String, Object>>> categoryList(){
+		 List<Map<String, Object>> cate = freeBoardService.selectCategoryList();
+		System.out.println(cate);
+		return ResponseEntity.ok(cate);
 	}
 }

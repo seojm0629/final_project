@@ -34,6 +34,7 @@ const FreeBoardMain = () => {
         */
   }
 
+  /*
   const [menus, setMenus] = useState([
     {
       text: "직장",
@@ -52,20 +53,31 @@ const FreeBoardMain = () => {
       ],
     },
   ]);
+  */
 
-  /*
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
-      .get(`${backServer}/freeBoard/mainPage`, menus)
+      .get(`${backServer}/freeBoard/mainPage`)
       .then((res) => {
         console.log(res);
+        setMenus(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-*/
+  console.log(menus);
+  /*
+  const [menus, setMenus] = useState([
+    {
+      freeBoardCategory: "직장",
+      freeBoardSubcategory: ["회사생활","서류/면접 팁","퇴사 팁"]
+        
+      ],
+    },
+  ]);
+  */
   /*
   const [reqPageInfo, setReqPageInfo] = useState({
   pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
