@@ -90,6 +90,8 @@ public class MemberService {
 	public int email(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
 		if(m != null) {
+			String email = member.getMemberEmail();
+			String emailFront = email.split("@")[0];
 			return 1;
 		} else {
 			return 0;
