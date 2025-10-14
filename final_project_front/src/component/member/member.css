@@ -434,9 +434,9 @@ input[type="radio"]:checked+label{
 /* member-account */
 .mypage-account-wrap{
     width: 500px;
-    height: 400px;
+    height: 420px;
     margin-left : 90px;
-    padding-top: 25px;
+    padding-top: 30px;
     border: 1px solid #ccc;
 }
 .mypage-account{
