@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
-import { Icon, TableSortLabel } from "@mui/material";
+import { TableSortLabel } from "@mui/material";
 import Swal from "sweetalert2";
 import SearchBar from "../utils/SearchBar";
 import SearchIcon from "@mui/icons-material/Search";
 import MemberDetail from "./MemberDetail";
-import Switch from "@mui/material/Switch";
+import Button from "@mui/material/Button";
 
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -57,7 +57,8 @@ const ContentMember = () => {
   });
 
   const [totalListCount, setTotalListCount] = useState(0);
-
+  const [loading, setLoading] = useState(false);
+  const [updateMemberType, setUpdateMemberType] = useState();
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
   // memberList : Back -> Client
@@ -65,43 +66,11 @@ const ContentMember = () => {
   // totalListCount : Back -> Client
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
-  //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
   useEffect(() => {
-    console.log("pageInfo : ");
-    console.log(reqPageInfo);
-
-    axios
-      .get(
-        `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
-          reqPageInfo.order
-        }&pageNo=${reqPageInfo.pageNo}&searchText=${
-          reqPageInfo.searchText
-        }&searchType=${reqPageInfo.searchType}&listCnt=${reqPageInfo.listCnt}`
-      )
-      .then((res) => {
-        console.log(res.data.pageList);
-        console.log(res.data.totalListCount);
-        console.log("확인");
-        console.log(userDetailInfo);
-        console.log(userDetailInfo.length);
-        setMemberList(res.data.pageList);
-        setTotalListCount(res.data.totalListCount);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [reqPageInfo]);
-  //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
-  // Back 호출하고 리턴 받기
-  //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-
-  const [updateMemberType, setUpdateMemberType] = useState();
-
-  useEffect(() => {
-    console.log("updateMemberType");
-
-    console.log(updateMemberType !== undefined);
+    //console.log("updateMemberType");
+    console.log("리스트 가져오기 시작");
+    setLoading(true);
+    //console.log(updateMemberType !== undefined);
     updateMemberType !== undefined &&
       axios
         .patch(
@@ -109,12 +78,39 @@ const ContentMember = () => {
           updateMemberType
         )
         .then((res) => {
+          axios
+            .get(
+              `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
+                reqPageInfo.order
+              }&pageNo=${reqPageInfo.pageNo}&searchText=${
+                reqPageInfo.searchText
+              }&searchType=${reqPageInfo.searchType}&listCnt=${
+                reqPageInfo.listCnt
+              }`
+            )
+            .then((res) => {
+              //console.log(res.data.pageList);
+              //console.log(res.data.totalListCount);
+              //console.log("확인");
+              //console.log(userDetailInfo);
+              //console.log(userDetailInfo.length);
+              setMemberList(res.data.pageList);
+              setTotalListCount(res.data.totalListCount);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           if (res.data === 1) {
             Swal.fire({
               title: "알림",
               text: `등급 변경이 완료되었습니다.`,
 
               icon: "success",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                console.log("리스트 가져오기 끝");
+                setLoading(false);
+              }
             });
           }
         })
@@ -128,7 +124,41 @@ const ContentMember = () => {
           });
         });
   }, [updateMemberType]);
-  //아래는 SearchBar 컴포넌트로 분리했음
+
+  //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
+  useEffect(() => {
+    //console.log("pageInfo : ");
+    //console.log(reqPageInfo);
+    console.log("리스트 가져오기 시작");
+    setLoading(true);
+
+    axios
+      .get(
+        `${import.meta.env.VITE_BACK_SERVER}/admin/memberList?order=${
+          reqPageInfo.order
+        }&pageNo=${reqPageInfo.pageNo}&searchText=${
+          reqPageInfo.searchText
+        }&searchType=${reqPageInfo.searchType}&listCnt=${reqPageInfo.listCnt}`
+      )
+      .then((res) => {
+        //console.log(res.data.pageList);
+        //console.log(res.data.totalListCount);
+        //console.log("확인");
+        //console.log(userDetailInfo);
+        //console.log(userDetailInfo.length);
+        setMemberList(res.data.pageList);
+        setTotalListCount(res.data.totalListCount);
+        console.log("리스트 가져오기 끝");
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [reqPageInfo]);
+  //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
+  // Back 호출하고 리턴 받기
+  //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   const [searchType, setSearchType] = useState("no");
   const [searchText, setSearchText] = useState("");
 
@@ -144,7 +174,7 @@ const ContentMember = () => {
   };
   //test
   const search = () => {
-    if (searchText == "") {
+    if (searchText === "") {
       Swal.fire({
         title: "알림",
         text: `${searchPlaceholder[searchType]}어를 입력하세요!`,
@@ -211,7 +241,7 @@ const ContentMember = () => {
       reqPageInfo.order === 9
         ? setReqPageInfo({ ...reqPageInfo, order: 10 })
         : setReqPageInfo({ ...reqPageInfo, order: 9 });
-    } else if (x === "date") {
+    } else if (x === "ban") {
       reqPageInfo.order === 11
         ? setReqPageInfo({ ...reqPageInfo, order: 12 })
         : setReqPageInfo({ ...reqPageInfo, order: 11 });
@@ -224,10 +254,70 @@ const ContentMember = () => {
 
   const [userDetailInfo, setUserDetailInfo] = useState({});
   const reqUserInfo = (member) => {
-    console.log(member);
+    //console.log(member);
     setUserDetailInfo({ ...userDetailInfo, member: member });
   };
-  console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
+  //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
+
+  const MemberList = (props) => {
+    const m = props.m;
+    const [benMode, setBenMode] = useState(false);
+    return (
+      <tr key={"member-" + m.memberNo} className="row">
+        <td>{m.memberNo}</td>
+        <td>{m.memberId}</td>
+        <td>{m.memberEmail}</td>
+        <td>{m.totalClaimCnt}</td>
+        <td>{m.totalLikeCnt}</td>
+        <td>{m.totalPostCnt}</td>
+        <td>{m.totalCommentCnt}</td>
+        <td>{m.memberDate}</td>
+        <td key={"select-" + m.memberNo}>
+          <select
+            defaultValue={m.memberType}
+            onChange={(e) => {
+              setUpdateMemberType({
+                memberType: e.target.value,
+                memberNo: m.memberNo,
+              });
+            }}
+          >
+            <option value="1">관리자</option>
+            <option value="2">일반</option>
+          </select>
+        </td>
+        <td
+          onMouseOver={() => {
+            setBenMode(true);
+          }}
+          onMouseOut={() => {
+            setBenMode(false);
+          }}
+          key={"claim-" + m.memberNo}
+        >
+          {benMode ? (
+            <div className="banMode">
+              <button>정지</button>
+              <button>선택</button>
+            </div>
+          ) : m.isBen === "FALSE" ? (
+            "정상"
+          ) : (
+            `${m.isBen}`
+          )}
+        </td>
+        <td>
+          <button
+            onClick={() => {
+              reqUserInfo(m);
+            }}
+          >
+            <SearchIcon />
+          </button>
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div className="admin-right">
@@ -255,16 +345,13 @@ const ContentMember = () => {
               <tr>
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 1 || reqPageInfo.order === 2) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 1 || reqPageInfo.order === 2}
                     direction={
                       reqPageInfo.order === 1
                         ? "asc"
                         : reqPageInfo.order === 2
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("no");
@@ -280,85 +367,73 @@ const ContentMember = () => {
                 <th>이메일</th> {/* MEMBER_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 3 || reqPageInfo.order === 4) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 3 || reqPageInfo.order === 4}
                     direction={
                       reqPageInfo.order === 3
                         ? "asc"
                         : reqPageInfo.order === 4
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("claim");
                     }}
                   >
-                    신고 받은 수
+                    받은 신고
                   </TableSortLabel>
                 </th>
                 {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 5 || reqPageInfo.order === 6) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 5 || reqPageInfo.order === 6}
                     direction={
                       reqPageInfo.order === 5
                         ? "asc"
                         : reqPageInfo.order === 6
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("like");
                     }}
                   >
-                    좋아요 받은 수
+                    받은 좋아요
                   </TableSortLabel>
                 </th>
                 {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 7 || reqPageInfo.order === 8) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 7 || reqPageInfo.order === 8}
                     direction={
                       reqPageInfo.order === 7
                         ? "asc"
                         : reqPageInfo.order === 8
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("board");
                     }}
                   >
-                    작성 게시글 수
+                    작성 게시글
                   </TableSortLabel>
                 </th>{" "}
                 {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
                 <th>
                   <TableSortLabel
-                    active={
-                      (reqPageInfo.order === 9 || reqPageInfo.order === 10) &&
-                      "true"
-                    }
+                    active={reqPageInfo.order === 9 || reqPageInfo.order === 10}
                     direction={
                       reqPageInfo.order === 9
                         ? "asc"
                         : reqPageInfo.order === 10
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("comment");
                     }}
                   >
-                    작성 댓글 수
+                    작성 댓글
                   </TableSortLabel>
                 </th>{" "}
                 {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
@@ -366,15 +441,14 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      (reqPageInfo.order === 13 || reqPageInfo.order === 14) &&
-                      "true"
+                      reqPageInfo.order === 13 || reqPageInfo.order === 14
                     }
                     direction={
                       reqPageInfo.order === 13
                         ? "asc"
                         : reqPageInfo.order === 14
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
                       sortSelect("grade");
@@ -386,18 +460,17 @@ const ContentMember = () => {
                 <th>
                   <TableSortLabel
                     active={
-                      (reqPageInfo.order === 11 || reqPageInfo.order === 12) &&
-                      "true"
+                      reqPageInfo.order === 11 || reqPageInfo.order === 12
                     }
                     direction={
                       reqPageInfo.order === 11
                         ? "asc"
                         : reqPageInfo.order === 12
                         ? "desc"
-                        : ""
+                        : undefined
                     }
                     onClick={() => {
-                      sortSelect("date");
+                      sortSelect("ban");
                     }}
                   >
                     회원 정지
@@ -408,48 +481,29 @@ const ContentMember = () => {
               </tr>
             </thead>
             <tbody>
-              {memberList.length === 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan={12}>
+                    <div className="loadingMsg">
+                      <Button
+                        fullWidth
+                        loading
+                        loadingPosition="start"
+                        variant="outlined"
+                        className="loadingBtn"
+                      >
+                        로딩중입니다. 잠시만 기다려주세요!
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              ) : memberList.length === 0 ? (
                 <tr>
                   <td colSpan={12}>데이터가 없습니다.</td>
                 </tr>
               ) : (
                 memberList.map((m, i) => {
-                  return (
-                    <tr key={"member-" + m.memberNo} className="row">
-                      <td>{m.memberNo}</td>
-                      <td>{m.memberId}</td>
-                      <td>{m.memberEmail}</td>
-                      <td>{m.totalClaimCnt}</td>
-                      <td>{m.totalLikeCnt}</td>
-                      <td>{m.totalPostCnt}</td>
-                      <td>{m.totalCommentCnt}</td>
-                      <td>{m.memberDate}</td>
-                      <td>
-                        <select
-                          defaultValue={m.memberType}
-                          onChange={(e) => {
-                            setUpdateMemberType({
-                              memberType: e.target.value,
-                              memberNo: m.memberNo,
-                            });
-                          }}
-                        >
-                          <option value="1">관리자</option>
-                          <option value="2">일반</option>
-                        </select>
-                      </td>
-                      <td>{m.isBen === "FALSE" ? "정상" : `${m.isBen}`}</td>
-                      <td>
-                        <button
-                          onClick={() => {
-                            reqUserInfo(m);
-                          }}
-                        >
-                          <SearchIcon />
-                        </button>
-                      </td>
-                    </tr>
-                  );
+                  return <MemberList m={m} />;
                 })
               )}
             </tbody>
@@ -462,9 +516,6 @@ const ContentMember = () => {
                     totalListCount={totalListCount}
                   />
                 </td>
-                {/*
-                
-                */}
               </tr>
             </tfoot>
           </table>
@@ -474,7 +525,7 @@ const ContentMember = () => {
         {userDetailInfo.member != null && (
           <div className="content-head">
             <div className="title m">사용자 상세 정보</div>
-            <div className="title s">{userDetailInfo.no}</div>
+
             <MemberDetail
               reqPageInfo={reqDetailInfo}
               setReqPageInfo={setReqDetailInfo}

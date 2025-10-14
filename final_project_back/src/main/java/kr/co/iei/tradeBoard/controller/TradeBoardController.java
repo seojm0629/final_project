@@ -22,7 +22,6 @@ public class TradeBoardController {
 	@GetMapping
 	public ResponseEntity<Map> tradeBoradList(@RequestParam int reqPage, @RequestParam int listCnt){
 		Map map = tradeBoardService.selectBoardList(reqPage,listCnt);
-		System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 }

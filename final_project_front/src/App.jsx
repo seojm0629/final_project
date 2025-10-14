@@ -9,7 +9,8 @@ import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
 import TradeBoardList from "./component/trade_board/TradeBoardList";
-import SurveyContent from "./component/survey/SurveyContent";
+import ChangePw from "./component/member/ChangePw";
+import ChangeEmail from "./component/member/ChangeEmail";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/member/login" element={<MemberLogin />} />
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
-          <Route path="/member/mypage" element={<MemberMypage />} />
+          <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route
             path="/freeBoard/mainPage"

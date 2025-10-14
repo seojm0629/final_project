@@ -106,12 +106,12 @@ const HeaderLink = () => {
     setMemberType(0);
     delete axios.defaults.headers.common["Authorization"];
     window.localStorage.removeItem("refreshToken");
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <ul className="header-user">
-      {memberId != "" && memberType !== 0 ?(
+      {memberId != "" && memberType !== 0 ? (
         <>
           <li>
             <Link to="member/mypage">{memberId}</Link>
@@ -121,16 +121,16 @@ const HeaderLink = () => {
               로그아웃
             </Link>
           </li>
-        </>  
+        </>
       ) : (
         <>
-        <li>
-          <Link to="/member/login">로그인</Link>
-        </li>
-        <li>
-          <Link to="/member/join">회원가입</Link>
-        </li>
-      </>
+          <li>
+            <Link to="/member/login">로그인</Link>
+          </li>
+          <li>
+            <Link to="/member/agree">회원가입</Link>
+          </li>
+        </>
       )}
     </ul>
   );
