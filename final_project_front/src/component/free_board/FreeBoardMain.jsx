@@ -8,10 +8,11 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
-import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
+
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import FreeBoardWrite from "./FreeBoardWrite";
+import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
 
 const FreeBoardMain = () => {
   const [selectMenu, setSelectMenu] = useState([]); //클릭 시 선택된 글씨가 나타나도록 구현하는 state
@@ -35,32 +36,11 @@ const FreeBoardMain = () => {
             menu는 관리자가 직접 추가 삭제가능하도록 backend 처리해야함 (axios로 카테고리와 하위 카테고리)
         */
   }
-  /*
-  const [menus, setMenus] = useState([
-    {
-      text: "직장",
-      children: [
-        { url: "/freeBoard/content", text: "회사생활" },
-        { url: "/freeBoard/document", text: "서류/면접 팁" },
-        { url: "/freeBoard/quit", text: "퇴사팁" },
-      ],
-    },
-    {
-      text: "게임",
-      children: [
-        { url: "/freeBoard/review", text: "게임 리뷰" },
-        { url: "/freeBoard/mobile", text: "모바일 게임" },
-        { url: "/freeBoard/PC", text: "PC" },
-      ],
-    },
-  ]);
-  */
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainPage`)
       .then((res) => {
-        console.log(res);
         setMenus(res.data);
       })
       .catch((err) => {
@@ -71,7 +51,7 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const searchTitle = () => {
     axios
-      .get(`${backServer}/freeBoard?freeBoardTitle=${freeBoardTitle}`)
+      .get(`${backServer}/freeBoard/${freeBoardTitle}`)
       .then((res) => {
         console.log(res.data);
       })
@@ -172,33 +152,35 @@ const FreeBoardContent = () => {
   });
   const [totalListCount, setTotalListCount] = useState(0);
   const [freeBoardList, setFreeBoardList] = useState([]);
+  console.log(freeBoardList);
   useEffect(() => {
     //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
     axios
       .get(
-        `${backServer}/freeBoard/content?freeBoardList=${freeBoardList}
-        &totaListCount=${totalListCount}
-        &pageNo=${reqPageInfo.pageNo}
+        `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
         &order=${reqPageInfo.order}`
       )
       .then((res) => {
         console.log(res);
+        setFreeBoardList(res.data.boardList);
+        setTotalListCount(res.data.totalListCount);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardList]);
-
+  }, [reqPageInfo.pageNo]);
   return (
     <section className="freeBoard-section">
-      <div className="board-div">
-        <div className="board-section">
+      {freeBoardList.map((list, i) => {
+        return(
+          <div className="board-div">
+        <div key={"first" + i} className="board-section">
           <div className="board-status">now</div>
           {/*상태*/}
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
+          <div className="board-title">{list.freeBoardTitle}</div>
+          <div className="board-content">{list.freeBoardContent}</div>
           <div className="nickname-id">
             <span>닉네임</span>
             <span>아이디</span>
@@ -217,10 +199,10 @@ const FreeBoardContent = () => {
             </div>
           </div>
         </div>
-        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
+        <div key={"second" + i+1} className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
           <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
+          <div className="board-title">{list.freeBoardTitle}</div>
+          <div className="board-content">{list.freeBoardContent}</div>
           <div className="nickname-id">
             <span>닉네임</span>
             <span>아이디</span>
@@ -240,102 +222,107 @@ const FreeBoardContent = () => {
           </div>
         </div>
       </div>
-      <div className="board-div">
-        <div className="board-section">
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="board-div">
-        <div className="board-section">
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-      </div>
+        );
+      })}
       <div className="page-navi">
-        <PageNavigation></PageNavigation>
+        <PageNavigation reqPageInfo={reqPageInfo} totalListCount={totalListCount}></PageNavigation>
       </div>
     </section>
   );
+      {/*
+      <div className="board-div">
+        <div className="board-section">
+          <div className="board-status">now</div>
+          <div className="board-title">야야야</div>
+          <div className="board-content">내용내용내용</div>
+          <div className="nickname-id">
+            <span>닉네임</span>
+            <span>아이디</span>
+          </div>
+          <div className="view-heart">
+            <div className="view">
+              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+              111
+            </div>
+            <div className="heart">
+              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+              222
+            </div>
+            <div className="hour">
+              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+            </div>
+          </div>
+        </div>
+        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
+          <div className="board-status">now</div>
+          <div className="board-title">야야야</div>
+          <div className="board-content">내용내용내용</div>
+          <div className="nickname-id">
+            <span>닉네임</span>
+            <span>아이디</span>
+          </div>
+          <div className="view-heart">
+            <div className="view">
+              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+              111
+            </div>
+            <div className="heart">
+              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+              222
+            </div>
+            <div className="hour">
+              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="board-div">
+        <div className="board-section">
+          <div className="board-status">now</div>
+          <div className="board-title">야야야</div>
+          <div className="board-content">내용내용내용</div>
+          <div className="nickname-id">
+            <span>닉네임</span>
+            <span>아이디</span>
+          </div>
+          <div className="view-heart">
+            <div className="view">
+              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+              111
+            </div>
+            <div className="heart">
+              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+              222
+            </div>
+            <div className="hour">
+              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+            </div>
+          </div>
+        </div>
+        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
+          <div className="board-status">now</div>
+          <div className="board-title">야야야</div>
+          <div className="board-content">내용내용내용</div>
+          <div className="nickname-id">
+            <span>닉네임</span>
+            <span>아이디</span>
+          </div>
+          <div className="view-heart">
+            <div className="view">
+              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+              111
+            </div>
+            <div className="heart">
+              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+              222
+            </div>
+            <div className="hour">
+              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+            </div>
+          </div>
+        </div>
+      </div>
+      */}
+
 };
 export default FreeBoardMain;

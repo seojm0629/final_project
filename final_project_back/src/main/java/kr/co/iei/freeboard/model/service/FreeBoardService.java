@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.iei.freeboard.model.dao.FreeBoardDao;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
@@ -18,16 +19,7 @@ public class FreeBoardService {
 	@Autowired
 	private FreeBoardDao freeBoardDao;
 
-	/*
-	public List selectCategoryList(FreeBoardDTO menus) {
-		List boardList = freeBoardDao.selectCategoryList(menus);
-		System.out.println(boardList);
-		if(boardList != null) {
-			
-		}
-		return boardList;
-	}
-	*/
+
 	public List<Map<String, Object>> selectCategoryList() {
 		List<FreeBoardCategoryDTO> cate = freeBoardDao.selectCategoryList();
 		//System.out.println("여기 서비스임"+cate);
@@ -74,13 +66,20 @@ public class FreeBoardService {
 		return boardList;
 	}
 
-	public HashMap<String, Object> boardList(FreeBoardDTO freeBoardList, int totalListCount, int listCount, int pageNo,
-			int listCnt, int order) {
-		FreeBoardDTO = s
-		List<FreeBoardDTO> list = freeBoardDao.boardList(freeBoardList);
+	public HashMap<String, Object> boardList(int startRow, int endRow, int sideBtnCount,
+			int order) {
+		HashMap<String, Object> freeBoardList = new HashMap<String,Object>(); 
+		freeBoardList.put("startRow", startRow);
+		freeBoardList.put("endRow", endRow);
+		freeBoardList.put("sideBtnCount", sideBtnCount);
+		freeBoardList.put("order", order);
 		
+		List<FreeBoardDTO> boardList = freeBoardDao.totalBoardList(freeBoardList);
+		int totalListCount = freeBoardDao.totalListCount(freeBoardList);
 		
-		
-		return null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("boardList", boardList);
+		map.put("totalListCount", totalListCount);
+		return map;
 	}
 }
