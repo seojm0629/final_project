@@ -12,7 +12,12 @@
   z-index: 2000;
 }
 .modal-contentbox {
+  display: flex;
+  flex-direction: column;
   background-color: white;
+  border-radius: 10px;
+  overflow: auto; /* 내용이 넘칠 때 자동으로 스크롤  */
+  box-sizing: border-box;
 }
 .modal-button {
   border: none;
@@ -48,8 +53,10 @@
 
 .modal-footer > button {
   width: 25%;
-  height: 50%;
+  height: auto;
   border-radius: 5px;
   cursor: pointer;
   border: none;
+  min-width: 100px;
+  white-space: nowrap; /* 글씨고정 */
 }
