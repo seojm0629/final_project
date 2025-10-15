@@ -157,7 +157,7 @@ const MemberInfo = (props) => {
                 <AccountCircleIcon />
             </div>
             <div className="info-nickname">
-                <div className="nickname-input">
+                <div className="nickname-input ">
                     <input name="memberNickname" id="memberNickname"
                     value={member.memberNickname} onChange={(e)=>{setMember({...member, [e.target.name] : e.target.value})}}></input>
                 </div>
@@ -174,14 +174,14 @@ const MemberAccount = (props) => {
     return(
         <div className="mypage-account-wrap tab-menu">
             <div className="mypage-account">
-                <div className="account-name">
+                <div className="account-name tab-div">
                     
                     <span> {memberId}</span>
                 </div>
-                <div className="account-changePw">
+                <div className="account-changePw tab-div">
                     <ChangePw />
                 </div>
-                <div className="account-changeEmail">
+                <div className="account-changeEmail tab-div">
                     <ChangeEmail />
                 </div>
             </div>
@@ -202,10 +202,10 @@ const MemberCommunity = () => {
         <div className="mypage-community-wrap">
             <div className="mypage-community tab-menu">
             
-                <div className="community-manage">
+                <div className="community-manage tab-div">
                     <button type="submit">게시판 관리</button>
                 </div>
-                <div className="commnuity-rule">
+                <div className="commnuity-rule tab-div">
                     <button type="submit">커뮤니티 이용규칙</button>
                 </div>
             </div>
@@ -218,13 +218,13 @@ const MemberNotice = () => {
     return(
         <div className="mypage-notice-wrap">
             <div className="mypage-notice tab-menu">
-                <div className="notice">
+                <div className="notice tab-div">
                     <button type="submit">공지사항</button>
                 </div>
-                <div className="mypage-service">
+                <div className="mypage-service tab-div">
                     <button type="submit">서비스 이용약관</button>
                 </div>
-                <div className="mypage-terms">
+                <div className="mypage-terms tab-div">
                     <button type="submit">개인정보 처리방침</button>
                 </div>
             </div>
@@ -277,7 +277,7 @@ const MemberEtc = (props) => {
     return(
         <div className="mypage-etc-wrap">
             <div className="mypage-etc tab-menu">
-                <div className="delete-member">
+                <div className="delete-member tab-div">
                     <button type="submit" onClick={deleteMember}>회원 탈퇴</button>
                 </div>
             </div>

@@ -105,12 +105,15 @@
 /* 회원가입 페이지 */
 /* 회원가입 전체 페이지 감싸는 section*/
 .join-wrap{
-    width:1200px;
+    width:600px;
     margin: 0 auto;
-    
+    background-color: #F5F8FB;
+    border: 1px solid #999999;
+    border-radius: 10px;
+    padding-bottom: 20px;
 }
 .join-page-title{
-    width: 700px;
+    width: 600px;
     height: 50px;
     margin: 10px auto;
     text-align: center;
@@ -252,7 +255,7 @@ input[type="radio"]:checked+label{
     width: 700px;
     height: 975px;
     margin: 10px auto;
-    background-color: #fff;
+    background-color: #F5F8FB;
     
     border: 1px solid #999999;
     border-radius: 8px ;
@@ -271,7 +274,7 @@ input[type="radio"]:checked+label{
     background-color: #fff;
     border-radius: 5px ;
     color: #666666;
-    border: 1px solid #ccc;
+    border: 1px solid #999999;
     
     overflow: auto;
 }
@@ -363,6 +366,63 @@ input[type="radio"]:checked+label{
 }
 
 /* 마이페이지 */
+/* 로그인 박스 */
+.login-header{
+    width: 300px;
+    margin: 15px 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    
+}
+.login-img>svg{
+    font-size: 60px;
+}
+.logout-btn{
+    padding-top: 10px;
+    padding-left: 65px;
+    text-align: right;
+}
+.logout-btn>button{
+    width: 85px;
+    height: 32px;
+    display: flex;
+    align-items: center;      
+    gap: 6px; 
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding-left: 2px;
+    background-color: #F5F8FB;
+    cursor: pointer;
+}
+.login-info{
+    width: 100px;
+}
+
+.login-info div span{
+    font-size: 14px;
+}
+
+.login-bottom{
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+}
+.login-bottom div{
+    width : calc(100%/4);
+    border-right: 1px solid #ccc;
+}
+.login-bottom div:last-child{
+    border: none;
+}
+
+.tab-div{
+    background-color: #fff;
+}
 
 .mypage-tab{
     width: 600px;
@@ -397,6 +457,8 @@ input[type="radio"]:checked+label{
     width: 200px;
     background-color: #2F4E70;
     color: #fff;
+    
+    
 }
 
 
@@ -405,20 +467,32 @@ input[type="radio"]:checked+label{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 30px;
-    margin-right: 15px;
+    padding-left: 11px;
+    padding-right: 10px;
     text-decoration: none;
+    
 }
 
 .side-menu-login .active-link > span {
-    color: #19D3F0;
+    color: #2f4e70;
     font-family: ns-b;
+    
+}
+
+.side-menu-login .active-link{
+    width: 177px;
+    color: #2f4e70;
+    background-color: #fff;
+    font-family: ns-b;
+    border: 1px solid black;
+    
 }
 
 .side-menu-login .active-link > svg {
-    fill: #19D3F0;
-
+    fill: #2f4e70;
+    
 }
+
 
 .side-menu-login button {
     width: 100%;
@@ -471,9 +545,10 @@ input[type="radio"]:checked+label{
     border: 1px solid #ccc;
     font-size: 18px;
     padding-left: 10px;
-    background-color: #EDF2F7;
+    background-color: #fff;
     color: black;
     font-weight: 500;
+
     
 }
 
@@ -497,7 +572,7 @@ input[type="radio"]:checked+label{
 .mypage-account-wrap{
     width: 500px;
     margin: 0 auto;
-    min-height: 33.5vh; 
+    min-height: 38vh; 
     margin-bottom: 20px;
     border: 1px solid #ccc;
     
@@ -583,10 +658,9 @@ input[type="radio"]:checked+label{
 
 .changeEmail{
     width: 400px;
-    border: 1px solid #ccc;
     text-align: center;
     padding : 20px 0;
-    
+    background-color: #F5F8FB;
 }
 
 .changeEmail input{
@@ -594,6 +668,7 @@ input[type="radio"]:checked+label{
     border-radius: 7px;
     padding-left: 10px;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
 }
 .changeEmail select{
     height: 30px;

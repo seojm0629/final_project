@@ -112,7 +112,7 @@ const HeaderLink = () => {
 
   return (
     <ul className="header-user">
-      {memberId != "" && memberType !== 0 ? (
+      {memberId !== "" && memberType !== 0 ? (
         <>
           <li>
             <Link to="">

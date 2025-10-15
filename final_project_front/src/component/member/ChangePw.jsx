@@ -3,6 +3,7 @@ import { loginIdState } from "../utils/RecoilData";
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const ChangePw = () => {
     //로그인 한 사용자 저장 아이디 불러오기
@@ -17,6 +18,7 @@ const ChangePw = () => {
     //비밀번호 확인 State
     const [memberPwRe, setMemberPwRe] = useState("");
     
+    const navigate = useNavigate();
     const inputPw = (e) => {
         const newPw = {...member, memberPw : e.target.value};
         setMember(newPw);
@@ -61,6 +63,7 @@ const ChangePw = () => {
                         setIsAuth(flase);
                         setMember({...member, memberPw : ""})
                         setMemberPwRe("");
+                        
                     })
                 }
             })
