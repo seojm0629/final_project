@@ -402,7 +402,9 @@ input[type="radio"]:checked+label{
 .login-info div span{
     font-size: 14px;
 }
-
+.login-btn>button{
+    font-size: 22px;
+}
 .login-bottom{
     height: 50px;
     line-height: 50px;
@@ -782,6 +784,36 @@ input[type="radio"]:checked+label{
     cursor: pointer;
 }
 
+/* 회원가입 완료 시 넘어가는 페이지*/
+.join-finish-wrap{
+    width: 1200px;
+    margin: 0 auto;
+}
+.join-finish{
+    width: 600px;
+    min-height: 30vh;
+    margin: 0 auto;
+    background-color: #F5F8FB;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+
+}
+.finish-content h1,h3{
+    margin : 25px 0;
+}
+.finish-button>button{
+    width: 230px;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 20px;
+    
+}
 
 /*
 .member-button-zone{
