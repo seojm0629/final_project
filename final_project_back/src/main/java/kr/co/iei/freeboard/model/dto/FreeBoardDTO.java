@@ -21,6 +21,6 @@ public class FreeBoardDTO {
 	private int memberNo;
 	private String freeBoardContent;
 	private String freeBoardDate;
-	private List freeBoardList;
+	
 	
 }

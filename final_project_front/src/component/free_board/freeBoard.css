@@ -1,3 +1,8 @@
+.main-wrap {
+  display: flex;
+  flex-direction: column;
+  box-sizing: content-box;
+}
 .main-header {
   height: 80px;
   display: flex;
@@ -74,6 +79,9 @@
   width: max-content;
   user-select: none;
   justify-content: center;
+}
+.menu-tag:hover {
+  margin: 1px;
 }
 .menu-tag svg {
   margin-left: 4px;

@@ -13,4 +13,8 @@ public interface FreeBoardDao {
 
 	List<FreeBoardCategoryDTO> selectCategoryList();
 
+	List searchTitle(String freeBoardTitle);
+
+	List<FreeBoardDTO> boardList(FreeBoardDTO freeBoardList);
+
 }

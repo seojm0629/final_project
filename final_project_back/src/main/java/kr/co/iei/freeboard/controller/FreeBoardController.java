@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +38,24 @@ public class FreeBoardController {
 	@GetMapping(value = "/mainPage")
 	public ResponseEntity<List<Map<String, Object>>> categoryList(){
 		 List<Map<String, Object>> cate = freeBoardService.selectCategoryList();
-		System.out.println(cate);
+		
 		return ResponseEntity.ok(cate);
+	}
+	@GetMapping
+	public ResponseEntity<List> searchTitle(@RequestParam String freeBoardTitle){
+		List boardList = freeBoardService.searchTitle(freeBoardTitle);
+		System.out.println(boardList);
+		return ResponseEntity.ok(boardList);
+	}
+	@GetMapping
+	public ResponseEntity<HashMap<String, Object>> boardList(@RequestParam FreeBoardDTO freeBoardList, @RequestParam int totalListCount, @RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount, @RequestParam int order){
+		//freeBoardList : 게시글 담을 객체
+		//totalListCount : 게시글 수
+		//pageNo: 한 페이지에 나타낼 수 있는 버튼 수
+		//listCnt : 한 페이지에 넣을 게시글 수
+		//sidebtnCount : 한 페이지에서 나타내는 버튼 수중에 가운데 버튼을 기준으로 양 옆에 나타내고싶은 버튼 수
+		//order: (1 : 최신순, 2 : 오래된 순)
+		HashMap<String, Object> map = freeBoardService.boardList(freeBoardList, totalListCount, pageNo, listCnt,sideBtnCount ,order);
+		return null;
 	}
 }

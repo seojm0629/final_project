@@ -3,7 +3,17 @@
 <mapper namespace="kr.co.iei.freeboard.model.dao.FreeBoardDao">
 
 	<select id="selectCategoryList" resultType = "freeBoardCategory">
-		SELECT FREE_BOARD_CATEGORY,FREE_BOARD_SUBCATEGORY FROM FREE_BOARD_SUB_CATEGORY_TBL JOIN FREE_BOARD_CATEGORY_TBL USING (FREE_BOARD_CATEGORY_NO)
+ 		SELECT 
+			FREE_BOARD_CATEGORY,FREE_BOARD_SUBCATEGORY 
+			FROM FREE_BOARD_SUB_CATEGORY_TBL 
+		JOIN FREE_BOARD_CATEGORY_TBL USING (FREE_BOARD_CATEGORY_NO)
 	</select>  
 	
+	<select id="searchTitle" resultType = "freeBoard">
+		select * from free_board_tbl where free_board_title like '%||${freeBoardTitle}||%'
+	</select>
+	
+	<select id="boardList" resultType="freeBoard">
+		select * from free_board_tbl
+	</select>
 </mapper>

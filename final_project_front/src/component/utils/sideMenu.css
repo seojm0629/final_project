@@ -47,6 +47,17 @@
 .side-menuDown {
   margin: 15px 0px;
 }
-.active-link {
+.side-submenu {
   color: #002e63;
+  cursor: pointer;
+  user-select: none;
+}
+.side-submenu li {
+  padding-left: 5px;
+}
+.side-submenu:hover {
+  background-color: #43688f;
+  color: white;
+  border-radius: 5px;
+  margin: 5px 5px;
 }

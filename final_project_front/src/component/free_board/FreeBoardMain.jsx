@@ -6,15 +6,17 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
 import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
+import FreeBoardWrite from "./FreeBoardWrite";
 
 const FreeBoardMain = () => {
   const [selectMenu, setSelectMenu] = useState([]); //클릭 시 선택된 글씨가 나타나도록 구현하는 state
   const backServer = import.meta.env.VITE_BACK_SERVER;
+  const navigation = useNavigate();
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
       setSelectMenu([...selectMenu, menu]);
@@ -33,7 +35,6 @@ const FreeBoardMain = () => {
             menu는 관리자가 직접 추가 삭제가능하도록 backend 처리해야함 (axios로 카테고리와 하위 카테고리)
         */
   }
-
   /*
   const [menus, setMenus] = useState([
     {
@@ -54,7 +55,6 @@ const FreeBoardMain = () => {
     },
   ]);
   */
-
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
@@ -67,34 +67,17 @@ const FreeBoardMain = () => {
         console.log(err);
       });
   }, []);
-  console.log(menus);
-  /*
-  const [menus, setMenus] = useState([
-    {
-      freeBoardCategory: "직장",
-      freeBoardSubcategory: ["회사생활","서류/면접 팁","퇴사 팁"]
-        
-      ],
-    },
-  ]);
-  */
-  /*
-  const [reqPageInfo, setReqPageInfo] = useState({
-  pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
-  listCnt: 6, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
-    });
-  const [totalListCount, setTotalListCount] = useState(0);
-  */
+
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
-  const searchTitle = (e) => {
-    if (e.target.text !== null) {
-      //axios.get()
-      /*
-        id="freeBoardTitle"
-              name="freeBoardTitle"
-              value={freeBoardTitle}
-      */
-    }
+  const searchTitle = () => {
+    axios
+      .get(`${backServer}/freeBoard?freeBoardTitle=${freeBoardTitle}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className="main-wrap">
@@ -107,11 +90,20 @@ const FreeBoardMain = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              searchTitle(e);
+              searchTitle();
             }}
             className="search-btn"
           >
-            <input type="text" placeholder="검색어를 입력해주세요" />
+            <input
+              type="text"
+              placeholder="검색어를 입력해주세요"
+              id="freeBoardTitle"
+              name="freeBoardTitle"
+              value={freeBoardTitle}
+              onChange={(e) => {
+                setFreeBoardTitle(e.target.value);
+              }}
+            />
             {/*클릭 시 axios search되도록*/}
             <ManageSearchIcon></ManageSearchIcon>
           </form>
@@ -143,7 +135,12 @@ const FreeBoardMain = () => {
           </section>
         </div>
         <div className="main-content">
-          <div className="write-div">
+          <div
+            className="write-div"
+            onClick={() => {
+              navigation("/freeBoard/boardWrite");
+            }}
+          >
             <span>글작성</span>
           </div>
           <section className="section free-board">
@@ -152,13 +149,12 @@ const FreeBoardMain = () => {
                 path="mainPage"
                 element={<FreeBoardContent></FreeBoardContent>}
               ></Route>
+              <Route
+                path="boardWrite"
+                element={<FreeBoardWrite></FreeBoardWrite>}
+              ></Route>
             </Routes>
           </section>
-          {/*
-          <div className="page-navi">
-            <PageNavigation></PageNavigation>
-          </div>
-          */}
         </div>
       </div>
     </div>
@@ -167,11 +163,40 @@ const FreeBoardMain = () => {
 
 //각 카테고리별 하위카테고리를 눌렀을 때 뜨도록하는 페이지 관리자 페이지에서 추가될때 마다 생성되도록 구현 필요
 const FreeBoardContent = () => {
+  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const [reqPageInfo, setReqPageInfo] = useState({
+    sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
+    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+    listCnt: 6, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    order: 2, //최신순, 오래된 순
+  });
+  const [totalListCount, setTotalListCount] = useState(0);
+  const [freeBoardList, setFreeBoardList] = useState([]);
+  useEffect(() => {
+    //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
+    axios
+      .get(
+        `${backServer}/freeBoard/content?freeBoardList=${freeBoardList}
+        &totaListCount=${totalListCount}
+        &pageNo=${reqPageInfo.pageNo}
+        &listCnt=${reqPageInfo.listCnt}
+        &sideBtnCount=${reqPageInfo.sideBtnCount}
+        &order=${reqPageInfo.order}`
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [freeBoardList]);
+
   return (
     <section className="freeBoard-section">
       <div className="board-div">
         <div className="board-section">
           <div className="board-status">now</div>
+          {/*상태*/}
           <div className="board-title">야야야</div>
           <div className="board-content">내용내용내용</div>
           <div className="nickname-id">
@@ -306,6 +331,9 @@ const FreeBoardContent = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="page-navi">
+        <PageNavigation></PageNavigation>
       </div>
     </section>
   );
