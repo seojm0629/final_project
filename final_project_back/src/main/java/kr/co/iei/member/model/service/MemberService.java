@@ -104,6 +104,12 @@ public class MemberService {
 		return result;
 	}
 
+	@Transactional
+	public int deleteMember(String memberId) {
+		int result = memberDao.deleteMember(memberId);
+		return result;
+	}
+
 	
 	
 

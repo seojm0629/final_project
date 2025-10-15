@@ -37,4 +37,34 @@
 	<update id="changeEmail">
 		update member_tbl set member_email = #{memberEmail} where member_id = #{memberId}
 	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteMember">
+		delete from member_tbl where member_id = #{memberId}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

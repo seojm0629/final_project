@@ -415,6 +415,7 @@ input[type="radio"]:checked+label{
 .mypage-info{
     width: 500px;
     margin-left: 90px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -439,10 +440,9 @@ input[type="radio"]:checked+label{
 /* member-account */
 .mypage-account-wrap{
     width: 500px;
-    height: 420px;
     margin-left : 90px;
-    padding-top: 30px;
     border: 1px solid #ccc;
+    margin-bottom: 20px;
 }
 .mypage-account{
     width: 500px;
@@ -460,7 +460,6 @@ input[type="radio"]:checked+label{
 .mypage-changePw-wrap{
     width: 300px;
     margin: 0 auto;
-    line-height: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -470,7 +469,6 @@ input[type="radio"]:checked+label{
 .mypage-changePw-wrap-update{
     width: 300px;
     margin: 0 auto;
-    line-height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -522,9 +520,7 @@ input[type="radio"]:checked+label{
 }
 
 /* 이메일 변경 */
-.mypage-changeEmail-wrap{
-    width: 800px;    
-}
+
 .changeEmail{
     width: 400px;
     border: 1px solid #ccc;
@@ -542,6 +538,107 @@ input[type="radio"]:checked+label{
 .mypage-changeEmail-btn-box{
     text-align: center;
 }
+
+/* 커뮤니티 탭 */
+.mypage-community-wrap{
+    margin-bottom: 20px;
+}
+
+.mypage-community{
+    width: 500px;
+    margin: 0 auto;
+    margin-left: 90px;
+    
+    border: 1px solid #ccc;
+    
+}
+
+.mypage-community div{
+    width:400px;
+    height: 40px;
+    line-height: 40px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.mypage-community div>button{
+    width: 400px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+/* 이용약관 탭 */
+.mypage-notice-wrap{
+    margin-bottom: 20px;
+}
+.mypage-notice{
+    width: 500px;
+    margin: 0 auto;
+    margin-left: 90px;
+    border: 1px solid #ccc;
+    
+}
+
+.mypage-notice div{
+    width:400px;
+    height: 40px;
+    line-height: 40px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.mypage-notice div>button{
+    width: 400px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+
+/* 기타 탭*/
+.mypage-etc{
+    width: 500px;
+    margin: 0 auto;
+    margin-left: 90px;
+    border: 1px solid #ccc;
+    
+}
+
+.mypage-etc div{
+    width:400px;
+    height: 40px;
+    line-height: 40px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.mypage-etc div>button{
+    width: 400px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+
 /*
 .member-button-zone{
     width: 400px;

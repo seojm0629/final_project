@@ -21,6 +21,8 @@ public interface MemberDao {
 
 	int changeEmail(MemberDTO member);
 
+	int deleteMember(String memberId);
+
 	
 
 	
