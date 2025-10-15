@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./SurveyModal.css";
-import Modal from "react-modal";
-Modal.setAppElement("#root");
+import { Modal } from "@mui/material";
 const SurveyContent = ({ onClose, onSubmit, title }) => {
   //컴포넌트에 onClose 함수 받아오기 (모달닫기)
   const [surveyTitle, setSurveyTitle] = useState("");

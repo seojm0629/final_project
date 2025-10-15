@@ -35,25 +35,10 @@ const ContentMember = () => {
     searchText: "",
   });
 
-  const [reqDetailInfo, setReqDetailInfo] = useState({
-    order: 2, //어떤 정렬을 요청할건데??
-    // 1: 회원 번호 오름차순
-    // 2: 회원 번호 내림차순
-    // 3: 신고 받은 수 오름차순
-    // 4: 신고 받은 수 내림차순
-    // 5: 좋아요 받은 수 오름차순
-    // 6: 좋아요 받은 수 내림차순
-    // 7: 작성 게시글 수 오름차순
-    // 8: 작성 게시글 수 내림차순
-    // 9 : 작성 댓글 수 오름차순
-    // 10 : 작성 댓글 수 내림차순
-    // 11: 회원 정지 오름차순
-    // 12: 회원 정지 내림차순
-    pageNo: 1, //몇번째 페이지를 요청하는데?
-    sideBtnCount: 2,
-    listCnt: 15, //한 페이지에 몇개 리스트를 보여줄건데?
-    searchType: "no",
-    searchText: "",
+  const [reqDetailPageInfo, setReqDetailPageInfo] = useState({
+    sideBtnCount: 2, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
+    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
   });
 
   const [totalListCount, setTotalListCount] = useState(0);
@@ -68,7 +53,7 @@ const ContentMember = () => {
 
   useEffect(() => {
     //console.log("updateMemberType");
-    console.log("리스트 가져오기 시작");
+    //console.log("리스트 가져오기 시작");
     setLoading(true);
     //console.log(updateMemberType !== undefined);
     updateMemberType !== undefined &&
@@ -108,7 +93,7 @@ const ContentMember = () => {
               icon: "success",
             }).then((result) => {
               if (result.isConfirmed) {
-                console.log("리스트 가져오기 끝");
+                //console.log("리스트 가져오기 끝");
                 setLoading(false);
               }
             });
@@ -254,7 +239,8 @@ const ContentMember = () => {
 
   const [userDetailInfo, setUserDetailInfo] = useState({});
   const reqUserInfo = (member) => {
-    //console.log(member);
+    console.log("reqUser");
+    console.log(member);
     setUserDetailInfo({ ...userDetailInfo, member: member });
   };
   //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
@@ -318,6 +304,29 @@ const ContentMember = () => {
       </tr>
     );
   };
+  //console.log("이거 확인해야함");
+  const [userDetailBoard, setUserDetailBoard] = useState(null);
+  useEffect(() => {
+    {
+      userDetailInfo.member !== undefined &&
+        axios
+          .get(
+            `${import.meta.env.VITE_BACK_SERVER}/admin/memberDetail?memberNo=${
+              userDetailInfo.member.memberNo
+            }&pageNo=${reqDetailPageInfo.pageNo}&listCnt=${
+              reqDetailPageInfo.listCnt
+            }`
+          )
+          .then((res) => {
+            console.log("userDetailBoard resdata");
+            console.log(res.data);
+            setUserDetailBoard(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
+  }, [userDetailInfo]);
 
   return (
     <div className="admin-right">
@@ -527,10 +536,11 @@ const ContentMember = () => {
             <div className="title m">사용자 상세 정보</div>
 
             <MemberDetail
-              reqPageInfo={reqDetailInfo}
-              setReqPageInfo={setReqDetailInfo}
-              totalListCount={totalListCount}
+              reqPageInfo={reqDetailPageInfo}
+              setReqPageInfo={setReqDetailPageInfo}
+              totalListCount={120}
               userDetailInfo={userDetailInfo}
+              userDetailBoard={userDetailBoard}
             ></MemberDetail>
           </div>
         )}

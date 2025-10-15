@@ -12,6 +12,7 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ChangePw from "./component/member/ChangePw";
 import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
+import Test from "./component/survey/test";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             element={<SurveyContent></SurveyContent>}
           />
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
+          <Route path="/survey/test" element={<Test />} />
         </Routes>
       </main>
       <Footer></Footer>
