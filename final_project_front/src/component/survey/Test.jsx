@@ -17,7 +17,7 @@ const Test = () => {
             <br />
             <input type="email" placeholder="이메일" />
             <br />
-            <button>버튼dd</button>
+            <button>버튼</button>
           </div>
         }
       />
