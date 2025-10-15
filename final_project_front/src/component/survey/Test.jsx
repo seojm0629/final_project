@@ -6,8 +6,8 @@ const Test = () => {
       <BaseModal
         title={"제목입력하는곳"}
         buttonLabel={"모달열기버튼"}
-        contentBoxStyle={{ width: "800px", height: "600px" }}
-        result={"확인버튼이름"}
+        contentBoxStyle={{ width: "1000px", height: "600px" }}
+        result={"확인버"}
         end={"닫기버튼이름"}
         content={
           <div>

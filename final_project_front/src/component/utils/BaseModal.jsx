@@ -16,7 +16,9 @@ const BaseModal = ({
 
   return (
     <div>
-      <button onClick={handleOpen}>{buttonLabel}</button>
+      <button className="modal-button" onClick={handleOpen}>
+        {buttonLabel}
+      </button>
       <Modal open={open} onClose={handleClose}>
         <Grow in={open}>
           <div className="modal-box">
