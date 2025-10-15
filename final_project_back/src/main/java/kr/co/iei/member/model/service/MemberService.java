@@ -104,6 +104,17 @@ public class MemberService {
 		return result;
 	}
 
+	@Transactional
+	public int deleteMember(String memberId) {
+		int result = memberDao.deleteMember(memberId);
+		return result;
+	}
+
+	public int updateNickname(MemberDTO member) {
+		int result = memberDao.updateNickname(member);
+		return result;
+	}
+
 	
 	
 
