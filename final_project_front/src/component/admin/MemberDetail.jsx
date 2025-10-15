@@ -4,7 +4,7 @@ const MemberDetail = (props) => {
   console.log("주고난 후");
   console.log(props);
   const reqPageInfo = props.reqPageInfo;
-  const setReqPageInfo = props.setReqPageInfo;
+  const setReqPageInfo = props.setReqDetailPageInfo;
   const userDetailInfo = props.userDetailInfo;
   const date = new Date();
   const utcYear = date.getUTCFullYear();
