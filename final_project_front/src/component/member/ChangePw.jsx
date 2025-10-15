@@ -67,6 +67,12 @@ const ChangePw = () => {
             .catch((err)=>{
                 console.log(err);
             })
+        } else {
+            Swal.fire({
+                title : "비밀번호 확인",
+                text : "비밀번호가 일치하지 않습니다.",
+                icon : "warning",
+            })
         }
     }
 
@@ -79,7 +85,7 @@ const ChangePw = () => {
                 }}>
                     <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
-                            <input type="text" name="memberPw" id="memberPw"
+                            <input type="password" name="memberPw" id="memberPw"
                             value={""}
                             onChange={inputPw}
                             placeholder="확인되었습니다."
@@ -91,7 +97,7 @@ const ChangePw = () => {
 
                     <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
-                            <input type="text" name="changePw" id="changePw" 
+                            <input type="password" name="changePw" id="changePw" 
                             value={member.memberPw}
                             onChange={inputPw}
                             placeholder="새 비밀번호 입력"
@@ -101,15 +107,15 @@ const ChangePw = () => {
 
                     <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
-                            <input type="text" name="changePwRe" id="changePwRe"
+                            <input type="password" name="changePwRe" id="changePwRe"
                             value={memberPwRe}
                             onChange={inputPwRe}
                             placeholder="새 비밀번호 확인 입력"
                             />
                         </div>
-                    </div>
-                    <div className="mypage-changePw-btn-box">
-                        <button className="btn-zone">수정</button>
+                        <div className="mypage-changePw-btn-box">
+                            <button className="btn-zone">수정</button>
+                        </div>
                     </div>
 
                     
@@ -120,7 +126,7 @@ const ChangePw = () => {
                 }}>
                     <div className="mypage-changePw-wrap">
                         <div className="mypage-changePw-item">
-                            <input type="text" name="memberPw" id="memberPw"
+                            <input type="password" name="memberPw" id="memberPw"
                             value={member.memberPw}
                             onChange={inputPw}
                             placeholder="기존 비밀번호 입력"
@@ -133,7 +139,7 @@ const ChangePw = () => {
 
                     <div className="mypage-changePw-wrap">
                         <div className="mypage-changePw-item">
-                            <input type="text" name="changePw" id="changePw" 
+                            <input type="password" name="changePw" id="changePw" 
                             value={""}
                             onChange={inputPw}
                             placeholder="새 비밀번호 입력"
@@ -144,7 +150,7 @@ const ChangePw = () => {
 
                     <div className="mypage-changePw-wrap">
                         <div className="mypage-changePw-item">
-                            <input type="text" name="changePwRe" id="changePwRe"
+                            <input type="password" name="changePwRe" id="changePwRe"
                             value={memberPwRe}
                             onChange={inputPwRe}
                             placeholder="새 비밀번호 확인 입력"
