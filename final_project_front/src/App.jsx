@@ -13,7 +13,7 @@ import ChangePw from "./component/member/ChangePw";
 import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
 import Test from "./component/survey/test";
-import JoinFinish from "./component/member/JoinFinish";
+
 
 function App() {
   return (
@@ -26,7 +26,6 @@ function App() {
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
-          <Route path="/member/finish" element={<JoinFinish />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route
             path="/freeBoard/*"
