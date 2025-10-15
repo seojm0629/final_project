@@ -232,4 +232,66 @@ SELECT
 	<update id="memberTypeUpdate">
 	UPDATE MEMBER_TBL SET MEMBER_TYPE=#{memberType} WHERE MEMBER_NO=#{memberNo} 
 	</update>
+	
+	<select id="memberDetail" resultType="memberDetail">
+-- 490번 유저의 전체 작성 글 (자유, 거래, 댓글, 대댓글)
+
+SELECT * FROM
+(SELECT ROWNUM RNUM, A.* FROM (
+SELECT * FROM(
+                        -- 해당 유저가 작성한 거래 게시판 게시글 --
+                        SELECT '게시글' CATEGORY_MAIN, 
+                                        '거래' CATEGORY_SUB, 
+                                        MEMBER_NICKNAME, 
+                                        TRADE_BOARD_TITLE BOARD_TITLE,
+                                        TRADE_BOARD_DATE BOARD_DATE 
+                                                        FROM MEMBER_TBL 
+                                                                JOIN TRADE_BOARD_TBL USING(MEMBER_NO) 
+                                                                WHERE MEMBER_NO = #{memberNo}
+                        UNION
+                        -- 해당 유저가 작성한 자유 게시판 게시글 --
+                        SELECT '게시글' CATEGORY_MAIN, 
+                                        '자유' CATEGORY_SUB, 
+                                        MEMBER_NICKNAME, 
+                                        FREE_BOARD_TITLE,
+                                        FREE_BOARD_DATE 
+                                                        FROM MEMBER_TBL 
+                                                                JOIN FREE_BOARD_TBL USING(MEMBER_NO)
+                                                                WHERE MEMBER_NO = #{memberNo}
+                        UNION
+                        -- 해당 유저가 작성한 자유 게시판 댓글 --
+                        SELECT '댓글' CATEGORY_MAIN, 
+                                        '자유' CATEGORY_SUB,
+                                        MEMBER_NICKNAME, 
+                                        FB_COMMENT_CONTENT,
+                                        FB_COMMENT_DATE 
+                                                        FROM MEMBER_TBL 
+                                                                JOIN FB_COMMENT_TBL USING(MEMBER_NO)
+                                                                WHERE MEMBER_NO = #{memberNo}
+                        UNION
+                        -- 해당 유저가 작성한 자유 게시판 대댓글 --
+                        SELECT '대댓글' CATEGORY_MAIN,
+                                        '자유' CATEGORY_SUB, 
+                                        MEMBER_NICKNAME, 
+                                        FB_SUBCOMMENT,
+                                        FB_COMMENT_DATE 
+                                                        FROM MEMBER_TBL 
+                                                                JOIN FB_COMMENT_TBL USING(MEMBER_NO)
+                                                                WHERE MEMBER_NO = #{memberNo}
+                        UNION
+                        -- 해당 유저가 작성한 거래 게시판 댓글 --
+                        SELECT '댓글' CATEGORY_MAIN, 
+                                        '거래' CATEGORY_SUB, 
+                                        MEMBER_NICKNAME, 
+                                        TB_COMMENT_CONTENT,
+                                        TB_COMMENT_DATE 
+                                                        FROM MEMBER_TBL 
+                                                                JOIN TB_COMMENT_TBL USING(MEMBER_NO)
+                                                                WHERE MEMBER_NO = #{memberNo}
+                                                                )
+                                                                ORDER BY BOARD_DATE DESC
+                                                                
+) A) WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+
+	</select>
 </mapper>

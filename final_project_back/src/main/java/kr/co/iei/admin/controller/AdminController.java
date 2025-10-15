@@ -56,4 +56,14 @@ public class AdminController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping(value="memberDetail")
+	public ResponseEntity<List> memberDetail(@RequestParam int memberNo, @RequestParam int pageNo, @RequestParam int listCnt){
+		
+		int startRow = (pageNo-1)*listCnt+1;
+		int endRow = pageNo * listCnt;
+		List userDetailBoard = adminService.memberDetail(memberNo,startRow,endRow);
+		System.out.println(memberNo);
+		return ResponseEntity.ok(userDetailBoard);
+	}
+	
 }
