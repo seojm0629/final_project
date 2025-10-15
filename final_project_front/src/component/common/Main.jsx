@@ -200,7 +200,7 @@ const Main = () => {
                 <div className="main-login-box">
                     <div className="main-login">
                         <div className="login-btn">
-                            <button type="submit" onClick={toLogin}>로그인 하기</button>
+                            <button type="submit" onClick={toLogin}>talk & deal 로그인</button>
                         </div>
                         <div className="login-find">
                             <Link to="#">아이디 찾기</Link>
