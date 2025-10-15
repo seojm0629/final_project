@@ -12,8 +12,7 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ChangePw from "./component/member/ChangePw";
 import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
-import Test from "./component/survey/test";
-
+import Test from "./component/survey/Test";
 
 function App() {
   return (
