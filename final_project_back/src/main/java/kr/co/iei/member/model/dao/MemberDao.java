@@ -23,6 +23,8 @@ public interface MemberDao {
 
 	int deleteMember(String memberId);
 
+	int updateNickname(MemberDTO member);
+
 	
 
 	

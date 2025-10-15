@@ -43,6 +43,11 @@
 		delete from member_tbl where member_id = #{memberId}
 	</delete>
 	
+	<!-- 닉네임 변경 -->
+	<update id="updateNickname">
+		update member_tbl set member_nickname = #{memberNickname} where member_id = #{memberId}
+	</update>
+	
 	
 	
 	

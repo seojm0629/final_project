@@ -110,6 +110,11 @@ public class MemberService {
 		return result;
 	}
 
+	public int updateNickname(MemberDTO member) {
+		int result = memberDao.updateNickname(member);
+		return result;
+	}
+
 	
 	
 

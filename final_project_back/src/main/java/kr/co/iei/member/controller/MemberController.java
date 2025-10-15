@@ -99,6 +99,11 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PatchMapping
+	public ResponseEntity<Integer> updateNickname(@RequestBody MemberDTO member){
+		int result = memberService.updateNickname(member);
+		return ResponseEntity.ok(result);
+	}
 	
 	
 	

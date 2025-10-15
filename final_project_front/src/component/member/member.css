@@ -363,6 +363,15 @@ input[type="radio"]:checked+label{
 }
 
 /* 마이페이지 */
+
+.mypage-tab{
+    width: 600px;
+    margin: 0 auto;
+}
+.tab-menu{
+    border-radius: 8px;
+    background-color: #F5F8FB;
+}
 .account-box>div{
     width: 200px;
     height: 50px;
@@ -402,19 +411,43 @@ input[type="radio"]:checked+label{
 }
 
 .side-menu-login .active-link > span {
-  color: #19d3f0;
-  font-family: ns-b;
+    color: #19D3F0;
+    font-family: ns-b;
 }
 
 .side-menu-login .active-link > svg {
-  fill: #19d3f0;
-  
+    fill: #19D3F0;
+
 }
+
+.side-menu-login button {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.side-menu-login button:hover span {
+  color: #19d3f0;
+}
+
+
 
 /* member-info */
 .mypage-info{
     width: 500px;
-    margin-left: 90px;
+    min-height: 8vh;
+    margin: 0 auto;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
@@ -422,27 +455,52 @@ input[type="radio"]:checked+label{
     gap: 30px;
     border: 1px solid #ccc;
 }
-.info-img > img{
-    width: 100px;
+.info-img > svg{
+    font-size: 50px;
 }
 
 .info-nickname{
     width: 200px;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+.nickname-input > input{
+    width: 100px;
+    height: 40px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    padding-left: 10px;
+    background-color: #EDF2F7;
+    color: black;
+    font-weight: 500;
+    
+}
+
+.mypage-nick-btn-box>button{
+    width: 60px;
+    height: 40px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
 }
 
 .info-nickname > div {
     height: 50px;
     line-height: 50px;   
-    border: 1px solid #ccc;
+    
 }
 
 /* member-account */
 .mypage-account-wrap{
     width: 500px;
-    margin-left : 90px;
-    border: 1px solid #ccc;
+    margin: 0 auto;
+    min-height: 33.5vh; 
     margin-bottom: 20px;
+    border: 1px solid #ccc;
+    
 }
 .mypage-account{
     width: 500px;
@@ -463,14 +521,15 @@ input[type="radio"]:checked+label{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    
 }
 
 .mypage-changePw-wrap-update{
     width: 300px;
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }
@@ -483,6 +542,7 @@ input[type="radio"]:checked+label{
     width: 250px;
     height: 30px;
     margin: 10px 0;
+    padding-left: 10px;
 }
 
 .mypage-changePw-btn-box{
@@ -529,8 +589,21 @@ input[type="radio"]:checked+label{
     
 }
 
+.changeEmail input{
+    height: 30px;
+    border-radius: 7px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+.changeEmail select{
+    height: 30px;
+    border-radius: 7px;
+}
+
 .changeEmail button{
+    height: 30px;
     background-color: #2F4E70;
+    border-radius: 7px;
     color: #fff;
     width: 81px;    
     margin-left: 5px;
@@ -546,9 +619,7 @@ input[type="radio"]:checked+label{
 
 .mypage-community{
     width: 500px;
-    margin: 0 auto;
-    margin-left: 90px;
-    
+    margin: 0 auto;    
     border: 1px solid #ccc;
     
 }
@@ -581,7 +652,6 @@ input[type="radio"]:checked+label{
 .mypage-notice{
     width: 500px;
     margin: 0 auto;
-    margin-left: 90px;
     border: 1px solid #ccc;
     
 }
@@ -612,7 +682,6 @@ input[type="radio"]:checked+label{
 .mypage-etc{
     width: 500px;
     margin: 0 auto;
-    margin-left: 90px;
     border: 1px solid #ccc;
     
 }
