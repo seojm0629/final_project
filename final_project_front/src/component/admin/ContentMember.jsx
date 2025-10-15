@@ -42,8 +42,11 @@ const ContentMember = () => {
   });
 
   const [totalListCount, setTotalListCount] = useState(0);
-  const [loading, setLoading] = useState(false);
+
+  const [memberLoading, setMemberLoading] = useState(false); // 회원 리스트 로딩
+  const [detailLoading, setDetailLoading] = useState(false);
   const [updateMemberType, setUpdateMemberType] = useState();
+  const [detailTotalCount, setDetailTotalCount] = useState(0);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
   // memberList : Back -> Client
@@ -54,7 +57,7 @@ const ContentMember = () => {
   useEffect(() => {
     //console.log("updateMemberType");
     //console.log("리스트 가져오기 시작");
-    setLoading(true);
+    setMemberLoading(true);
     //console.log(updateMemberType !== undefined);
     updateMemberType !== undefined &&
       axios
@@ -94,7 +97,7 @@ const ContentMember = () => {
             }).then((result) => {
               if (result.isConfirmed) {
                 //console.log("리스트 가져오기 끝");
-                setLoading(false);
+                setMemberLoading(false);
               }
             });
           }
@@ -116,7 +119,7 @@ const ContentMember = () => {
     //console.log("pageInfo : ");
     //console.log(reqPageInfo);
     console.log("리스트 가져오기 시작");
-    setLoading(true);
+    setMemberLoading(true);
 
     axios
       .get(
@@ -135,7 +138,7 @@ const ContentMember = () => {
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
         console.log("리스트 가져오기 끝");
-        setLoading(false);
+        setMemberLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -242,6 +245,7 @@ const ContentMember = () => {
     console.log("reqUser");
     console.log(member);
     setUserDetailInfo({ ...userDetailInfo, member: member });
+    setReqDetailPageInfo({ ...reqDetailPageInfo, pageNo: 1 });
   };
   //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
 
@@ -305,29 +309,29 @@ const ContentMember = () => {
     );
   };
   //console.log("이거 확인해야함");
-  const [userDetailBoard, setUserDetailBoard] = useState(null);
+  const [userDetailBoard, setUserDetailBoard] = useState([]);
   useEffect(() => {
-    {
-      userDetailInfo.member !== undefined &&
-        axios
-          .get(
-            `${import.meta.env.VITE_BACK_SERVER}/admin/memberDetail?memberNo=${
-              userDetailInfo.member.memberNo
-            }&pageNo=${reqDetailPageInfo.pageNo}&listCnt=${
-              reqDetailPageInfo.listCnt
-            }`
-          )
-          .then((res) => {
-            console.log("userDetailBoard resdata");
-            console.log(res.data);
-            setUserDetailBoard(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+    if (userDetailInfo.member === undefined || userDetailInfo.member === null) {
+      return;
     }
-  }, [userDetailInfo]);
-
+    setDetailLoading(true);
+    axios
+      .get(
+        `${import.meta.env.VITE_BACK_SERVER}/admin/memberDetail?memberNo=${
+          userDetailInfo.member.memberNo
+        }&pageNo=${reqDetailPageInfo.pageNo}&listCnt=${
+          reqDetailPageInfo.listCnt
+        }`
+      )
+      .then((res) => {
+        setUserDetailBoard(res.data.memberDetail);
+        setDetailTotalCount(res.data.totalListCount);
+        setDetailLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, [userDetailInfo, reqDetailPageInfo.pageNo, reqDetailPageInfo.listCnt]);
+  const hasMember = userDetailInfo && userDetailInfo.member != null;
+  const hasDetail = userDetailBoard != null;
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">
@@ -347,9 +351,7 @@ const ContentMember = () => {
           />
         </div>
         <div className="content-body">
-          <table
-            key={"list" + (memberList.length !== 0 && memberList[0].memberNo)}
-          >
+          <table className="member-table">
             <thead>
               <tr>
                 <th>
@@ -368,12 +370,14 @@ const ContentMember = () => {
                   >
                     회원 번호
                   </TableSortLabel>
-                </th>{" "}
-                {/* MEMBER_TBL */}
-                <th>아이디</th>
-                {/*" https://mui.com/material-ui/api/table-sort-label/"*/}
-                {/* MEMBER_TBL */}
-                <th>이메일</th> {/* MEMBER_TBL */}
+                  {/* MEMBER_TBL */}
+                </th>
+                <th>
+                  아이디
+                  {/*" https://mui.com/material-ui/api/table-sort-label/"*/}
+                  {/* MEMBER_TBL */}
+                </th>
+                <th>이메일 {/* MEMBER_TBL */}</th>
                 <th>
                   <TableSortLabel
                     active={reqPageInfo.order === 3 || reqPageInfo.order === 4}
@@ -390,8 +394,8 @@ const ContentMember = () => {
                   >
                     받은 신고
                   </TableSortLabel>
+                  {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
                 </th>
-                {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
                 <th>
                   <TableSortLabel
                     active={reqPageInfo.order === 5 || reqPageInfo.order === 6}
@@ -409,8 +413,8 @@ const ContentMember = () => {
                     받은 좋아요
                   </TableSortLabel>
                 </th>
-                {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
                 <th>
+                  {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
                   <TableSortLabel
                     active={reqPageInfo.order === 7 || reqPageInfo.order === 8}
                     direction={
@@ -426,9 +430,9 @@ const ContentMember = () => {
                   >
                     작성 게시글
                   </TableSortLabel>
-                </th>{" "}
-                {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
+                </th>
                 <th>
+                  {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
                   <TableSortLabel
                     active={reqPageInfo.order === 9 || reqPageInfo.order === 10}
                     direction={
@@ -444,10 +448,14 @@ const ContentMember = () => {
                   >
                     작성 댓글
                   </TableSortLabel>
-                </th>{" "}
-                {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
-                <th>회원가입일</th> {/* MEMBER_TBL */}
+                </th>
+
                 <th>
+                  {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
+                  회원가입일
+                </th>
+                <th>
+                  {/* MEMBER_TBL */}
                   <TableSortLabel
                     active={
                       reqPageInfo.order === 13 || reqPageInfo.order === 14
@@ -484,13 +492,13 @@ const ContentMember = () => {
                   >
                     회원 정지
                   </TableSortLabel>
-                </th>{" "}
+                </th>
                 {/* MEMBER_BEN_TBL */}
                 <th>상세 보기</th>
               </tr>
             </thead>
             <tbody>
-              {loading ? (
+              {memberLoading ? (
                 <tr>
                   <td colSpan={12}>
                     <div className="loadingMsg">
@@ -512,7 +520,7 @@ const ContentMember = () => {
                 </tr>
               ) : (
                 memberList.map((m, i) => {
-                  return <MemberList m={m} />;
+                  return <MemberList key={m.memberNo} m={m} />;
                 })
               )}
             </tbody>
@@ -531,21 +539,35 @@ const ContentMember = () => {
         </div>
       </div>
       <div className="admin-detail-content-wrap">
-        {userDetailInfo.member != null && (
+        {!hasMember ? (
+          <div className="nullMsg">상세보기를 클릭해보세요.</div>
+        ) : detailLoading ? (
           <div className="content-head">
             <div className="title m">사용자 상세 정보</div>
-
+            <div className="loadingMsg">
+              <Button
+                fullWidth
+                loading
+                loadingPosition="start"
+                variant="outlined"
+                className="loadingBtn"
+              >
+                로딩중입니다. 잠시만 기다려주세요!
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="content-head">
+            <div className="title m">사용자 상세 정보</div>
             <MemberDetail
               reqPageInfo={reqDetailPageInfo}
               setReqPageInfo={setReqDetailPageInfo}
-              totalListCount={120}
+              totalListCount={detailTotalCount}
               userDetailInfo={userDetailInfo}
               userDetailBoard={userDetailBoard}
-            ></MemberDetail>
+              detailLoading={detailLoading}
+            />
           </div>
-        )}
-        {userDetailInfo.member == null && (
-          <div className="nullMsg">상세보기를 클릭해보세요.</div>
         )}
       </div>
     </div>

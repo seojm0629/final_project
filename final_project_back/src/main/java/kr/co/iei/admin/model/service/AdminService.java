@@ -43,10 +43,13 @@ public class AdminService {
 		return result;
 	}
 
-	public List memberDetail(int memberNo,int startRow,int endRow) {
+	public HashMap<String, Object> memberDetail(int memberNo,int startRow,int endRow) {
 		List<AdminMemberDetailDTO> memberDetail = adminDao.memberDetail(memberNo,startRow,endRow);
-		
+		int totalListCount = adminDao.memberDetailTotalCount(memberNo);
 		System.out.println(memberDetail);
-		return memberDetail;
+		HashMap<String,Object> memberMap = new HashMap<>();
+		memberMap.put("memberDetail",memberDetail );
+		memberMap.put("totalListCount",totalListCount);
+		return memberMap;
 	}
 }
