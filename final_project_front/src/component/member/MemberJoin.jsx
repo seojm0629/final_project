@@ -90,7 +90,7 @@ const MemberJoin = () => {
         .get(`${backServer}/api/sendCode`,{params : {receiver}})
         .then((res)=>{
             console.log(res.data);  //인증코드 반환 console 구현 완료시 삭제 필요
-            setMailCode(res.data);
+            setMailCode(res.data.toLowerCase());
             //clickConfirm();
             //formatTime();
             setShowCodeInput(true);     //인증번호 입력 창 메일 전송 시 보일 수 있게 true로 변경

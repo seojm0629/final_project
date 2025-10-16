@@ -13,6 +13,7 @@ import ChangePw from "./component/member/ChangePw";
 import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
 import Test from "./component/survey/test";
+import ServiceAgree from "./component/member/ServiceAgree";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
+          <Route path="/service/agree" element={<ServiceAgree />} />
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
