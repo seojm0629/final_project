@@ -59,6 +59,15 @@ const SideMenu = ({ active, setActive }) => {
         </li>
         <li>
           <button
+            onClick={() => setActive("statistics")}
+            className={active === "statistics" ? "active" : ""}
+          >
+            통계
+            <span className="material-icons">navigate_next</span>
+          </button>
+        </li>
+        <li>
+          <button
             onClick={() => setActive("board")}
             className={active === "board" ? "active" : ""}
           >
