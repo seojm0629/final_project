@@ -28,7 +28,8 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
-          <Route path="/member/modal" element={<FindId />} />
+          <Route path="/member/findId" element={<FindId />} />
+          <Route path="/member/findPw" element={<FindPw />} />          
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
