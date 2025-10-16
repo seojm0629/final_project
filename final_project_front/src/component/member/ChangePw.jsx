@@ -86,6 +86,9 @@ const ChangePw = () => {
                     e.preventDefault();
                     changePw();
                 }}>
+                    <div className="changePw-name">
+                        <span>비밀번호 변경</span>
+                    </div>
                     <div className="mypage-changePw-wrap-update">
                         <div className="mypage-changePw-item">
                             <input type="password" name="memberPw" id="memberPw"
@@ -127,7 +130,11 @@ const ChangePw = () => {
                     e.preventDefault();
                     checkPw();
                 }}>
+                    <div className="changePw-name">
+                        <span>비밀번호 변경</span>
+                    </div>
                     <div className="mypage-changePw-wrap">
+                        
                         <div className="mypage-changePw-item">
                             <input type="password" name="memberPw" id="memberPw"
                             value={member.memberPw}

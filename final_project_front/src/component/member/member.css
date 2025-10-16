@@ -14,6 +14,11 @@
   font-family: ns-black;
   src: url(/font/NotoSansKR-Black.ttf);
 }
+
+body{
+    background-color: #F0F2F5;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -426,6 +431,7 @@ input[type="radio"]:checked+label{
     background-color: #fff;
 }
 
+
 .mypage-tab{
     width: 600px;
     margin: 0 auto;
@@ -520,43 +526,52 @@ input[type="radio"]:checked+label{
 
 
 /* member-info */
-.mypage-info{
+.mypage-info {
     width: 500px;
-    min-height: 8vh;
     margin: 0 auto;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+    margin-bottom : 30px;
     border: 1px solid #ccc;
 }
-.info-img > svg{
-    font-size: 50px;
+.mypage-title{
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    
 }
+.mypage-title>h3{
+    font-size: 25px;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.info-content{
+    width: 400px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around; 
+}
+
 
 .info-nickname{
-    width: 200px;
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
+    width: 250px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-sizing: border-box;
 }
 .nickname-input > input{
-    width: 100px;
-    height: 40px;
-    border: 1px solid #ccc;
+    width: 237px;
+    height: 25px;
     font-size: 18px;
     padding-left: 10px;
-    background-color: #fff;
     color: black;
     font-weight: 500;
-
+    border: none;
     
 }
 
 .mypage-nick-btn-box>button{
-    width: 60px;
-    height: 40px;
+    width: 100px;
+    height: 44px;
     background-color: #2F4E70;
     color: #fff;
     font-size: 18px;
@@ -564,10 +579,12 @@ input[type="radio"]:checked+label{
     border-radius: 5px;
 }
 
-.info-nickname > div {
-    height: 50px;
-    line-height: 50px;   
-    
+
+.content-info{
+    width: 200px;
+    text-align: left;
+    font-size: 12px;
+    padding-left: 10px;
 }
 
 /* member-account */
@@ -579,22 +596,34 @@ input[type="radio"]:checked+label{
     border: 1px solid #ccc;
     
 }
-.mypage-account{
-    width: 500px;
-    margin: 0 auto;
-    text-align: center;
+
+.account-title{
+    margin: 20px auto;
+
 }
 
+.account-name{
+    border: 1px solid #ccc;
+}
+
+.account-name>span{
+    padding-left: 10px;
+    font-size: 18px;
+}
 
 /* 비밀번호 변경 */
 .changePw-wrap{
-    width: 500px;
+    width: 400px;
     margin: 0 auto;
     
 }
+.changePw-name{
+    padding-left: 10px;
+    font-size: 13px;
+}
 .mypage-changePw-wrap{
     width: 300px;
-    margin: 0 auto;
+    padding-left: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -604,7 +633,7 @@ input[type="radio"]:checked+label{
 
 .mypage-changePw-wrap-update{
     width: 300px;
-    margin: 0 auto;
+    padding-left: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -617,7 +646,7 @@ input[type="radio"]:checked+label{
 
 .mypage-changePw-item>input{
     width: 250px;
-    height: 30px;
+    height: 40px;
     margin: 10px 0;
     padding-left: 10px;
 }
@@ -628,8 +657,8 @@ input[type="radio"]:checked+label{
 }
 
 .mypage-changePw-btn-box>button{
-    width: 50px;
-    height: 30px;
+    width: 100px;
+    height: 45px;
     background-color: #2F4E70;
     color: #fff;
     font-size: 18px;
@@ -642,13 +671,7 @@ input[type="radio"]:checked+label{
     width: 400px;
     margin: 0 auto;
 }
-.account-name{
-    width: 400px;
-    height: 50px;
-    line-height: 50px;
-    margin: 15px auto;
-    border: 1px solid #ccc;
-}
+
 .account-changePw{
     width: 400px;
     margin: 15px auto;
@@ -657,47 +680,90 @@ input[type="radio"]:checked+label{
 }
 
 /* 이메일 변경 */
+.mypage-changeEmail-wrap{
+    border : 1px solid #ccc;
+    margin-bottom : 30px;
+}
 
 .changeEmail{
     width: 400px;
     text-align: center;
-    padding : 20px 0;
-    background-color: #F5F8FB;
+}
+.changeEmail-name{
+    margin-bottom: 10px;
+}
+.changeEmail-name>span{
+    padding-left: 10px;
+    font-size: 13px;
+    
 }
 
 .changeEmail input{
-    height: 30px;
+    width: 200px;
+    height: 40px;
     border-radius: 7px;
     padding-left: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 .changeEmail select{
-    height: 30px;
+    width: 85px;
+    height: 40px;
     border-radius: 7px;
 }
 
 .changeEmail button{
-    height: 30px;
+    height: 40px;
     background-color: #2F4E70;
     border-radius: 7px;
     color: #fff;
     width: 81px;    
     margin-left: 5px;
 }
+.changeEmail>button{
+    width: 75px
+}
+.mypage-input-code button{
+    width: 80px;
+    margin-left: 10px;
+}
+
 .mypage-changeEmail-btn-box{
     text-align: center;
 }
 
+.mypage-input-code{
+    width: 400px;
+    text-align: left;
+    margin-left: 10px;
+}
+.format-time{
+    margin-left: 12px;
+}
+.mypage-input-code>input{
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+}
 /* 커뮤니티 탭 */
 .mypage-community-wrap{
+    width: 500px;
+    margin: 0 auto;
     margin-bottom: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+}
+.community-title{
+    width: 400px;
+    margin: 20px auto;
+    text-align: center;
 }
 
 .mypage-community{
     width: 500px;
     margin: 0 auto;    
-    border: 1px solid #ccc;
+    
     
 }
 
@@ -723,13 +789,22 @@ input[type="radio"]:checked+label{
 }
 
 /* 이용약관 탭 */
+.agree-title{
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
 .mypage-notice-wrap{
+    width: 500px;
+    margin: 0 auto;
     margin-bottom: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
 }
 .mypage-notice{
     width: 500px;
     margin: 0 auto;
-    border: 1px solid #ccc;
+    
     
 }
 
@@ -756,10 +831,23 @@ input[type="radio"]:checked+label{
 
 
 /* 기타 탭*/
+.etc-title{
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mypage-etc-wrap{
+    width: 500px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
 .mypage-etc{
     width: 500px;
     margin: 0 auto;
-    border: 1px solid #ccc;
+    
     
 }
 
@@ -799,6 +887,7 @@ input[type="radio"]:checked+label{
     border-radius: 15px;
 
 }
+
 .finish-content h1,h3{
     margin : 25px 0;
 }
