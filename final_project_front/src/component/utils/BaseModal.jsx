@@ -28,29 +28,33 @@ const BaseModal = ({
               </header>
               <div className="modal-main">{content}</div>
               <footer className="modal-footer">
-                <Button
-                  variant="contined"
-                  style={{
-                    backgroundColor: "white",
-                    color: "#2f4e70",
-                    fontWeight: "bold",
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  {result}
-                </Button>
-                <Button
-                  variant="contined"
-                  style={{
-                    backgroundColor: "white",
-                    color: "#2f4e70",
-                    fontWeight: "bold",
-                    fontSize: "0.9rem",
-                  }}
-                  onClick={handleClose}
-                >
-                  {end}
-                </Button>
+                {result && (
+                  <Button
+                    variant="contined"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#2f4e70",
+                      fontWeight: "bold",
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    {result}
+                  </Button>
+                )}
+                {end && (
+                  <Button
+                    variant="contined"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#2f4e70",
+                      fontWeight: "bold",
+                      fontSize: "0.9rem",
+                    }}
+                    onClick={handleClose}
+                  >
+                    {end}
+                  </Button>
+                )}
               </footer>
             </div>
           </div>
