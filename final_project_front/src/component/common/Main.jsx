@@ -5,6 +5,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import FindId from "../member/FindId";
+import FindPw from "../member/FindPw";
 
 const Main = () => {
     //login 정보 가져와야함
@@ -203,8 +205,8 @@ const Main = () => {
                             <button type="submit" onClick={toLogin}>talk & deal 로그인</button>
                         </div>
                         <div className="login-find">
-                            <Link to="#">아이디 찾기</Link>
-                            <Link to="#">비밀번호 찾기</Link>
+                            <FindId>아이디 찾기</FindId>
+                            <FindPw>비밀번호 찾기</FindPw>
                             <Link to="/member/agree">회원가입</Link>
                         </div>
                     </div>
