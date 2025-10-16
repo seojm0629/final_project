@@ -52,15 +52,36 @@ const TradeBoardView = () => {
         <div className="tradeBoard-view-content">
           <div className="tradeBoard-view-info">
             <div className="tradeBoard-thumbnail">
+              <img src="/image/default_img.png" />
+              {/*
               <img
                 src={
-                  tradeBoard.tradeBoardThumb
+                  tradeBoard.tradeThumbnailPath
                     ? `${import.meta.env.VITE_BACK_SERVER}/tradeBoard/thumb/${
-                        tradeBoard.tradeBoardThumb
+                        tradeBoard.tradeThumbnailPath
                       }`
                     : "image/default_img.png"
                 }
               ></img>
+               */}
+            </div>
+            <div className="tradeBoard-view-preview">
+              <div className="tradeBoard-view-content2">
+                <p>{tradeBoard.tradeBoardTitle}</p>
+                <p>{tradeBoard.tradeBoardCategory}</p>
+                <p>2시간 전</p>
+                <p>{tradeBoard.tradeBoardPrice}원</p>
+                <p>{tradeBoard.tradeBoardPlace}</p>
+                <p>관심</p>
+                <p>조회수</p>
+                <p>신고하기</p>
+                <p>찜 아이콘</p>
+                <p>문의</p>
+                <p>판매자 아이디</p>
+                <p>매너 점수</p>
+              </div>
+              <div className="tradeBoard-view-comment"></div>
+              <div className="tradeBoard-view-product"></div>
             </div>
           </div>
         </div>

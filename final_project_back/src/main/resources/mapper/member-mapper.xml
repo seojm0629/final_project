@@ -4,7 +4,7 @@
 
 	<!-- 회원가입 -->
 	<insert id="join">
-		insert into member_tbl values(member_seq.nextval, #{memberId}, #{memberPw}, #{memberNickname}, #{memberPhone}, #{memberEmail}, #{memberGender}, #{memberBirth}, to_char(sysdate, 'yyyy-mm-dd'), 2)		
+		insert into member_tbl values(member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberNickname}, #{memberPhone}, #{memberEmail}, #{memberGender}, #{memberBirth}, to_char(sysdate, 'yyyy-mm-dd'), 2)		
 	</insert>
 
 	<!-- 로그인
@@ -47,7 +47,12 @@
 	<update id="updateNickname">
 		update member_tbl set member_nickname = #{memberNickname} where member_id = #{memberId}
 	</update>
-
+	
+	
+	<!-- 아이디, 비밀번호 찾기 -->
+	<select id="find" resultType="member">
+		select * from member_tbl where member_nickname = #{memberNickName}
+	</select>
 	
 	
 	

@@ -1,15 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-//import "./tradeBoard.css";
+import "./tradeBoard.css";
 import PageNavigation from "../utils/PageNavigation";
 import { useNavigate } from "react-router-dom";
 
 const TradeBoardList = () => {
   const [tradeBoardList, setTradeBoardList] = useState([]);
   const [reqPageInfo, setReqPageInfo] = useState({
-    sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
-    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
-    listCnt: 16, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    sideBtnCount: 3,
+    pageNo: 1,
+    listCnt: 16,
   });
   const [totalListCount, setTotalListCount] = useState(10);
   useEffect(() => {
@@ -61,9 +61,13 @@ const TradeBoardList = () => {
 const TradeBoardItem = (props) => {
   const tradeBoard = props.tradeBoard;
   const navigate = useNavigate();
+
+  // 거래 완료 상태 확인 (2: 완료)
+  const isTradeCompleted = tradeBoard.tradeBoardStatus === 2;
+
   return (
     <li
-      className="posting-item"
+      className={`posting-item ${isTradeCompleted ? "completed" : ""}`} // 거래 완료 시 'completed' 클래스 추가
       onClick={() => {
         navigate(`/tradeBoard/view/${tradeBoard.tradeBoardNo}`);
       }}
@@ -81,9 +85,11 @@ const TradeBoardItem = (props) => {
       </div>
       <div className="posting-info">
         <div className="posting-title">{tradeBoard.tradeBoardTitle}</div>
-        <div className="posting-sub-info">
-          {/* <span>{member.memberId}</span> */}
-          <span>{tradeBoard.tradeBoardDate}</span>
+        <div className="posting-price">
+          {isTradeCompleted && (
+            <span className="trade-completed-text">거래 완료</span>
+          )}
+          <span className="price-amount">{tradeBoard.tradeBoardPrice}원</span>
         </div>
       </div>
     </li>

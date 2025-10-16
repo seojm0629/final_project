@@ -2,12 +2,22 @@ import React, { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
-import { TableSortLabel } from "@mui/material";
+import { TableSortLabel, Typography } from "@mui/material";
 import Swal from "sweetalert2";
 import SearchBar from "../utils/SearchBar";
 import SearchIcon from "@mui/icons-material/Search";
 import MemberDetail from "./MemberDetail";
 import Button from "@mui/material/Button";
+import BaseModal from "../utils/BaseModal";
+import {
+  DatePicker,
+  DateTimePicker,
+  LocalizationProvider,
+  MultiSectionDigitalClock,
+  TimeField,
+} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -252,6 +262,54 @@ const ContentMember = () => {
   const MemberList = (props) => {
     const m = props.m;
     const [benMode, setBenMode] = useState(false);
+    const [dateValue, setDateValue] = useState(dayjs());
+
+    const confirm = (
+      <div
+        onClick={() => confirmData()}
+        style={{ width: "100%", height: "100%" }}
+      >
+        확인
+      </div>
+    );
+
+    const confirmData = () => {
+      console.log(m);
+      console.log(dateValue);
+      console.log(dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D);
+
+      axios
+        .patch(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/memberBan?memberNo=${
+            m.memberNo
+          }`
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    const BanModalContent = () => {
+      return (
+        <div>
+          <div className="titleText">회원을 정지하시겠습니까?</div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <div> 날짜를 선택해주세요 </div>
+            <DatePicker
+              dateValue={dateValue}
+              onChange={(newValue) => setDateValue(newValue)}
+            />
+            <div> 시간을 선택해주세요 </div>
+            <MultiSectionDigitalClock
+              timeSteps={{ hours: 1, minutes: 15, seconds: 10 }}
+              views={["hours", "minutes", "seconds"]}
+            />
+          </LocalizationProvider>
+        </div>
+      );
+    };
     return (
       <tr key={"member-" + m.memberNo} className="row">
         <td>{m.memberNo}</td>
@@ -287,8 +345,23 @@ const ContentMember = () => {
         >
           {benMode ? (
             <div className="banMode">
-              <button>정지</button>
-              <button>선택</button>
+              <BaseModal
+                title="이용자 정지"
+                content={BanModalContent()}
+                buttonLabel="정지"
+                contentBoxStyle={{ width: "1000px", height: "600px" }}
+                end="닫기"
+                result={confirm}
+              />
+
+              <BaseModal
+                title="벤모드"
+                content={<div>회원을 선택하시겠습니까?</div>}
+                buttonLabel="선택"
+                contentBoxStyle={{ width: "1000px", height: "600px" }}
+                end={"닫기버튼이름"}
+                result={"확인버튼"}
+              />
             </div>
           ) : m.isBen === "FALSE" ? (
             "정상"
@@ -331,7 +404,34 @@ const ContentMember = () => {
       .catch((err) => console.log(err));
   }, [userDetailInfo, reqDetailPageInfo.pageNo, reqDetailPageInfo.listCnt]);
   const hasMember = userDetailInfo && userDetailInfo.member != null;
-  const hasDetail = userDetailBoard != null;
+  /*
+  const banPopup = (m) => {
+    Swal.fire({
+      title: "알림",
+      text: `회원을 정지하시겠습니까?`,
+      showCancelButton: true,
+      confirmButtonText: "네",
+      cancelButtonText: "아니요",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("정지");
+        axios
+          .patch(
+            `${import.meta.env.VITE_BACK_SERVER}/admin/memberBan?memberNo=${
+              m.memberNo
+            }`
+          )
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
+  */
+
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">

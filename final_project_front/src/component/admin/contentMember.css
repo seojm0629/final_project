@@ -113,27 +113,29 @@
   gap: 5px;
 }
 
-.admin .banMode button {
+.admin .banMode div button {
   border-radius: 5px;
   color: rgb(255, 255, 255);
   align-items: center;
   justify-content: center;
 }
 
-.admin .banMode button:nth-of-type(1) {
+.admin .banMode > div:nth-of-type(1) .modal-button {
   background-color: brown;
+  width: 90px;
 }
 
-.admin .banMode button:nth-of-type(2) {
+.admin .banMode > div:nth-of-type(2) .modal-button {
   background-color: #2f4e70;
+  width: 90px;
 }
 
-.admin .banMode button:nth-of-type(1):hover {
+.admin .banMode > div > .modal-button:nth-of-type(1):hover {
   background-color: rgb(165, 112, 42);
   color: antiquewhite;
 }
 
-.admin .banMode button:nth-of-type(2):hover {
+.admin .banMode > div > .modal-button:nth-of-type(2):hover {
   background-color: #2f7070;
   color: antiquewhite;
 }
@@ -148,4 +150,9 @@
   height: 600px;
   line-height: 600px;
   font-size: 30px;
+}
+
+.titleText {
+  font-size: 50px;
+  background-color: #417ab6;
 }

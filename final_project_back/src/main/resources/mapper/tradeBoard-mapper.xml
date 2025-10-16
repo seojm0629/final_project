@@ -11,6 +11,7 @@
 	    (select rownum as rnum, b.*
 	        from
 	            (select
+	            	trade_board_no,
 	                trade_thumbnail_path,
 	                trade_board_title,
 	                trade_board_price
@@ -18,4 +19,7 @@
 	    where rnum BETWEEN #{startRow} and #{endRow}
    </select>
    
+   <select id="selectOneBoard" resultType="tradeBoard">
+   		select * from trade_board_tbl where trade_board_no = #{tradeBoardNo}
+   </select>
 </mapper>

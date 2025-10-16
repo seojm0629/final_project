@@ -20,7 +20,7 @@ const AdminMain = () => {
       <div className="admin-body">
         {/* 현재 어떤 탭이 클릭되었는지, 최상위가 알아야한다. */}
         <SideMenu active={active} setActive={setActive} />
-
+        {active === "statistics"}
         {active === "member" && <ContentMember />}
         {active === "board" && <ContentBoard />}
         {active === "free-board" && <ContentFreeBoard />}

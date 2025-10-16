@@ -50,7 +50,11 @@ const MemberMypage = () => {
                 console.log(err);
             })    
     },[memberId]);
-
+    const navigate = useNavigate();
+    const agree = () => {
+        navigate("/service/agree");
+    }
+    
 
 
     const [menus, setMenus] = useState(
@@ -94,19 +98,19 @@ const MemberMypage = () => {
                 <section className="section site-path">
                     <div className="mypage-tab">
                         <section ref={infoRef} className="section site-path">
-                            <MemberInfo member={member} memberId={memberId} setMember={setMember}/>
+                            <MemberInfo member={member} memberId={memberId} />
                         </section>
                         <section ref={accountRef} className="section site-path">
                             <MemberAccount memberId={memberId} />
                         </section>
                         <section ref={communityRef} className="section site-path">
-                            <MemberCommunity />
+                            <MemberCommunity agree={agree}/>
                         </section>
                         <section ref={noticeRef} className="section site-path">
-                            <MemberNotice />
+                            <MemberNotice agree={agree}/>
                         </section>
                         <section ref={etcRef} className="section site-path">
-                            <MemberEtc memberId={memberId} memberType={memberType} setMemberId={setMemberId} setMemberType={setMemberType}/>
+                            <MemberEtc memberId={memberId} memberType={memberType} setMemberId={setMemberId} setMemberType={setMemberType} />
                         </section>
                     </div>
                 </section>
@@ -119,6 +123,7 @@ const MemberInfo = (props) => {
     const member = props.member;
     const memberId = props.memberId;
     const setMember = props.setMember;
+    
     
     const changeNickname = () => {
         Swal.fire({
@@ -150,19 +155,25 @@ const MemberInfo = (props) => {
         })
     }
 
-    return(
+    return(      
         <div className="mypage-info tab-menu">
-            <div className="info-img">
-            
-                <AccountCircleIcon />
+            <div className="info-title mypage-title">
+                <h2>내 정보</h2>
             </div>
-            <div className="info-nickname">
-                <div className="nickname-input ">
-                    <input name="memberNickname" id="memberNickname"
-                    value={member.memberNickname} onChange={(e)=>{setMember({...member, [e.target.name] : e.target.value})}}></input>
+
+            <div className="info-content" >
+                
+                <div className="info-nickname">
+                    <div className="nickname-input ">
+                        <div className="nickname content-info">
+                            닉네임
+                        </div>
+                        <input name="memberNickname" id="memberNickname"
+                        value={member.memberNickname} onChange={(e)=>{setMember({...member, [e.target.name] : e.target.value})}}></input>
+                    </div>
                 </div>
                 <div className="mypage-nick-btn-box">
-                    <button type="submit" onClick={changeNickname}>수정</button>
+                    <button type="submit" onClick={changeNickname}>변경하기</button>
                 </div>
             </div>
         </div>
@@ -173,11 +184,19 @@ const MemberAccount = (props) => {
     const memberId = props.memberId;
     return(
         <div className="mypage-account-wrap tab-menu">
+            <div className="account-title mypage-title">
+                <h2>계정</h2>
+            </div>
+
             <div className="mypage-account">
+
                 <div className="account-name tab-div">
-                    
-                    <span> {memberId}</span>
+                    <div className="member-name content-info">
+                        아이디
+                    </div>                    
+                    <span>{memberId}</span>
                 </div>
+
                 <div className="account-changePw tab-div">
                     <ChangePw />
                 </div>
@@ -189,8 +208,9 @@ const MemberAccount = (props) => {
     )
 }
 
-const MemberCommunity = () => {
+const MemberCommunity = (props) => {
     const navigate = useNavigate();
+    const agree = props.agree;
 
     const board = () => {
         navigate("") //게시판 링크 필요
@@ -199,33 +219,39 @@ const MemberCommunity = () => {
         navigate("") //커뮤니티 이용 규칙 링크 필요
     }
     return(
-        <div className="mypage-community-wrap">
-            <div className="mypage-community tab-menu">
-            
+        <div className="mypage-community-wrap tab-menu">
+            <div className="community-title">
+                <h2>커뮤니티</h2>
+            </div>
+            <div className="mypage-community">
                 <div className="community-manage tab-div">
                     <button type="submit">게시판 관리</button>
                 </div>
                 <div className="commnuity-rule tab-div">
-                    <button type="submit">커뮤니티 이용규칙</button>
+                    <button type="submit" onClick={agree}>커뮤니티 이용규칙</button>
                 </div>
             </div>
         </div>
     )
 }
 
-const MemberNotice = () => {
+const MemberNotice = (props) => {
+    const agree = props.agree;
 
     return(
-        <div className="mypage-notice-wrap">
-            <div className="mypage-notice tab-menu">
+        <div className="mypage-notice-wrap tab-menu">
+            <div className="agree-title">
+                <h2>이용약관</h2>
+            </div>
+            <div className="mypage-notice">
                 <div className="notice tab-div">
                     <button type="submit">공지사항</button>
                 </div>
                 <div className="mypage-service tab-div">
-                    <button type="submit">서비스 이용약관</button>
+                    <button type="submit" onClick={agree}>서비스 이용약관</button>
                 </div>
                 <div className="mypage-terms tab-div">
-                    <button type="submit">개인정보 처리방침</button>
+                    <button type="submit" onClick={agree}>개인정보 처리방침</button>
                 </div>
             </div>
         </div>
@@ -275,8 +301,11 @@ const MemberEtc = (props) => {
         })
     }
     return(
-        <div className="mypage-etc-wrap">
-            <div className="mypage-etc tab-menu">
+        <div className="mypage-etc-wrap  tab-menu">
+            <div className="etc-title">
+                <h2>기타</h2>
+            </div>
+            <div className="mypage-etc">
                 <div className="delete-member tab-div">
                     <button type="submit" onClick={deleteMember}>회원 탈퇴</button>
                 </div>

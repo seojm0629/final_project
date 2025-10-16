@@ -8,6 +8,7 @@ const MemberJoin = () => {
     const backServer = import.meta.env.VITE_BACK_SERVER;
     const navigate = useNavigate();
     const [member, setMember] = useState({
+        memberName : "",
         memberId : "",
         memberNickname : "",
         memberPw : "",
@@ -90,7 +91,7 @@ const MemberJoin = () => {
         .get(`${backServer}/api/sendCode`,{params : {receiver}})
         .then((res)=>{
             console.log(res.data);  //인증코드 반환 console 구현 완료시 삭제 필요
-            setMailCode(res.data.toLowerCase());
+            setMailCode(res.data);
             //clickConfirm();
             //formatTime();
             setShowCodeInput(true);     //인증번호 입력 창 메일 전송 시 보일 수 있게 true로 변경
@@ -291,6 +292,16 @@ const MemberJoin = () => {
                 joinMember();
             }}>
                 <div className="join">
+                    <div className="join-input-wrap">
+                        <div className="join-input-title">
+                            <label htmlFor="memberName">이름</label>
+                        </div>
+                        <div className="join-input-item">
+                            <input type="text" name="memberName" id="memberName" 
+                            value={member.memberName} onChange={inputMemberData}
+                            />
+                        </div>
+                    </div>
                     <div className="join-input-wrap">
                         <div className="join-input-title">
                             <label htmlFor="memberId">아이디</label>
