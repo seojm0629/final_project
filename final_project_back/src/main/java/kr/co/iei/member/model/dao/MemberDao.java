@@ -27,6 +27,10 @@ public interface MemberDao {
 
 	int updateNickname(MemberDTO member);
 
+<<<<<<< HEAD
+=======
+	MemberDTO find(String memberName);
+>>>>>>> jungmin
 
 	
 

@@ -115,8 +115,8 @@ public class MemberService {
 		return result;
 	}
 
-	public MemberDTO find(MemberDTO member) {
-		MemberDTO m = memberDao.find(member);
+	public MemberDTO find(String memberName) {
+		MemberDTO m = memberDao.find(memberName);
 		return m;
 	}
 
