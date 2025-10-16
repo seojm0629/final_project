@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.iei.freeboard.model.dao.FreeBoardDao;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
+import kr.co.iei.member.model.dao.MemberDao;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 @Service
 public class FreeBoardService {
 	@Autowired
 	private FreeBoardDao freeBoardDao;
-
+	@Autowired 
+	private MemberDao memberDao;
 
 	public List<Map<String, Object>> selectCategoryList() {
 		List<FreeBoardCategoryDTO> cate = freeBoardDao.selectCategoryList();
@@ -68,6 +71,7 @@ public class FreeBoardService {
 
 	public HashMap<String, Object> boardList(int startRow, int endRow, int sideBtnCount,
 			int order) {
+		
 		HashMap<String, Object> freeBoardList = new HashMap<String,Object>(); 
 		freeBoardList.put("startRow", startRow);
 		freeBoardList.put("endRow", endRow);
@@ -80,6 +84,7 @@ public class FreeBoardService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("boardList", boardList);
 		map.put("totalListCount", totalListCount);
+		//System.out.println(boardList);
 		return map;
 	}
 }

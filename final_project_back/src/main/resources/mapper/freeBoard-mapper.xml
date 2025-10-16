@@ -17,11 +17,20 @@
 		select * from free_board_tbl
 	</select>
 	<select id="totalBoardList" resultType = "freeBoard">
-		select * from 
-		    (select rownum as fbnum, fb.* 
-		        from (select free_board_no, free_board_subcategory_no, free_board_category_no, free_board_title, member_no, free_board_content, free_board_date 
-		            from free_board_tbl order by free_board_no desc) fb)
-	            where fbnum between #{startRow} and #{endRow}
+		select * from
+	    		(select rownum as fbnum, fb.* from
+	            	(select f.*, m.member_nickname, m.member_id, (select count(*) from fb_like_tbl where free_board_no=f.free_board_no) as like_count
+	                from free_board_tbl f
+	            left join member_tbl m on (f.member_no = m.member_no)
+	            ) fb
+	            <if test="order == 2">
+	            	order by free_board_no desc
+	            </if>
+	    		<if test="order == 1">
+	    			order by free_board_no asc
+	    		</if>
+           	)
+	    where fbnum between #{startRow} and #{endRow}
 	</select>
 	<select id="totalListCount" resultType="int">
 		select count(*) from free_board_tbl

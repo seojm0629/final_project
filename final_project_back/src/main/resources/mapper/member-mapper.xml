@@ -47,9 +47,7 @@
 	<update id="updateNickname">
 		update member_tbl set member_nickname = #{memberNickname} where member_id = #{memberId}
 	</update>
-	
-	
-	
+
 	
 	
 	

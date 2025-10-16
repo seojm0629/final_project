@@ -6,6 +6,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
 
@@ -31,11 +32,6 @@ const FreeBoardMain = () => {
       })
     );
   };
-  {
-    /*
-            menu는 관리자가 직접 추가 삭제가능하도록 backend 처리해야함 (axios로 카테고리와 하위 카테고리)
-        */
-  }
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
@@ -51,7 +47,7 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const searchTitle = () => {
     axios
-      .get(`${backServer}/freeBoard/${freeBoardTitle}`)
+      .get(`${backServer}/freeBoard/content/${freeBoardTitle}`)
       .then((res) => {
         console.log(res.data);
       })
@@ -126,7 +122,7 @@ const FreeBoardMain = () => {
           <section className="section free-board">
             <Routes>
               <Route
-                path="mainPage"
+                path="content"
                 element={<FreeBoardContent></FreeBoardContent>}
               ></Route>
               <Route
@@ -152,7 +148,6 @@ const FreeBoardContent = () => {
   });
   const [totalListCount, setTotalListCount] = useState(0);
   const [freeBoardList, setFreeBoardList] = useState([]);
-  console.log(freeBoardList);
   useEffect(() => {
     //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
     axios
@@ -163,36 +158,42 @@ const FreeBoardContent = () => {
         &order=${reqPageInfo.order}`
       )
       .then((res) => {
-        console.log(res);
         setFreeBoardList(res.data.boardList);
         setTotalListCount(res.data.totalListCount);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPageInfo.pageNo]);
+  }, [reqPageInfo.order, reqPageInfo.pageNo]);
   return (
     <section className="freeBoard-section">
       <div className="board-div">
         {freeBoardList.map((list, i) => {
-          return i % 2 !== 0 ? (
-            <div key={"first" + i} className="board-section">
-              <div className="board-status">now</div>
-              {/*상태*/}
+          return i % 2 === 0 ? (
+            <div
+              key={"first" + i}
+              className="board-section"
+              style={{
+                borderRight: "1px solid #ccc",
+              }}
+            >
+              {/*상태넣을꺼*/}
+              <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
               <div className="board-content">{list.freeBoardContent}</div>
               <div className="nickname-id">
-                <span>닉네임</span>
-                <span>아이디</span>
+                <span>{list.memberNickname}</span>
+                <span>{list.memberId}</span>
               </div>
               <div className="view-heart">
                 <div className="view">
+                  {/*작성된 게시글을 */}
                   <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
                   111
                 </div>
                 <div className="heart">
                   <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                  222
+                  {list.likeCount}
                 </div>
                 <div className="hour">
                   <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
@@ -200,17 +201,13 @@ const FreeBoardContent = () => {
               </div>
             </div>
           ) : (
-            <div
-              key={"second" + i}
-              className="board-section"
-              style={{ borderLeft: "1px solid #ccc" }}
-            >
-              <div className="board-status">now</div>
+            <div key={"second" + i} className="board-section" style={{}}>
+              <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
               <div className="board-content">{list.freeBoardContent}</div>
               <div className="nickname-id">
-                <span>닉네임</span>
-                <span>아이디</span>
+                <span>{list.memberNickname}</span>
+                <span>{list.memberId}</span>
               </div>
               <div className="view-heart">
                 <div className="view">
@@ -219,7 +216,7 @@ const FreeBoardContent = () => {
                 </div>
                 <div className="heart">
                   <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                  222
+                  {list.likeCount}
                 </div>
                 <div className="hour">
                   <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
@@ -228,6 +225,25 @@ const FreeBoardContent = () => {
             </div>
           );
         })}
+      </div>
+      <div
+        className="order-div"
+        onClick={() => {
+          {
+            reqPageInfo.order === 2
+              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
+              : setReqPageInfo({ ...reqPageInfo, order: 2 });
+          }
+        }}
+      >
+        <div>
+          <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
+          {reqPageInfo.order === 2 ? (
+            <span>최신순</span>
+          ) : (
+            <span>오래된순</span>
+          )}
+        </div>
       </div>
       <div className="page-navi">
         <PageNavigation
@@ -238,101 +254,5 @@ const FreeBoardContent = () => {
       </div>
     </section>
   );
-  {
-    /*
-      <div className="board-div">
-        <div className="board-section">
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="board-div">
-        <div className="board-section">
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-        <div className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
-          <div className="board-status">now</div>
-          <div className="board-title">야야야</div>
-          <div className="board-content">내용내용내용</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-      </div>
-      */
-  }
 };
 export default FreeBoardMain;

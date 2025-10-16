@@ -21,6 +21,9 @@ public class FreeBoardDTO {
 	private int memberNo;
 	private String freeBoardContent;
 	private String freeBoardDate;
+	private String memberNickname;
+	private String memberId;
+	private int likeCount;
 	
 	
 }

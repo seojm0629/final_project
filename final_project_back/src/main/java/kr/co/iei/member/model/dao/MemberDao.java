@@ -1,5 +1,7 @@
 package kr.co.iei.member.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -24,6 +26,7 @@ public interface MemberDao {
 	int deleteMember(String memberId);
 
 	int updateNickname(MemberDTO member);
+
 
 	
 

@@ -14,7 +14,6 @@ import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
 import ServiceAgree from "./component/member/ServiceAgree";
 
-
 function App() {
   return (
     <div className="wrap">
@@ -37,7 +36,6 @@ function App() {
             element={<SurveyContent></SurveyContent>}
           />
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
-          
         </Routes>
       </main>
       <Footer></Footer>
