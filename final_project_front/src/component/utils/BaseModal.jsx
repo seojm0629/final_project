@@ -34,9 +34,8 @@ const BaseModal = ({
                     backgroundColor: "white",
                     color: "#2f4e70",
                     fontWeight: "bold",
-                    fontSize: "20px",
+                    fontSize: "0.9rem",
                   }}
-                  onClick={handleClose}
                 >
                   {result}
                 </Button>
@@ -46,7 +45,7 @@ const BaseModal = ({
                     backgroundColor: "white",
                     color: "#2f4e70",
                     fontWeight: "bold",
-                    fontSize: "20px",
+                    fontSize: "0.9rem",
                   }}
                   onClick={handleClose}
                 >
