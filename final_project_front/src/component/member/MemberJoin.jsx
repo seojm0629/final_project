@@ -8,6 +8,7 @@ const MemberJoin = () => {
     const backServer = import.meta.env.VITE_BACK_SERVER;
     const navigate = useNavigate();
     const [member, setMember] = useState({
+        memberName : "",
         memberId : "",
         memberNickname : "",
         memberPw : "",
@@ -291,6 +292,16 @@ const MemberJoin = () => {
                 joinMember();
             }}>
                 <div className="join">
+                    <div className="join-input-wrap">
+                        <div className="join-input-title">
+                            <label htmlFor="memberName">이름</label>
+                        </div>
+                        <div className="join-input-item">
+                            <input type="text" name="memberName" id="memberName" 
+                            value={member.memberName} onChange={inputMemberData}
+                            />
+                        </div>
+                    </div>
                     <div className="join-input-wrap">
                         <div className="join-input-title">
                             <label htmlFor="memberId">아이디</label>

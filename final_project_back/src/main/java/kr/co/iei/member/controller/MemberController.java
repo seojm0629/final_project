@@ -63,7 +63,7 @@ public class MemberController {
 	public ResponseEntity<MemberDTO> mypage(@PathVariable String memberId){
 		
 		MemberDTO member = memberService.selectOneMember(memberId);
-		System.out.println(member);
+		
 		
 		return ResponseEntity.ok(member);
 	}
@@ -105,7 +105,11 @@ public class MemberController {
 	}
 	
 	
-	
+	@GetMapping(value="/find")
+	public ResponseEntity<MemberDTO> find(@RequestBody MemberDTO member){
+		MemberDTO m = memberService.find(member);
+		return ResponseEntity.ok(m);
+	}
 	
 	
 	

@@ -265,7 +265,9 @@ input[type="radio"]:checked+label{
 }
 .main-topic{
     background-color: #fff;
+
 }
+
 .main-page{
     width: 1200px;
     margin: 0 auto;
@@ -867,7 +869,7 @@ input[type="radio"]:checked+label{
 }
 
 .finish-content h1,h3{
-    margin : 25px 0;
+    margin : 10px 0;
 }
 .finish-button>button{
     width: 230px;
@@ -907,6 +909,55 @@ input[type="radio"]:checked+label{
     border: 1px solid #ccc;
     overflow: auto;
 }
+
+/* 모달 적용*/
+.member-modal-content{
+    width: 400px;
+}
+.member-modal-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.member-modal-title>span{
+    color: #fff;
+    text-align: center;
+    margin-right: 12px;
+}
+
+.title-explain>span{
+    color: #fff;
+    font-weight: 200;
+    font-size: 11px;
+    display: flex;
+}
+
+.modal-member-name{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+.modal-member-title label{
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.modal-member-item input{
+    width: 290px;
+    height: 30px;
+    padding-left: 10px;
+}
+
+.modal-button-box{
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+.modal-button-box>button{
+    width: 100%;
+    height: 40px;
+}
+
 /*
 .member-button-zone{
     width: 400px;

@@ -13,6 +13,7 @@ import SurveyContent from "./component/survey/SurveyModal";
 import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/survey/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
+import FindId from "./component/member/FindId";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
+          <Route path="/member/modal" element={<FindId />} />
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
