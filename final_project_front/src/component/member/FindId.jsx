@@ -23,6 +23,7 @@ const FindId = () => {
             .get(`${import.meta.env.VITE_BACK_SERVER}/member/find?memberName=${member.memberName}`)
             .then((res)=>{
                 console.log(res);
+                setMember(res.data);
             })
             .catch((err)=>{
                 console.log(err);
@@ -90,17 +91,43 @@ const FindId = () => {
         </div>
     )
     return(
-       <div>
+    <div>
         <BaseModal
             title={title}
             buttonLabel={"모달열기버튼"}
             contentBoxStyle={{ width: "600px", height: "500px" }}
-            result={"확인버"}
-            end={"닫기버튼이름"}
+            result={"확인"}
+            end={"취소"}
             content={content}
         />
     </div>
     )
 }
+
+const resultModal = () => {
+    
+    const result = (
+        <div className="result-modal-wrap">
+            <div className="result-modal">
+                <div className="member-id">
+                    <span>회원님의 아이디는 : "memberId" 입니다.</span>
+                </div>
+            </div>
+        </div>
+    )
+
+    return(
+        <div>
+            <BaseModal
+            title={title}
+            buttonLabel={"모달열기버튼"}
+            contentBoxStyle={{ width: "600px", height: "500px" }}
+            result={"확인"}
+            end={"취소"}
+            content={content}
+            />
+        </div>
+    )
+};
 
 export default FindId;
