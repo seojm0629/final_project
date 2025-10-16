@@ -13,6 +13,7 @@ import ChangePw from "./component/member/ChangePw";
 import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
 import Test from "./component/survey/Test";
+import TradeBoardView from "./component/trade_board/TradeBoardView";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           />
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
           <Route path="/survey/test" element={<Test />} />
+          <Route
+            path="/tradeBoard/view/:tradeBoardNo"
+            element={<TradeBoardView />}
+          />
         </Routes>
       </main>
       <Footer></Footer>
