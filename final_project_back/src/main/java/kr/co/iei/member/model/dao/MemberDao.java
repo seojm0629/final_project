@@ -29,6 +29,8 @@ public interface MemberDao {
 
 
 	MemberDTO find(String memberName);
+	
+	
 
 
 	

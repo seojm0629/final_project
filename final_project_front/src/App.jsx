@@ -14,6 +14,7 @@ import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/survey/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import FindId from "./component/member/FindId";
+import FindPw from "./component/member/FindPw";
 
 function App() {
   return (
