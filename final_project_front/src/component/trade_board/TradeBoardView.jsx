@@ -62,6 +62,24 @@ const TradeBoardView = () => {
                 }
               ></img>
             </div>
+            <div className="tradeBoard-view-preview">
+              <div className="tradeBoard-view-content2">
+                <div>{tradeBoard.tradeBoardTitle}</div>
+                <div>카테고리</div>
+                <div>2시간 전</div>
+                <div>{tradeBoard.tradeBoardPrice}</div>
+                <div>{tradeBoard.tradeBoardPlace}</div>
+                <div>관심</div>
+                <div>조회수</div>
+                <div>신고하기</div>
+                <div>찜 아이콘</div>
+                <div>문의</div>
+                <div>판매자 아이디</div>
+                <div>매너 점수</div>
+              </div>
+              <div className="tradeBoard-view-comment"></div>
+              <div className="tradeBoard-view-product"></div>
+            </div>
           </div>
         </div>
       )}

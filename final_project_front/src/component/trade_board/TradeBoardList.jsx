@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-//import "./tradeBoard.css";
+import "./tradeBoard.css";
 import PageNavigation from "../utils/PageNavigation";
 import { useNavigate } from "react-router-dom";
 
@@ -61,9 +61,13 @@ const TradeBoardList = () => {
 const TradeBoardItem = (props) => {
   const tradeBoard = props.tradeBoard;
   const navigate = useNavigate();
+
+  // 거래 완료 상태 확인 (2: 완료)
+  const isTradeCompleted = tradeBoard.tradeBoardStatus === 2;
+
   return (
     <li
-      className="posting-item"
+      className={`posting-item ${isTradeCompleted ? "completed" : ""}`} // 거래 완료 시 'completed' 클래스 추가
       onClick={() => {
         navigate(`/tradeBoard/view/${tradeBoard.tradeBoardNo}`);
       }}
@@ -81,9 +85,15 @@ const TradeBoardItem = (props) => {
       </div>
       <div className="posting-info">
         <div className="posting-title">{tradeBoard.tradeBoardTitle}</div>
-        <div className="posting-sub-info">
-          {/* <span>{member.memberId}</span> */}
-          <span>{tradeBoard.tradeBoardDate}</span>
+
+        <div className="posting-price">
+          {/* 1. 거래 완료 상태 텍스트 */}
+          {isTradeCompleted && (
+            <span className="trade-completed-text">거래 완료</span>
+          )}
+
+          {/* 2. 상품 금액 */}
+          <span className="price-amount">{tradeBoard.tradeBoardPrice}원</span>
         </div>
       </div>
     </li>

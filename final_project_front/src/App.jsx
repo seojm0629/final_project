@@ -12,7 +12,9 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ChangePw from "./component/member/ChangePw";
 import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
+import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/survey/Test";
+import TradeBoardView from "./component/trade_board/TradeBoardView";
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
+          <Route path="/service/agree" element={<ServiceAgree />} />
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
@@ -35,6 +38,10 @@ function App() {
             element={<SurveyContent></SurveyContent>}
           />
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
+          <Route
+            path="/tradeBoard/view/:tradeBoardNo"
+            element={<TradeBoardView />}
+          />
           <Route path="/survey/test" element={<Test />} />
         </Routes>
       </main>

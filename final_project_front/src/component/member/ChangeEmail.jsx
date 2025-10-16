@@ -207,6 +207,9 @@ const ChangeEmail = () => {
     return(
         <div>
             <div className="mypage-changeEmail-wrap">
+                <div className="changeEmail-name">
+                        <span>이메일 변경</span>
+                </div>
                 <div className="changeEmail">
                     <input type="text" name="memberEmail" id="memberEmail" 
                     value={member.memberEmail}
