@@ -13,6 +13,7 @@ import {
   DatePicker,
   DateTimePicker,
   LocalizationProvider,
+  MultiSectionDigitalClock,
   TimeField,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -265,16 +266,17 @@ const ContentMember = () => {
 
     const confirm = (
       <div
-        onClick={() => confirmData(m)}
+        onClick={() => confirmData()}
         style={{ width: "100%", height: "100%" }}
       >
         확인
       </div>
     );
 
-    const confirmData = (m) => {
+    const confirmData = () => {
       console.log(m);
       console.log(dateValue);
+      console.log(dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D);
 
       axios
         .patch(
@@ -289,7 +291,25 @@ const ContentMember = () => {
           console.log(err);
         });
     };
-
+    const BanModalContent = () => {
+      return (
+        <div>
+          <div className="titleText">회원을 정지하시겠습니까?</div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <div> 날짜를 선택해주세요 </div>
+            <DatePicker
+              dateValue={dateValue}
+              onChange={(newValue) => setDateValue(newValue)}
+            />
+            <div> 시간을 선택해주세요 </div>
+            <MultiSectionDigitalClock
+              timeSteps={{ hours: 1, minutes: 15, seconds: 10 }}
+              views={["hours", "minutes", "seconds"]}
+            />
+          </LocalizationProvider>
+        </div>
+      );
+    };
     return (
       <tr key={"member-" + m.memberNo} className="row">
         <td>{m.memberNo}</td>
@@ -326,21 +346,11 @@ const ContentMember = () => {
           {benMode ? (
             <div className="banMode">
               <BaseModal
-                title="벤모드"
-                content={
-                  <div>
-                    <div>회원을 정지하시겠습니까?</div>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        dateValue={dateValue}
-                        onChange={(newValue) => setDateValue(newValue)}
-                      />
-                    </LocalizationProvider>
-                  </div>
-                }
+                title="이용자 정지"
+                content={BanModalContent()}
                 buttonLabel="정지"
                 contentBoxStyle={{ width: "1000px", height: "600px" }}
-                end={"닫기버튼이름"}
+                end="닫기"
                 result={confirm}
               />
 
