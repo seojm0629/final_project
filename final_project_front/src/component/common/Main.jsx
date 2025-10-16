@@ -159,10 +159,10 @@ const Main = () => {
                             </div>
                             <div className="login-info">
                                 <div className="login-nickname">
-                                    <span>{memberId}</span>
+                                    <span style={{fontWeight : "500", fontSize : "16px"}}>{memberId}</span>
                                 </div>
                                 <div className="login-email">
-                                    <span>{member.memberEmail}</span>
+                                    <span style={{fontWeight : "500", fontSize : "15px"}}>{member.memberEmail}</span>
                                 </div>
                             </div>
                             <div className="logout-btn">

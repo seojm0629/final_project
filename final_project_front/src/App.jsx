@@ -9,8 +9,6 @@ import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
 import TradeBoardList from "./component/trade_board/TradeBoardList";
-import ChangePw from "./component/member/ChangePw";
-import ChangeEmail from "./component/member/ChangeEmail";
 import SurveyContent from "./component/survey/SurveyModal";
 import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/survey/Test";

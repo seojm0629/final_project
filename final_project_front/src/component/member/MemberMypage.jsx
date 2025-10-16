@@ -173,7 +173,7 @@ const MemberInfo = (props) => {
                     </div>
                 </div>
                 <div className="mypage-nick-btn-box">
-                    <button type="submit" onClick={changeNickname}>닉네임 변경</button>
+                    <button type="submit" onClick={changeNickname}>변경하기</button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./common.css";
+import "./default.css";
 import { useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";

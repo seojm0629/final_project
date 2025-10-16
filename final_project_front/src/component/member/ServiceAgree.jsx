@@ -7,7 +7,7 @@ const ServiceAgree = () => {
     
     return(
         <div className="service-agree-wrap">
-            <div className="service-agree">
+            <div className="service-agree-toJoin">
                 <div className="service-agree-title">
                     <h1>약관동의</h1>
                 </div>

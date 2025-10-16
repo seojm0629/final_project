@@ -1,37 +1,3 @@
-@font-face {
-  font-family: ns-l;
-  src: url(/font/NotoSansKR-Light.ttf);
-}
-@font-face {
-  font-family: ns-r;
-  src: url(/font/NotoSansKR-Regular.ttf);
-}
-@font-face {
-  font-family: ns-b;
-  src: url(/font/NotoSansKR-Bold.ttf);
-}
-@font-face {
-  font-family: ns-black;
-  src: url(/font/NotoSansKR-Black.ttf);
-}
-
-body{
-    background-color: #F0F2F5;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  outline: 0;
-  font-family: ns-r;
-  list-style-type: none;
-  color: var(--main1);
-}
-
-*{
-    margin: 0;
-    padding: 0;
-}
 
 /* 로그인 페이지 */
 /* 로그인 로고 */
@@ -60,6 +26,7 @@ body{
 .login-input-wrap .login-input-title {
     width: 400px;
     margin: 0 auto;
+    
 }
 
 /* 로그인 인풋 */
@@ -166,7 +133,8 @@ body{
     margin-left: 5px;
 }
 .join-input-wrap .join-input-email > button{
-    background-color: #2F4E70;
+    background-color: #3E5F86;
+    color: #fff;
     color: #fff;
     width: 81px;    
     margin-left: 5px;
@@ -186,7 +154,8 @@ body{
 }
 
 .join-input-code > button{
-    background-color: #2F4E70;
+    background-color: #3E5F86;
+    color: #fff;
     color: #fff;
     width: 81px;    
     margin-left: 5px;
@@ -214,7 +183,8 @@ body{
     cursor: pointer;
 }
 input[type="radio"]:checked+label{
-    background-color: #2F4E70;
+    background-color: #3E5F86;
+    color: #fff;
     color: #fff;
     font-weight: 800;
     cursor: pointer;
@@ -243,7 +213,8 @@ input[type="radio"]:checked+label{
     height: 40px;
     margin: 0 auto;
     margin-top: 20px;
-    background-color: #2F4E70;
+    background-color: #3E5F86;
+    color: #fff;
     color: #fff;
     font-size: 20px;
     font-weight: 800;
@@ -267,20 +238,20 @@ input[type="radio"]:checked+label{
     padding-top: 20px;
 }
 .service-agree{
-    width: 400px;
+    width: 500px;
     height: 225px;
     margin: 30px auto;
     
 }
 
 .service-div{
-    width: 100%;
+    width: 500px;
     height: 200px;
     background-color: #fff;
     border-radius: 5px ;
     color: #666666;
     border: 1px solid #999999;
-    
+    box-sizing: border-box;
     overflow: auto;
 }
 
@@ -289,6 +260,12 @@ input[type="radio"]:checked+label{
 }
 
 /* 메인 페이지 */
+.main-login{
+    background-color: #fff;
+}
+.main-topic{
+    background-color: #fff;
+}
 .main-page{
     width: 1200px;
     margin: 0 auto;
@@ -307,16 +284,7 @@ input[type="radio"]:checked+label{
     gap: 50px;
 }
 
-.main-board{
-    width: 140px;
-    height: 110px;
-    border: 1px solid black;
-    border-radius: 20px;
-    background-color: #FEFEF9;
-    text-align: center;
-    padding-top: 30px;
-    
-}
+
 
 .board-image>img{
     width:50px;
@@ -346,6 +314,10 @@ input[type="radio"]:checked+label{
 }
 .board-tab>div:first-child{
     border-left: none;
+}
+
+.first{
+    background-color: #fff;
 }
 .board-tab>div{
     font-family: ns-b;
@@ -397,7 +369,7 @@ input[type="radio"]:checked+label{
     border: 1px solid #ccc;
     border-radius: 6px;
     padding-left: 2px;
-    background-color: #F5F8FB;
+    background-color: #fff;
     cursor: pointer;
 }
 .login-info{
@@ -520,7 +492,7 @@ input[type="radio"]:checked+label{
 }
 
 .side-menu-login button:hover span {
-  color: #19d3f0;
+    color: #19d3f0;
 }
 
 
@@ -557,6 +529,7 @@ input[type="radio"]:checked+label{
     border: 1px solid #ccc;
     background-color: #fff;
     box-sizing: border-box;
+    padding-top: 6px;
 }
 .nickname-input > input{
     width: 237px;
@@ -566,13 +539,14 @@ input[type="radio"]:checked+label{
     color: black;
     font-weight: 500;
     border: none;
+    padding-bottom: 6px;
     
 }
 
 .mypage-nick-btn-box>button{
     width: 100px;
-    height: 44px;
-    background-color: #2F4E70;
+    height: 55px;
+    background-color: #3E5F86;
     color: #fff;
     font-size: 18px;
     font-weight: 500;
@@ -604,9 +578,11 @@ input[type="radio"]:checked+label{
 
 .account-name{
     border: 1px solid #ccc;
+    padding : 6px 0;
 }
 
 .account-name>span{
+    
     padding-left: 10px;
     font-size: 18px;
 }
@@ -618,6 +594,7 @@ input[type="radio"]:checked+label{
     
 }
 .changePw-name{
+    padding-top : 6px;
     padding-left: 10px;
     font-size: 13px;
 }
@@ -659,7 +636,7 @@ input[type="radio"]:checked+label{
 .mypage-changePw-btn-box>button{
     width: 100px;
     height: 45px;
-    background-color: #2F4E70;
+    background-color: #3E5F86;
     color: #fff;
     font-size: 18px;
     font-weight: 500;
@@ -683,6 +660,7 @@ input[type="radio"]:checked+label{
 .mypage-changeEmail-wrap{
     border : 1px solid #ccc;
     margin-bottom : 30px;
+    padding-top : 6px;
 }
 
 .changeEmail{
@@ -715,7 +693,7 @@ input[type="radio"]:checked+label{
 
 .changeEmail button{
     height: 40px;
-    background-color: #2F4E70;
+    background-color: #3E5F86;
     border-radius: 7px;
     color: #fff;
     width: 81px;    
@@ -896,7 +874,7 @@ input[type="radio"]:checked+label{
     height: 40px;
     margin: 0 auto;
     margin-top: 20px;
-    background-color: #2F4E70;
+    background-color: #3E5F86;
     color: #fff;
     font-size: 20px;
     font-weight: 800;
@@ -910,7 +888,7 @@ input[type="radio"]:checked+label{
     
 }
 
-.service-agree{
+.service-agree-toJoin{
     width: 1000px;
     margin: 0 auto;
     
