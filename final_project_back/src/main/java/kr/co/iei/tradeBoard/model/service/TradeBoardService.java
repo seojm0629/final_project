@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.iei.tradeBoard.model.dao.TradeBoardDao;
+import kr.co.iei.tradeBoard.model.dto.TradeBoardDTO;
 
 
 @Service
@@ -24,5 +25,10 @@ public class TradeBoardService {
 		map.put("tradeBoardList", tradeBoardList);
 		map.put("totalCount", totalCount);
 		return map;
+	}
+
+	public TradeBoardDTO selectOneBoard(int tradeBoardNo) {
+		TradeBoardDTO tb = tradeBoardDao.selectOneBoard(tradeBoardNo);
+		return tb;
 	}
 }
