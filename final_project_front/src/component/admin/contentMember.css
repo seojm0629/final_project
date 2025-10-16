@@ -151,3 +151,8 @@
   line-height: 600px;
   font-size: 30px;
 }
+
+.admin .titleText {
+  font-size: 50px;
+  background-color: #417ab6;
+}
