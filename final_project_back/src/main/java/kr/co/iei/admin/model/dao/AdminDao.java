@@ -20,4 +20,6 @@ public interface AdminDao {
 
 	List<AdminMemberDetailDTO> memberDetail(int memberNo,int startRow,int endRow);
 
+	int memberDetailTotalCount(int memberNo);
+
 }
