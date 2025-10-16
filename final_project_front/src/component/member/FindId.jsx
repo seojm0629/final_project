@@ -20,7 +20,7 @@ const FindId = () => {
     const findId = () => {
         if(member.memberName !== "" && member.memberBirth != "" && member.memberPhone !== ""){
             axios
-            .get(`${import.meta.env.VITE_BACK_SERVER}/member/find`, member)
+            .get(`${import.meta.env.VITE_BACK_SERVER}/member/find?memberName=${member.memberName}`)
             .then((res)=>{
                 console.log(res);
             })
@@ -94,7 +94,7 @@ const FindId = () => {
         <BaseModal
             title={title}
             buttonLabel={"모달열기버튼"}
-            contentBoxStyle={{ width: "800px", height: "600px" }}
+            contentBoxStyle={{ width: "600px", height: "500px" }}
             result={"확인버"}
             end={"닫기버튼이름"}
             content={content}

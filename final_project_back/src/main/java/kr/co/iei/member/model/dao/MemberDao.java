@@ -25,7 +25,7 @@ public interface MemberDao {
 
 	int updateNickname(MemberDTO member);
 
-	MemberDTO find(MemberDTO member);
+	MemberDTO find(String memberName);
 
 	
 

@@ -51,7 +51,7 @@
 	
 	<!-- 아이디, 비밀번호 찾기 -->
 	<select id="find" resultType="member">
-		select * from member_tbl where member_nickname = #{memberNickName}
+		select * from member_tbl where member_name = #{memberName}
 	</select>
 	
 	
