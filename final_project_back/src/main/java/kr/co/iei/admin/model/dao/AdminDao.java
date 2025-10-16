@@ -22,4 +22,6 @@ public interface AdminDao {
 
 	int memberDetailTotalCount(int memberNo);
 
+	int memberBan(HashMap<String, String> banSet);
+
 }

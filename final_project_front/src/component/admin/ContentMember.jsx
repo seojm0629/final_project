@@ -123,6 +123,7 @@ const ContentMember = () => {
         });
   }, [updateMemberType]);
 
+  const [reqListToggle, setReqListToggle] = useState(false);
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
   useEffect(() => {
@@ -153,7 +154,7 @@ const ContentMember = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPageInfo]);
+  }, [reqPageInfo, reqListToggle]);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Back 호출하고 리턴 받기
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -258,11 +259,13 @@ const ContentMember = () => {
     setReqDetailPageInfo({ ...reqDetailPageInfo, pageNo: 1 });
   };
   //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
+  const [banReason, setBanReason] = useState("");
 
   const MemberList = (props) => {
     const m = props.m;
     const [benMode, setBenMode] = useState(false);
     const [dateValue, setDateValue] = useState(dayjs());
+    const [timeValue, setTimeValue] = useState(dayjs());
 
     const confirm = (
       <div
@@ -277,34 +280,89 @@ const ContentMember = () => {
       console.log(m);
       console.log(dateValue);
       console.log(dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D);
+      //const banText =
+      //  dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D;
+      console.log(timeValue);
+      console.log(timeValue.$H + ":" + timeValue.$m + ":" + timeValue.$s);
 
+      const banText =
+        dateValue.$y +
+        "-" +
+        (dateValue.$M + 1) +
+        "-" +
+        dateValue.$D +
+        " " +
+        timeValue.$H +
+        ":" +
+        timeValue.$m +
+        ":" +
+        timeValue.$s;
+      console.log(banText);
+      console.log(banReason);
+      const banSet = {
+        memberNo: m.memberNo,
+        memberBenFinishDate: banText,
+        memberBanContent: banReason,
+      };
+      console.log(banSet);
       axios
-        .patch(
-          `${import.meta.env.VITE_BACK_SERVER}/admin/memberBan?memberNo=${
-            m.memberNo
-          }`
-        )
+        .post(`${import.meta.env.VITE_BACK_SERVER}/admin/memberBan`, banSet)
         .then((res) => {
           console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
+          Swal.fire({
+            title: "알림",
+            text: `해당 이용자 정지되었습니다.`,
+
+            confirmButtonText: "확인",
+          });
+          setBenMode(false);
+          setDateValue(dayjs());
+          setTimeValue(dayjs());
+          setBanReason("");
+          setReqListToggle(!reqListToggle);
+          console.log(reqListToggle);
         });
     };
     const BanModalContent = () => {
       return (
-        <div>
-          <div className="titleText">회원을 정지하시겠습니까?</div>
+        <div className="adminModal ban-modal">
+          <div className="adminModal titleText">
+            [{m.memberNickname}] 회원을 정지하시겠습니까?
+          </div>
+
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <div> 날짜를 선택해주세요 </div>
+            <div>
+              <div className="adminModal subtitleText">
+                정지 사유를 입력하세요
+              </div>
+            </div>
+            <input
+              type="text"
+              placeholder="욕설 사용으로 50일 정지"
+              value={banReason}
+              onChange={(e) => {
+                setBanReason(e.target.value);
+              }}
+            ></input>
+            <div>
+              <div className="adminModal subtitleText">날짜를 선택해주세요</div>
+            </div>
             <DatePicker
-              dateValue={dateValue}
-              onChange={(newValue) => setDateValue(newValue)}
+              value={dateValue}
+              onChange={(newValue) => {
+                setDateValue(newValue);
+              }}
             />
-            <div> 시간을 선택해주세요 </div>
+            <div>
+              <div className="adminModal subtitleText">시간을 선택해주세요</div>
+            </div>
             <MultiSectionDigitalClock
               timeSteps={{ hours: 1, minutes: 15, seconds: 10 }}
               views={["hours", "minutes", "seconds"]}
+              value={timeValue}
+              onChange={(newValue) => {
+                setTimeValue(newValue);
+              }}
             />
           </LocalizationProvider>
         </div>
@@ -347,9 +405,9 @@ const ContentMember = () => {
             <div className="banMode">
               <BaseModal
                 title="이용자 정지"
-                content={BanModalContent()}
+                content={<BanModalContent />}
                 buttonLabel="정지"
-                contentBoxStyle={{ width: "1000px", height: "600px" }}
+                contentBoxStyle={{ width: "400px", height: "800px" }}
                 end="닫기"
                 result={confirm}
               />
@@ -358,7 +416,7 @@ const ContentMember = () => {
                 title="벤모드"
                 content={<div>회원을 선택하시겠습니까?</div>}
                 buttonLabel="선택"
-                contentBoxStyle={{ width: "1000px", height: "600px" }}
+                contentBoxStyle={{ width: "800px", height: "500px" }}
                 end={"닫기버튼이름"}
                 result={"확인버튼"}
               />

@@ -52,4 +52,9 @@ public class AdminService {
 		memberMap.put("totalListCount",totalListCount);
 		return memberMap;
 	}
+
+	public int memberBan(HashMap<String, String> banSet) {
+		int result = adminDao.memberBan(banSet);
+		return result;
+	}
 }
