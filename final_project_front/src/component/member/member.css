@@ -814,7 +814,32 @@ input[type="radio"]:checked+label{
     border-radius: 20px;
     
 }
+.service-agree-wrap{
+    width: 1000px;
+    margin: 0 auto;
+    height: 2000px;
+    
+}
 
+.service-agree{
+    width: 1000px;
+    margin: 0 auto;
+    
+    
+    
+}
+
+.mypage-rules{
+    width: 1400px;
+    margin: 30px auto;
+    
+}
+
+.agree-content{
+    width: 800px;
+    border: 1px solid #ccc;
+    overflow: auto;
+}
 /*
 .member-button-zone{
     width: 400px;

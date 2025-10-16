@@ -50,7 +50,11 @@ const MemberMypage = () => {
                 console.log(err);
             })    
     },[memberId]);
-
+    const navigate = useNavigate();
+    const agree = () => {
+        navigate("/service/agree");
+    }
+    
 
 
     const [menus, setMenus] = useState(
@@ -94,19 +98,19 @@ const MemberMypage = () => {
                 <section className="section site-path">
                     <div className="mypage-tab">
                         <section ref={infoRef} className="section site-path">
-                            <MemberInfo member={member} memberId={memberId} setMember={setMember}/>
+                            <MemberInfo member={member} memberId={memberId} />
                         </section>
                         <section ref={accountRef} className="section site-path">
                             <MemberAccount memberId={memberId} />
                         </section>
                         <section ref={communityRef} className="section site-path">
-                            <MemberCommunity />
+                            <MemberCommunity agree={agree}/>
                         </section>
                         <section ref={noticeRef} className="section site-path">
-                            <MemberNotice />
+                            <MemberNotice agree={agree}/>
                         </section>
                         <section ref={etcRef} className="section site-path">
-                            <MemberEtc memberId={memberId} memberType={memberType} setMemberId={setMemberId} setMemberType={setMemberType}/>
+                            <MemberEtc memberId={memberId} memberType={memberType} setMemberId={setMemberId} setMemberType={setMemberType} />
                         </section>
                     </div>
                 </section>
@@ -119,6 +123,7 @@ const MemberInfo = (props) => {
     const member = props.member;
     const memberId = props.memberId;
     const setMember = props.setMember;
+    
     
     const changeNickname = () => {
         Swal.fire({
@@ -189,8 +194,9 @@ const MemberAccount = (props) => {
     )
 }
 
-const MemberCommunity = () => {
+const MemberCommunity = (props) => {
     const navigate = useNavigate();
+    const agree = props.agree;
 
     const board = () => {
         navigate("") //게시판 링크 필요
@@ -206,14 +212,15 @@ const MemberCommunity = () => {
                     <button type="submit">게시판 관리</button>
                 </div>
                 <div className="commnuity-rule tab-div">
-                    <button type="submit">커뮤니티 이용규칙</button>
+                    <button type="submit" onClick={agree}>커뮤니티 이용규칙</button>
                 </div>
             </div>
         </div>
     )
 }
 
-const MemberNotice = () => {
+const MemberNotice = (props) => {
+    const agree = props.agree;
 
     return(
         <div className="mypage-notice-wrap">
@@ -222,10 +229,10 @@ const MemberNotice = () => {
                     <button type="submit">공지사항</button>
                 </div>
                 <div className="mypage-service tab-div">
-                    <button type="submit">서비스 이용약관</button>
+                    <button type="submit" onClick={agree}>서비스 이용약관</button>
                 </div>
                 <div className="mypage-terms tab-div">
-                    <button type="submit">개인정보 처리방침</button>
+                    <button type="submit" onClick={agree}>개인정보 처리방침</button>
                 </div>
             </div>
         </div>
