@@ -176,3 +176,21 @@
     font-size: 1em;
   }
 }
+
+.tradeBoard-view-wrap {
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+}
+.tradeBoard-view-info {
+  overflow: hidden;
+}
+.tradeBoard-thumbnail {
+  float: left;
+}
+.tradeBoard-view-preview {
+  float: right;
+}
+.tradeBoard-thumbnail > img {
+  margin-right: 40px;
+}

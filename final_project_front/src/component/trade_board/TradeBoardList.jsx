@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 const TradeBoardList = () => {
   const [tradeBoardList, setTradeBoardList] = useState([]);
   const [reqPageInfo, setReqPageInfo] = useState({
-    sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
-    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
-    listCnt: 16, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    sideBtnCount: 3,
+    pageNo: 1,
+    listCnt: 16,
   });
   const [totalListCount, setTotalListCount] = useState(10);
   useEffect(() => {
@@ -85,14 +85,10 @@ const TradeBoardItem = (props) => {
       </div>
       <div className="posting-info">
         <div className="posting-title">{tradeBoard.tradeBoardTitle}</div>
-
         <div className="posting-price">
-          {/* 1. 거래 완료 상태 텍스트 */}
           {isTradeCompleted && (
             <span className="trade-completed-text">거래 완료</span>
           )}
-
-          {/* 2. 상품 금액 */}
           <span className="price-amount">{tradeBoard.tradeBoardPrice}원</span>
         </div>
       </div>
