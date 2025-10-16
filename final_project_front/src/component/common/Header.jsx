@@ -5,6 +5,8 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberTypeState } from "../utils/RecoilData";
+import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
+import BaseModal from "../utils/BaseModal";
 const Header = () => {
   return (
     <header className="header">
@@ -111,8 +113,30 @@ const HeaderLink = () => {
 
   return (
     <ul className="header-user">
-      {memberId != "" && memberType !== 0 ? (
+      {memberId !== "" && memberType !== 0 ? (
         <>
+          <li>
+            <BaseModal
+              title={"쪽지보관함"}
+              buttonLabel={
+                <MarkAsUnreadOutlinedIcon
+                  style={{ color: "white" }}
+                ></MarkAsUnreadOutlinedIcon>
+              }
+              contentBoxStyle={{ width: "800px", height: "800px" }}
+              result={"쪽지보내기"}
+              end={"닫기"}
+              content={
+                <div className="note-box">
+                  <div>
+                    <ul>
+                      <li>li자리</li>
+                    </ul>
+                  </div>
+                </div>
+              }
+            />
+          </li>
           <li>
             <Link to="member/mypage">{memberId}</Link>
           </li>

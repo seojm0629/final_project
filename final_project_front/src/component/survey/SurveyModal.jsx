@@ -1,8 +1,7 @@
 import { useState } from "react";
 import "./SurveyModal.css";
-import Modal from "react-modal";
-Modal.setAppElement("#root");
-const SurveyContent = ({ onClose, onSubmit }) => {
+import { Modal } from "@mui/material";
+const SurveyContent = ({ onClose, onSubmit, title }) => {
   //컴포넌트에 onClose 함수 받아오기 (모달닫기)
   const [surveyTitle, setSurveyTitle] = useState("");
   const [options, setOptions] = useState(["", ""]); //기본 2개 항목
@@ -24,7 +23,7 @@ const SurveyContent = ({ onClose, onSubmit }) => {
     setOptions(newOptions);
     console.log(newOptions);
   };
-
+  //항목 갯수 저장
   let optionsCount = 0;
   //확인누를때 값 저장
   const checkSubmit = () => {
@@ -34,6 +33,7 @@ const SurveyContent = ({ onClose, onSubmit }) => {
       endDate,
       endTime,
     };
+    //제목 비어있을때 경고
     if (data.title === "") {
       alert("제목을 입력하세요");
       return;
@@ -47,21 +47,23 @@ const SurveyContent = ({ onClose, onSubmit }) => {
         optionsCount++;
       }
     }
+    //항목 갯수 경고
     if (optionsCount < 2) {
       alert("항목을 2개 이상 입력하세요");
       return;
     }
-
+    //날짜 빈칸 경고
     if (data.endDate === "") {
       alert("날짜를 설정하세요");
       return;
     }
+    //시간 빈칸 경고
     if (data.endTime === "") {
       alert("시간을 설정하세요");
       return;
     }
     onSubmit(data); // 값 전달
-    onClose();
+    onClose(); // 다되면 닫기
   };
 
   return (
@@ -117,7 +119,7 @@ const SurveyContent = ({ onClose, onSubmit }) => {
             <button onClick={addOption}>+ 항목 추가</button>
           </div>
           <div className="survey-date">
-            종료일,시간 설정ㅇㅇ
+            종료일,시간 설정
             <div className="date-time-box">
               <input
                 type="date"

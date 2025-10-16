@@ -90,7 +90,7 @@ const MemberJoin = () => {
         .get(`${backServer}/api/sendCode`,{params : {receiver}})
         .then((res)=>{
             console.log(res.data);  //인증코드 반환 console 구현 완료시 삭제 필요
-            setMailCode(res.data);
+            setMailCode(res.data.toLowerCase());
             //clickConfirm();
             //formatTime();
             setShowCodeInput(true);     //인증번호 입력 창 메일 전송 시 보일 수 있게 true로 변경
@@ -249,11 +249,27 @@ const MemberJoin = () => {
             .post(`${backServer}/member`, sendData)
             .then((res)=>{
                 setMember(res.data);
-                navigate("/");
+                if(res.data === 1){
+                    Swal.fire({
+                        title : "회원가입 완료!",
+                        text : "회원가입이 완료되었습니다.",
+                        icon : "success",
+                        showConfirmButton: true,
+                        confirmButtonText : "확인",
+                    }).then((isconfirmed)=>{
+                        if(isconfirmed){
+                            navigate("/");
+                        }
+                    });
+
+                }
+                
+                
             })
             .catch((err)=>{
                 console.log(err);
             })
+            
         } else {
             Swal.fire({
                 title : "모든 입력 필수",
@@ -261,6 +277,7 @@ const MemberJoin = () => {
                 icon: "warning",
             })
         }
+        
     }
     
 
@@ -312,7 +329,7 @@ const MemberJoin = () => {
                             : nicknameCheck === 2
                             ? <span style={{color:"red"}}>닉네임을 입력해주세요.</span>
                             : nicknameCheck === 3
-                            ? <span style={{color:"red"}}>닉네임을 입력해주세요.</span>
+                            ? <span style={{color:"red"}}>이미 사용 중인 닉네임입니다.</span>
                             : ""}
                         </p>
                     </div>
@@ -468,4 +485,7 @@ const MemberJoin = () => {
     )
 }
 
+
+
 export default MemberJoin;
+

@@ -2,12 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./contentMember.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
-import { TableSortLabel } from "@mui/material";
+import { TableSortLabel, Typography } from "@mui/material";
 import Swal from "sweetalert2";
 import SearchBar from "../utils/SearchBar";
 import SearchIcon from "@mui/icons-material/Search";
 import MemberDetail from "./MemberDetail";
 import Button from "@mui/material/Button";
+import BaseModal from "../utils/BaseModal";
+import {
+  DatePicker,
+  DateTimePicker,
+  LocalizationProvider,
+  TimeField,
+} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -35,30 +44,18 @@ const ContentMember = () => {
     searchText: "",
   });
 
-  const [reqDetailInfo, setReqDetailInfo] = useState({
-    order: 2, //어떤 정렬을 요청할건데??
-    // 1: 회원 번호 오름차순
-    // 2: 회원 번호 내림차순
-    // 3: 신고 받은 수 오름차순
-    // 4: 신고 받은 수 내림차순
-    // 5: 좋아요 받은 수 오름차순
-    // 6: 좋아요 받은 수 내림차순
-    // 7: 작성 게시글 수 오름차순
-    // 8: 작성 게시글 수 내림차순
-    // 9 : 작성 댓글 수 오름차순
-    // 10 : 작성 댓글 수 내림차순
-    // 11: 회원 정지 오름차순
-    // 12: 회원 정지 내림차순
-    pageNo: 1, //몇번째 페이지를 요청하는데?
-    sideBtnCount: 2,
-    listCnt: 15, //한 페이지에 몇개 리스트를 보여줄건데?
-    searchType: "no",
-    searchText: "",
+  const [reqDetailPageInfo, setReqDetailPageInfo] = useState({
+    sideBtnCount: 2, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
+    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
   });
 
   const [totalListCount, setTotalListCount] = useState(0);
-  const [loading, setLoading] = useState(false);
+
+  const [memberLoading, setMemberLoading] = useState(false); // 회원 리스트 로딩
+  const [detailLoading, setDetailLoading] = useState(false);
   const [updateMemberType, setUpdateMemberType] = useState();
+  const [detailTotalCount, setDetailTotalCount] = useState(0);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
   // Client -> Back 으로 전달하고 응답받을 값
   // memberList : Back -> Client
@@ -68,8 +65,8 @@ const ContentMember = () => {
 
   useEffect(() => {
     //console.log("updateMemberType");
-    console.log("리스트 가져오기 시작");
-    setLoading(true);
+    //console.log("리스트 가져오기 시작");
+    setMemberLoading(true);
     //console.log(updateMemberType !== undefined);
     updateMemberType !== undefined &&
       axios
@@ -108,8 +105,8 @@ const ContentMember = () => {
               icon: "success",
             }).then((result) => {
               if (result.isConfirmed) {
-                console.log("리스트 가져오기 끝");
-                setLoading(false);
+                //console.log("리스트 가져오기 끝");
+                setMemberLoading(false);
               }
             });
           }
@@ -131,7 +128,7 @@ const ContentMember = () => {
     //console.log("pageInfo : ");
     //console.log(reqPageInfo);
     console.log("리스트 가져오기 시작");
-    setLoading(true);
+    setMemberLoading(true);
 
     axios
       .get(
@@ -150,7 +147,7 @@ const ContentMember = () => {
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
         console.log("리스트 가져오기 끝");
-        setLoading(false);
+        setMemberLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -254,14 +251,45 @@ const ContentMember = () => {
 
   const [userDetailInfo, setUserDetailInfo] = useState({});
   const reqUserInfo = (member) => {
-    //console.log(member);
+    console.log("reqUser");
+    console.log(member);
     setUserDetailInfo({ ...userDetailInfo, member: member });
+    setReqDetailPageInfo({ ...reqDetailPageInfo, pageNo: 1 });
   };
   //console.log(userDetailInfo.member != null && userDetailInfo.member.memberNo);
 
   const MemberList = (props) => {
     const m = props.m;
     const [benMode, setBenMode] = useState(false);
+    const [dateValue, setDateValue] = useState(dayjs());
+
+    const confirm = (
+      <div
+        onClick={() => confirmData(m)}
+        style={{ width: "100%", height: "100%" }}
+      >
+        확인
+      </div>
+    );
+
+    const confirmData = (m) => {
+      console.log(m);
+      console.log(dateValue);
+
+      axios
+        .patch(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/memberBan?memberNo=${
+            m.memberNo
+          }`
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     return (
       <tr key={"member-" + m.memberNo} className="row">
         <td>{m.memberNo}</td>
@@ -297,8 +325,33 @@ const ContentMember = () => {
         >
           {benMode ? (
             <div className="banMode">
-              <button>정지</button>
-              <button>선택</button>
+              <BaseModal
+                title="벤모드"
+                content={
+                  <div>
+                    <div>회원을 정지하시겠습니까?</div>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        dateValue={dateValue}
+                        onChange={(newValue) => setDateValue(newValue)}
+                      />
+                    </LocalizationProvider>
+                  </div>
+                }
+                buttonLabel="정지"
+                contentBoxStyle={{ width: "1000px", height: "600px" }}
+                end={"닫기버튼이름"}
+                result={confirm}
+              />
+
+              <BaseModal
+                title="벤모드"
+                content={<div>회원을 선택하시겠습니까?</div>}
+                buttonLabel="선택"
+                contentBoxStyle={{ width: "1000px", height: "600px" }}
+                end={"닫기버튼이름"}
+                result={"확인버튼"}
+              />
             </div>
           ) : m.isBen === "FALSE" ? (
             "정상"
@@ -318,6 +371,56 @@ const ContentMember = () => {
       </tr>
     );
   };
+  //console.log("이거 확인해야함");
+  const [userDetailBoard, setUserDetailBoard] = useState([]);
+  useEffect(() => {
+    if (userDetailInfo.member === undefined || userDetailInfo.member === null) {
+      return;
+    }
+    setDetailLoading(true);
+    axios
+      .get(
+        `${import.meta.env.VITE_BACK_SERVER}/admin/memberDetail?memberNo=${
+          userDetailInfo.member.memberNo
+        }&pageNo=${reqDetailPageInfo.pageNo}&listCnt=${
+          reqDetailPageInfo.listCnt
+        }`
+      )
+      .then((res) => {
+        setUserDetailBoard(res.data.memberDetail);
+        setDetailTotalCount(res.data.totalListCount);
+        setDetailLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, [userDetailInfo, reqDetailPageInfo.pageNo, reqDetailPageInfo.listCnt]);
+  const hasMember = userDetailInfo && userDetailInfo.member != null;
+  /*
+  const banPopup = (m) => {
+    Swal.fire({
+      title: "알림",
+      text: `회원을 정지하시겠습니까?`,
+      showCancelButton: true,
+      confirmButtonText: "네",
+      cancelButtonText: "아니요",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("정지");
+        axios
+          .patch(
+            `${import.meta.env.VITE_BACK_SERVER}/admin/memberBan?memberNo=${
+              m.memberNo
+            }`
+          )
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
+  */
 
   return (
     <div className="admin-right">
@@ -338,9 +441,7 @@ const ContentMember = () => {
           />
         </div>
         <div className="content-body">
-          <table
-            key={"list" + (memberList.length !== 0 && memberList[0].memberNo)}
-          >
+          <table className="member-table">
             <thead>
               <tr>
                 <th>
@@ -359,12 +460,14 @@ const ContentMember = () => {
                   >
                     회원 번호
                   </TableSortLabel>
-                </th>{" "}
-                {/* MEMBER_TBL */}
-                <th>아이디</th>
-                {/*" https://mui.com/material-ui/api/table-sort-label/"*/}
-                {/* MEMBER_TBL */}
-                <th>이메일</th> {/* MEMBER_TBL */}
+                  {/* MEMBER_TBL */}
+                </th>
+                <th>
+                  아이디
+                  {/*" https://mui.com/material-ui/api/table-sort-label/"*/}
+                  {/* MEMBER_TBL */}
+                </th>
+                <th>이메일 {/* MEMBER_TBL */}</th>
                 <th>
                   <TableSortLabel
                     active={reqPageInfo.order === 3 || reqPageInfo.order === 4}
@@ -381,8 +484,8 @@ const ContentMember = () => {
                   >
                     받은 신고
                   </TableSortLabel>
+                  {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
                 </th>
-                {/* FB_CLAIM_TBL, FBC_CLAIM_TBL, TB_CLAIM_TBL, TBC_CLAIM_TBL */}
                 <th>
                   <TableSortLabel
                     active={reqPageInfo.order === 5 || reqPageInfo.order === 6}
@@ -400,8 +503,8 @@ const ContentMember = () => {
                     받은 좋아요
                   </TableSortLabel>
                 </th>
-                {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
                 <th>
+                  {/* FB_LIKE_TBL, FBC_LIKE_TBL, TB_LIKE_TBL, TBC_LIKE_TBL */}
                   <TableSortLabel
                     active={reqPageInfo.order === 7 || reqPageInfo.order === 8}
                     direction={
@@ -417,9 +520,9 @@ const ContentMember = () => {
                   >
                     작성 게시글
                   </TableSortLabel>
-                </th>{" "}
-                {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
+                </th>
                 <th>
+                  {/* FREE_BOARD_TBL, TRADE_BOARD_TBL */}
                   <TableSortLabel
                     active={reqPageInfo.order === 9 || reqPageInfo.order === 10}
                     direction={
@@ -435,10 +538,14 @@ const ContentMember = () => {
                   >
                     작성 댓글
                   </TableSortLabel>
-                </th>{" "}
-                {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
-                <th>회원가입일</th> {/* MEMBER_TBL */}
+                </th>
+
                 <th>
+                  {/* FB_COMMENT_TBL, TB_COMMENT_TBL */}
+                  회원가입일
+                </th>
+                <th>
+                  {/* MEMBER_TBL */}
                   <TableSortLabel
                     active={
                       reqPageInfo.order === 13 || reqPageInfo.order === 14
@@ -475,13 +582,13 @@ const ContentMember = () => {
                   >
                     회원 정지
                   </TableSortLabel>
-                </th>{" "}
+                </th>
                 {/* MEMBER_BEN_TBL */}
                 <th>상세 보기</th>
               </tr>
             </thead>
             <tbody>
-              {loading ? (
+              {memberLoading ? (
                 <tr>
                   <td colSpan={12}>
                     <div className="loadingMsg">
@@ -503,7 +610,7 @@ const ContentMember = () => {
                 </tr>
               ) : (
                 memberList.map((m, i) => {
-                  return <MemberList m={m} />;
+                  return <MemberList key={m.memberNo} m={m} />;
                 })
               )}
             </tbody>
@@ -522,20 +629,35 @@ const ContentMember = () => {
         </div>
       </div>
       <div className="admin-detail-content-wrap">
-        {userDetailInfo.member != null && (
+        {!hasMember ? (
+          <div className="nullMsg">상세보기를 클릭해보세요.</div>
+        ) : detailLoading ? (
           <div className="content-head">
             <div className="title m">사용자 상세 정보</div>
-
-            <MemberDetail
-              reqPageInfo={reqDetailInfo}
-              setReqPageInfo={setReqDetailInfo}
-              totalListCount={totalListCount}
-              userDetailInfo={userDetailInfo}
-            ></MemberDetail>
+            <div className="loadingMsg">
+              <Button
+                fullWidth
+                loading
+                loadingPosition="start"
+                variant="outlined"
+                className="loadingBtn"
+              >
+                로딩중입니다. 잠시만 기다려주세요!
+              </Button>
+            </div>
           </div>
-        )}
-        {userDetailInfo.member == null && (
-          <div className="nullMsg">상세보기를 클릭해보세요.</div>
+        ) : (
+          <div className="content-head">
+            <div className="title m">사용자 상세 정보</div>
+            <MemberDetail
+              reqPageInfo={reqDetailPageInfo}
+              setReqPageInfo={setReqDetailPageInfo}
+              totalListCount={detailTotalCount}
+              userDetailInfo={userDetailInfo}
+              userDetailBoard={userDetailBoard}
+              detailLoading={detailLoading}
+            />
+          </div>
         )}
       </div>
     </div>

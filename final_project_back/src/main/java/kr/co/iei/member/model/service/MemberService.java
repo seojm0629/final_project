@@ -90,6 +90,7 @@ public class MemberService {
 	public int email(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
 		if(m != null) {
+			
 			return 1;
 		} else {
 			return 0;
@@ -100,6 +101,17 @@ public class MemberService {
 	@Transactional
 	public int changeEmail(MemberDTO member) {
 		int result = memberDao.changeEmail(member);
+		return result;
+	}
+
+	@Transactional
+	public int deleteMember(String memberId) {
+		int result = memberDao.deleteMember(memberId);
+		return result;
+	}
+
+	public int updateNickname(MemberDTO member) {
+		int result = memberDao.updateNickname(member);
 		return result;
 	}
 

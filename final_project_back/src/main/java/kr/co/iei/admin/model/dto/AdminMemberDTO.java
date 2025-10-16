@@ -18,6 +18,7 @@ public class AdminMemberDTO {
 	private String memberBirth;
 	private String memberPhone;
 	private String memberEmail;
+	private String memberNickname;
 	private int totalClaimCnt;
 	private int totalLikeCnt;
 	private int totalPostCnt;

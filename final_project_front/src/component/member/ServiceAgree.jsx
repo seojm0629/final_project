@@ -1,65 +1,60 @@
-import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useRecoilState } from "recoil";
+import { authReadyState, loginIdState, memberTypeState } from "../utils/RecoilData";
 
-const MemberAgree = () => {
-    const navigate = useNavigate();
+const ServiceAgree = () => {
+    
 
-
-    const [checks, setChecks] = useState({
-        allCheck : false,
-        service : false,
-        community: false,
-        personal: false,
-    });
-
-    const changeChecks = (e) => {
-        const name = e.target.name;
-        
-        const checked = e.target.checked;
-        
-        const updated = {...checks, [name]:checked};
-
-        updated.allCheck = updated.service && updated.community && updated.personal;
-
-        setChecks(updated);
-    }
-
-    const allChecks = (e) => {
-        const checked = e.target.checked;
-        setChecks({
-            allCheck : checked,
-            service : checked,
-            community : checked,
-            personal : checked,
-        });
-    }
-
-    const nextPage = () => {
-        if(checks.allCheck && checks.service && checks.community && checks.personal){
-            navigate("/member/join");
-        } else {
-            Swal.fire({
-                title : "약관 동의 확인",
-                text : "전체 동의 확인 필요",
-                icon : "info",
-            })
-        }
-    }
-
+    
     return(
-        <section className="section agree-wrap">
+        <div className="service-agree-wrap">
+            <div className="service-agree">
+                <div className="service-agree-title">
+                    <h1>약관동의</h1>
+                </div>
 
-            <div className="agree">
-                <div className="join-page-title">약관동의</div> 
-                <div className="service-agree">
-                    <div className="service-btn">
-                        <input type="checkbox" id="service" name="service"
-                        checked={checks.service}
-                        onChange={changeChecks}/>
-                        <label htmlFor="service">서비스 이용약관 동의(필수)</label>
+                <div className="community-rules mypage-rules">
+
+                    <div className="community-rules-title">
+                        <h3>커뮤니티 이용규칙</h3>
                     </div>
-                    <div className="service-div">
+                    <div className="community-rules-content agree-content">
+                        <p style={{whiteSpace: "pre-line"}}>제1조 (목적)
+
+제1조 (목적)
+본 방침은 Talk & Deal 커뮤니티(중고거래, 직장인 게시판, 자유게시판 등)가 건전하고 안전하게 운영되도록 회원이 지켜야 할 원칙과 운영 기준을 규정합니다.
+<br />
+제2조 (금지 행위)
+회원은 다음 행위를 할 수 없습니다.
+중고거래 관련:
+불법·위조·청소년 유해 물품 등록
+거래 사기, 허위 매물 등록
+직장인 게시판 관련:
+특정 개인·기업에 대한 근거 없는 비방
+개인정보 유출, 내부 정보 불법 공유
+자유게시판 관련:
+욕설, 혐오 발언, 정치·종교적 선동
+음란물, 폭력물 게시
+공통:
+스팸, 광고성 게시물
+시스템 해킹, 서비스 방해 행위
+<br />
+제3조 (운영 원칙)
+위반 행위 적발 시 회사는 경고, 게시물 삭제, 계정 일시 정지, 영구 정지 등의 조치를 할 수 있습니다.
+신고 제도를 운영하여 회원 누구나 위반 게시물을 신고할 수 있습니다.
+<br />
+제4조 (회원 권리 보호)
+제재 조치에 이의가 있는 경우 회원은 회사에 소명할 수 있습니다.
+회사는 합리적인 기간 내 검토 후 결과를 통보합니다.
+<br />
+</p>
+                    </div>
+                </div>
+
+                <div className="service-rules mypage-rules">
+                    <div className="service-rules-title">
+                        <h3>서비스 이용약관</h3>
+                    </div>
+                    <div className="service-rules-content agree-content">
                         <p style={{whiteSpace: "pre-line"}}>제1조 (목적)
 
 본 약관은 Talk & Deal(이하 "회사")이 제공하는 커뮤니티 기반 서비스(중고거래, 직장인 게시판, 자유게시판 등) 이용과 관련하여 회사와 회원 간의 권리·의무 및 책임 사항을 규정함을 목적으로 합니다.<br />
@@ -152,83 +147,14 @@ const MemberAgree = () => {
 제11조 (분쟁 해결)
 
 분쟁 발생 시 협의하여 해결하며, 협의가 되지 않을 경우 회사 본사 소재지를 관할하는 법원을 제1심 관할 법원으로 합니다.
-<br />
-
-</p>
+<br /></p>
                     </div>
                 </div>
-
-                <div className="service-agree">
-                    <div className="service-btn">
-                        <input type="checkbox" id="community" name="community"
-                        onChange={changeChecks}
-                        checked={checks.community}
-                        />
-                        <label htmlFor="community">커뮤니티 운영방침 동의(필수)</label>
+                <div className="info-rules mypage-rules">
+                    <div className="info-rules-title">
+                        <h3>개인정보 처리방침</h3>
                     </div>
-                    <div className="service-div">
-                        <p style={{whiteSpace: "pre-line"}}>제1조 (목적)
-
-제1조 (목적)
-
-본 방침은 Talk & Deal 커뮤니티(중고거래, 직장인 게시판, 자유게시판 등)가 건전하고 안전하게 운영되도록 회원이 지켜야 할 원칙과 운영 기준을 규정합니다.
-<br />
-
-제2조 (금지 행위)
-
-회원은 다음 행위를 할 수 없습니다.
-
-중고거래 관련:
-
-불법·위조·청소년 유해 물품 등록
-
-거래 사기, 허위 매물 등록
-
-직장인 게시판 관련:
-
-특정 개인·기업에 대한 근거 없는 비방
-
-개인정보 유출, 내부 정보 불법 공유
-
-자유게시판 관련:
-
-욕설, 혐오 발언, 정치·종교적 선동
-
-음란물, 폭력물 게시
-
-공통:
-
-스팸, 광고성 게시물
-
-시스템 해킹, 서비스 방해 행위
-<br />
-
-제3조 (운영 원칙)
-
-위반 행위 적발 시 회사는 경고, 게시물 삭제, 계정 일시 정지, 영구 정지 등의 조치를 할 수 있습니다.
-
-신고 제도를 운영하여 회원 누구나 위반 게시물을 신고할 수 있습니다.
-<br />
-
-제4조 (회원 권리 보호)
-
-제재 조치에 이의가 있는 경우 회원은 회사에 소명할 수 있습니다.
-
-회사는 합리적인 기간 내 검토 후 결과를 통보합니다.
-<br />
-</p>
-                    </div>
-                </div>
-
-                <div className="service-agree">
-                    <div className="service-btn">
-                        <input type="checkbox" id="personal" name="personal"
-                        onChange={changeChecks}
-                        checked={checks.personal}
-                        />
-                        <label htmlFor="personal">개인정보 처리방침 동의(필수)</label>
-                    </div>
-                    <div className="service-div">
+                    <div className="info-rules-content agree-content">
                         <p>제1조 (수집하는 개인정보 항목)
 
 회사는 서비스 제공을 위해 다음 정보를 수집합니다.
@@ -290,27 +216,11 @@ const MemberAgree = () => {
 제9조 (문의처)
 
 개인정보 관련 문의는 개인정보 보호 책임자에게 연락할 수 있습니다.</p>
-
                     </div>
-                    <div className="service-btn">
-                        <input type="checkbox" id="allCheck" name="allCheck" 
-                        onChange={allChecks}
-                        checked = {checks.allCheck}/>
-                        <label htmlFor="allCheck">전체 동의</label>
-                    </div>
-
-                    <div className="member-button-zone">
-                        <button type="submit" className="member-btn"
-                        onClick={nextPage}
-                        >다음</button>
-                    </div>
-                    
                 </div>
-
-
             </div>
-        </section>
+        </div>
     )
 }
 
-export default MemberAgree;
+export default ServiceAgree;

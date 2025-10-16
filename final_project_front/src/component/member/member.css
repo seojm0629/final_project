@@ -14,6 +14,11 @@
   font-family: ns-black;
   src: url(/font/NotoSansKR-Black.ttf);
 }
+
+body{
+    background-color: #F0F2F5;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -105,12 +110,15 @@
 /* 회원가입 페이지 */
 /* 회원가입 전체 페이지 감싸는 section*/
 .join-wrap{
-    width:1200px;
+    width:600px;
     margin: 0 auto;
-    
+    background-color: #F5F8FB;
+    border: 1px solid #999999;
+    border-radius: 10px;
+    padding-bottom: 20px;
 }
 .join-page-title{
-    width: 800px;
+    width: 600px;
     height: 50px;
     margin: 10px auto;
     text-align: center;
@@ -250,10 +258,12 @@ input[type="radio"]:checked+label{
 }
 .agree{
     width: 700px;
-    height: 900px;
+    height: 975px;
     margin: 10px auto;
-    background-color: #FEFEF9;
-    border: 1px solid black;
+    background-color: #F5F8FB;
+    
+    border: 1px solid #999999;
+    border-radius: 8px ;
     padding-top: 20px;
 }
 .service-agree{
@@ -266,8 +276,11 @@ input[type="radio"]:checked+label{
 .service-div{
     width: 100%;
     height: 200px;
+    background-color: #fff;
+    border-radius: 5px ;
+    color: #666666;
+    border: 1px solid #999999;
     
-    border: 1px solid black;
     overflow: auto;
 }
 
@@ -358,6 +371,75 @@ input[type="radio"]:checked+label{
 }
 
 /* 마이페이지 */
+/* 로그인 박스 */
+.login-header{
+    width: 300px;
+    margin: 15px 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    
+}
+.login-img>svg{
+    font-size: 60px;
+}
+.logout-btn{
+    padding-top: 10px;
+    padding-left: 65px;
+    text-align: right;
+}
+.logout-btn>button{
+    width: 85px;
+    height: 32px;
+    display: flex;
+    align-items: center;      
+    gap: 6px; 
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding-left: 2px;
+    background-color: #F5F8FB;
+    cursor: pointer;
+}
+.login-info{
+    width: 100px;
+}
+
+.login-info div span{
+    font-size: 14px;
+}
+.login-btn>button{
+    font-size: 22px;
+}
+.login-bottom{
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+}
+.login-bottom div{
+    width : calc(100%/4);
+    border-right: 1px solid #ccc;
+}
+.login-bottom div:last-child{
+    border: none;
+}
+
+.tab-div{
+    background-color: #fff;
+}
+
+
+.mypage-tab{
+    width: 600px;
+    margin: 0 auto;
+}
+.tab-menu{
+    border-radius: 8px;
+    background-color: #F5F8FB;
+}
 .account-box>div{
     width: 200px;
     height: 50px;
@@ -383,6 +465,8 @@ input[type="radio"]:checked+label{
     width: 200px;
     background-color: #2F4E70;
     color: #fff;
+    
+    
 }
 
 
@@ -391,83 +475,167 @@ input[type="radio"]:checked+label{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 30px;
-    margin-right: 15px;
+    padding-left: 11px;
+    padding-right: 10px;
     text-decoration: none;
+    
 }
 
 .side-menu-login .active-link > span {
-  color: #19d3f0;
-  font-family: ns-b;
+    color: #2f4e70;
+    font-family: ns-b;
+    
+}
+
+.side-menu-login .active-link{
+    width: 177px;
+    color: #2f4e70;
+    background-color: #fff;
+    font-family: ns-b;
+    border: 1px solid black;
+    
 }
 
 .side-menu-login .active-link > svg {
-  fill: #19d3f0;
-  
+    fill: #2f4e70;
+    
 }
+
+
+.side-menu-login button {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.side-menu-login button:hover span {
+  color: #19d3f0;
+}
+
+
 
 /* member-info */
-.mypage-info{
+.mypage-info {
     width: 500px;
-    margin-left: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+    margin: 0 auto;
+    margin-bottom : 30px;
     border: 1px solid #ccc;
 }
-.info-img > img{
-    width: 100px;
+.mypage-title{
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    
 }
+.mypage-title>h3{
+    font-size: 25px;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.info-content{
+    width: 400px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around; 
+}
+
 
 .info-nickname{
-    width: 200px;
-    text-align: center;
+    width: 250px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.nickname-input > input{
+    width: 237px;
+    height: 25px;
+    font-size: 18px;
+    padding-left: 10px;
+    color: black;
+    font-weight: 500;
+    border: none;
+    
 }
 
-.info-nickname > div {
-    height: 50px;
-    line-height: 50px;   
-    border: 1px solid #ccc;
+.mypage-nick-btn-box>button{
+    width: 100px;
+    height: 44px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+
+.content-info{
+    width: 200px;
+    text-align: left;
+    font-size: 12px;
+    padding-left: 10px;
 }
 
 /* member-account */
 .mypage-account-wrap{
     width: 500px;
-    height: 400px;
-    margin-left : 90px;
-    padding-top: 25px;
-    border: 1px solid #ccc;
-}
-.mypage-account{
-    width: 500px;
     margin: 0 auto;
-    text-align: center;
+    min-height: 38vh; 
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    
 }
 
+.account-title{
+    margin: 20px auto;
+
+}
+
+.account-name{
+    border: 1px solid #ccc;
+}
+
+.account-name>span{
+    padding-left: 10px;
+    font-size: 18px;
+}
 
 /* 비밀번호 변경 */
 .changePw-wrap{
-    width: 500px;
+    width: 400px;
     margin: 0 auto;
     
 }
+.changePw-name{
+    padding-left: 10px;
+    font-size: 13px;
+}
 .mypage-changePw-wrap{
     width: 300px;
-    margin: 0 auto;
-    line-height: 30px;
+    padding-left: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    
 }
 
 .mypage-changePw-wrap-update{
     width: 300px;
-    margin: 0 auto;
-    line-height: 30px;
+    padding-left: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }
@@ -478,8 +646,9 @@ input[type="radio"]:checked+label{
 
 .mypage-changePw-item>input{
     width: 250px;
-    height: 30px;
+    height: 40px;
     margin: 10px 0;
+    padding-left: 10px;
 }
 
 .mypage-changePw-btn-box{
@@ -488,8 +657,8 @@ input[type="radio"]:checked+label{
 }
 
 .mypage-changePw-btn-box>button{
-    width: 50px;
-    height: 30px;
+    width: 100px;
+    height: 45px;
     background-color: #2F4E70;
     color: #fff;
     font-size: 18px;
@@ -502,13 +671,7 @@ input[type="radio"]:checked+label{
     width: 400px;
     margin: 0 auto;
 }
-.account-name{
-    width: 400px;
-    height: 50px;
-    line-height: 50px;
-    margin: 15px auto;
-    border: 1px solid #ccc;
-}
+
 .account-changePw{
     width: 400px;
     margin: 15px auto;
@@ -518,24 +681,253 @@ input[type="radio"]:checked+label{
 
 /* 이메일 변경 */
 .mypage-changeEmail-wrap{
-    width: 800px;    
+    border : 1px solid #ccc;
+    margin-bottom : 30px;
 }
+
 .changeEmail{
     width: 400px;
-    border: 1px solid #ccc;
     text-align: center;
-    padding : 20px 0;
+}
+.changeEmail-name{
+    margin-bottom: 10px;
+}
+.changeEmail-name>span{
+    padding-left: 10px;
+    font-size: 13px;
     
 }
 
+.changeEmail input{
+    width: 200px;
+    height: 40px;
+    border-radius: 7px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.changeEmail select{
+    width: 85px;
+    height: 40px;
+    border-radius: 7px;
+}
+
 .changeEmail button{
+    height: 40px;
     background-color: #2F4E70;
+    border-radius: 7px;
     color: #fff;
     width: 81px;    
     margin-left: 5px;
 }
+.changeEmail>button{
+    width: 75px
+}
+.mypage-input-code button{
+    width: 80px;
+    margin-left: 10px;
+}
+
 .mypage-changeEmail-btn-box{
     text-align: center;
+}
+
+.mypage-input-code{
+    width: 400px;
+    text-align: left;
+    margin-left: 10px;
+}
+.format-time{
+    margin-left: 12px;
+}
+.mypage-input-code>input{
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+}
+/* 커뮤니티 탭 */
+.mypage-community-wrap{
+    width: 500px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+}
+.community-title{
+    width: 400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.mypage-community{
+    width: 500px;
+    margin: 0 auto;    
+    
+    
+}
+
+.mypage-community div{
+    width:400px;
+    height: 40px;
+    line-height: 40px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.mypage-community div>button{
+    width: 400px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+/* 이용약관 탭 */
+.agree-title{
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+.mypage-notice-wrap{
+    width: 500px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+}
+.mypage-notice{
+    width: 500px;
+    margin: 0 auto;
+    
+    
+}
+
+.mypage-notice div{
+    width:400px;
+    height: 40px;
+    line-height: 40px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.mypage-notice div>button{
+    width: 400px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+
+/* 기타 탭*/
+.etc-title{
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mypage-etc-wrap{
+    width: 500px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.mypage-etc{
+    width: 500px;
+    margin: 0 auto;
+    
+    
+}
+
+.mypage-etc div{
+    width:400px;
+    height: 40px;
+    line-height: 40px;
+    margin: 15px auto;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    
+}
+
+.mypage-etc div>button{
+    width: 400px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+/* 회원가입 완료 시 넘어가는 페이지*/
+.join-finish-wrap{
+    width: 1200px;
+    margin: 0 auto;
+}
+.join-finish{
+    width: 600px;
+    min-height: 30vh;
+    margin: 0 auto;
+    background-color: #F5F8FB;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+
+}
+
+.finish-content h1,h3{
+    margin : 25px 0;
+}
+.finish-button>button{
+    width: 230px;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 20px;
+    
+}
+.service-agree-wrap{
+    width: 1000px;
+    margin: 0 auto;
+    height: 2000px;
+    
+}
+
+.service-agree{
+    width: 1000px;
+    margin: 0 auto;
+    
+    
+    
+}
+
+.mypage-rules{
+    width: 1400px;
+    margin: 30px auto;
+    
+}
+
+.agree-content{
+    width: 800px;
+    border: 1px solid #ccc;
+    overflow: auto;
 }
 /*
 .member-button-zone{

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { loginIdState } from "../utils/RecoilData";
 import axios from "axios";
 import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
 
 const ChangeEmail = () => {
     //로그인 한 사용자 저장 아이디 불러오기
@@ -16,7 +17,13 @@ const ChangeEmail = () => {
         axios
         .get(`${import.meta.env.VITE_BACK_SERVER}/member/${memberId}`)
         .then((res)=>{
-            setMember(res.data);
+            if(res.data.memberEmail){
+                const [splitEmail, domainPart] = res.data.memberEmail.split("@");
+                setMember({...member, memberEmail : splitEmail});
+                setDomain(domainPart || "naver.com");
+            } else {
+                setMember(res.data);
+            }
         })
         .catch((err)=>{
             console.log(err);
@@ -175,8 +182,21 @@ const ChangeEmail = () => {
         .patch(`${import.meta.env.VITE_BACK_SERVER}/member/email`, sendData)
         .then((res)=>{
             if(res.data === 1){
-                setMember(res.data);
-
+                setMember(prev => ({
+                    ...prev,
+                    ...res.data,
+                    memberEmail: prev.memberEmail || emailFront   
+                }));
+                
+                Swal.fire({
+                    title : "비밀번호 수정 완료",
+                    icon : "success",
+                })
+                setShowCodeInput(false);
+                setIsVerified(false);
+                setErrorMessage("");
+                setTime(0);
+                setTimerActive(false);
             }
         })
         .catch((err)=>{
@@ -187,9 +207,12 @@ const ChangeEmail = () => {
     return(
         <div>
             <div className="mypage-changeEmail-wrap">
+                <div className="changeEmail-name">
+                        <span>이메일 변경</span>
+                </div>
                 <div className="changeEmail">
                     <input type="text" name="memberEmail" id="memberEmail" 
-                    value={member.memberEmail.split("@")[0]}
+                    value={member.memberEmail}
                     onChange={(e)=>{
                         setMember({...member, [e.target.name] : e.target.value})
                     }}
@@ -210,11 +233,9 @@ const ChangeEmail = () => {
                     
                     {showCodeInput && (
                         <>
-                            <div className="join-input-wrap">
-                                <div className="join-input-title">
-                                    <label htmlFor="confirmNo">인증코드</label>
-                                </div>
-                                <div className="join-input-code">
+                            <div className="mypage-input-wrap">
+                                
+                                <div className="mypage-input-code">
                                     <input type="text" name="confirmNo" id="confirmNo" 
                                     placeholder="인증번호를 입력하세요."
                                     value={confirmNo}
@@ -238,15 +259,19 @@ const ChangeEmail = () => {
                                     {errorMessage && (<p style={{color:"red", marginTop : "5px"}}>{errorMessage}</p>)}
 
                                     {isVerified && (<p style={{color:"green", marginTop : "5px"}}>인증이 완료되었습니다.</p>)}
+                                    
                                 </div>
                                 
                             </div>
                         </>
                     )}
 
-                    <div className="mypage-changeEmail-btn-box">
+                    {isVerified && 
+                    (<div className="mypage-changeEmail-btn-box">
                         <button type="submit" onClick={updateEmail}>수정</button>
-                    </div>
+                    </div>)
+                    }
+                    
                     
                 </div>
             </div>

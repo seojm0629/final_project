@@ -132,3 +132,36 @@ const PageNavigation = (props) => {
   );
 };
 export default PageNavigation;
+
+/*
+ *
+PageNavigation 사용법
+
+컴포넌트 필수 props
+- reqPageInfo (object): 페이징 상태
+  - pageNo (number): 현재 페이지 (1부터)
+  - listCnt (number): 한 페이지당 아이템 수
+  - sideBtnCount (number): 현재 페이지 기준 좌우로 몇 개의 페이지 버튼을 보여줄지
+- setReqPageInfo (function): reqPageInfo를 갱신하는 setter
+- totalListCount (number): 전체 아이템 개수
+
+실제 사용 예시
+      <PageNavigation
+        reqPageInfo={reqPageInfo}
+        setReqPageInfo={setReqPageInfo}
+        totalListCount={totalListCount}
+      />
+
+      const [reqPageInfo, setReqPageInfo] = useState({
+          sideBtnCount: 3,
+          pageNo: 1,
+          listCnt: 10,
+      });
+      : 서버로 부터 값 받아오는 것 없음
+ 
+   const [totalListCount, setTotalListCount] = useState(0); 
+      : 서버로 부터 값 받아와서 저장해야됨
+ * 
+ * 
+ * 
+ */
