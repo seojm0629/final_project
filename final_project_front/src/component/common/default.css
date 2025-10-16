@@ -1,0 +1,58 @@
+:root{
+    /* 대표 색상 */
+    --main1 : #1F3A59;
+    --main2 : #2F4E70; /* 메인 색상 */
+    --main3 : #486C92;
+    --main4 : #6C8FB3;
+
+    /* 전체 배경색 */
+    --back1 : #F0F2F5;
+
+    /* 버튼 배경색 */
+    --btn1 : #2F4E70;
+    --btn2 : #3E5F86;
+
+    /* 테두리 색 */
+    --line1 : #999999;
+    --line2 : #8f8f8f;
+    --line3 : #b7b7b7;
+    --line4 : #d6d6d6;
+
+    /* 컨텐츠 배경색 */
+    --content1 : #F5F8FB;
+
+}
+@font-face {
+  font-family: ns-l;
+  src: url(/font/NotoSansKR-Light.ttf);
+}
+@font-face {
+  font-family: ns-r;
+  src: url(/font/NotoSansKR-Regular.ttf);
+}
+@font-face {
+  font-family: ns-b;
+  src: url(/font/NotoSansKR-Bold.ttf);
+}
+@font-face {
+  font-family: ns-black;
+  src: url(/font/NotoSansKR-Black.ttf);
+}
+
+body{
+    background-color: #F0F2F5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: ns-r;
+  list-style-type: none;
+  color: var(--main1);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
