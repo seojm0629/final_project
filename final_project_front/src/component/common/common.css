@@ -95,66 +95,65 @@
   font-size: 12px;
   line-height: 23px;
   padding: 20px;
-  margin-top: 50px;
-  position: absolute;
+  margin-top: auto;
+  position: relative;
+  bottom: 0;
+  left: 0;
 }
 
 /* 메인페이지 */
 
-.main-wrap{
+.main-wrap {
   width: 1200px;
   margin: 0 auto;
-  
   box-sizing: border-box;
   display: flex;
   justify-content: center;
 }
 
-.main-board-list{
+.main-board-list {
   width: 750px;
   height: 421px;
   padding-left: 10px;
-  padding-top : 10px;
+  padding-top: 10px;
   box-sizing: border-box;
   margin-left: 20px;
   display: flex;
   gap: 23px;
-  
 }
 
 /* 중고거래 게시판, 자유 */
 
-.main-board-list .first{
+.main-board-list .first {
   width: 350px;
   height: 450px;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
-
 }
 
-.first>div h4{
+.first > div h4 {
   padding-left: 7px;
-  
-  padding-top : 10px;
+
+  padding-top: 10px;
   font-size: 20px;
 }
 
-.main-board-content{
+.main-board-content {
   padding-left: 7px;
-  padding-top : 10px;
+  padding-top: 10px;
   display: flex;
   justify-content: flex-start;
   gap: 150px;
 }
 
-.transaction-list-right{
+.transaction-list-right {
   display: flex;
   gap: 10px;
 }
 
 /* 스포츠, 게임 게시판*/
-.pre-board-content{
+.pre-board-content {
   text-align: center;
   line-height: 330px;
 }
@@ -162,25 +161,25 @@
 /* 로그인 */
 
 /* 로그인 박스*/
-.main-login-box{
+.main-login-box {
   width: 750px;
   margin-left: 20px;
-  margin-top : 60px;
+  margin-top: 60px;
 }
 
-.main-login{
+.main-login {
   width: 350px;
   height: 170px;
   padding-top: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
 }
-.login-btn{
+.login-btn {
   width: 350px;
   text-align: center;
 }
 
-.login-btn>button{
+.login-btn > button {
   width: 280px;
   height: 50px;
   background-color: #2f4e70;
@@ -188,16 +187,16 @@
   color: #fff;
   font-weight: 800;
   font-size: 30px;
-  margin : 30px 0;
+  margin: 30px 0;
   cursor: pointer;
 }
 
-.login-find{
+.login-find {
   width: 350px;
 }
 
 /* 컨텐츠 박스 */
-.main-topic{
+.main-topic {
   width: 350px;
   height: 450px;
   margin-top: 30px;
@@ -205,12 +204,12 @@
   border-radius: 10px;
 }
 
-.main-topic>h3{
+.main-topic > h3 {
   padding-left: 10px;
-  padding-top : 10px;
+  padding-top: 10px;
 }
 
-.main-topic .topic-list{
+.main-topic .topic-list {
   text-align: center;
   line-height: 330px;
 }

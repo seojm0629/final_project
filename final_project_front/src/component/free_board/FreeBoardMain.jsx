@@ -60,7 +60,7 @@ const FreeBoardMain = () => {
       });
   };
   return (
-    <div className="main-wrap">
+    <div className="main-div">
       <div className="main-header">
         <div className="search-div">
           <div className="search-menu">
@@ -173,63 +173,73 @@ const FreeBoardContent = () => {
   }, [reqPageInfo.pageNo]);
   return (
     <section className="freeBoard-section">
-      {freeBoardList.map((list, i) => {
-        return(
-          <div className="board-div">
-        <div key={"first" + i} className="board-section">
-          <div className="board-status">now</div>
-          {/*상태*/}
-          <div className="board-title">{list.freeBoardTitle}</div>
-          <div className="board-content">{list.freeBoardContent}</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
+      <div className="board-div">
+        {freeBoardList.map((list, i) => {
+          return i % 2 !== 0 ? (
+            <div key={"first" + i} className="board-section">
+              <div className="board-status">now</div>
+              {/*상태*/}
+              <div className="board-title">{list.freeBoardTitle}</div>
+              <div className="board-content">{list.freeBoardContent}</div>
+              <div className="nickname-id">
+                <span>닉네임</span>
+                <span>아이디</span>
+              </div>
+              <div className="view-heart">
+                <div className="view">
+                  <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+                  111
+                </div>
+                <div className="heart">
+                  <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+                  222
+                </div>
+                <div className="hour">
+                  <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+                </div>
+              </div>
             </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
+          ) : (
+            <div
+              key={"second" + i}
+              className="board-section"
+              style={{ borderLeft: "1px solid #ccc" }}
+            >
+              <div className="board-status">now</div>
+              <div className="board-title">{list.freeBoardTitle}</div>
+              <div className="board-content">{list.freeBoardContent}</div>
+              <div className="nickname-id">
+                <span>닉네임</span>
+                <span>아이디</span>
+              </div>
+              <div className="view-heart">
+                <div className="view">
+                  <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+                  111
+                </div>
+                <div className="heart">
+                  <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+                  222
+                </div>
+                <div className="hour">
+                  <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+                </div>
+              </div>
             </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
-        <div key={"second" + i+1} className="board-section" style={{ borderLeft: "1px solid #ccc" }}>
-          <div className="board-status">now</div>
-          <div className="board-title">{list.freeBoardTitle}</div>
-          <div className="board-content">{list.freeBoardContent}</div>
-          <div className="nickname-id">
-            <span>닉네임</span>
-            <span>아이디</span>
-          </div>
-          <div className="view-heart">
-            <div className="view">
-              <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-              111
-            </div>
-            <div className="heart">
-              <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-              222
-            </div>
-            <div className="hour">
-              <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
-        );
-      })}
       <div className="page-navi">
-        <PageNavigation reqPageInfo={reqPageInfo} totalListCount={totalListCount}></PageNavigation>
+        <PageNavigation
+          reqPageInfo={reqPageInfo}
+          setReqPageInfo={setReqPageInfo}
+          totalListCount={totalListCount}
+        ></PageNavigation>
       </div>
     </section>
   );
-      {/*
+  {
+    /*
       <div className="board-div">
         <div className="board-section">
           <div className="board-status">now</div>
@@ -322,7 +332,7 @@ const FreeBoardContent = () => {
           </div>
         </div>
       </div>
-      */}
-
+      */
+  }
 };
 export default FreeBoardMain;
