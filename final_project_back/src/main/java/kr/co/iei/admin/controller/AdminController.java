@@ -66,4 +66,11 @@ public class AdminController {
 		return ResponseEntity.ok(userDetailBoard);
 	}
 	
+	@PatchMapping(value="memberBan")
+	public ResponseEntity<Integer> memberBan(@RequestParam int memberNo){
+		System.out.println("memberBan (memberNo) : "+memberNo);
+		
+		return ResponseEntity.ok(null);
+	}
+	
 }
