@@ -91,14 +91,11 @@
   color: white;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   font-size: 12px;
   line-height: 23px;
   padding: 20px;
-  margin-top: auto;
+  margin-top: 50px;
   position: relative;
-  bottom: 0;
-  left: 0;
 }
 
 /* 메인페이지 */
