@@ -84,14 +84,7 @@
   color: #d4e1f0;
 }
 
-body{
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-main{
-  flex: 1;
-}
+
 
 .footer {
   width: 100%;
@@ -100,7 +93,6 @@ main{
   color: white;
   display: flex;
   justify-content: flex-start;
-  flex-direction: column;
   font-size: 12px;
   line-height: 23px;
   padding: 20px;
@@ -114,7 +106,6 @@ main{
 .main-wrap{
   width: 1200px;
   margin: 0 auto;
-  
   box-sizing: border-box;
   display: flex;
   justify-content: center;
