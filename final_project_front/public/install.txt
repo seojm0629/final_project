@@ -22,3 +22,6 @@ npm install @mui/x-date-pickers
 
 2025-10-17 13:40 이진원
 npm install chart.js
+
+2025-10-17 14:04 이진원
+npm i chart.js react-chartjs-2
