@@ -9,7 +9,6 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
-
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import FreeBoardWrite from "./FreeBoardWrite";
@@ -35,7 +34,7 @@ const FreeBoardMain = () => {
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
-      .get(`${backServer}/freeBoard/contents`)
+      .get(`${backServer}/freeBoard/content`)
       .then((res) => {
         setMenus(res.data);
       })
@@ -47,7 +46,7 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const searchTitle = () => {
     axios
-      .get(`${backServer}/freeBoard/contents/${freeBoardTitle}`)
+      .get(`${backServer}/freeBoard/content/${freeBoardTitle}`)
       .then((res) => {
         console.log(res.data);
       })
@@ -121,7 +120,7 @@ const FreeBoardMain = () => {
           <section className="section free-board">
             <Routes>
               <Route
-                path="contents"
+                path="content"
                 element={<FreeBoardContent></FreeBoardContent>}
               ></Route>
               <Route
@@ -151,7 +150,7 @@ const FreeBoardContent = () => {
     //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
     axios
       .get(
-        `${backServer}/freeBoard/contents?pageNo=${reqPageInfo.pageNo}
+        `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
         &order=${reqPageInfo.order}`

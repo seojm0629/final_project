@@ -47,7 +47,7 @@ public class FreeBoardController {
 		System.out.println(boardList);
 		return ResponseEntity.ok(boardList);
 	}
-	@GetMapping(value = "/contents")
+	@GetMapping(value = "/content")
 	public ResponseEntity<HashMap<String, Object>> boardList(@RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount, @RequestParam int order){
 		//freeBoardList : 게시글 담을 객체
 		//totalListCount : 게시글 수
