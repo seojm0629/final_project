@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.note.model.dao.NoteDao">
-	<insert id="note">
-		insert into note_tbl values(note_seq.nextval,#{noteContent},sysdate,null,0,0,0#{memberSend},#{memberReceive})
+	<insert id="receiveNote">
+		insert into note_tbl values(
+			note_seq.nextval, 
+			#{noteContent}, 
+			sysdate , 
+			null, 
+			0,
+			0,
+			0,
+			#{memberSend},
+			#{memberReceive},
+			#{sendId},
+			#{receiveId})
 	</insert>
 	
 	<select id="getMemberNo" resultType="int" >
