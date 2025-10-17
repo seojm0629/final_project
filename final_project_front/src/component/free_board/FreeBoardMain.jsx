@@ -35,7 +35,7 @@ const FreeBoardMain = () => {
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
-      .get(`${backServer}/freeBoard/mainPage`)
+      .get(`${backServer}/freeBoard/contents`)
       .then((res) => {
         setMenus(res.data);
       })
@@ -47,7 +47,7 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const searchTitle = () => {
     axios
-      .get(`${backServer}/freeBoard/content/${freeBoardTitle}`)
+      .get(`${backServer}/freeBoard/contents/${freeBoardTitle}`)
       .then((res) => {
         console.log(res.data);
       })
@@ -80,7 +80,6 @@ const FreeBoardMain = () => {
                 setFreeBoardTitle(e.target.value);
               }}
             />
-            {/*클릭 시 axios search되도록*/}
             <ManageSearchIcon></ManageSearchIcon>
           </form>
         </div>
@@ -122,7 +121,7 @@ const FreeBoardMain = () => {
           <section className="section free-board">
             <Routes>
               <Route
-                path="content"
+                path="contents"
                 element={<FreeBoardContent></FreeBoardContent>}
               ></Route>
               <Route
@@ -152,7 +151,7 @@ const FreeBoardContent = () => {
     //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
     axios
       .get(
-        `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
+        `${backServer}/freeBoard/contents?pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
         &order=${reqPageInfo.order}`

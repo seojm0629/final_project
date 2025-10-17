@@ -81,7 +81,7 @@ const MainNavi = () => {
           {naviDown === "free" ? (
             <ul className="navi-down">
               <li>
-                <Link to="/freeBoard/mainPage">메인페이지</Link>
+                <Link to="/freeBoard/content">메인페이지</Link>
               </li>
               <li>
                 <Link to="/">취업</Link>
