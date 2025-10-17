@@ -9,9 +9,8 @@ import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
 import FreeBoardMain from "./component/free_board/FreeBoardMain";
 import TradeBoardList from "./component/trade_board/TradeBoardList";
-import SurveyContent from "./component/survey/SurveyModal";
 import ServiceAgree from "./component/member/ServiceAgree";
-import Test from "./component/survey/Test";
+import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import FindId from "./component/member/FindId";
 import FindPw from "./component/member/FindPw";
@@ -35,16 +34,12 @@ function App() {
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
           ></Route>
-          <Route
-            path="/survey/content"
-            element={<SurveyContent></SurveyContent>}
-          />
           <Route path="/tradeBoard/list" element={<TradeBoardList />} />
           <Route
             path="/tradeBoard/view/:tradeBoardNo"
             element={<TradeBoardView />}
           />
-          <Route path="/survey/test" element={<Test />} />
+          <Route path="/note/test" element={<Test />} />
         </Routes>
       </main>
       <Footer></Footer>
