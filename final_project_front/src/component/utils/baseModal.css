@@ -12,6 +12,8 @@
   z-index: 2000;
 }
 .modal-contentbox {
+  width: 500px;
+  height: 40%;
   display: flex;
   flex-direction: column;
   background-color: white;

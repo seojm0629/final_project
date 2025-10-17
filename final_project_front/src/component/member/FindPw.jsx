@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import BaseModal from "../utils/BaseModal";
 import Swal from "sweetalert2";
 import axios from "axios";
+import BaseModalFind from "../utils/BaseModalFind";
+import { Button, Grow, Modal } from "@mui/material";
 
 
 const FindPw = () => {
@@ -16,8 +18,14 @@ const FindPw = () => {
     const [domain, setDomain] = useState("naver.com") //기본도메인
     const [customDomain, setCustomDomain] = useState("");
 
+    //비밀번호 찾기 전 : 0 - 비밀번호 찾기 성공 : 1 - 비밀번호 찾기 실패 : 2
     const [isAuth, setIsAuth] = useState(0);
+    // 로딩 css 띄우기
     const [isLoader, setIsLoader] = useState(false);
+    // 닫기 useState 띄우기
+    const [isClose, setIsClose] = useState(false);
+    
+    const [isLoding, setIsLoding] = useState(false);
 
     const modalInputData = (e) => {
         const name = e.target.name;
@@ -29,17 +37,36 @@ const FindPw = () => {
     const backServer = import.meta.env.VITE_BACK_SERVER;
 
     const findPw = () => {
+        setIsLoding(true);
         if(member.memberId !== "" && member.memberName !== "" && member.memberEmail){
+            setIsLoader(true);
             axios
             .get(`${backServer}/member/findPw?memberId=${member.memberId}&&memberName=${member.memberName}
                 &&memberEmail=${member.memberEmail}`)
+                
+                
             .then((res)=>{
+                setIsLoding(false);
                 console.log(res.data);
                 if(res.data){
-                    setIsAuth(1);
-                    setIsLoader(true);
+                    setIsAuth(1);          // 비밀번호 찾기 전 : 0 - 비밀번호 찾기 성공(trueResult) : 1 - 비밀번호 찾기 실패(falseResult) : 2
+                    setIsLoader(false);
+                    setIsClose(true);
+                    setMember({...member,
+                        memberId : "",
+                        memberName : "",
+                        memberEmail : "",
+                    })
+                    
                 } else {
                     setIsAuth(2);
+                    setIsLoader(false);
+                    setIsClose(true);
+                    setMember({...member,
+                        memberId : "",
+                        memberName : "",
+                        memberEmail : "",
+                    })
                 }
                 
             })
@@ -113,9 +140,40 @@ const FindPw = () => {
         </div>
     ) 
 
+    const trueResult = (
+        <div className="result-modal-wrap">
+            <div className="result-modal">                
+                <div className="member-id">
+                    <span>임시 비밀번호가 전송되었습니다.</span>
+                </div>
+                
+            </div>
+        </div>
+        
+    )
     
+    const falseResult = (
+        <div className="result-modal-wrap">
+            <div className="result-modal">
+                <div className="member-id">
+                    <span >회원님의 아이디가 존재하지 않습니다.</span>
+                </div>
+            </div>
+        </div>
+    )
+    
+
     const content = (
+        
+
         <div className="member-modal-wrap">
+
+             {isLoader && (
+                <div className="loader-wrap">
+                    <span className={isLoding?"loader":""}></span>
+                </div>
+            )}
+
             <div className="member-modal-content">
                 <div className="modal-member-name">
                     <div className="modal-member-title">
@@ -161,43 +219,79 @@ const FindPw = () => {
             
     )
 
-    const trueResult = (
-        <div className="result-modal-wrap">
-            <div className="result-modal">                
-                <div className="member-id">
-                    <span className="loader"></span>
-                </div>
-                <button className="result-modal-btn" onClick={()=>{setIsAuth(0);}}>닫기</button>
-            </div>
-        </div>
-        
-    )
-    
-    const falseResult = (
-        <div className="result-modal-wrap">
-            <div className="result-modal">
-                <div className="member-id">
-                    <span >회원님의 아이디가 존재하지 않습니다.</span>
-                </div>
-                <button className="result-modal-btn" onClick={()=>{setIsAuth(0)}}>닫기</button>
-            </div>
-        </div>
-    )
-
     
 
     
-    return(
+
+    /*
+      title,
+  content,
+  buttonLabel,
+  contentBoxStyle,
+  end,
+  result,*/
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setMember({...member,
+                        memberId : "",
+                        memberName : "",
+                        memberEmail : "",
+                    })
+                    
+    setIsClose(false);
+    setIsAuth(0);
+}
+
+ 
+  return (
     <div>
-        <BaseModal
+      <button className="modal-button" onClick={handleOpen}>
+        비밀번호 찾기
+      </button>
+      <Modal open={open} onClose={handleClose}>
+        <Grow in={open}>
+          <div className="modal-box" >
+            <div className="modal-contentbox" >
+              <header className="modal-header">
+                <h3>{title}</h3>
+              </header>
+              <div className="modal-main">{isAuth==0?content:isAuth==1?trueResult:falseResult}</div>
+              <footer className="modal-footer">
+                <Button
+                    variant="contined"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#2f4e70",
+                      fontWeight: "bold",
+                      fontSize: "0.9rem",
+                    }}
+                    onClick={handleClose}
+                  >
+                    닫기
+                  </Button>
+              </footer>
+            </div>
+          </div>
+        </Grow>
+      </Modal>
+    </div>
+
+
+        /*
+    <div>
+        <BaseModalFind
             title={title}
             buttonLabel={"비밀번호 찾기"}
             contentBoxStyle={{ width: "600px", height: "500px" }}
             result={""}
-            end={"닫기"}
+            end={isClose ? "닫기" : "" }
             content={isAuth === 0 ? (content) : isAuth === 1 ? (trueResult) : (falseResult)}
         />
     </div>
+    */
     )
 }
 
