@@ -30,12 +30,15 @@ public class MemberService {
 		String encPw = encoder.encode(memberPw);
 		member.setMemberPw(encPw);
 		
+		
 		int result = memberDao.join(member);
 		return result;
 	}
 	
 	public LoginMemberDTO login(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
+		System.out.println("member.getMemberPw() : " + member.getMemberPw());
+		System.out.println("m.getMemberPw() : " + m.getMemberPw());
 		
 		
 		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
@@ -121,6 +124,26 @@ public class MemberService {
 		
 		return m;
 	}
+
+	
+
+	public MemberDTO findPw(String memberId, String memberEmail) {
+		MemberDTO m = memberDao.findPw(memberId, memberEmail);	//회원 정보 조회 쿼리
+		System.out.println(m);
+		
+		return m;
+	}
+
+	
+	@Transactional
+	public int updatePw(MemberDTO m) {
+		String encPw = encoder.encode(m.getMemberPw());
+		m.setMemberPw(encPw);		
+		int result = memberDao.updatePw(m);
+		return result;
+	}
+
+	
 
 	
 		
