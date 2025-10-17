@@ -30,7 +30,9 @@ public class NoteController {
 		
 		int result = noteService.receiveNote(note);
 		
-		System.out.println("확인해보자"+result);
+		System.out.println("확인해보자"+ result);
+		
+		System.out.println(note);
 		
 		return ResponseEntity.ok(result);
 	}

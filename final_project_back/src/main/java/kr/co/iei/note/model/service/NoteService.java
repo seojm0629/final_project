@@ -2,6 +2,7 @@ package kr.co.iei.note.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.note.model.dao.NoteDao;
 import kr.co.iei.note.model.dto.NoteDTO;
@@ -11,7 +12,8 @@ import kr.co.iei.note.model.dto.NoteDTO;
 public class NoteService {
 	@Autowired
 	private NoteDao noteDao;
-
+	
+	@Transactional
 	public int receiveNote(NoteDTO note) {
 
 		
@@ -21,8 +23,11 @@ public class NoteService {
 		int reseiveNo = noteDao.getMemberNo(note.getReceiveId()); 
 		//출력,출력
 		
-		System.out.println("sendNo"+ sendNo);
-		System.out.println("reseiveNo"+ reseiveNo);
+		//System.out.println("sendNo"+ sendNo);
+		//System.out.println("reseiveNo"+ reseiveNo);
+		
+		note.setMemberSend(sendNo);
+		note.setMemberReceive(reseiveNo);
 		
 		int result = noteDao.receiveNote(note);	
 		
