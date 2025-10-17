@@ -1,5 +1,6 @@
 package kr.co.iei.tradeBoard.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.tradeBoard.model.dto.TradeBoardDTO;
+import kr.co.iei.tradeBoard.model.dto.TradeCommentDTO;
+import kr.co.iei.tradeBoard.model.dto.TradeReportDTO;
 import kr.co.iei.tradeBoard.model.service.TradeBoardService;
 
 @CrossOrigin("*")
@@ -27,9 +32,33 @@ public class TradeBoardController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping(value="/{tradeBoardNo}")
-	public ResponseEntity<TradeBoardDTO> selectOneBoard(@PathVariable int tradeBoardNo){
-		TradeBoardDTO tb = tradeBoardService.selectOneBoard(tradeBoardNo);
-		return ResponseEntity.ok(tb);
-	}
+	@GetMapping("/{tradeBoardNo}")
+    public ResponseEntity<TradeBoardDTO> selectOneBoard(@PathVariable int tradeBoardNo) {
+        TradeBoardDTO tb = tradeBoardService.selectOneBoard(tradeBoardNo);
+        return ResponseEntity.ok(tb);
+    }
+
+    @GetMapping("/{tradeBoardNo}/comments")
+    public ResponseEntity<List<TradeCommentDTO>> getComments(@PathVariable int tradeBoardNo) {
+        List<TradeCommentDTO> list = tradeBoardService.selectCommentList(tradeBoardNo);
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/{tradeBoardNo}/likes")
+    public ResponseEntity<Map<String, Object>> getLikes(@PathVariable int tradeBoardNo, @RequestParam int memberNo) {
+        Map<String, Object> map = tradeBoardService.getLikeInfo(tradeBoardNo, memberNo);
+        return ResponseEntity.ok(map);
+    }
+
+    @PostMapping("/{tradeBoardNo}/like")
+    public ResponseEntity<String> toggleLike(@PathVariable int tradeBoardNo, @RequestParam int memberNo) {
+        tradeBoardService.toggleLike(tradeBoardNo, memberNo);
+        return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/{tradeBoardNo}/report")
+    public ResponseEntity<String> reportBoard(@PathVariable int tradeBoardNo, @RequestBody TradeReportDTO report) {
+        tradeBoardService.insertReport(tradeBoardNo, report);
+        return ResponseEntity.ok("reported");
+    }
 }
