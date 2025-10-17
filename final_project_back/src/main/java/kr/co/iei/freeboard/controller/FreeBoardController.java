@@ -41,7 +41,7 @@ public class FreeBoardController {
 		
 		return ResponseEntity.ok(cate);
 	}
-	@GetMapping(value = "/{freeBoardTitle}")
+	@GetMapping(value = "/content/{freeBoardTitle}")
 	public ResponseEntity<List> searchTitle(@PathVariable String freeBoardTitle){
 		List boardList = freeBoardService.searchTitle(freeBoardTitle);
 		System.out.println(boardList);
