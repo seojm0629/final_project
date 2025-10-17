@@ -25,7 +25,17 @@
   transition: 0.5s;
 }
 
+.admin .chart-content-body > div {
+  display: flex;
+
+  justify-content: space-between;
+  border: 1px solid #d3d3d3;
+  padding: 100px;
+  border-radius: 5px;
+}
+
 .admin .chart-content-body {
   display: flex;
-  overflow: auto;
+  flex-direction: column;
+  gap: 30px;
 }
