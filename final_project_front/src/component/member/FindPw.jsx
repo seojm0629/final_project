@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BaseModal from "../utils/BaseModal";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -9,10 +9,15 @@ const FindPw = () => {
     const [member, setMember] = useState({
         memberId : "",
         memberName : "",
-        memberPhone : "",
+        memberEmail : "",
     })
 
+    const [mailCode, setMailCode] = useState(null);
+    const [domain, setDomain] = useState("naver.com") //기본도메인
+    const [customDomain, setCustomDomain] = useState("");
+
     const [isAuth, setIsAuth] = useState(0);
+    const [isLoader, setIsLoader] = useState(false);
 
     const modalInputData = (e) => {
         const name = e.target.name;
@@ -20,39 +25,79 @@ const FindPw = () => {
         const findMember = {...member, [name] : value};
         setMember(findMember);
     }
-    
 
-    const findPw= () => {
-        
-        if(member.memberId !== "" && member.memberName != "" && member.memberPhone !== ""){
+    const backServer = import.meta.env.VITE_BACK_SERVER;
+
+    const findPw = () => {
+        if(member.memberId !== "" && member.memberName !== "" && member.memberEmail){
             axios
-            .post(`${import.meta.env.VITE_BACK_SERVER}/member/findPw`, member)
+            .get(`${backServer}/member/findPw?memberId=${member.memberId}&&memberName=${member.memberName}
+                &&memberEmail=${member.memberEmail}`)
             .then((res)=>{
-                
+                console.log(res.data);
                 if(res.data){
-                    if(member.memberId === res.data.memberId && member.memberName === res.data.memberName && member.memberPhone === res.data.memberPhone){
-                        setMember(res.data);
-                        setIsAuth(1);
-                    } else {
-                        setIsAuth(2);
-                    }
-                    
-                    
-                } 
+                    setIsAuth(1);
+                    setIsLoader(true);
+                } else {
+                    setIsAuth(2);
+                }
                 
             })
             .catch((err)=>{
                 console.log(err);
             })
-        } else {
-            Swal.fire({
-                title : "입력 정보 확인",
-                text : "빈칸 없이 모두 입력해주세요.",
-                icon : "warning",
+        }
+    }
+
+    /*
+    const findPw = () => {
+        if(member.memberId !== "" && member.memberName !== "" && member.memberEmail !== ""){
+            axios
+            .get(`${backServer}/member/findPw?memberId=${member.memberId}`)
+                .then((res)=>{
+                
+                if(res.data){
+                    setMember(res.data);
+
+                    const receiver = `${member.memberEmail}`
+
+                    axios
+                    .get(`${backServer}/api/sendCodePw`,{params : {receiver}})
+                    .then((res)=>{
+                        console.log(res);
+                        if(res.data){
+                            setMailCode(res.data); //이메일 전송코드 저장
+
+                            axios
+                            .patch(`${backServer}/member/password`, member)
+                            .then((res)=>{
+                                
+                                if(res.data === 1){
+                                    alert("비밀번호 전송완료");
+                                    
+                                    setMember({...member, memberPw : ""});
+                                }
+                            })
+                            .catch((err)=>{
+                                console.log(err);
+                            })
+                        }
+
+                        
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                    })
+                }
+                
+                
+            })    
+            .catch((err)=>{
+                console.log(err);
             })
         }
-        
     }
+    */
 
     
     
@@ -97,11 +142,11 @@ const FindPw = () => {
                 
                 <div className="modal-member-name">
                     <div className="modal-member-title">
-                        <label htmlFor="memberPhone">전화번호</label>
+                        <label htmlFor="memberEmail">이메일</label>
                     </div>
                     <div className="modal-member-item">
-                        <input type="text" name="memberPhone" id="memberPhone"
-                        value={member.memberPhone} onChange={modalInputData}
+                        <input type="text" name="memberEmail" id="memberEmail"
+                        value={member.memberEmail} onChange={modalInputData}
                         />
                     </div>
                 </div>
@@ -118,11 +163,11 @@ const FindPw = () => {
 
     const trueResult = (
         <div className="result-modal-wrap">
-            <div className="result-modal">
+            <div className="result-modal">                
                 <div className="member-id">
-                    <span>회원님의 비밀번호는 : "{member.memberPw}" 입니다.</span>
+                    <span className="loader"></span>
                 </div>
-                <button className="result-modal-btn" onClick={()=>{setIsAuth(0)}}>닫기</button>
+                <button className="result-modal-btn" onClick={()=>{setIsAuth(0);}}>닫기</button>
             </div>
         </div>
         
@@ -132,7 +177,7 @@ const FindPw = () => {
         <div className="result-modal-wrap">
             <div className="result-modal">
                 <div className="member-id">
-                    <span>회원님의 아이디가 존재하지 않습니다.</span>
+                    <span >회원님의 아이디가 존재하지 않습니다.</span>
                 </div>
                 <button className="result-modal-btn" onClick={()=>{setIsAuth(0)}}>닫기</button>
             </div>

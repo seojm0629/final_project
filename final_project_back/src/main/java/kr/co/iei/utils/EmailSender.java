@@ -17,7 +17,7 @@ public class EmailSender {
 	@Autowired
 	private JavaMailSender sender;
 	
-	public void sendMail(String emailTitle, String receiver, String emailContent) {
+	public void sendMail(String emailTitle, String memberEmail, String emailContent) {
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		
@@ -26,7 +26,7 @@ public class EmailSender {
 			//보내는 사람 정보
 			helper.setFrom(new InternetAddress("abc@gmail.com", "talk_deal 주식회사"));
 			//받는사람 이메일 주소
-			helper.setTo(receiver);
+			helper.setTo(memberEmail);
 			//제목 설정
 			helper.setSubject(emailTitle);
 			//내용 설정

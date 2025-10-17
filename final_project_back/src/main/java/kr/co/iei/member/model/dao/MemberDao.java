@@ -27,8 +27,13 @@ public interface MemberDao {
 
 	int updateNickname(MemberDTO member);
 
-
 	MemberDTO find(String memberName);
+	
+	MemberDTO findPw(String memberId, String memberEmail);
+
+	int updatePw(MemberDTO m);
+
+	
 	
 	
 
