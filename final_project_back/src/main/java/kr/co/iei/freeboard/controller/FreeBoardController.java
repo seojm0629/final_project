@@ -63,4 +63,9 @@ public class FreeBoardController {
 		//System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
+	@GetMapping(value = "/category/{freeBoardSubcategoryNo}")
+	public ResponseEntity<List> subList(@PathVariable int freeBoardSubcategoryNo){
+		List subList = freeBoardService.subList(freeBoardSubcategoryNo);
+		return ResponseEntity.ok(subList);
+	}
 }

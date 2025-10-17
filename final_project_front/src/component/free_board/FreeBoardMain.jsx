@@ -14,10 +14,17 @@ import PageNavigation from "../utils/PageNavigation";
 import FreeBoardWrite from "./FreeBoardWrite";
 import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
 
+// * 메인페이지 최상위 컴포넌트 *
+
 const FreeBoardMain = () => {
   const [selectMenu, setSelectMenu] = useState([]); //클릭 시 선택된 글씨가 나타나도록 구현하는 state
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigation = useNavigate();
+  //const freeBoardList = props.freeBoardList;
+  //const setFreeBoardList = props.setFreeBoardList;
+  const [selectedBoardList, setSelectedBoardList] = useState([]);
+  const [selected, setSelected] = useState();
+  // * freeBoardListNo (최상위 컴포넌트에서 -> sideMenu -> main -> content) *
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
       setSelectMenu([...selectMenu, menu]);
@@ -34,9 +41,10 @@ const FreeBoardMain = () => {
   const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
-      .get(`${backServer}/freeBoard/content`)
+      .get(`${backServer}/freeBoard/mainPage`)
       .then((res) => {
         setMenus(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +113,8 @@ const FreeBoardMain = () => {
             <FreeBoardSideMenu
               menus={menus}
               setSelectMenu={addMenu}
+              setSelectedBoardList={setSelectedBoardList}
+              setSelected={setSelected}
             ></FreeBoardSideMenu>
           </section>
         </div>
@@ -121,7 +131,12 @@ const FreeBoardMain = () => {
             <Routes>
               <Route
                 path="content"
-                element={<FreeBoardContent></FreeBoardContent>}
+                element={
+                  <FreeBoardContent
+                    selectedBoardList={selectedBoardList}
+                    selected={selected}
+                  ></FreeBoardContent>
+                }
               ></Route>
               <Route
                 path="boardWrite"
@@ -136,8 +151,11 @@ const FreeBoardMain = () => {
 };
 
 //각 카테고리별 하위카테고리를 눌렀을 때 뜨도록하는 페이지 관리자 페이지에서 추가될때 마다 생성되도록 구현 필요
-const FreeBoardContent = () => {
+const FreeBoardContent = (props) => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
+  const selectedBoardList = props.selectedBoardList;
+  console.log(selectedBoardList);
+  const selected = props.selected;
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
@@ -248,6 +266,96 @@ const FreeBoardContent = () => {
           reqPageInfo={reqPageInfo}
           setReqPageInfo={setReqPageInfo}
           totalListCount={totalListCount}
+          setTotalListCount={setTotalListCount}
+          setFreeBoardList={setFreeBoardList}
+        ></PageNavigation>
+      </div>
+      {/*2*/}
+      <div className="board-div">
+        {freeBoardList.map((list, i) => {
+          return i % 2 === 0 ? (
+            <div
+              key={"first" + i}
+              className="board-section"
+              style={{
+                borderRight: "1px solid #ccc",
+              }}
+            >
+              {/*상태넣을꺼*/}
+              <div className="board-status">{list.freeBoardNo}</div>
+              <div className="board-title">{list.freeBoardTitle}</div>
+              <div className="board-content">{list.freeBoardContent}</div>
+              <div className="nickname-id">
+                <span>{list.memberNickname}</span>
+                <span>{list.memberId}</span>
+              </div>
+              <div className="view-heart">
+                <div className="view">
+                  {/*작성된 게시글을 */}
+                  <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+                  111
+                </div>
+                <div className="heart">
+                  <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+                  {list.likeCount}
+                </div>
+                <div className="hour">
+                  <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div key={"second" + i} className="board-section" style={{}}>
+              <div className="board-status">{list.freeBoardNo}</div>
+              <div className="board-title">{list.freeBoardTitle}</div>
+              <div className="board-content">{list.freeBoardContent}</div>
+              <div className="nickname-id">
+                <span>{list.memberNickname}</span>
+                <span>{list.memberId}</span>
+              </div>
+              <div className="view-heart">
+                <div className="view">
+                  <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
+                  111
+                </div>
+                <div className="heart">
+                  <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+                  {list.likeCount}
+                </div>
+                <div className="hour">
+                  <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        className="order-div"
+        onClick={() => {
+          {
+            reqPageInfo.order === 2
+              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
+              : setReqPageInfo({ ...reqPageInfo, order: 2 });
+          }
+        }}
+      >
+        <div>
+          <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
+          {reqPageInfo.order === 2 ? (
+            <span>최신순</span>
+          ) : (
+            <span>오래된순</span>
+          )}
+        </div>
+      </div>
+      <div className="page-navi">
+        <PageNavigation
+          reqPageInfo={reqPageInfo}
+          setReqPageInfo={setReqPageInfo}
+          totalListCount={totalListCount}
+          setTotalListCount={setTotalListCount}
+          setFreeBoardList={setFreeBoardList}
         ></PageNavigation>
       </div>
     </section>

@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value = "freeBoardCategory")
 public class FreeBoardCategoryDTO {
-
+	private int freeBoardCategoryNo;
 	private String freeBoardCategory;
+	private int freeBoardSubcategoryNo;
 	private String freeBoardSubcategory;
 }
