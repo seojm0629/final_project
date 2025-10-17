@@ -323,6 +323,7 @@ const ContentMember = () => {
           console.log(reqListToggle);
         });
     };
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const BanModalContent = () => {
       return (
         <div className="adminModal ban-modal">
@@ -394,32 +395,57 @@ const ContentMember = () => {
         </td>
         <td
           onMouseOver={() => {
+            console.log(isModalOpen);
             setBenMode(true);
           }}
           onMouseOut={() => {
-            setBenMode(false);
+            console.log(isModalOpen);
+            !isModalOpen && setBenMode(false);
           }}
           key={"claim-" + m.memberNo}
         >
           {benMode ? (
             <div className="banMode">
-              <BaseModal
-                title="이용자 정지"
-                content={<BanModalContent />}
-                buttonLabel="정지"
-                contentBoxStyle={{ width: "400px", height: "800px" }}
-                end="닫기"
-                result={confirm}
-              />
+              <button
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+              >
+                <BaseModal
+                  title="이용자 정지"
+                  content={<BanModalContent />}
+                  buttonLabel="정지"
+                  contentBoxStyle={{ width: "400px", height: "800px" }}
+                  end={
+                    <div>
+                      <button
+                        onClick={() => {
+                          setIsModalOpen(false);
+                          setBenMode(false);
+                        }}
+                      >
+                        취소
+                      </button>
+                    </div>
+                  }
+                  result={confirm}
+                />
+              </button>
 
-              <BaseModal
-                title="벤모드"
-                content={<div>회원을 선택하시겠습니까?</div>}
-                buttonLabel="선택"
-                contentBoxStyle={{ width: "800px", height: "500px" }}
-                end={"닫기버튼이름"}
-                result={"확인버튼"}
-              />
+              <button
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+              >
+                <BaseModal
+                  title="벤모드"
+                  content={<div>회원을 선택하시겠습니까?</div>}
+                  buttonLabel="선택"
+                  contentBoxStyle={{ width: "800px", height: "500px" }}
+                  end={"닫기버튼이름"}
+                  result={"확인버튼"}
+                />
+              </button>
             </div>
           ) : m.isBen === "FALSE" ? (
             "정상"
