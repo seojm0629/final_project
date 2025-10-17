@@ -42,8 +42,6 @@ const Note = () => {
       .post(`${backServer}/note`, data)
       .then((res) => {
         console.log(res);
-        //setReceiveListNote(res.data);
-        //setSendListNote(res.data);
       })
       .catch((err) => {
         console.log(err);
