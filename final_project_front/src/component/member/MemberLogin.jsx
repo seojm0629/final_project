@@ -5,6 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberTypeState } from "../utils/RecoilData";
+import FindPw from "./FindPw";
 
 const MemberLogin = () => {
     //recoil에 선언한 데이터(state)를 가져오는 방법
@@ -99,7 +100,7 @@ const MemberLogin = () => {
                     <div className="login-find">
                         <Link to="#">아이디 찾기</Link>
                         
-                        <Link to="#">비밀번호 찾기</Link>
+                        <FindPw> 비밀번호 찾기</FindPw>
                         
                         <Link to="/member/join">회원가입</Link>
                     </div>
