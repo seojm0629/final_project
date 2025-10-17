@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,11 +67,14 @@ public class AdminController {
 		return ResponseEntity.ok(userDetailBoard);
 	}
 	
-	@PatchMapping(value="memberBan")
-	public ResponseEntity<Integer> memberBan(@RequestParam int memberNo){
-		System.out.println("memberBan (memberNo) : "+memberNo);
-		
-		return ResponseEntity.ok(null);
+	@PostMapping(value="memberBan")
+	public ResponseEntity<Integer> memberBan(@RequestBody HashMap<String, String> banSet){
+		System.out.println(banSet);
+		int result = adminService.memberBan(banSet);
+		System.out.println(result);
+		return ResponseEntity.ok(result);
 	}
+	
+	
 	
 }

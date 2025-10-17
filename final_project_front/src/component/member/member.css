@@ -958,6 +958,9 @@ input[type="radio"]:checked+label{
     height: 40px;
 }
 
+.result-false {
+    display: none;
+}
 
 
 /*

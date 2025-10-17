@@ -117,9 +117,17 @@ public class MemberService {
 
 	public MemberDTO find(String memberName) {
 		MemberDTO m = memberDao.find(memberName);
+		
+		
 		return m;
 	}
 
+	
+		
+
+		
+	
+	
 	
 	
 

@@ -2,13 +2,13 @@ import { useState } from "react";
 import BaseModal from "../utils/BaseModal";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { Route, Routes, useNavigate } from "react-router-dom";
 
-const FindId = () => {
+
+const FindPw = () => {
     
     const [member, setMember] = useState({
+        memberId : "",
         memberName : "",
-        memberBirth : "",
         memberPhone : "",
     })
 
@@ -21,18 +21,16 @@ const FindId = () => {
         setMember(findMember);
     }
     
-    const navigate = useNavigate();
-    
 
-    const findId = () => {
+    const findPw= () => {
         
-        if(member.memberName !== "" && member.memberBirth != "" && member.memberPhone !== ""){
+        if(member.memberId !== "" && member.memberName != "" && member.memberPhone !== ""){
             axios
-            .get(`${import.meta.env.VITE_BACK_SERVER}/member/find?memberName=${member.memberName}`)
+            .post(`${import.meta.env.VITE_BACK_SERVER}/member/findPw`, member)
             .then((res)=>{
                 
                 if(res.data){
-                    if(member.memberName === res.data.memberName && member.memberBirth === res.data.memberBirth && member.memberPhone === res.data.memberPhone){
+                    if(member.memberId === res.data.memberId && member.memberName === res.data.memberName && member.memberPhone === res.data.memberPhone){
                         setMember(res.data);
                         setIsAuth(1);
                     } else {
@@ -60,12 +58,12 @@ const FindId = () => {
     
     const titleExplain = (
         <div className="title-explain">
-            <span>※ 가입한 정보로 아이디를 찾을 수 있습니다.</span>
+            <span>※ 가입한 정보로 비밀번호를 찾을 수 있습니다.</span>
         </div>
     )
     const title = ( 
         <div className="member-modal-title">
-            <span>가입정보로 아이디 찾기</span>
+            <span>가입정보로 비밀번호 찾기</span>
             {titleExplain}
         </div>
     ) 
@@ -76,11 +74,11 @@ const FindId = () => {
             <div className="member-modal-content">
                 <div className="modal-member-name">
                     <div className="modal-member-title">
-                        <label htmlFor="memberName">이름</label>
+                        <label htmlFor="memberId">아이디</label>
                     </div>    
                     <div className="modal-member-item">
-                        <input type="text" name="memberName" id="memberName"
-                        value={member.memberName} onChange={modalInputData}
+                        <input type="text" name="memberId" id="memberId"
+                        value={member.memberId} onChange={modalInputData}
                         />
                     </div>
                     
@@ -88,11 +86,11 @@ const FindId = () => {
                 </div>    
                 <div className="modal-member-name">
                     <div className="modal-member-title">
-                        <label htmlFor="memberBirth">생년월일</label>
+                        <label htmlFor="memberName">이름</label>
                     </div>
                     <div className="modal-member-item">
-                        <input type="text" name="memberBirth" id="memberBirth" 
-                        value={member.memberBirth} onChange={modalInputData}
+                        <input type="text" name="memberName" id="memberName" 
+                        value={member.memberName} onChange={modalInputData}
                         />
                     </div>
                 </div>
@@ -109,8 +107,8 @@ const FindId = () => {
                 </div>
 
                 <div className="modal-button-box">
-                    <button type="submit" className="modal-btn" onClick={findId}>                    
-                        아이디 찾기
+                    <button type="submit" className="modal-btn" onClick={findPw}>                    
+                        비밀번호 찾기
                     </button>
                 </div>
             </div>
@@ -122,7 +120,7 @@ const FindId = () => {
         <div className="result-modal-wrap">
             <div className="result-modal">
                 <div className="member-id">
-                    <span>회원님의 아이디는 : "{member.memberId}" 입니다.</span>
+                    <span>회원님의 비밀번호는 : "{member.memberPw}" 입니다.</span>
                 </div>
                 <button className="result-modal-btn" onClick={()=>{setIsAuth(0)}}>닫기</button>
             </div>
@@ -148,7 +146,7 @@ const FindId = () => {
     <div>
         <BaseModal
             title={title}
-            buttonLabel={"아이디 찾기"}
+            buttonLabel={"비밀번호 찾기"}
             contentBoxStyle={{ width: "600px", height: "500px" }}
             result={""}
             end={"닫기"}
@@ -160,4 +158,4 @@ const FindId = () => {
 
 
 
-export default FindId;
+export default FindPw;

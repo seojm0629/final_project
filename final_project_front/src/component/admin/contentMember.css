@@ -152,7 +152,43 @@
   font-size: 30px;
 }
 
-.titleText {
-  font-size: 50px;
-  background-color: #417ab6;
+.adminModal.ban-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 14px;
+  gap: 16px;
+  margin: 0 auto;
+}
+.adminModal.titleText {
+  font-size: 18px;
+  font-weight: 800;
+  color: #2f4e70;
+}
+
+.adminModal .subtitleText {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  color: #37597e;
+  margin-top: 10px;
+  border-radius: 10px;
+
+  width: 200px;
+}
+
+.adminModal input {
+  width: 280px;
+  max-width: 90%;
+  padding: 10px 12px;
+  border-radius: 5px;
+  border: 1px solid #cfe0f0;
+  background-color: #ffffff;
+  color: #2f4e70;
+}
+
+.adminModal input:hover {
+  border: 1px solid #000000;
 }
