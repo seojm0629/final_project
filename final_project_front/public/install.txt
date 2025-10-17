@@ -20,3 +20,5 @@ npm install dayjs
 2025-10-16 12:48 이진원
 npm install @mui/x-date-pickers
 
+2025-10-17 13:40 이진원
+npm install chart.js
