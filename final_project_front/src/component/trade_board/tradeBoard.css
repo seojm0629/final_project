@@ -177,20 +177,88 @@
   }
 }
 
-.tradeBoard-view-wrap {
-  width: 500px;
+.trade-view-wrap {
+  max-width: 900px;
   margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.trade-header {
   display: flex;
+  gap: 20px;
 }
-.tradeBoard-view-info {
-  overflow: hidden;
+
+.trade-thumbnail {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
 }
-.tradeBoard-thumbnail {
-  float: left;
+
+.trade-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.tradeBoard-view-preview {
-  float: right;
+
+.trade-actions {
+  display: flex;
+  gap: 10px;
 }
-.tradeBoard-thumbnail > img {
-  margin-right: 40px;
+
+.trade-btn-zone {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.trade-comment-wrap {
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+.trade-more-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.trade-status .on-sale {
+  color: #007aff;
+  font-weight: bold;
+}
+
+.trade-status .sold {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.comment-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.comment-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+}
+
+.comment-list {
+  margin-top: 15px;
+}
+
+.comment-list li {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
 }

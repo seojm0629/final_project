@@ -1,0 +1,41 @@
+.admin .admin-content-wrap {
+  padding: 50px;
+}
+.admin .chartBox {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrap-1 {
+  width: 500px;
+}
+.chartBox button {
+  text-align: center;
+  background-color: rgb(46, 116, 148);
+  padding: 10px 50px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: azure;
+}
+
+.chartBox button:hover {
+  background-color: rgb(72, 90, 255);
+  transition: 0.5s;
+}
+
+.admin .chart-content-body > div {
+  display: flex;
+
+  justify-content: space-between;
+  border: 1px solid #d3d3d3;
+  padding: 100px;
+  border-radius: 5px;
+}
+
+.admin .chart-content-body {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}

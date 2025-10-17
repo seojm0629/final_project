@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.tradeBoard.model.dao.TradeBoardDao">
-
+	
+	<!-- 게시글 전체 개수 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from trade_board_tbl where trade_board_status = 1
 	</select>
-	
+	<!-- 게시글 목록 (페이징) -->
 	<select id="selectTradeBoardList" resultType="tradeBoard">
 	  	select * from
 	    (select rownum as rnum, b.*
@@ -18,8 +19,89 @@
 	            from trade_board_tbl where trade_board_status = 1 order by trade_board_no desc)b)
 	    where rnum BETWEEN #{startRow} and #{endRow}
    </select>
-   
-   <select id="selectOneBoard" resultType="tradeBoard">
-   		select * from trade_board_tbl where trade_board_no = #{tradeBoardNo}
-   </select>
+   <!-- 게시글 상세보기 -->
+   <select id="selectOneBoard" parameterType="int" resultType="tradeBoard">
+        select
+            trade_board_no,
+            trade_board_title,
+            trade_board_content,
+            TO_CHAR(trade_board_date, 'YYYY-MM-DD HH24:MI:SS'),
+            trade_board_price,
+            trade_board_place,
+            trade_board_status,
+            trade_board_category_no,
+            member_no,
+            trade_thumbnail_path
+        from trade_board_tbl
+        where trade_board_no = #{tradeBoardNo}
+    </select>
+    <!-- 댓글 목록 -->
+    <select id="selectCommentList" parameterType="int" resultType="tradeComment">
+        SELECT 
+            trade_comment_no,
+            trade_board_no,
+            member_no,
+            trade_comment_content,
+            TO_CHAR(trade_comment_date, 'YYYY-MM-DD HH24:MI:SS')
+        FROM trade_comment_tbl
+        WHERE trade_board_no = #{tradeBoardNo}
+        ORDER BY trade_comment_no ASC
+    </select>
+    <!-- 댓글 등록 -->
+    <insert id="insertComment" parameterType="tradeComment">
+        INSERT INTO trade_comment_tbl (
+            trade_comment_no,
+            trade_board_no,
+            member_no,
+            trade_comment_content,
+            trade_comment_date
+        ) VALUES (
+            trade_comment_seq.NEXTVAL,
+            #{tradeBoardNo},
+            #{memberNo},
+            #{tradeCommentContent},
+            SYSDATE
+        )
+    </insert>
+    <!-- 좋아요 등록 -->
+    <insert id="insertLike" parameterType="tradeLike">
+        INSERT INTO trade_like_tbl (
+            trade_like_no,
+            trade_board_no,
+            member_no
+        ) VALUES (
+            trade_like_seq.NEXTVAL,
+            #{tradeBoardNo},
+            #{memberNo}
+        )
+    </insert>
+    <!-- 좋아요 취소 -->
+    <delete id="deleteLike" parameterType="tradeLike">
+        DELETE FROM trade_like_tbl
+        WHERE trade_board_no = #{tradeBoardNo}
+          AND member_no = #{memberNo}
+    </delete>
+    <!-- 좋아요 개수 -->
+    <select id="selectLikeCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) 
+        FROM trade_like_tbl
+        WHERE trade_board_no = #{tradeBoardNo}
+    </select>
+    <!-- 신고 등록 -->
+    <insert id="insertReport" parameterType="tradeReport">
+        INSERT INTO trade_report_tbl (
+            trade_report_no,
+            trade_board_no,
+            reporter_member_no,
+            report_reason,
+            report_date
+        ) VALUES (
+            trade_report_seq.NEXTVAL,
+            #{tradeBoardNo},
+            #{reporterMemberNo},
+            #{reportReason},
+            SYSDATE
+        )
+    </insert>
+    
 </mapper>
