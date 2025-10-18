@@ -20,5 +20,11 @@
 		select member_no from member_tbl where member_id = #{memberId}
 	</select>
 	
+	<select id="selectReceivedNotes" resultType="note">
+		select note_no, note_content,note_date,send_id
+		from note_tbl
+		where send_id = #{memberId} and del_receive = 0 
+		order by note_date desc
+	</select>
 
 </mapper>
