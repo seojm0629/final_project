@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./common.css";
 import "./default.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { useRecoilState } from "recoil";
@@ -24,9 +24,22 @@ const Header = () => {
 
 const MainNavi = () => {
   const [naviDown, setNaviDown] = useState(null);
+  const menuRef = useRef(null);
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
   };
+  /*메뉴 다운 후 해당 영역이 아닌 곳을 클릭 시 메뉴 업 되게끔*/
+    useEffect(() => {
+      const outClickMenu = (e) =>{
+        if(menuRef.current && !menuRef.current.contains(e.target)){
+          setNaviDown(null);
+        }
+      }
+        document.addEventListener("mousedown", outClickMenu);
+        return() => {
+          document.removeEventListener("mousedown", outClickMenu);
+        }
+    }, [menuRef]);
   return (
     <nav className="navi-wrap">
       <ul className="navi-menu">
@@ -41,6 +54,7 @@ const MainNavi = () => {
             onClick={() => {
               downMenu("trade");
             }}
+            ref={menuRef}
           >
             <Link>중고거래 게시판</Link>
             {naviDown === "trade" ? (
@@ -70,6 +84,7 @@ const MainNavi = () => {
             onClick={() => {
               downMenu("free");
             }}
+            ref={menuRef}
           >
             <Link>자유게시판</Link>
             {naviDown === "free" ? (
