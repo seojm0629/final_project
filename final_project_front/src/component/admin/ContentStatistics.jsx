@@ -9,18 +9,11 @@ const ContentStatistics = () => {
   // 'https://react-chartjs-2.js.org/docs/working-with-datasets'
   //메인 컴포넌트는 월간/주간/일간에 대한 정보를 가지고 있는다.
 
-  /**
-   * searchCriteria : 검색 기준이 되는 함수 (year, month, day 순 배열)
-   */
   const searchCriteria = ["5년", "1년", "1개월", "1일"];
-  /**
-   * selectCriteria : 현재 선택된 검색 조건을 관리하는 State
-   */
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
-  /**
-   * yearLabels : 전체 월 배열을 리턴함 (ex,1월)
-   */
-  console.log(dayjs().$y);
+
+  /* **************************************************************** */
+  /* ********* [Chart (Bar) > data > Label 속성에 들어갈 배열] ********* */
   const yearsLabels = () => {
     const arr = [];
     for (let y = 0; y < 5; y++) {
@@ -35,9 +28,7 @@ const ContentStatistics = () => {
     }
     return arr;
   };
-  /**
-   * monthLabels : 전체 일 배열을 리턴함 (ex,1일)
-   */
+
   const monthLabels = () => {
     const arr = [];
     for (let d = 0; d < 31; d++) {
@@ -45,9 +36,7 @@ const ContentStatistics = () => {
     }
     return arr;
   };
-  /**
-   * dayLabels : 전체 시간 배열을 리턴함 (ex,1시)
-   */
+
   const dayLabels = () => {
     const arr = [];
     for (let h = 0; h < 24; h++) {
@@ -55,10 +44,6 @@ const ContentStatistics = () => {
     }
     return arr;
   };
-  console.log(yearsLabels());
-  console.log(yearLabels());
-  console.log(monthLabels());
-  console.log(dayLabels());
 
   const labels =
     selectCriteria === "5년"
@@ -68,7 +53,13 @@ const ContentStatistics = () => {
       : selectCriteria === "1개월"
       ? monthLabels()
       : dayLabels();
-
+  /* **************************************************************** */
+  console.log(yearsLabels());
+  console.log(yearLabels());
+  console.log(monthLabels());
+  console.log(dayLabels());
+  /* **************************************************************** */
+  /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
   const data = {
     labels: labels,
     datasets: [
@@ -86,8 +77,10 @@ const ContentStatistics = () => {
     maintainAspectRatio: false,
     scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
   };
+  /* **************************************************************** */
 
   console.log(selectCriteria);
+
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">
@@ -97,17 +90,7 @@ const ContentStatistics = () => {
         </div>
         {/*개발 중인 것 여기 넣고 테스트 해서 하단에 배치하기 */}
         <div className="placeholder">
-          <ChartTemplate
-            title={
-              selectCriteria === "1년"
-                ? "월별 가입자 수"
-                : selectCriteria === "1개월"
-                ? "일별 가입자 수"
-                : "시간대별 가입자 수"
-            }
-            subTitle={"기준 : " + selectCriteria}
-            chartTag={<Bar data={data} options={options} />}
-          />
+          <div>테스트 영역</div>
         </div>
 
         {/* 주간/월간/일간 필터 */}
@@ -135,6 +118,19 @@ const ContentStatistics = () => {
         </div>
         <div className="placeholder">
           <div>DAU/가입자 수/게시글 수/댓글 수</div>
+          <ChartTemplate
+            title={
+              selectCriteria === "5년"
+                ? "연간 가입자 수"
+                : selectCriteria === "1년"
+                ? "월간 가입자 수"
+                : selectCriteria === "1개월"
+                ? "일간 가입자 수"
+                : "시간대별 가입자 수"
+            }
+            subTitle={"기준 : " + selectCriteria}
+            chartTag={<Bar data={data} options={options} />}
+          />
         </div>
         <div className="placeholder">
           <div>신규 가입자 수 (필터에 따라)</div>
