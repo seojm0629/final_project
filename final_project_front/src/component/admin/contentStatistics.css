@@ -62,11 +62,14 @@
   transition: 0.2s;
 }
 .admin-right .chartBox {
+  margin: 30px;
   border: 1px solid #e6e6e6;
   border-radius: 5px;
   padding: 16px;
   text-align: left;
+  width: 45%;
 }
+
 .admin-right .chartBox-head {
   display: flex;
   justify-content: space-between;
@@ -83,4 +86,37 @@
 
 .admin-right .chartBox-content {
   height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-right .chartFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-right .entireBox {
+  display: flex;
+}
+.admin-right .element {
+  margin: 30px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  padding: 16px;
+  text-align: left;
+  width: 20%;
+}
+.admin-right .entireBox-title {
+  font-weight: 700;
+  text-align: center;
+}
+.admin-right .entireBox-content {
+  background-color: #485aff;
+  color: #fff;
+  transition: 0.5s;
+  border-radius: 10px;
+  margin: 5px 20px;
+  text-align: center;
 }

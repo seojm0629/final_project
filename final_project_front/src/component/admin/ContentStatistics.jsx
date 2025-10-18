@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./contentStatistics.css";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line, Pie } from "react-chartjs-2";
 import dayjs from "dayjs";
 import axios from "axios";
 
@@ -80,11 +80,6 @@ const ContentStatistics = () => {
     ],
   };
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
-  };
   /* **************************************************************** */
 
   console.log(selectCriteria);
@@ -119,6 +114,19 @@ const ContentStatistics = () => {
       });
   }, [selectCriteria]);
   /* **************************************************************** */
+  const PIE_DUMMY = { signup: 60, withdraw: 40 }; // 합계 100
+
+  const pieData = {
+    labels: ["가입", "탈퇴"],
+    datasets: [
+      {
+        label: "비율(%)",
+        data: [PIE_DUMMY.signup, PIE_DUMMY.withdraw],
+        backgroundColor: ["rgba(0, 102, 255, 0.5)", "rgba(255, 94, 0, 0.5)"],
+      },
+    ],
+  };
+
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">
@@ -130,10 +138,34 @@ const ContentStatistics = () => {
         <div className="placeholder">
           <div>테스트 영역</div>
         </div>
-
+        <div className="placeholder">
+          <div>대시보드</div>
+          <div className="entireBox">
+            <div className="element">
+              <div className="entireBox-title">전체 가입자 수</div>
+              <div className="entireBox-content">500명</div>
+            </div>
+            <div className="element">
+              <div className="entireBox-title">전체 게시글 수</div>
+              <div className="entireBox-content">1104건</div>
+            </div>
+            <div className="element">
+              <div className="entireBox-title">전체 댓글 수</div>
+              <div className="entireBox-content">40건</div>
+            </div>
+            <div className="element">
+              <div className="entireBox-title">전체 탈퇴 유저 수</div>
+              <div className="entireBox-content">500명</div>
+            </div>
+          </div>
+          <div>가능하면 어제 기준 조회 수 보다 늘었는지 줄었는지 표기하기</div>
+        </div>
         {/* 주간/월간/일간 필터 */}
         <div className="placeholder">
-          <div>필터 (year/month/day)</div>
+          <div>
+            필터 (year/month/day) - 기타를 클릭하면 특정 기간 조회할 수 있도록
+            고민하기
+          </div>
           <div>
             {searchCriteria.map((sc, i) => {
               return (
@@ -154,24 +186,80 @@ const ContentStatistics = () => {
             })}
           </div>
         </div>
-        <div className="placeholder">
-          <div>DAU/가입자 수/게시글 수/댓글 수</div>
-          <ChartTemplate
-            title={
-              selectCriteria === "5년"
-                ? "연간 가입자 수"
-                : selectCriteria === "1년"
-                ? "월간 가입자 수"
-                : selectCriteria === "1개월"
-                ? "일간 가입자 수"
-                : "시간대별 가입자 수"
-            }
-            subTitle={"기준 : " + selectCriteria}
-            chartTag={<Bar data={data} options={options} />}
-          />
-        </div>
+
         <div className="placeholder">
           <div>신규 가입자 수 (필터에 따라)</div>
+          <div className="chartFlex">
+            <ChartTemplate
+              title={
+                selectCriteria === "5년"
+                  ? "연간 가입자 수"
+                  : selectCriteria === "1년"
+                  ? "월간 가입자 수"
+                  : selectCriteria === "1개월"
+                  ? "일간 가입자 수"
+                  : "시간대별 가입자 수"
+              }
+              subTitle={"기준 : " + selectCriteria}
+              chartTag={<Pie data={pieData} />}
+            />
+          </div>
+          <div className="chartFlex">
+            <ChartTemplate
+              title={
+                selectCriteria === "5년"
+                  ? "연간 가입자 수"
+                  : selectCriteria === "1년"
+                  ? "월간 가입자 수"
+                  : selectCriteria === "1개월"
+                  ? "일간 가입자 수"
+                  : "시간대별 가입자 수"
+              }
+              subTitle={"기준 : " + selectCriteria}
+              chartTag={<Bar data={data} />}
+            />
+            <ChartTemplate
+              title={
+                selectCriteria === "5년"
+                  ? "연간 탈퇴 유저 수"
+                  : selectCriteria === "1년"
+                  ? "월간 탈퇴 유저 수"
+                  : selectCriteria === "1개월"
+                  ? "일간 탈퇴 유저 수"
+                  : "시간대별 탈퇴 유저 수"
+              }
+              subTitle={"기준 : " + selectCriteria}
+              chartTag={<Bar data={data} />}
+            />
+          </div>
+          <div className="chartFlex">
+            <ChartTemplate
+              title={
+                selectCriteria === "5년"
+                  ? "연간 자유 게시물 수"
+                  : selectCriteria === "1년"
+                  ? "월간 자유 게시물 수"
+                  : selectCriteria === "1개월"
+                  ? "일간 자유 게시물 수"
+                  : "시간대별 자유 게시물 등록 수"
+              }
+              subTitle={"기준 : " + selectCriteria}
+              chartTag={<Line data={data} />}
+            />
+            <ChartTemplate
+              title={
+                selectCriteria === "5년"
+                  ? "연간 거래 게시물 수"
+                  : selectCriteria === "1년"
+                  ? "월간 거래 게시물 수"
+                  : selectCriteria === "1개월"
+                  ? "일간 거래 게시물 수"
+                  : "시간대별 거래 게시물 등록 수"
+              }
+              subTitle={"기준 : " + selectCriteria}
+              chartTag={<Line data={data} />}
+            />
+          </div>
         </div>
         <div className="placeholder">
           <div>
