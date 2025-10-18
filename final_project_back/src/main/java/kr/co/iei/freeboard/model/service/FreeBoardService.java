@@ -26,7 +26,7 @@ public class FreeBoardService {
 		List<FreeBoardCategoryDTO> cate = freeBoardDao.selectCategoryList();
 		//System.out.println("여기 서비스임"+cate);
 		
-		System.out.println(cate);
+		//System.out.println(cate);
 	    Map<String, List<Object>> categoryList = new HashMap<>();
 	    
 	    for (FreeBoardCategoryDTO c : cate) {
@@ -82,10 +82,20 @@ public class FreeBoardService {
 		return map;
 	}
 
-	public List subList(int freeBoardSubcategoryNo) {
+	public HashMap<String, Object> boardSubList(int startRow, int endRow, int sideBtnCount, int order, int selected) {
+		HashMap<String, Object> freeBoardList = new HashMap<String,Object>(); 
+		freeBoardList.put("startRow", startRow);
+		freeBoardList.put("endRow", endRow);
+		freeBoardList.put("sideBtnCount", sideBtnCount);
+		freeBoardList.put("order", order);
+		freeBoardList.put("selected", selected);
+		List<FreeBoardDTO> boardList = freeBoardDao.totalBoardList(freeBoardList);
+		int totalListCount = freeBoardDao.totalListCount(freeBoardList);
 		
-		List subList = freeBoardDao.subList(freeBoardSubcategoryNo);
-		
-		return subList;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("boardList", boardList);
+		map.put("totalListCount", totalListCount);
+		//System.out.println(boardList);
+		return map;
 	}
 }

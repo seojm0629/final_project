@@ -23,7 +23,7 @@ const FreeBoardMain = () => {
   //const freeBoardList = props.freeBoardList;
   //const setFreeBoardList = props.setFreeBoardList;
   const [selectedBoardList, setSelectedBoardList] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(null);
   // * freeBoardListNo (최상위 컴포넌트에서 -> sideMenu -> main -> content) *
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
@@ -113,7 +113,6 @@ const FreeBoardMain = () => {
             <FreeBoardSideMenu
               menus={menus}
               setSelectMenu={addMenu}
-              setSelectedBoardList={setSelectedBoardList}
               setSelected={setSelected}
             ></FreeBoardSideMenu>
           </section>
@@ -132,10 +131,7 @@ const FreeBoardMain = () => {
               <Route
                 path="content"
                 element={
-                  <FreeBoardContent
-                    selectedBoardList={selectedBoardList}
-                    selected={selected}
-                  ></FreeBoardContent>
+                  <FreeBoardContent selected={selected}></FreeBoardContent>
                 }
               ></Route>
               <Route
@@ -153,8 +149,6 @@ const FreeBoardMain = () => {
 //각 카테고리별 하위카테고리를 눌렀을 때 뜨도록하는 페이지 관리자 페이지에서 추가될때 마다 생성되도록 구현 필요
 const FreeBoardContent = (props) => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
-  const selectedBoardList = props.selectedBoardList;
-  console.log(selectedBoardList);
   const selected = props.selected;
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
@@ -164,113 +158,38 @@ const FreeBoardContent = (props) => {
   });
   const [totalListCount, setTotalListCount] = useState(0);
   const [freeBoardList, setFreeBoardList] = useState([]);
-  useEffect(() => {
-    //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
-    axios
-      .get(
-        `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
+  const listUrl = selected === null ? (
+    `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
         &order=${reqPageInfo.order}`
-      )
-      .then((res) => {
-        setFreeBoardList(res.data.boardList);
-        setTotalListCount(res.data.totalListCount);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [reqPageInfo.order, reqPageInfo.pageNo]);
+  ) : (
+    `${backServer}/freeBoard/content/category?pageNo=${reqPageInfo.pageNo}
+              &listCnt=${reqPageInfo.listCnt}
+              &sideBtnCount=${reqPageInfo.sideBtnCount}
+              &order=${reqPageInfo.order}
+              &selected=${selected}`
+  )
+  const array = selected === null ? (
+    [reqPageInfo.order, reqPageInfo.pageNo]
+  ) : (
+    [reqPageInfo.order, reqPageInfo.pageNo, selected]
+  )
+  useEffect(() => {
+    //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
+        (axios
+            .get(listUrl)
+            .then((res) => {
+              setFreeBoardList(res.data.boardList);
+              setTotalListCount(res.data.totalListCount);
+            })
+            .catch((err) => {
+              console.log(err);
+            }),
+          array)
+  });
   return (
     <section className="freeBoard-section">
-      <div className="board-div">
-        {freeBoardList.map((list, i) => {
-          return i % 2 === 0 ? (
-            <div
-              key={"first" + i}
-              className="board-section"
-              style={{
-                borderRight: "1px solid #ccc",
-              }}
-            >
-              {/*상태넣을꺼*/}
-              <div className="board-status">{list.freeBoardNo}</div>
-              <div className="board-title">{list.freeBoardTitle}</div>
-              <div className="board-content">{list.freeBoardContent}</div>
-              <div className="nickname-id">
-                <span>{list.memberNickname}</span>
-                <span>{list.memberId}</span>
-              </div>
-              <div className="view-heart">
-                <div className="view">
-                  {/*작성된 게시글을 */}
-                  <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-                  111
-                </div>
-                <div className="heart">
-                  <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                  {list.likeCount}
-                </div>
-                <div className="hour">
-                  <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div key={"second" + i} className="board-section" style={{}}>
-              <div className="board-status">{list.freeBoardNo}</div>
-              <div className="board-title">{list.freeBoardTitle}</div>
-              <div className="board-content">{list.freeBoardContent}</div>
-              <div className="nickname-id">
-                <span>{list.memberNickname}</span>
-                <span>{list.memberId}</span>
-              </div>
-              <div className="view-heart">
-                <div className="view">
-                  <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-                  111
-                </div>
-                <div className="heart">
-                  <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                  {list.likeCount}
-                </div>
-                <div className="hour">
-                  <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div
-        className="order-div"
-        onClick={() => {
-          {
-            reqPageInfo.order === 2
-              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
-              : setReqPageInfo({ ...reqPageInfo, order: 2 });
-          }
-        }}
-      >
-        <div>
-          <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
-          {reqPageInfo.order === 2 ? (
-            <span>최신순</span>
-          ) : (
-            <span>오래된순</span>
-          )}
-        </div>
-      </div>
-      <div className="page-navi">
-        <PageNavigation
-          reqPageInfo={reqPageInfo}
-          setReqPageInfo={setReqPageInfo}
-          totalListCount={totalListCount}
-          setTotalListCount={setTotalListCount}
-          setFreeBoardList={setFreeBoardList}
-        ></PageNavigation>
-      </div>
-      {/*2*/}
       <div className="board-div">
         {freeBoardList.map((list, i) => {
           return i % 2 === 0 ? (
