@@ -40,6 +40,7 @@ const MainNavi = () => {
           document.removeEventListener("mousedown", outClickMenu);
         }
     }, [menuRef]);
+    console.log(menuRef);
   return (
     <nav className="navi-wrap">
       <ul className="navi-menu">
@@ -64,7 +65,7 @@ const MainNavi = () => {
             )}
           </button>
           {naviDown === "trade" ? (
-            <ul className="navi-down">
+            <ul className="navi-down" ref={menuRef}>
               <li>
                 <Link to="/tradeBoard/list">메인페이지</Link>
               </li>
@@ -94,7 +95,7 @@ const MainNavi = () => {
             )}
           </button>
           {naviDown === "free" ? (
-            <ul className="navi-down">
+            <ul className="navi-down" ref={menuRef}>
               <li>
                 <Link to="/freeBoard/content">메인페이지</Link>
               </li>
