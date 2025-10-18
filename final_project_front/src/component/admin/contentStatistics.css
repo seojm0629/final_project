@@ -25,17 +25,24 @@
   transition: 0.5s;
 }
 
-.admin .chart-content-body > div {
-  display: flex;
-
-  justify-content: space-between;
-  border: 1px solid #d3d3d3;
-  padding: 100px;
-  border-radius: 5px;
+.admin .admin-content-wrap {
+  padding: 32px;
+}
+.content-head .title.m {
+  font-size: 22px;
+  font-weight: 700;
+}
+.content-head .title.s {
+  font-size: 14px;
+  color: #666;
 }
 
-.admin .chart-content-body {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+.placeholder {
+  border: 1px dashed #c9c9c9;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 12px;
+  text-align: center;
+  color: #888;
+  background-color: #fafafa;
 }
