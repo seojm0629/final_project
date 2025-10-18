@@ -31,7 +31,12 @@
     			order by free_board_no asc
     		</if>
           	)
-	    where fbnum between #{startRow} and #{endRow}
+          	<if test="selected == null">
+          		where fbnum between #{startRow} and #{endRow}
+          	</if>
+          	<if test="selected != null">
+          		where (fbnum between #{startRow} and #{endRow}) and free_board_subcategory_no = #{selected}
+          	</if>
 	</select>
 	
 	<select id="totalListCount" resultType="int">

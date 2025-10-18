@@ -18,7 +18,6 @@ const FreeBoardSideMenu = (props) => {
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
   };
-
   return (
     <div className="side-menu">
       <section className="side-header">
@@ -62,7 +61,6 @@ const FreeBoardSideMenu = (props) => {
                           className="side-submenu"
                           onClick={() => {
                             setSelected(i);
-                            searchList(i);
                           }}
                         >
                           <li>

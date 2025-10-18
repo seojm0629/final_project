@@ -23,7 +23,7 @@ const FreeBoardMain = () => {
   //const freeBoardList = props.freeBoardList;
   //const setFreeBoardList = props.setFreeBoardList;
   const [selectedBoardList, setSelectedBoardList] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState(null);
   // * freeBoardListNo (최상위 컴포넌트에서 -> sideMenu -> main -> content) *
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
@@ -158,17 +158,27 @@ const FreeBoardContent = (props) => {
   });
   const [totalListCount, setTotalListCount] = useState(0);
   const [freeBoardList, setFreeBoardList] = useState([]);
-  useEffect(() => {
-    //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
-    {
-      selected === -1
-        ? (axios
-            .get(
-              `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
+  const listUrl = selected === null ? (
+    `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
         &order=${reqPageInfo.order}`
-            )
+  ) : (
+    `${backServer}/freeBoard/content/category?pageNo=${reqPageInfo.pageNo}
+              &listCnt=${reqPageInfo.listCnt}
+              &sideBtnCount=${reqPageInfo.sideBtnCount}
+              &order=${reqPageInfo.order}
+              &selected=${selected}`
+  )
+  const array = selected === null ? (
+    [reqPageInfo.order, reqPageInfo.pageNo]
+  ) : (
+    [reqPageInfo.order, reqPageInfo.pageNo, selected]
+  )
+  useEffect(() => {
+    //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
+        (axios
+            .get(listUrl)
             .then((res) => {
               setFreeBoardList(res.data.boardList);
               setTotalListCount(res.data.totalListCount);
@@ -176,25 +186,7 @@ const FreeBoardContent = (props) => {
             .catch((err) => {
               console.log(err);
             }),
-          [reqPageInfo.order, reqPageInfo.pageNo])
-        : axios
-            .get(
-              `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
-        &listCnt=${reqPageInfo.listCnt}
-        &sideBtnCount=${reqPageInfo.sideBtnCount}
-        &order=${reqPageInfo.order}
-        &selected=${selected}`
-            )
-            .then((res) => {
-              console.log(res);
-            })
-            .catch(
-              (err) => {
-                console.log(err);
-              },
-              [reqPageInfo.order, reqPageInfo.pageNo]
-            );
-    }
+          array)
   });
   return (
     <section className="freeBoard-section">
