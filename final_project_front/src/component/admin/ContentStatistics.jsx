@@ -8,7 +8,7 @@ const ContentStatistics = () => {
   /**
    * searchCriteria : 검색 기준이 되는 함수 (year, month, day 순 배열)
    */
-  const searchCriteria = ["year", "month", "day"];
+  const searchCriteria = ["연간", "월간", "일간"];
   /**
    * selectCriteria : 현재 선택된 검색 조건을 관리하는 State
    */
@@ -21,6 +21,14 @@ const ContentStatistics = () => {
         <div className="content-head">
           <div className="title m">통계 페이지</div>
           <div className="title s">사이트 이용 지표</div>
+        </div>
+        {/*개발 중인 것 여기 넣고 테스트 해서 하단에 배치하기 */}
+        <div className="placeholder">
+          <ChartTemplate
+            title="제목"
+            subTitle={"기준 : " + selectCriteria}
+            chartTag={<div>테스트</div>}
+          />
         </div>
 
         {/* 주간/월간/일간 필터 */}
@@ -74,6 +82,9 @@ const ChartTemplate = (props) => {
   const title = props.title;
   const subTitle = props.subTitle;
   const chartTag = props.chartTag;
+  console.log(title);
+  console.log(subTitle);
+  console.log(chartTag);
   return <div>아아</div>;
 };
 
