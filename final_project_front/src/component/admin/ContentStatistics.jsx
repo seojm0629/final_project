@@ -15,6 +15,7 @@ const ContentStatistics = () => {
 
   /* **************************************************************** */
   /* ********* [Chart (Bar) > data > Label 속성에 들어갈 배열] ********* */
+  /*
   const yearsLabels = () => {
     const arr = [];
     for (let y = 0; y < 5; y++) {
@@ -54,19 +55,25 @@ const ContentStatistics = () => {
       : selectCriteria === "1개월"
       ? monthLabels()
       : dayLabels();
+      */
+
   /* **************************************************************** */
+  /*
   console.log(yearsLabels());
   console.log(yearLabels());
   console.log(monthLabels());
   console.log(dayLabels());
+  */
   /* **************************************************************** */
   /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
+  const [labels, setLabels] = useState([]);
+  const [values, setValues] = useState([]);
   const data = {
     labels: labels,
     datasets: [
       {
         label: "가입자",
-        data: [12, 19, 7],
+        data: values,
         backgroundColor: "rgba(5, 20, 160, 0.5)",
         borderWidth: 1,
       },
@@ -92,7 +99,20 @@ const ContentStatistics = () => {
         }/admin/statistics?selectCriteria=${selectCriteria}`
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.accessionCounts);
+        const results = res.data.accessionCounts;
+
+        const labels = results.map((r) => {
+          return r.label;
+        });
+        setLabels(labels);
+        const values = results.map((r) => {
+          return r.value;
+        });
+        setValues(values);
+        console.log(labels);
+
+        console.log(values);
       })
       .catch((err) => {
         console.log(err);

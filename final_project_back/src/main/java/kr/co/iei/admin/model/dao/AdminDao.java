@@ -26,13 +26,13 @@ public interface AdminDao {
 
 	int memberBan(HashMap<String, String> banSet);
 
-	List<AdminStatisticsDTO> statisticsYears(String selectCriteria);
+	List<AdminStatisticsDTO> statisticsYears();
 
-	List<AdminStatisticsDTO> statisticsYear(String selectCriteria);
+	List<AdminStatisticsDTO> statisticsYear();
 
-	List<AdminStatisticsDTO> statisticsMonth(String selectCriteria);
+	List<AdminStatisticsDTO> statisticsMonth();
 
-	List<AdminStatisticsDTO> statisticsDay(String selectCriteria);
+	List<AdminStatisticsDTO> statisticsDay();
 
 
 }

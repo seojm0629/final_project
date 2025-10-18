@@ -1,5 +1,6 @@
 package kr.co.iei.admin.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,13 +62,18 @@ public class AdminService {
 	}
 
 	public HashMap<String, Object> statistics(String selectCriteria) {
-		List<AdminStatisticsDTO> yearsList = adminDao.statisticsYears(selectCriteria);
-		List<AdminStatisticsDTO> yearList = adminDao.statisticsYear(selectCriteria);
-		List<AdminStatisticsDTO> monthList = adminDao.statisticsMonth(selectCriteria);
-		HashMap<String, Object> accessionCounts = new HashMap<>();
-		accessionCounts.put("yearsList", yearsList);
-		accessionCounts.put("yearList", yearList);
-		accessionCounts.put("monthList", monthList);
-		return accessionCounts;
+		List<AdminStatisticsDTO> list = new ArrayList<>();
+		switch(selectCriteria) {
+		case "5년": 
+			list = adminDao.statisticsYears();
+			break;
+		case "1년" : list = adminDao.statisticsYear();
+			break;
+		case "1개월" : list = adminDao.statisticsMonth();
+			break;
+		}
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("accessionCounts", list);
+		return map;
 	}
 }

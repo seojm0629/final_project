@@ -81,9 +81,9 @@ public class AdminController {
 	@GetMapping(value="statistics")
 	public HashMap<String, Object> statistics(@RequestParam String selectCriteria){
 		System.out.println(selectCriteria);
-		HashMap<String, Object> accessionCounts = adminService.statistics(selectCriteria);
-		System.out.println(accessionCounts);
-		return accessionCounts;
+		HashMap<String, Object> map = adminService.statistics(selectCriteria);
+		System.out.println(map);
+		return map;
 	}
 	
 	
