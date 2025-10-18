@@ -85,10 +85,22 @@ const Note = () => {
   };
 
   const menuClick = (menu) => {
-    setSelectMenu(menu);
-    //클릭했을때 함수 변경용
-    //변수확인
-    console.log(menu);
+    setSelectMenu(menu); //클릭했을때 함수 변경용
+    console.log("memberId in menuClick:", memberId);
+    if (menu === "send") {
+      //받은 메시지 리스트목록이라서 보낸사람아이디로 나오게
+      axios
+        .get(`${backServer}/note/received/${memberId}`)
+        .then((res) => {
+          console.log("서버 응답(res.data):", res.data);
+          setReceiveListNote(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      {
+      }
+    }
   };
 
   const title = (
@@ -172,14 +184,26 @@ const Note = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style={{ width: "10%" }}>
-                      <input type="checkbox" />
-                    </td>
-                    <td style={{ width: "15%" }}></td>
-                    <td style={{ width: "60%" }}></td>
-                    <td style={{ width: "15%" }}></td>
-                  </tr>
+                  {receiveListNote.length === 0 ? (
+                    <tr>
+                      <td colSpan={"4"} style={{ textAlign: "center" }}>
+                        받은 쪽지가 없습니다.
+                      </td>
+                    </tr>
+                  ) : (
+                    receiveListNote.map((receive, i) => {
+                      return (
+                        <tr key={"receive-" + i}>
+                          <td>
+                            <input type="checkbox" />
+                          </td>
+                          <td>{receive.sendId}</td>
+                          <td>{receive.noteContent}</td>
+                          <td>{receive.noteDate}</td>
+                        </tr>
+                      );
+                    })
+                  )}
                 </tbody>
               </table>
             </div>

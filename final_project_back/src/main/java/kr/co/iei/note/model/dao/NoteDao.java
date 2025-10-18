@@ -1,5 +1,7 @@
 package kr.co.iei.note.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.note.model.dto.NoteDTO;
@@ -10,6 +12,8 @@ public interface NoteDao {
 	int receiveNote(NoteDTO note);
 
 	int getMemberNo(String memberId);
+
+	List<NoteDTO> selectReceivedNotes(String memberId);
 
 	
 
