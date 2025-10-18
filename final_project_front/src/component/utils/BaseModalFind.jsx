@@ -2,7 +2,7 @@ import { Button, Grow, Modal, Slide } from "@mui/material";
 import { useState } from "react";
 import "./baseModal.css";
 
-const BaseModal = ({
+const BaseModalFind = ({
   title,
   content,
   buttonLabel,
@@ -19,7 +19,7 @@ const BaseModal = ({
       <button className="modal-button" onClick={handleOpen}>
         {buttonLabel}
       </button>
-      <Modal open={open} onClose={handleClose} style={{ zIndex: 100 }}>
+      <Modal open={open} onClose={handleClose}>
         <Grow in={open}>
           <div className="modal-box">
             <div className="modal-contentbox" style={contentBoxStyle}>
@@ -64,4 +64,4 @@ const BaseModal = ({
   );
 };
 
-export default BaseModal;
+export default BaseModalFind;

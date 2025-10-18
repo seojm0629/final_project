@@ -1,5 +1,5 @@
 .wrap{
-    width: 2000px;
+    width: 1950px;
 }
 /* 로그인 페이지 */
 /* 로그인 로고 */
@@ -984,9 +984,22 @@ input[type="radio"]:checked+label{
     100% {
         transform: rotate(360deg);
     }
-    } 
+} 
 
+.loader-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 /*
+
 .member-button-zone{
     width: 400px;
     margin : 0 auto;

@@ -119,7 +119,6 @@ public class MemberController {
 	public ResponseEntity<String> findPw(@RequestParam String memberId, @RequestParam String memberEmail){
 		MemberDTO m = memberService.findPw(memberId, memberEmail);
 		System.out.println(m);
-		System.out.println(m.getMemberPw());
 		
 		//인증 메일용 제목 생성
 		String emailTitle = "talk & deal 인증메일입니다.";
