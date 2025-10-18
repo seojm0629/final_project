@@ -1,9 +1,20 @@
 import { useState } from "react";
 import "./contentStatistics.css";
-
 import { Bar } from "react-chartjs-2";
 
+//메인 컴포넌트 위치 ▼
 const ContentStatistics = () => {
+  //메인 컴포넌트는 월간/주간/일간에 대한 정보를 가지고 있는다.
+  /**
+   * searchCriteria : 검색 기준이 되는 함수 (year, month, day 순 배열)
+   */
+  const searchCriteria = ["year", "month", "day"];
+  /**
+   * selectCriteria : 현재 선택된 검색 조건을 관리하는 State
+   */
+  const [selectCriteria, setSelectCriteria] = useState(searchCriteria[0]);
+
+  console.log(selectCriteria);
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">
@@ -12,12 +23,40 @@ const ContentStatistics = () => {
           <div className="title s">사이트 이용 지표</div>
         </div>
 
-        <div className="placeholder">필터 (year/moth/day)</div>
-        <div className="placeholder">DAU/가입자 수/게시글 수/댓글 수</div>
-        <div className="placeholder">신규 가입자 수 (필터에 따라)</div>
+        {/* 주간/월간/일간 필터 */}
         <div className="placeholder">
-          게시글 작성자 수 / 게시판 게시글 작성 비중 / 탈퇴 유저 수 / 가입자 수
-          → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성 인원 수
+          <div>필터 (year/month/day)</div>
+          <div>
+            {searchCriteria.map((sc, i) => {
+              return (
+                <button
+                  key={"criteria-" + i}
+                  onClick={() => {
+                    setSelectCriteria(sc);
+                  }}
+                  className={
+                    selectCriteria === sc
+                      ? "criteriaBtn selected"
+                      : "criteriaBtn"
+                  }
+                >
+                  {sc}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="placeholder">
+          <div>DAU/가입자 수/게시글 수/댓글 수</div>
+        </div>
+        <div className="placeholder">
+          <div>신규 가입자 수 (필터에 따라)</div>
+        </div>
+        <div className="placeholder">
+          <div>
+            게시글 작성자 수 / 게시판 게시글 작성 비중 / 탈퇴 유저 수 / 가입자
+            수 → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성 인원 수
+          </div>
         </div>
       </div>
     </div>
@@ -26,4 +65,28 @@ const ContentStatistics = () => {
 
 //ContentStatistics 컴포넌트의 하위 컴포넌트 위치 ▼
 
+/** 차트 양식
+ * title(String) : 차트 상단의 제목
+ * subTitle(String) : 차드 제목 하단의 부제목
+ * chartTag(tag) : 추가할 차트 넣기
+ * */
+const ChartTemplate = (props) => {
+  const title = props.title;
+  const subTitle = props.subTitle;
+  const chartTag = props.chartTag;
+  return <div>아아</div>;
+};
+
+/** 개수 표기 양식
+ * title (String) : 추출된 값의 의미 (제목)
+ * value : 추출된 값
+ * difference : 전일 대비 얼마나 차이나는지 비율
+ */
+const CountTemplate = (props) => {
+  const title = props.title;
+  const value = props.value;
+  const difference = props.difference;
+
+  return <div>아아2</div>;
+};
 export default ContentStatistics;
