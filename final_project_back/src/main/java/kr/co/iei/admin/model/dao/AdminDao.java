@@ -26,6 +26,7 @@ public interface AdminDao {
 
 	int memberBan(HashMap<String, String> banSet);
 
-	List<AdminStatisticsDTO> statistics(String selectCriteria);
+	List<AdminStatisticsDTO> statisticsYears(String selectCriteria);
+
 
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
-import kr.co.iei.admin.model.dto.AdminSubscriberDTO;
+
 import kr.co.iei.admin.model.service.AdminService;
 
 @CrossOrigin("*")
@@ -79,11 +79,11 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="statistics")
-	public ResponseEntity<HashMap<String, Object>> statistics(@RequestParam String selectCriteria){
+	public List<AdminStatisticsDTO> statistics(@RequestParam String selectCriteria){
 		System.out.println(selectCriteria);
 		List<AdminStatisticsDTO> insertMemberCountList = adminService.statistics(selectCriteria);
 		System.out.println(insertMemberCountList);
-		return null;
+		return insertMemberCountList;
 	}
 	
 	

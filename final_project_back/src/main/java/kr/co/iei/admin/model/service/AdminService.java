@@ -61,7 +61,7 @@ public class AdminService {
 	}
 
 	public List<AdminStatisticsDTO> statistics(String selectCriteria) {
-		List<AdminStatisticsDTO> list = adminDao.statistics(selectCriteria);
+		List<AdminStatisticsDTO> list = adminDao.statisticsYears(selectCriteria);
 		return list;
 	}
 }

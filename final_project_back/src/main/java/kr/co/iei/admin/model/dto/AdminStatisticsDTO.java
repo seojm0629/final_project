@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="adminStatics")
+@Alias(value="adminStatistics")
 public class AdminStatisticsDTO {
 	private String label;
 	private int value;

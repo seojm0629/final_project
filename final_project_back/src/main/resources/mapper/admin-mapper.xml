@@ -363,7 +363,8 @@ SELECT * FROM(
 			)
 	</insert>
 	
-	<select id="selectCriteria" resultType="adminStatistics">
-	
+	<select id="statisticsYears" resultType="adminStatistics">
+		SELECT LABEL,COUNT(*) VALUE FROM (
+		SELECT TO_CHAR(TO_DATE(MEMBER_DATE,'YYYY-MM-DD'),'YYYY') LABEL FROM MEMBER_TBL) GROUP BY LABEL ORDER BY LABEL
 	</select>
 </mapper>
