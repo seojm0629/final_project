@@ -60,8 +60,14 @@ public class AdminService {
 		return result;
 	}
 
-	public List<AdminStatisticsDTO> statistics(String selectCriteria) {
-		List<AdminStatisticsDTO> list = adminDao.statisticsYears(selectCriteria);
-		return list;
+	public HashMap<String, Object> statistics(String selectCriteria) {
+		List<AdminStatisticsDTO> yearsList = adminDao.statisticsYears(selectCriteria);
+		List<AdminStatisticsDTO> yearList = adminDao.statisticsYear(selectCriteria);
+		List<AdminStatisticsDTO> monthList = adminDao.statisticsMonth(selectCriteria);
+		HashMap<String, Object> accessionCounts = new HashMap<>();
+		accessionCounts.put("yearsList", yearsList);
+		accessionCounts.put("yearList", yearList);
+		accessionCounts.put("monthList", monthList);
+		return accessionCounts;
 	}
 }

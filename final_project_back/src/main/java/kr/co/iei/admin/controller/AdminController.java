@@ -79,11 +79,11 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="statistics")
-	public List<AdminStatisticsDTO> statistics(@RequestParam String selectCriteria){
+	public HashMap<String, Object> statistics(@RequestParam String selectCriteria){
 		System.out.println(selectCriteria);
-		List<AdminStatisticsDTO> insertMemberCountList = adminService.statistics(selectCriteria);
-		System.out.println(insertMemberCountList);
-		return insertMemberCountList;
+		HashMap<String, Object> accessionCounts = adminService.statistics(selectCriteria);
+		System.out.println(accessionCounts);
+		return accessionCounts;
 	}
 	
 	

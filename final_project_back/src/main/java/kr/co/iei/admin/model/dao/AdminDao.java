@@ -28,5 +28,11 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsYears(String selectCriteria);
 
+	List<AdminStatisticsDTO> statisticsYear(String selectCriteria);
+
+	List<AdminStatisticsDTO> statisticsMonth(String selectCriteria);
+
+	List<AdminStatisticsDTO> statisticsDay(String selectCriteria);
+
 
 }
