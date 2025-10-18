@@ -19,7 +19,7 @@ const BaseModal = ({
       <button className="modal-button" onClick={handleOpen}>
         {buttonLabel}
       </button>
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={open} onClose={handleClose} style={{ zIndex: 100 }}>
         <Grow in={open}>
           <div className="modal-box">
             <div className="modal-contentbox" style={contentBoxStyle}>

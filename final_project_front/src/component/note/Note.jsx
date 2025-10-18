@@ -9,6 +9,7 @@ import {
   memberTypeState,
 } from "../utils/RecoilData";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Note = () => {
   const memberId = useRecoilValue(loginIdState); // 사용자 ID
@@ -28,11 +29,26 @@ const Note = () => {
     const value = e.target.value;
     const newNote = { ...note, [name]: value };
     setNote(newNote);
-
     console.log(newNote);
   };
 
   const sendNote = () => {
+    if (note.noteId === "") {
+      Swal.fire({
+        title: "전송실패!",
+        text: "받는 사람 아이디를 입력해주세요.",
+        icon: "warning",
+      });
+      return;
+    }
+    if (note.noteContent === "") {
+      Swal.fire({
+        title: "전송실패!",
+        text: "쪽지 내용을 입력해주세요.",
+        icon: "warning",
+      });
+      return;
+    }
     const data = {
       sendId: memberId, // 로그인한 사용자 ID (보내는 사람)
       receiveId: note.noteId, // 입력된 받는 사람 ID
@@ -41,10 +57,30 @@ const Note = () => {
     axios
       .post(`${backServer}/note`, data)
       .then((res) => {
-        console.log(res);
+        const idCheck = res.data;
+
+        if (idCheck === 0) {
+          Swal.fire({
+            title: "아이디를 확인하세요!",
+            text: "자기 자신에게는 쪽지를 보낼 수 없습니다.",
+            icon: "error",
+          });
+        } else {
+          Swal.fire({
+            title: "성공!",
+            text: "쪽지를 보냈습니다.",
+            icon: "error",
+          });
+
+          setNote({ noteId: "", noteContent: "" });
+        }
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          title: "전송 실패",
+          text: "쪽지 전송 중 오류가 발생했습니다.",
+          icon: "error",
+        });
       });
   };
 

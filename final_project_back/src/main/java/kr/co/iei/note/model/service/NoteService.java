@@ -26,6 +26,11 @@ public class NoteService {
 		//System.out.println("sendNo"+ sendNo);
 		//System.out.println("reseiveNo"+ reseiveNo);
 		
+		if(sendNo == reseiveNo) {
+			return 0;
+		}
+		//자기 자신에게 보내기 금지
+		
 		note.setMemberSend(sendNo);
 		note.setMemberReceive(reseiveNo);
 		
