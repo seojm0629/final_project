@@ -1,11 +1,6 @@
 .admin .admin-content-wrap {
   padding: 50px;
 }
-.admin .chartBox {
-  width: 500px;
-  display: flex;
-  justify-content: space-between;
-}
 
 .wrap-1 {
   width: 500px;
@@ -37,7 +32,7 @@
   color: #666;
 }
 
-.placeholder {
+.admin-right .placeholder {
   border: 1px dashed #c9c9c9;
   border-radius: 12px;
   padding: 24px;
@@ -47,7 +42,7 @@
   background-color: #fafafa;
 }
 
-.criteriaBtn {
+.admin-right .criteriaBtn {
   padding: 5px 12px;
   border: 1px solid #d3d3d3;
   border-radius: 5px;
@@ -57,12 +52,35 @@
   height: 32px;
 }
 
-.criteriaBtn:hover {
+.admin-right .criteriaBtn:hover {
   background-color: #f6f7fb;
 }
 
-.criteriaBtn.selected {
+.admin-right .criteriaBtn.selected {
   background-color: #485aff;
   color: #fff;
   transition: 0.2s;
+}
+.admin-right .chartBox {
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  padding: 16px;
+  text-align: left;
+}
+.admin-right .chartBox-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.admin-right .chartBox-title {
+  font-weight: 700;
+}
+.admin-right .chartBox-subTitle {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.admin-right .chartBox-content {
+  height: 200px;
 }

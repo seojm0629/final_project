@@ -4,6 +4,8 @@ import { Bar } from "react-chartjs-2";
 
 //메인 컴포넌트 위치 ▼
 const ContentStatistics = () => {
+  //chartjs 참고 문서 위치
+  // 'https://react-chartjs-2.js.org/docs/working-with-datasets'
   //메인 컴포넌트는 월간/주간/일간에 대한 정보를 가지고 있는다.
   /**
    * searchCriteria : 검색 기준이 되는 함수 (year, month, day 순 배열)
@@ -13,6 +15,24 @@ const ContentStatistics = () => {
    * selectCriteria : 현재 선택된 검색 조건을 관리하는 State
    */
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[0]);
+
+  const data = {
+    labels: ["A", "B", "C"],
+    datasets: [
+      {
+        label: "가입자",
+        data: [12, 19, 7],
+        backgroundColor: "rgba(72,90,255,0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+  };
 
   console.log(selectCriteria);
   return (
@@ -27,7 +47,7 @@ const ContentStatistics = () => {
           <ChartTemplate
             title="제목"
             subTitle={"기준 : " + selectCriteria}
-            chartTag={<div>테스트</div>}
+            chartTag={<Bar data={data} options={options} />}
           />
         </div>
 
@@ -85,7 +105,17 @@ const ChartTemplate = (props) => {
   console.log(title);
   console.log(subTitle);
   console.log(chartTag);
-  return <div>아아</div>;
+  return (
+    <div className="chartBox">
+      <div className="chartBox-head">
+        <div>
+          <div className="chartBox-title">{title}</div>
+          <div className="chartBox-subTitle">{subTitle}</div>
+        </div>
+      </div>
+      <div className="chartBox-content">{chartTag}</div>
+    </div>
+  );
 };
 
 /** 개수 표기 양식
