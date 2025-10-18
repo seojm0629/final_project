@@ -1,5 +1,6 @@
 package kr.co.iei.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
+import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+import kr.co.iei.admin.model.dto.AdminSubscriberDTO;
 import kr.co.iei.admin.model.service.AdminService;
 
 @CrossOrigin("*")
@@ -73,6 +76,14 @@ public class AdminController {
 		int result = adminService.memberBan(banSet);
 		System.out.println(result);
 		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping(value="statistics")
+	public ResponseEntity<HashMap<String, Object>> statistics(@RequestParam String selectCriteria){
+		System.out.println(selectCriteria);
+		List<AdminStatisticsDTO> insertMemberCountList = adminService.statistics(selectCriteria);
+		System.out.println(insertMemberCountList);
+		return null;
 	}
 	
 	

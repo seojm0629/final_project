@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./contentStatistics.css";
 import { Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
+import axios from "axios";
 
 //메인 컴포넌트 위치 ▼
 const ContentStatistics = () => {
@@ -80,7 +81,24 @@ const ContentStatistics = () => {
   /* **************************************************************** */
 
   console.log(selectCriteria);
+  console.log(labels);
 
+  /* ********* [5년,1년,월간,일간 선택 값에 따라 객체 돌려받기] *********** */
+  useEffect(() => {
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_BACK_SERVER
+        }/admin/statistics?selectCriteria=${selectCriteria}`
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectCriteria]);
+  /* **************************************************************** */
   return (
     <div className="admin-right">
       <div className="admin-content-wrap">
@@ -146,6 +164,8 @@ const ContentStatistics = () => {
   );
 };
 
+export default ContentStatistics;
+
 //ContentStatistics 컴포넌트의 하위 컴포넌트 위치 ▼
 
 /** 차트 양식
@@ -185,4 +205,3 @@ const CountTemplate = (props) => {
 
   return <div>아아2</div>;
 };
-export default ContentStatistics;

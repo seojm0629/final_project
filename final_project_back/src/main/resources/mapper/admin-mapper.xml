@@ -362,4 +362,8 @@ SELECT * FROM(
 				#{memberNo},SYSDATE,TO_DATE(#{memberBenFinishDate},'YYYY-MM-DD HH24:MI:SS'),#{memberBanContent}
 			)
 	</insert>
+	
+	<select id="selectCriteria" resultType="adminStatistics">
+	
+	</select>
 </mapper>

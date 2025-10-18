@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
+import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+
 
 @Service
 public class AdminService {
@@ -56,5 +58,10 @@ public class AdminService {
 	public int memberBan(HashMap<String, String> banSet) {
 		int result = adminDao.memberBan(banSet);
 		return result;
+	}
+
+	public List<AdminStatisticsDTO> statistics(String selectCriteria) {
+		List<AdminStatisticsDTO> list = adminDao.statistics(selectCriteria);
+		return list;
 	}
 }

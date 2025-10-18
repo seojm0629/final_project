@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
+import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+
 
 @Mapper
 public interface AdminDao {
@@ -23,5 +25,7 @@ public interface AdminDao {
 	int memberDetailTotalCount(int memberNo);
 
 	int memberBan(HashMap<String, String> banSet);
+
+	List<AdminStatisticsDTO> statistics(String selectCriteria);
 
 }
