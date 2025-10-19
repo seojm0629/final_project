@@ -46,5 +46,10 @@ public class NoteService {
 	    return list;
 	}
 
+	public List<NoteDTO> sendList(String memberId) {
+		List<NoteDTO> list = noteDao.selectSendNotes(memberId);
+		return list;
+		
+    }
 
 }

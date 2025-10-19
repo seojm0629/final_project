@@ -25,7 +25,7 @@ public class NoteController {
 	@Autowired
 	private NoteService noteService;
 
-	
+	//쪽지쓰기
 	@PostMapping
 	public ResponseEntity<Integer> insertNote(@RequestBody NoteDTO note) {
 		System.out.println(note);
@@ -39,6 +39,7 @@ public class NoteController {
 		return ResponseEntity.ok(result);
 	}
 
+	//받은쪽지함 
 	@GetMapping("/received/{memberId}")
 	public ResponseEntity<List<NoteDTO>> receiveList(@PathVariable String memberId) {
 		
@@ -48,6 +49,12 @@ public class NoteController {
 		
 		return ResponseEntity.ok(list);
 	}
+	//보낸쪽지함
+	 @GetMapping("/send/{memberId}")
+	    public ResponseEntity<List<NoteDTO>> sendList(@PathVariable String memberId) {
+	        List<NoteDTO> list = noteService.sendList(memberId);
+	        return ResponseEntity.ok(list);
+	    }
 }
 
 
