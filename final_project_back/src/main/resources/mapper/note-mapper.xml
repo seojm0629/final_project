@@ -15,16 +15,38 @@
 			#{sendId},
 			#{receiveId})
 	</insert>
-	
+	<!-- 멤버번호 기준으로 멤버아이디 찾기 -->
 	<select id="getMemberNo" resultType="int" >
 		select member_no from member_tbl where member_id = #{memberId}
 	</select>
 	
+	<!-- 받은쪽지함 리스트 뽑기  -->
 	<select id="selectReceivedNotes" resultType="note">
-		select note_no, note_content,note_date,send_id
-		from note_tbl
-		where send_id = #{memberId} and del_receive = 0 
-		order by note_date desc
+	  select 
+	  note_no, 
+	  note_content,
+	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,  
+	  note_date, 
+	  send_id
+	  from note_tbl
+	  where receive_id = #{memberId} and del_receive = 0
+	  order by note_date desc
 	</select>
+	
+	<!-- 보낸쪽지함 리스트 뽑기  -->
+	<select id="selectSendNotes" resultType="note">
+	  select 
+	  note_no, 
+	  note_content, 
+	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,  
+	  receive_id
+	  from note_tbl
+	  where send_id = #{memberId} and del_send = 0
+	  order by note_date desc
+	</select>
+
+
+
+
 
 </mapper>
