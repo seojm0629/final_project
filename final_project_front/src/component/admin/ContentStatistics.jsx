@@ -65,6 +65,11 @@ const ContentStatistics = () => {
   console.log(dayLabels());
   */
   /* **************************************************************** */
+  const [ru, setRu] = useState(0);
+  const [bc, setBc] = useState(0);
+  const [bcc, setBcc] = useState(0);
+  const [wc, setWc] = useState(0);
+
   /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
@@ -94,13 +99,19 @@ const ContentStatistics = () => {
         }/admin/statistics?selectCriteria=${selectCriteria}`
       )
       .then((res) => {
+        console.log(res.data);
         console.log(res.data.accessionCounts);
         const results = res.data.accessionCounts;
+        setRu(res.data.ru);
+        setBc(res.data.bc);
+        setBcc(res.data.bcc);
+        setWc(res.data.wc);
 
         const labels = results.map((r) => {
           return r.label;
         });
         setLabels(labels);
+
         const values = results.map((r) => {
           return r.value;
         });
@@ -143,19 +154,19 @@ const ContentStatistics = () => {
           <div className="entireBox">
             <div className="element">
               <div className="entireBox-title">전체 가입자 수</div>
-              <div className="entireBox-content">500명</div>
+              <div className="entireBox-content">{ru} 명</div>
             </div>
             <div className="element">
               <div className="entireBox-title">전체 게시글 수</div>
-              <div className="entireBox-content">1104건</div>
+              <div className="entireBox-content">{bc} 건</div>
             </div>
             <div className="element">
               <div className="entireBox-title">전체 댓글 수</div>
-              <div className="entireBox-content">40건</div>
+              <div className="entireBox-content">{bcc} 건</div>
             </div>
             <div className="element">
               <div className="entireBox-title">전체 탈퇴 유저 수</div>
-              <div className="entireBox-content">500명</div>
+              <div className="entireBox-content">{wc}명</div>
             </div>
           </div>
           <div>가능하면 어제 기준 조회 수 보다 늘었는지 줄었는지 표기하기</div>

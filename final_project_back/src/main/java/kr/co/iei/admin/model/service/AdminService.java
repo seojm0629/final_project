@@ -67,13 +67,24 @@ public class AdminService {
 		case "5년": 
 			list = adminDao.statisticsYears();
 			break;
-		case "1년" : list = adminDao.statisticsYear();
+		case "1년" : 
+			list = adminDao.statisticsYear();
 			break;
-		case "1개월" : list = adminDao.statisticsMonth();
+		case "1개월" : 
+			list = adminDao.statisticsMonth();
 			break;
 		}
+		int registeredUser = adminDao.statisticsRu();
+		int boardCount = adminDao.statisticsBc();
+		int boardCommentCount = adminDao.statisticsBcc();
+		int withdrawCount = adminDao.statisticsWc();
+		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("accessionCounts", list);
+		map.put("ru", registeredUser);
+		map.put("bc", boardCount);
+		map.put("bcc",boardCommentCount);
+		map.put("wc", withdrawCount);
 		return map;
 	}
 }
