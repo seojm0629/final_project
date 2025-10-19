@@ -375,5 +375,18 @@ SELECT A.LABEL||'월' AS LABEL,COUNT(*) VALUE FROM (
 		SELECT A.LABEL||'일' AS LABEL,COUNT(*) VALUE FROM ( 
                 SELECT TO_CHAR(TO_DATE(MEMBER_DATE,'YYYY-MM-DD'),'DD') LABEL FROM MEMBER_TBL WHERE TO_CHAR(SYSDATE,'YYYY-MM')=TO_CHAR(TO_DATE(MEMBER_DATE,'YYYY-MM-DD'),'YYYY-MM')) A GROUP BY A.LABEL ORDER BY A.LABEL
 	</select>
-
+	
+	<select id="statisticsRu" resultType="int">
+		SELECT COUNT(*) FROM MEMBER_TBL
+	</select>
+	
+	<select id="statisticsBc" resultType="int">
+	SELECT (SELECT COUNT(*) FROM FREE_BOARD_TBL) + (SELECT COUNT(*) FROM TRADE_BOARD_TBL) BOARD_COUNT FROM DUAL
+	</select>
+	<select id="statisticsBcc" resultType="int">
+	SELECT (SELECT COUNT(*) FROM FB_COMMENT_TBL) + (SELECT COUNT(*) FROM TB_COMMENT_TBL) BOARD_COMMENT_COUNT FROM DUAL
+	</select>
+	<select id="statisticsWc" resultType="int">
+	SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL
+	</select>
 </mapper>

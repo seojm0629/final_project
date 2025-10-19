@@ -34,5 +34,13 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsDay();
 
+	int statisticsRu();
+
+	int statisticsBc();
+
+	int statisticsBcc();
+
+	int statisticsWc();
+
 
 }
