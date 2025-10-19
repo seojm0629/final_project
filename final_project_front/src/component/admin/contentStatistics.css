@@ -57,7 +57,7 @@
 }
 
 .admin-right .criteriaBtn.selected {
-  background-color: #485aff;
+  background-color: #2f4e70;
   color: #fff;
   transition: 0.2s;
 }
@@ -113,10 +113,24 @@
   text-align: center;
 }
 .admin-right .entireBox-content {
-  background-color: #485aff;
+  background-color: #2f4e70;
   color: #fff;
   transition: 0.5s;
   border-radius: 10px;
   margin: 5px 20px;
+  text-align: center;
+}
+
+.admin-right .entireBox-plus {
+  color: #a70600;
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.admin-right .entireBox-minus {
+  color: #3700ff;
+  font-size: 14px;
+  font-weight: 900;
   text-align: center;
 }

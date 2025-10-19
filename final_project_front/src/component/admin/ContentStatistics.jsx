@@ -149,28 +149,29 @@ const ContentStatistics = () => {
         <div className="placeholder">
           <div>테스트 영역</div>
         </div>
-        <div className="placeholder">
-          <div>대시보드</div>
-          <div className="entireBox">
-            <div className="element">
-              <div className="entireBox-title">전체 가입자 수</div>
-              <div className="entireBox-content">{ru} 명</div>
-            </div>
-            <div className="element">
-              <div className="entireBox-title">전체 게시글 수</div>
-              <div className="entireBox-content">{bc} 건</div>
-            </div>
-            <div className="element">
-              <div className="entireBox-title">전체 댓글 수</div>
-              <div className="entireBox-content">{bcc} 건</div>
-            </div>
-            <div className="element">
-              <div className="entireBox-title">전체 탈퇴 유저 수</div>
-              <div className="entireBox-content">{wc}명</div>
-            </div>
+        <div className="entireBox">
+          <div className="element">
+            <div className="entireBox-title">전체 가입자 수</div>
+            <div className="entireBox-content">{ru} 명</div>
+            <div className="entireBox-plus">전일 대비 +6 ▲</div>
           </div>
-          <div>가능하면 어제 기준 조회 수 보다 늘었는지 줄었는지 표기하기</div>
+          <div className="element">
+            <div className="entireBox-title">전체 게시글 수</div>
+            <div className="entireBox-content">{bc} 건</div>
+            <div className="entireBox-minus">전일 대비 -4 ▼</div>
+          </div>
+          <div className="element">
+            <div className="entireBox-title">전체 댓글 수</div>
+            <div className="entireBox-content">{bcc} 건</div>
+            <div className="entireBox-plus">전일 대비 +8 ▲</div>
+          </div>
+          <div className="element">
+            <div className="entireBox-title">전체 탈퇴 유저 수</div>
+            <div className="entireBox-content">{wc}명</div>
+            <div className="entireBox-minus">전일 대비 -2 ▼</div>
+          </div>
         </div>
+        <div className="placeholder"></div>
         {/* 주간/월간/일간 필터 */}
         <div className="placeholder">
           <div>
