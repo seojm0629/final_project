@@ -25,6 +25,69 @@ const Note = () => {
   const [selectedContent, setSelectedContent] = useState(null); // 선택한 내용
   const [detailcontent, setDetailContent] = useState(false); // 내용의 상세보기
 
+  const [selectNoteNos, setSelectNoteNos] = useState([]); // 선택된 쪽지번호 저장하기
+
+  //개별 체크박스 선택하기
+  const selectCheck = (noteNo) => {
+    setSelectNoteNos((prev) => {
+      const newList = prev.includes(noteNo) //배열안에 특정값 있는지 확인용
+        ? prev.filter((id) => id !== noteNo)
+        : [...prev, noteNo];
+
+      console.log("현재 선택된 쪽지번호:", newList);
+
+      return newList;
+    });
+  };
+
+  //전체선택 체크박스 선택하기
+  const allCheck = (list, checked) => {
+    if (checked) {
+      const allIds = list.map((note) => note.noteNo);
+      setSelectNoteNos(allIds);
+      console.log("전체 선택된것:", allIds);
+    } else {
+      setSelectNoteNos([]);
+      console.log("전체 선택 해제");
+    }
+  };
+
+  //삭제 버튼 클릭 시 axios 요청하기
+  const deleteNotes = () => {
+    console.log("삭제 요청할 쪽지번호:", selectNoteNos);
+    if (selectNoteNos.length === 0) {
+      Swal.fire({
+        title: "선택된 쪽지가 없습니다.",
+        text: "삭제할 쪽지를 선택하세요.",
+        icon: "warning",
+      });
+      return;
+    }
+    // 보내는 건지 받는 건지의 대한 값을 보내기
+    const deleteType = selectMenu === "send" ? "receive" : "send";
+
+    axios
+      .put(`${backServer}/note/delete`, {
+        noteNos: selectNoteNos,
+        deleteType: deleteType,
+      })
+      .then((res) => {
+        Swal.fire({
+          title: "삭제 완료",
+          text: "쪽지가 삭제되었습니다.",
+          icon: "success",
+        });
+        // 선택 초기화하기
+        setSelectNoteNos([]);
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: "삭제 실패",
+          text: "쪽지 삭제 중 오류가 발생했습니다.",
+          icon: "error",
+        });
+      });
+  };
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -116,6 +179,7 @@ const Note = () => {
         .get(`${backServer}/note/received/${memberId}`)
         .then((res) => {
           console.log("서버 응답(res.data):", res.data);
+          console.log("받은쪽지 리스트:", res.data);
           setReceiveListNote(res.data);
         })
         .catch((err) => {
@@ -127,6 +191,7 @@ const Note = () => {
       axios
         .get(`${backServer}/note/send/${memberId}`)
         .then((res) => {
+          console.log("보낸쪽지 리스트:", res.data);
           setSendListNote(res.data);
         })
         .catch((err) => {
@@ -203,7 +268,7 @@ const Note = () => {
           <div className="send-content-wrap">
             <div className="send-delbutton-wrap">
               <div className="send-delbutton">
-                <button>삭제</button>
+                <button onClick={deleteNotes}>삭제</button>
               </div>
             </div>
             <div className="send-content-box">
@@ -211,7 +276,16 @@ const Note = () => {
                 <thead>
                   <tr className="send-tr">
                     <th style={{ width: "10%" }}>
-                      <input type="checkbox" />
+                      <input // 전체선택한거
+                        type="checkbox"
+                        onChange={(e) =>
+                          allCheck(receiveListNote, e.target.checked)
+                        }
+                        checked={
+                          receiveListNote.length > 0 &&
+                          selectNoteNos.length === receiveListNote.length
+                        }
+                      ></input>
                     </th>
                     <th style={{ width: "15%" }}>보낸사람</th>
                     <th style={{ width: "55%" }}>내용</th>
@@ -230,7 +304,11 @@ const Note = () => {
                       return (
                         <tr key={"receive-" + i}>
                           <td>
-                            <input type="checkbox" />
+                            <input //개별선택한거 가져오기
+                              type="checkbox"
+                              onChange={() => selectCheck(receive.noteNo)}
+                              checked={selectNoteNos.includes(receive.noteNo)}
+                            ></input>
                           </td>
                           <td>{receive.sendId}</td>
                           <td
@@ -257,7 +335,7 @@ const Note = () => {
           <div className="send-content-wrap">
             <div className="send-delbutton-wrap">
               <div className="send-delbutton">
-                <button>삭제</button>
+                <button onClick={deleteNotes}>삭제</button>
               </div>
             </div>
             <div className="send-content-box">
@@ -265,7 +343,16 @@ const Note = () => {
                 <thead>
                   <tr className="send-tr">
                     <th style={{ width: "10%" }}>
-                      <input type="checkbox" />
+                      <input // 전체선택한거
+                        type="checkbox"
+                        onChange={(e) =>
+                          allCheck(sendListNote, e.target.checked)
+                        }
+                        checked={
+                          sendListNote.length > 0 &&
+                          selectNoteNos.length === sendListNote.length
+                        }
+                      ></input>
                     </th>
                     <th style={{ width: "15%" }}>받은사람</th>
                     <th style={{ width: "55%" }}>내용</th>
@@ -283,7 +370,11 @@ const Note = () => {
                     sendListNote.map((send, i) => (
                       <tr key={i}>
                         <td>
-                          <input type="checkbox" />
+                          <input //개별선택한거 가져오기
+                            type="checkbox"
+                            onChange={() => selectCheck(send.noteNo)}
+                            checked={selectNoteNos.includes(send.noteNo)}
+                          ></input>
                         </td>
                         <td>{send.receiveId}</td>
                         <td
