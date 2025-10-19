@@ -1,6 +1,6 @@
 package kr.co.iei.note.model.dto;
 
-import java.sql.Date;
+
 
 import org.apache.ibatis.type.Alias;
 
@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class NoteDTO {
 	private int noteNo;
 	private String noteContent;
-	private Date noteDate;
-	private Date noteDateRead;
+	private String noteDate;
+	private String noteDateRead;
 	private int noteContentRead;
 	private int delRecelve;
 	private int delSend;

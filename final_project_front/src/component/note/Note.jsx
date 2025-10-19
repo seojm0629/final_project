@@ -10,7 +10,11 @@ import {
 } from "../utils/RecoilData";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import dayjs from "dayjs"; // 진원이형이 다운받은 날짜js
+import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
+import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
+dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
+dayjs.locale("ko"); // 한국어 로케일 설정
 const Note = () => {
   const memberId = useRecoilValue(loginIdState); // 사용자 ID
   const memberType = useRecoilValue(memberTypeState); // 사용자 타입
@@ -18,6 +22,21 @@ const Note = () => {
   const [sendListNote, setSendListNote] = useState([]); // 받은 쪽지리스트
   const [selectMenu, setSelectMenu] = useState("write"); //쓰기 스테이트 기본값
   const backServer = import.meta.env.VITE_BACK_SERVER; // 서버값 저장
+  const [selectedContent, setSelectedContent] = useState(null); // 선택한 내용
+  const [detailcontent, setDetailContent] = useState(false); // 내용의 상세보기
+
+  const nowDate = (dateString) => {
+    const now = dayjs(); //현재 날짜/시간 가져오는 함수
+    const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
+    const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
+    // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
+
+    if (diffDays >= 7) {
+      return target.format("YYYY-MM-DD"); // 7일 이상이면 날짜로 변형
+    }
+    return target.fromNow(); //한국어로 ?? 시간전 표시하기
+  };
+
   const [note, setNote] = useState({
     // 입력받을 아이디,내용 함수 생성
     noteId: "",
@@ -33,6 +52,7 @@ const Note = () => {
   };
 
   const sendNote = () => {
+    //보내기 버튼 누를때 작동
     if (note.noteId === "") {
       Swal.fire({
         title: "전송실패!",
@@ -69,7 +89,7 @@ const Note = () => {
           Swal.fire({
             title: "성공!",
             text: "쪽지를 보냈습니다.",
-            icon: "error",
+            icon: "success",
           });
 
           setNote({ noteId: "", noteContent: "" });
@@ -85,7 +105,10 @@ const Note = () => {
   };
 
   const menuClick = (menu) => {
+    //메뉴 클릭할때
     setSelectMenu(menu); //클릭했을때 함수 변경용
+    setDetailContent(false);
+    setSelectedContent(null);
     console.log("memberId in menuClick:", memberId);
     if (menu === "send") {
       //받은 메시지 리스트목록이라서 보낸사람아이디로 나오게
@@ -98,14 +121,25 @@ const Note = () => {
         .catch((err) => {
           console.log(err);
         });
-      {
-      }
+    }
+    if (menu === "receive") {
+      // 보낸쪽지함
+      axios
+        .get(`${backServer}/note/send/${memberId}`)
+        .then((res) => {
+          setSendListNote(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
   const title = (
     <div className="note-title">
-      {selectMenu === "write"
+      {detailcontent
+        ? "쪽지 상세보기"
+        : selectMenu === "write"
         ? "쪽지 작성"
         : selectMenu === "send"
         ? "받은쪽지함"
@@ -164,7 +198,8 @@ const Note = () => {
             </div>
           </div>
         )}
-        {selectMenu === "send" && (
+        {/*---------------받은쪽지함-----------------*/}
+        {selectMenu === "send" && !detailcontent && (
           <div className="send-content-wrap">
             <div className="send-delbutton-wrap">
               <div className="send-delbutton">
@@ -179,8 +214,8 @@ const Note = () => {
                       <input type="checkbox" />
                     </th>
                     <th style={{ width: "15%" }}>보낸사람</th>
-                    <th style={{ width: "60%" }}>내용</th>
-                    <th style={{ width: "15%" }}>보낸 날짜</th>
+                    <th style={{ width: "55%" }}>내용</th>
+                    <th style={{ width: "20%" }}>보낸 날짜</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,8 +233,16 @@ const Note = () => {
                             <input type="checkbox" />
                           </td>
                           <td>{receive.sendId}</td>
-                          <td>{receive.noteContent}</td>
-                          <td>{receive.noteDate}</td>
+                          <td
+                            onClick={() => {
+                              setSelectedContent(receive);
+                              setDetailContent(true);
+                            }}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {receive.noteContent}
+                          </td>
+                          <td>{nowDate(receive.noteDate)}</td>
                         </tr>
                       );
                     })
@@ -209,7 +252,8 @@ const Note = () => {
             </div>
           </div>
         )}
-        {selectMenu === "receive" && (
+        {/*---------------보낸쪽지함-----------------*/}
+        {selectMenu === "receive" && !detailcontent && (
           <div className="send-content-wrap">
             <div className="send-delbutton-wrap">
               <div className="send-delbutton">
@@ -224,21 +268,91 @@ const Note = () => {
                       <input type="checkbox" />
                     </th>
                     <th style={{ width: "15%" }}>받은사람</th>
-                    <th style={{ width: "60%" }}>내용</th>
-                    <th style={{ width: "15%" }}>받은 날짜</th>
+                    <th style={{ width: "55%" }}>내용</th>
+                    <th style={{ width: "20%" }}>받은 날짜</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="send-tr">
-                    <th style={{ width: "10%" }}>
-                      <input type="checkbox" />
-                    </th>
-                    <th style={{ width: "15%" }}></th>
-                    <th style={{ width: "60%" }}></th>
-                    <th style={{ width: "15%" }}></th>
-                  </tr>
+                  {sendListNote.length === 0 ? (
+                    <tr>
+                      <td colSpan="4" style={{ textAlign: "center" }}>
+                        보낸 쪽지가 없습니다.
+                      </td>
+                    </tr>
+                  ) : (
+                    sendListNote.map((send, i) => (
+                      <tr key={i}>
+                        <td>
+                          <input type="checkbox" />
+                        </td>
+                        <td>{send.receiveId}</td>
+                        <td
+                          onClick={() => {
+                            setSelectedContent(send);
+                            setDetailContent(true);
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {send.noteContent}
+                        </td>
+                        <td>{nowDate(send.noteDate)}</td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+        {/*--------------상세보기 창만드는곳--------------*/}
+        <div className="detail-header">
+          {selectMenu === "send" ? "받은쪽지함" : "보낸쪽지함"}
+        </div>
+        {detailcontent && selectedContent && (
+          <div className="detail-box">
+            <div className="detail-info">
+              {selectMenu === "send" && (
+                <div>
+                  <b>보낸사람:</b> {selectedContent.sendId}
+                </div>
+              )}
+              {selectMenu === "receive" && (
+                <div>
+                  <b>받은사람:</b> {selectedContent.receiveId}
+                </div>
+              )}
+              <div>
+                <b>보낸날짜:</b> {selectedContent.noteDate}
+              </div>
+            </div>
+            <div className="detail-content-box">
+              {selectedContent.noteContent}
+            </div>
+            <div className="detail-buttons">
+              {selectMenu === "send" && (
+                <button
+                  onClick={() => {
+                    setNote({
+                      ...note,
+                      noteId: selectedContent.sendId, // 보낸 사람 아이디 자동 복사
+                      noteContent: "", // 내용비우기
+                    });
+                    setDetailContent(false); // 상세보기 닫기
+                    setSelectedContent(null);
+                    setSelectMenu("write"); // 작성 모드로 이동하기
+                  }}
+                >
+                  답장하기
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  setDetailContent(false);
+                  setSelectedContent(null);
+                }}
+              >
+                돌아가기
+              </button>
             </div>
           </div>
         )}

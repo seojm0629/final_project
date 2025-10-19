@@ -15,6 +15,8 @@ public interface NoteDao {
 
 	List<NoteDTO> selectReceivedNotes(String memberId);
 
+	List<NoteDTO> selectSendNotes(String memberId);
+
 	
 
 }
