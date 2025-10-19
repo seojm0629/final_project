@@ -7,12 +7,10 @@ import "./sideMenu.css";
 import axios from "axios";
 
 const FreeBoardSideMenu = (props) => {
-  const backServer = import.meta.env.VITE_BACK_SERVER;
   const menus = props.menus;
+  const setMenus = props.setMenus;
   const setSelectMenu = props.setSelectMenu;
   const setSelected = props.setSelected;
-  //const setFreeBoardList = props.setFreeBoardList;
-  //const setTotalListCount = props.setTotalListCount;
   const [naviDown, setNaviDown] = useState(null);
   const [menuNavi, setMenuNavi] = useState(""); //카테고리 밑 메뉴 네비
   const downMenu = (menu) => {
@@ -24,7 +22,10 @@ const FreeBoardSideMenu = (props) => {
         <p style={{ fontWeight: "600" }}>카테고리</p>
         <span>홈 &gt; 자유게시판 &gt; {menuNavi}</span>
       </section>
-      <div className="header-title">
+      <div className="header-title" onClick={() => {
+        setSelected(-1);
+        setMenuNavi("");
+      }}>
         <span>자유게시판</span>
       </div>
       <ul className="category">
@@ -36,7 +37,7 @@ const FreeBoardSideMenu = (props) => {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   downMenu(i);
-                  setMenuNavi(menuNavi !== i && m.freeBoardCategory);
+                  setMenuNavi(m.freeBoardCategory);
                 }}
               >
                 {m.freeBoardCategory}
@@ -46,7 +47,7 @@ const FreeBoardSideMenu = (props) => {
                   <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                 )}
               </span>
-              <div className="menu-down">
+              <div className="menu-down" style={{display: naviDown === i ? "block":"none"}}>
                 {m.freeBoardSubcategory.map((n, i) => {
                   return (
                     <ul

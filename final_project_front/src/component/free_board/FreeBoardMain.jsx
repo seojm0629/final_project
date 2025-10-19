@@ -20,10 +20,17 @@ const FreeBoardMain = () => {
   const [selectMenu, setSelectMenu] = useState([]); //클릭 시 선택된 글씨가 나타나도록 구현하는 state
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigation = useNavigate();
-  //const freeBoardList = props.freeBoardList;
-  //const setFreeBoardList = props.setFreeBoardList;
-  const [selectedBoardList, setSelectedBoardList] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(-1);
+  const [menus, setMenus] = useState([]);
+  const [freeBoardTitle, setFreeBoardTitle] = useState("");
+    const [reqPageInfo, setReqPageInfo] = useState({
+    sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
+    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+    listCnt: 6, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    order: 2, //최신순, 오래된 순
+  });
+  const [totalListCount, setTotalListCount] = useState(0);
+  const [freeBoardList, setFreeBoardList] = useState([]);
   // * freeBoardListNo (최상위 컴포넌트에서 -> sideMenu -> main -> content) *
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
@@ -38,25 +45,28 @@ const FreeBoardMain = () => {
       })
     );
   };
-  const [menus, setMenus] = useState([]);
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainPage`)
       .then((res) => {
         setMenus(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-
-  const [freeBoardTitle, setFreeBoardTitle] = useState("");
+  }, [])
   const searchTitle = () => {
     axios
-      .get(`${backServer}/freeBoard/content/${freeBoardTitle}`)
+      .get(`${backServer}/freeBoard/content/freeBoardTitle?pageNo=${reqPageInfo.pageNo}
+        &listCnt=${reqPageInfo.listCnt}
+        &sideBtnCount=${reqPageInfo.sideBtnCount}
+        &order=${reqPageInfo.order}
+        &freeBoardTitle=${freeBoardTitle}`
+      )
       .then((res) => {
         console.log(res.data);
+        setFreeBoardList(res.data.boardList);
+        setTotalListCount(res.data.totalListCount);
       })
       .catch((err) => {
         console.log(err);
@@ -112,6 +122,7 @@ const FreeBoardMain = () => {
           <section className="sidemenu-section">
             <FreeBoardSideMenu
               menus={menus}
+              setMenus={setMenus}
               setSelectMenu={addMenu}
               setSelected={setSelected}
             ></FreeBoardSideMenu>
@@ -131,7 +142,9 @@ const FreeBoardMain = () => {
               <Route
                 path="content"
                 element={
-                  <FreeBoardContent selected={selected}></FreeBoardContent>
+                  <FreeBoardContent selected={selected} reqPageInfo={reqPageInfo} setReqPageInfo={setReqPageInfo} totalListCount={totalListCount}
+                  setTotalListCount={setTotalListCount} freeBoardList={freeBoardList} setFreeBoardList={setFreeBoardList}
+                  ></FreeBoardContent>
                 }
               ></Route>
               <Route
@@ -150,15 +163,14 @@ const FreeBoardMain = () => {
 const FreeBoardContent = (props) => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const selected = props.selected;
-  const [reqPageInfo, setReqPageInfo] = useState({
-    sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
-    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
-    listCnt: 6, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
-    order: 2, //최신순, 오래된 순
-  });
-  const [totalListCount, setTotalListCount] = useState(0);
-  const [freeBoardList, setFreeBoardList] = useState([]);
-  const listUrl = selected === null ? (
+  const reqPageInfo = props.reqPageInfo;
+  const setReqPageInfo = props.setReqPageInfo;
+  const totalListCount = props.totalListCount;
+  const setTotalListCount = props.setTotalListCount;
+  const freeBoardList = props.freeBoardList;
+  const setFreeBoardList = props.setFreeBoardList;
+
+  const listUrl = selected === -1 ? (
     `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
@@ -170,11 +182,6 @@ const FreeBoardContent = (props) => {
               &order=${reqPageInfo.order}
               &selected=${selected}`
   )
-  const array = selected === null ? (
-    [reqPageInfo.order, reqPageInfo.pageNo]
-  ) : (
-    [reqPageInfo.order, reqPageInfo.pageNo, selected]
-  )
   useEffect(() => {
     //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
         (axios
@@ -185,9 +192,9 @@ const FreeBoardContent = (props) => {
             })
             .catch((err) => {
               console.log(err);
-            }),
-          array)
-  });
+            })
+        ) 
+      }, [reqPageInfo.order, reqPageInfo.pageNo, selected]);
   return (
     <section className="freeBoard-section">
       <div className="board-div">
@@ -210,7 +217,7 @@ const FreeBoardContent = (props) => {
               </div>
               <div className="view-heart">
                 <div className="view">
-                  {/*작성된 게시글을 */}
+                  {/*작성된 게시글을 클릭 시 count(*) */}
                   <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
                   111
                 </div>

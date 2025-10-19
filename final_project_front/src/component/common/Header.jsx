@@ -28,7 +28,7 @@ const MainNavi = () => {
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
   };
-  /*메뉴 다운 후 해당 영역이 아닌 곳을 클릭 시 메뉴 업 되게끔*/
+  /*메뉴 다운 후 해당 영역이 아닌 곳을 클릭 시 메뉴 업*/
     useEffect(() => {
       const outClickMenu = (e) =>{
         if(menuRef.current && !menuRef.current.contains(e.target)){
@@ -40,7 +40,6 @@ const MainNavi = () => {
           document.removeEventListener("mousedown", outClickMenu);
         }
     }, [menuRef]);
-    console.log(menuRef);
   return (
     <nav className="navi-wrap">
       <ul className="navi-menu">

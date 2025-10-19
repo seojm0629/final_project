@@ -20,6 +20,10 @@
   font-weight: 600;
   margin: 20px 0px 0px 5px;
 }
+.header-title span{
+  user-select: none;
+  cursor: pointer;
+}
 .category {
   margin: 30px 10px 0px 10px;
 }
