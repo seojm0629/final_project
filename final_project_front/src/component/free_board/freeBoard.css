@@ -261,38 +261,133 @@
   height: 50px;
   display: flex;
   align-items: center;
+  gap: 5px;
+}
+.section-area div {
+  display: flex;
 }
 .text-area {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 45px;
+}
+.text-area div:first-child {
+  display: flex;
+  gap: 5px;
+  color: #2f4e70;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+}
+.text-area div:last-child {
+  color: #2f4e70;
+  font-weight: 500;
+}
+.title-text input {
+  width: 580px;
+  height: 25px;
+  border: 0.3px solid #ccc;
+  border-radius: 3px;
+  background-color: #f0f2f5;
+  padding-left: 8px;
 }
 .category-area {
   display: flex;
-  gap: 30px;
+  gap: 35px;
+  color: #2f4e70;
+  font-weight: 600;
+  align-items: center;
+}
+.category-area input:first-child {
+  display: flex;
+  gap: 5px;
+  color: #2f4e70;
+  font-weight: 600;
+}
+.category-text div:first-child {
+  display: flex;
+  gap: 12px;
 }
 .category-text {
   display: flex;
   gap: 50px;
 }
-.category-text div {
-  display: flex;
-  gap: 15px;
+.category-text span {
+  font-weight: 500;
 }
 .title-area {
   display: flex;
   gap: 55px;
+  color: #2f4e70;
+  font-weight: 500;
+}
+.title-area div:first-child {
+  display: flex;
+  gap: 5px;
+  color: #2f4e70;
+  font-weight: 600;
 }
 .content-write {
+  display: flex;
   width: 800px;
-  height: 500px;
+  gap: 55px;
   margin-top: 20px;
 }
-.content-area {
+.content-write div:first-child {
   display: flex;
-  gap: 55px;
+  height: min-content;
+  gap: 5px;
+  color: #2f4e70;
+  font-weight: 600;
+}
+.content-area span {
+  color: #2f4e70;
+  font-weight: 600;
 }
 .content-text {
-  min-width: 700px;
-  height: 500px;
+  min-width: 600px;
+  min-height: 500px;
   background-color: antiquewhite;
+}
+/*작성 버튼*/
+.submit-section {
+  display: flex;
+  gap: 100px;
+  margin-top: 30px;
+}
+.submit-section div > button {
+  border: none;
+  background-color: #2f4e70;
+  color: white;
+  border-radius: 5px;
+  width: 80px;
+  height: 40px;
+  user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+.content-write div {
+  border: none;
+}
+.content-area {
+  background-color: transparent;
+  display: flex;
+  flex-grow: 1;
+  color: white;
+}
+.content-editor {
+  background-color: transparent;
+  display: flex;
+  color: white;
+  border: none;
+}
+.content-editor div {
+  display: flex;
+  flex-grow: 1;
+}
+.content-write div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

@@ -1,0 +1,90 @@
+import axios from "axios";
+import { useMemo, useRef } from "react";
+import ReactQuill, { Quill } from "react-quill";
+import ImageResize from "quill-image-resize-module-react";
+import "react-quill/dist/quill.snow.css";
+Quill.register("modules/ImageResize", ImageResize);
+
+const TextEditor = (props) => {
+  const freeBoardContent = props.freeBoardContent;
+  const setFreeBoardContent = props.freeBoardContent;
+  const editorRef = useRef(null);
+  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.onchange = () => {
+      const files = input.files;
+      if (files.length !== 0) {
+        const form = new FormData();
+        form.append("image", files[0]);
+        axios
+          .post(`${backServer}/board/image`, form, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            const editor = editorRef.current.getEditor();
+            const range = editor.getSelection();
+            editor.insertEmbed(
+              range.index,
+              "image",
+              `${backServer}/editor/${res.data}`
+            );
+            editor.setSelection(range.index + 1);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    };
+  };
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+            { align: [] },
+          ],
+          ["image"],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+      ImageResize: {
+        parchment: Quill.import("parchment"),
+        modules: ["Resize", "DisplaySize", "Toolbar"],
+      },
+    };
+  }, []);
+  return (
+    <ReactQuill
+      modules={modules}
+      ref={editorRef}
+      value={freeBoardContent}
+      theme="snow"
+      onChange={setFreeBoardContent}
+      style={{
+        backgroundColor: "",
+        border: "1px solid #2f4e70",
+        color: "#fff",
+        height: "100%",
+        minHeight: 400,
+        borderRadius: 15,
+      }}
+    ></ReactQuill>
+  );
+};
+
+export default TextEditor;

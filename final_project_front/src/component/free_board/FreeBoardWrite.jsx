@@ -1,9 +1,29 @@
-const FreeBoardWrite = () => {
+import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import SubtitlesOutlinedIcon from "@mui/icons-material/SubtitlesOutlined";
+import ContentPasteOutlinedIcon from "@mui/icons-material/ContentPasteOutlined";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { isLoginState } from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
+import TextEditor from "../utils/TextEditor";
+import { useState } from "react";
+
+const FreeBoardWrite = (props) => {
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  const setFreeBoardTitle = props.setFreeBoardTitle;
+  const [memberId, setMemberId] = useRecoilState(isLoginState); // 로그인된 memberId, memberType
+  const [freeBoardWriteTitle, setFreeBoardWriteTitle] = useState("");
+  const [freeBoardContent, setFreeBoardContent] = useState("");
   return (
     <div className="write-wrap">
       <div className="nickname section-area">
         <div className="text-area">
-          <span>닉네임</span>
+          <div>
+            <DriveFileRenameOutlineOutlinedIcon></DriveFileRenameOutlineOutlinedIcon>
+            <span>닉네임</span>
+          </div>
           <div className="nickname-text">
             <span>작성자</span>
           </div>
@@ -11,43 +31,84 @@ const FreeBoardWrite = () => {
       </div>
       <div className="category-select section-area">
         <div className="category-area">
-          <span>카테고리</span>
+          <div>
+            <CategoryOutlinedIcon></CategoryOutlinedIcon>
+            <span>카테고리</span>
+          </div>
           {/*카테고리 개수만큼 처리*/}
           <div className="category-text">
             <div>
-              <input type="radio" />
-              <span>test1</span>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  sx={{
+                    "& .MuiSvgIcon-root": { fontSize: 20 },
+                  }}
+                  label="test1" //카테고리 name
+                ></FormControlLabel>
+              </FormGroup>
             </div>
             <div>
-              <input type="radio" />
-              <span>test2</span>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+                  label="test2" //카테고리 name
+                ></FormControlLabel>
+              </FormGroup>
             </div>
             <div>
-              <input type="radio" />
-              <span>test3</span>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+                  label="test3" //카테고리 name
+                ></FormControlLabel>
+              </FormGroup>
             </div>
             <div>
-              <input type="radio" />
-              <span>test4</span>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
+                  label="test4" //카테고리 name
+                ></FormControlLabel>
+              </FormGroup>
             </div>
           </div>
         </div>
       </div>
       <div className="write-title section-area">
         <div className="title-area">
-          <span>제 목</span>
+          <div>
+            <SubtitlesOutlinedIcon></SubtitlesOutlinedIcon>
+            <span>제 목</span>
+          </div>
           <div className="title-text">
-            <span>글제목</span>
+            <input
+              type="text"
+              id="freeBoardTitle"
+              name="freeBoardTitle"
+              value={freeBoardWriteTitle}
+              placeholder="제목 입력"
+              onChange={(e) => {
+                setFreeBoardWriteTitle(e.target.value);
+              }}
+            ></input>
           </div>
         </div>
       </div>
       <div className="content-write">
-        <div className="content-area">
+        <div>
+          <ContentPasteOutlinedIcon></ContentPasteOutlinedIcon>
           <span>내 용</span>
-          <div className="content-text">
-            <textarea name="" id="">
-              sdasd
-            </textarea>
+        </div>
+        <div className="content-area">
+          <div className="content-editor">
+            <TextEditor
+              setFreeBoardContent={setFreeBoardContent}
+              freeBoardContent={freeBoardContent}
+            ></TextEditor>
           </div>
         </div>
       </div>
