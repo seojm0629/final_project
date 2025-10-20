@@ -1,0 +1,54 @@
+.member-modal-wrap{
+    margin: 0 auto;
+}
+.member-modal-title-name{
+    text-align: center;
+}
+
+.member-modal-content{
+    width: 440px;  
+    height: 300px;  
+    line-height: 40px;
+    margin: 40px auto;
+    text-align: center;
+    
+}
+
+.member-close-button{
+    width: 450px;
+    height: 15px;
+    margin: 0 auto;
+    text-align: right;
+    
+}
+.member-close-button>button{
+    margin: 0;
+    width: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 22px;
+}
+
+.modal-member-item{
+    margin-bottom: 10px;
+}
+
+.modal-button-box{
+    width: 100%;
+}
+
+.modal-button-box>button{
+    background-color: #2F4E70;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+
+
+.member-id{
+    text-align: center;
+    margin-top : 120px;
+    
+}
