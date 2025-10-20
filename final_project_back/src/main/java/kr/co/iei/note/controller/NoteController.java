@@ -68,7 +68,7 @@ public class NoteController {
 	 
 	@PatchMapping("/update")
 		public ResponseEntity<Integer> updateList(@RequestBody List<NoteUpdateDel> selectNoteNos) {
-		 System.out.println("받은 노트번호 목록" + selectNoteNos);
+		System.out.println("받은 노트번호 목록" + selectNoteNos.get(0).getNoteNos());
 		int result = noteService.sendUpdateList(selectNoteNos);
 		System.out.println("컨트롤러에서 프론트갈때 확인"+result);
 		

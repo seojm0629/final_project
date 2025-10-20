@@ -1,5 +1,6 @@
 package kr.co.iei.note.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +58,24 @@ public class NoteService {
 	public int sendUpdateList(List<NoteUpdateDel> selectNoteNos) {
 		
 		System.out.println("서비스에서확인"+selectNoteNos);
+		System.out.println("서비스에서확인"+selectNoteNos.get(0).getNoteNos());
+		System.out.println("리스트 크기: " + selectNoteNos.size());
+		List<NoteUpdateDel> newList = new ArrayList();
 		
 		int result = noteDao.sendUpdateList(selectNoteNos);
 		
 		System.out.println("서비스에서 넘어가는값확인"+result);
+		
+		 for (int i = 0; i < selectNoteNos.size(); i++) {
+		        NoteUpdateDel note = selectNoteNos.get(i); 
+		        int noteNo = note.getNoteNos(); 
+		        System.out.println("리스트 요소 " + i + ": noteNo = " + noteNo);
+		  
+		        newList.add(note);
+		 
+		 }
+		
+		 System.out.println("새로운 리스트 크기: " + newList.size());
 		
 		return result;
 	}
