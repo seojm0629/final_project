@@ -101,24 +101,6 @@ const SideMenu = ({ active, setActive }) => {
             </li>
           </ul>
         </li>
-        <li>
-          <button
-            onClick={() => setActive("test")}
-            className={active === "test" ? "active" : ""}
-          >
-            테스트용 기능
-            <span className="material-icons">navigate_next</span>
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => setActive("site")}
-            className={active === "site" ? "active" : ""}
-          >
-            사이트 관리
-            <span className="material-icons">navigate_next</span>
-          </button>
-        </li>
       </ul>
     </aside>
   );

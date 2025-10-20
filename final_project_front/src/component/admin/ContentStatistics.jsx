@@ -320,16 +320,3 @@ const ChartTemplate = (props) => {
     </div>
   );
 };
-
-/** 개수 표기 양식
- * title (String) : 추출된 값의 의미 (제목)
- * value : 추출된 값
- * difference : 전일 대비 얼마나 차이나는지 비율
- */
-const CountTemplate = (props) => {
-  const title = props.title;
-  const value = props.value;
-  const difference = props.difference;
-
-  return <div>아아2</div>;
-};
