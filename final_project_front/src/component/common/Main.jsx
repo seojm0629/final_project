@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import FindId from "../member/FindId";
 import FindPw from "../member/FindPw";
+import FindModal from "../member/FindIdModal";
+import FindIdModal from "../member/FindIdModal";
 
 const Main = () => {
     //login 정보 가져와야함
@@ -205,7 +207,7 @@ const Main = () => {
                             <button type="submit" onClick={toLogin}>talk & deal 로그인</button>
                         </div>
                         <div className="login-find">
-                            <FindId>아이디 찾기</FindId>
+                            <FindIdModal>아이디 찾기</FindIdModal>
                             <FindPw>비밀번호 찾기</FindPw>
                             <Link to="/member/agree">회원가입</Link>
                         </div>

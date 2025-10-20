@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.note.model.dto.NoteDTO;
+import kr.co.iei.note.model.dto.NoteUpdateDel;
 
 @Mapper
 public interface NoteDao {
@@ -16,6 +17,8 @@ public interface NoteDao {
 	List<NoteDTO> selectReceivedNotes(String memberId);
 
 	List<NoteDTO> selectSendNotes(String memberId);
+
+	int sendUpdateList(List<NoteUpdateDel> selectNoteNos);
 
 	
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.note.model.dao.NoteDao;
 import kr.co.iei.note.model.dto.NoteDTO;
+import kr.co.iei.note.model.dto.NoteUpdateDel;
 
 
 @Service
@@ -51,5 +52,17 @@ public class NoteService {
 		return list;
 		
     }
+	
+	@Transactional
+	public int sendUpdateList(List<NoteUpdateDel> selectNoteNos) {
+		
+		System.out.println("서비스에서확인"+selectNoteNos);
+		
+		int result = noteDao.sendUpdateList(selectNoteNos);
+		
+		System.out.println("서비스에서 넘어가는값확인"+result);
+		
+		return result;
+	}
 
 }
