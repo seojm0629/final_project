@@ -48,8 +48,8 @@
 	<update id="sendUpdateList">
 		update note_tbl set del_send = 1 
 		where note_no in
-			<foreach collection="list" item="noteNos" open="(" close= ")" separator=",">
-				#{noteNos}
+			<foreach collection="selectNoteNos" item="note" open="(" close= ")" separator=",">
+				#{note.noteNos}
 			</foreach>
 	</update>
 
