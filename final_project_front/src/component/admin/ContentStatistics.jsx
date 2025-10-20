@@ -70,6 +70,10 @@ const ContentStatistics = () => {
   const [bcc, setBcc] = useState(0);
   const [wc, setWc] = useState(0);
   const [ar, setAr] = useState(0);
+  const [ruDiff, setRuDiff] = useState(0);
+  const [bcDiff, setBcDiff] = useState(0);
+  const [bccDiff, setBccDiff] = useState(0);
+  const [wcDiff, setWcDiff] = useState(0);
 
   /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
   const [labels, setLabels] = useState([]);
@@ -108,6 +112,10 @@ const ContentStatistics = () => {
         setBcc(res.data.bcc);
         setWc(res.data.wc);
         setAr(res.data.ar);
+        setRuDiff(res.data.ruDiffDay);
+        setBcDiff(res.data.bcDiffDay);
+        setBccDiff(res.data.bccDiffDay);
+        setWcDiff(res.data.wcDiffDay);
 
         const labels = results.map((r) => {
           return r.label;
@@ -154,22 +162,32 @@ const ContentStatistics = () => {
           <div className="element">
             <div className="entireBox-title">전체 가입자 수</div>
             <div className="entireBox-content">{ru} 명</div>
-            <div className="entireBox-plus">전일 대비 +6 ▲</div>
+            <div className={ruDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {ruDiff >= 0 ? `+${ruDiff} ▲` : `${ruDiff} ▼`}
+            </div>
           </div>
           <div className="element">
             <div className="entireBox-title">전체 게시글 수</div>
             <div className="entireBox-content">{bc} 건</div>
-            <div className="entireBox-minus">전일 대비 -4 ▼</div>
+            <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
+            </div>
           </div>
           <div className="element">
             <div className="entireBox-title">전체 댓글 수</div>
             <div className="entireBox-content">{bcc} 건</div>
-            <div className="entireBox-plus">전일 대비 +8 ▲</div>
+            <div
+              className={bccDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}
+            >
+              전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
+            </div>
           </div>
           <div className="element">
             <div className="entireBox-title">전체 탈퇴 유저 수</div>
             <div className="entireBox-content">{wc}명</div>
-            <div className="entireBox-minus">전일 대비 -2 ▼</div>
+            <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
+            </div>
           </div>
         </div>
         <div className="placeholder"></div>
