@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { loginIdState, memberTypeState } from "../utils/RecoilData";
 import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
 import Note from "../note/note";
+import SurveyModal from "../survey/SurveyModal";
 const Header = () => {
   return (
     <header className="header">
@@ -29,17 +30,17 @@ const MainNavi = () => {
     setNaviDown(naviDown === menu ? null : menu);
   };
   /*메뉴 다운 후 해당 영역이 아닌 곳을 클릭 시 메뉴 업*/
-    useEffect(() => {
-      const outClickMenu = (e) =>{
-        if(menuRef.current && !menuRef.current.contains(e.target)){
-          setNaviDown(null);
-        }
+  useEffect(() => {
+    const outClickMenu = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setNaviDown(null);
       }
-        document.addEventListener("mousedown", outClickMenu);
-        return() => {
-          document.removeEventListener("mousedown", outClickMenu);
-        }
-    }, [menuRef]);
+    };
+    document.addEventListener("mousedown", outClickMenu);
+    return () => {
+      document.removeEventListener("mousedown", outClickMenu);
+    };
+  }, [menuRef]);
   return (
     <nav className="navi-wrap">
       <ul className="navi-menu">
