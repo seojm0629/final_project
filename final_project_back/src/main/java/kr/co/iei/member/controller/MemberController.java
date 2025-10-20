@@ -108,9 +108,9 @@ public class MemberController {
 	}
 	
 	
-	@GetMapping(value="/find")
-	public ResponseEntity<MemberDTO> find(@RequestParam String memberName){
-		MemberDTO m = memberService.find(memberName);
+	@PostMapping(value="/find")
+	public ResponseEntity<MemberDTO> find(@RequestBody MemberDTO member){
+		MemberDTO m = memberService.find(member);
 		return ResponseEntity.ok(m);
 	}
 	
