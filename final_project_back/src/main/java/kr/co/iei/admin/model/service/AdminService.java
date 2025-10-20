@@ -63,21 +63,28 @@ public class AdminService {
 
 	public HashMap<String, Object> statistics(String selectCriteria) {
 		List<AdminStatisticsDTO> list = new ArrayList<>();
+		int acceessionRate = 0;
 		switch(selectCriteria) {
 		case "5년": 
 			list = adminDao.statisticsYears();
+			acceessionRate = adminDao.statisticsAr();
 			break;
 		case "1년" : 
 			list = adminDao.statisticsYear();
+			acceessionRate = adminDao.statisticsArYear();
 			break;
 		case "1개월" : 
 			list = adminDao.statisticsMonth();
+			acceessionRate = adminDao.statisticsArMonth();
 			break;
+		case "1일" : 
+			acceessionRate = adminDao.statisticsArDay();
 		}
 		int registeredUser = adminDao.statisticsRu();
 		int boardCount = adminDao.statisticsBc();
 		int boardCommentCount = adminDao.statisticsBcc();
 		int withdrawCount = adminDao.statisticsWc();
+	
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("accessionCounts", list);
@@ -85,6 +92,7 @@ public class AdminService {
 		map.put("bc", boardCount);
 		map.put("bcc",boardCommentCount);
 		map.put("wc", withdrawCount);
+		map.put("ar", acceessionRate);
 		return map;
 	}
 }
