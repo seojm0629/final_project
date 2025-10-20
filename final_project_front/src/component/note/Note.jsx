@@ -56,8 +56,8 @@ const Note = () => {
   //삭제 버튼 클릭 시 axios 요청하기
   const deleteNotes = () => {
     console.log("삭제 요청할 쪽지번호확인:", selectNoteNos);
-
-    const deleteType = selectMenu === "send" ? "send" : "receive";
+    //삭제 실행햇을때 불러오는 값들이 0이 아니고 1이므로 반대로 값을 줘야함
+    const deleteType = selectMenu === "send" ? "receive" : "send";
 
     console.log("요청한 타입", deleteType);
 
@@ -80,7 +80,8 @@ const Note = () => {
               text: "쪽지가 삭제되었습니다.",
               icon: "success",
             });
-          setSelectMenu(selectMenu);
+          //메뉴값 다시 불러오기
+          menuClick(selectMenu);
           // 선택 초기화하기
           setSelectNoteNos([]);
         })
