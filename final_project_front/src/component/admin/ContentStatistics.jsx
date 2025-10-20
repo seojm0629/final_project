@@ -154,10 +154,7 @@ const ContentStatistics = () => {
           <div className="title m">통계 페이지</div>
           <div className="title s">사이트 이용 지표</div>
         </div>
-        {/*개발 중인 것 여기 넣고 테스트 해서 하단에 배치하기 */}
-        <div className="placeholder">
-          <div>테스트 영역</div>
-        </div>
+
         <div className="entireBox">
           <div className="element">
             <div className="entireBox-title">전체 가입자 수</div>
@@ -190,14 +187,9 @@ const ContentStatistics = () => {
             </div>
           </div>
         </div>
-        <div className="placeholder"></div>
-        {/* 주간/월간/일간 필터 */}
+
         <div className="placeholder">
-          <div>
-            필터 (year/month/day) - 기타를 클릭하면 특정 기간 조회할 수 있도록
-            고민하기
-          </div>
-          <div>
+          <div className="chartFilter">
             {searchCriteria.map((sc, i) => {
               return (
                 <button
@@ -216,10 +208,7 @@ const ContentStatistics = () => {
               );
             })}
           </div>
-        </div>
 
-        <div className="placeholder">
-          <div>신규 가입자 수 (필터에 따라)</div>
           <div className="chartFlex">
             <ChartTemplate
               title={
