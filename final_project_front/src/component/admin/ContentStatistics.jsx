@@ -69,6 +69,7 @@ const ContentStatistics = () => {
   const [bc, setBc] = useState(0);
   const [bcc, setBcc] = useState(0);
   const [wc, setWc] = useState(0);
+  const [ar, setAr] = useState(0);
 
   /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
   const [labels, setLabels] = useState([]);
@@ -106,6 +107,7 @@ const ContentStatistics = () => {
         setBc(res.data.bc);
         setBcc(res.data.bcc);
         setWc(res.data.wc);
+        setAr(res.data.ar);
 
         const labels = results.map((r) => {
           return r.label;
@@ -125,14 +127,13 @@ const ContentStatistics = () => {
       });
   }, [selectCriteria]);
   /* **************************************************************** */
-  const PIE_DUMMY = { signup: 60, withdraw: 40 }; // 합계 100
 
   const pieData = {
     labels: ["가입", "탈퇴"],
     datasets: [
       {
         label: "비율(%)",
-        data: [PIE_DUMMY.signup, PIE_DUMMY.withdraw],
+        data: [ar, 100 - ar],
         backgroundColor: ["rgba(0, 102, 255, 0.5)", "rgba(255, 94, 0, 0.5)"],
       },
     ],

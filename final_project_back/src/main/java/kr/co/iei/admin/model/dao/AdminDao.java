@@ -42,5 +42,13 @@ public interface AdminDao {
 
 	int statisticsWc();
 
+	int statisticsAr();
+
+	int statisticsArYear();
+
+	int statisticsArMonth();
+
+	int statisticsArDay();
+
 
 }

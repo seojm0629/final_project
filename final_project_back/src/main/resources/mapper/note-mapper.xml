@@ -45,6 +45,14 @@
 	  order by note_date desc
 	</select>
 
+	<update id="sendUpdateList">
+		update note_tbl set del_send = 1 
+		where note_no in
+			<foreach collection="selectNoteNos" item="note" open="(" close= ")" separator=",">
+				#{note.noteNos}
+			</foreach>
+	</update>
+
 
 
 

@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import dayjs from "dayjs"; // 진원이형이 다운받은 날짜js
 import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
+import { MenuList } from "@mui/material";
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
 const Note = () => {
@@ -29,10 +30,10 @@ const Note = () => {
 
   //개별 체크박스 선택하기
   const selectCheck = (noteNo) => {
-    setSelectNoteNos((prev) => {
-      const newList = prev.includes(noteNo) //배열안에 특정값 있는지 확인용
-        ? prev.filter((id) => id !== noteNo)
-        : [...prev, noteNo];
+    setSelectNoteNos((checkSelect) => {
+      const newList = checkSelect.includes(noteNo) //배열안에 특정값 있는지 확인용
+        ? checkSelect.filter((id) => id !== noteNo)
+        : [...checkSelect, noteNo];
 
       console.log("현재 선택된 쪽지번호:", newList);
 
@@ -54,39 +55,40 @@ const Note = () => {
 
   //삭제 버튼 클릭 시 axios 요청하기
   const deleteNotes = () => {
-    console.log("삭제 요청할 쪽지번호:", selectNoteNos);
+    console.log("삭제 요청할 쪽지번호확인:", selectNoteNos);
+
+    const deleteType = selectMenu === "send" ? "send" : "receive";
+
+    console.log("요청한 타입", deleteType);
+
     if (selectNoteNos.length === 0) {
       Swal.fire({
         title: "선택된 쪽지가 없습니다.",
         text: "삭제할 쪽지를 선택하세요.",
         icon: "warning",
       });
-      return;
+    } else {
+      axios
+        .patch(`${backServer}/note/update`, selectNoteNos, deleteType)
+        .then((res) => {
+          if (res)
+            Swal.fire({
+              title: "삭제 완료",
+              text: "쪽지가 삭제되었습니다.",
+              icon: "success",
+            });
+          setSelectMenu(selectMenu);
+          // 선택 초기화하기
+          setSelectNoteNos([]);
+        })
+        .catch((err) => {
+          Swal.fire({
+            title: "삭제 실패",
+            text: "쪽지 삭제 중 오류가 발생했습니다.",
+            icon: "error",
+          });
+        });
     }
-    // 보내는 건지 받는 건지의 대한 값을 보내기
-    const deleteType = selectMenu === "send" ? "receive" : "send";
-
-    axios
-      .put(`${backServer}/note/delete`, {
-        noteNos: selectNoteNos,
-        deleteType: deleteType,
-      })
-      .then((res) => {
-        Swal.fire({
-          title: "삭제 완료",
-          text: "쪽지가 삭제되었습니다.",
-          icon: "success",
-        });
-        // 선택 초기화하기
-        setSelectNoteNos([]);
-      })
-      .catch((err) => {
-        Swal.fire({
-          title: "삭제 실패",
-          text: "쪽지 삭제 중 오류가 발생했습니다.",
-          icon: "error",
-        });
-      });
   };
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
