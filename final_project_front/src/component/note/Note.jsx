@@ -69,7 +69,10 @@ const Note = () => {
       });
     } else {
       axios
-        .patch(`${backServer}/note/update`, selectNoteNos, deleteType)
+        .patch(
+          `${backServer}/note/update?deleteType=${deleteType}`,
+          selectNoteNos
+        )
         .then((res) => {
           if (res)
             Swal.fire({
