@@ -32,6 +32,7 @@ public class FreeBoardService {
 	            List<Object> list = categoryList.get(c.getFreeBoardCategory());
 	            list.add(c.getFreeBoardSubcategory());
 	            list.add(c.getFreeBoardSubcategoryNo());
+	            System.out.println(list);
 	        } else {
 	            List<Object> list = new ArrayList<>();
 	            list.add(c.getFreeBoardSubcategory());
@@ -50,9 +51,9 @@ public class FreeBoardService {
 	    	sub = categoryList.get(main);
 	    	newList.put("freeBoardCategory", main);
 	    	newList.put("freeBoardSubcategory", sub);
+	    	
 	    	finalFinalList.add(newList);
 	    }
-	 
 		return finalFinalList;
 	}
 
@@ -100,13 +101,13 @@ public class FreeBoardService {
 		freeBoardList.put("sideBtnCount", sideBtnCount);
 		freeBoardList.put("order", order);
 		freeBoardList.put("selected", selected);
-		List<FreeBoardDTO> boardList = freeBoardDao.totalBoardList(freeBoardList);
-		int totalListCount = freeBoardDao.totalListCount(freeBoardList);
+		List<FreeBoardDTO> boardList = freeBoardDao.totalBoardSubList(freeBoardList);
+		int totalListCount = freeBoardDao.totalSubListCount(freeBoardList);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("boardList", boardList);
 		map.put("totalListCount", totalListCount);
-		
+	
 		return map;
 	}
 }
