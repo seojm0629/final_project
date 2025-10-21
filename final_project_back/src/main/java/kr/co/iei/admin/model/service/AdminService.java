@@ -64,6 +64,8 @@ public class AdminService {
 	public HashMap<String, Object> statistics(String selectCriteria) {
 		List<AdminStatisticsDTO> list = new ArrayList<>();
 		List<AdminStatisticsDTO> listWithdraw = new ArrayList<>();
+		List<AdminStatisticsDTO> listFreeBoard = new ArrayList<>();
+		List<AdminStatisticsDTO> listTradeBoard = new ArrayList<>();
 		
 		int acceessionRate = 0;
 		switch (selectCriteria) {
@@ -71,16 +73,22 @@ public class AdminService {
 			list = adminDao.statisticsYears();
 			acceessionRate = adminDao.statisticsAr();
 			listWithdraw = adminDao.statisticsWithdrawYears();
+			listFreeBoard = adminDao.statisticsFreeBoardYears();
+			listTradeBoard = adminDao.statisticsTradeBoardYears();
 			break;
 		case "1년":
 			list = adminDao.statisticsYear();
 			acceessionRate = adminDao.statisticsArYear();
 			listWithdraw = adminDao.statisticsWithdrawYear();
+			listFreeBoard = adminDao.statisticsFreeBoardYear();
+			listTradeBoard = adminDao.statisticsTradeBoardYear();
 			break;
 		case "1개월":
 			list = adminDao.statisticsMonth();
 			acceessionRate = adminDao.statisticsArMonth();
 			listWithdraw = adminDao.statisticsWithdrawMonth();
+			listFreeBoard = adminDao.statisticsFreeBoardMonth();
+			listTradeBoard = adminDao.statisticsTradeBoardMonth();
 			break;
 		case "1일":
 			acceessionRate = adminDao.statisticsArDay();
@@ -106,6 +114,7 @@ public class AdminService {
 	    map.put("bccDiffDay", bccDiffDay);
 	    map.put("wcDiffDay", wcDiffDay);
 	    map.put("listWithdraw", listWithdraw);
+	    map.put("listFreeBoard", listFreeBoard);
 		return map;
 	}
 }

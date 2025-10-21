@@ -81,6 +81,9 @@ const ContentStatistics = () => {
 
   const [withdrawLabels, setWithdrawLabels] = useState([]);
   const [withdrawValues, setWithdrawValues] = useState([]);
+
+  const [freeBoardLabels, setFreeBoardLabels] = useState([]);
+  const [freeBoardValues, setFreeBoardValues] = useState([]);
   const data = {
     labels: labels,
     datasets: [
@@ -97,8 +100,20 @@ const ContentStatistics = () => {
     labels: withdrawLabels,
     datasets: [
       {
-        label: "가입자",
+        label: "탈퇴 유저 수",
         data: withdrawValues,
+        backgroundColor: "rgba(216, 14, 0, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const dataFreeBoard = {
+    labels: freeBoardLabels,
+    datasets: [
+      {
+        label: "자유 게시판 게시글 등록 수",
+        data: freeBoardValues,
         backgroundColor: "rgba(5, 20, 160, 0.5)",
         borderWidth: 1,
       },
@@ -143,6 +158,7 @@ const ContentStatistics = () => {
         setValues(values);
 
         const resultsWithdraw = res.data.listWithdraw;
+
         const withdrawLabels = resultsWithdraw.map((r) => {
           return r.label;
         });
@@ -152,6 +168,18 @@ const ContentStatistics = () => {
           return r.value;
         });
         setWithdrawValues(withdrawValues);
+
+        const listFreeBoard = res.data.listFreeBoard;
+
+        const freeBoardLabels = listFreeBoard.map((r) => {
+          return r.label;
+        });
+        setFreeBoardLabels(freeBoardLabels);
+
+        const freeBoardValues = listFreeBoard.map((r) => {
+          return r.value;
+        });
+        setFreeBoardValues(freeBoardValues);
 
         console.log(labels);
 
@@ -292,7 +320,7 @@ const ContentStatistics = () => {
                   : "시간대별 자유 게시물 등록 수"
               }
               subTitle={"기준 : " + selectCriteria}
-              chartTag={<Line data={data} />}
+              chartTag={<Line data={dataFreeBoard} />}
             />
             <ChartTemplate
               title={
@@ -311,8 +339,8 @@ const ContentStatistics = () => {
         </div>
         <div className="placeholder">
           <div>
-            게시글 작성자 수 / 게시판 게시글 작성 비중 / 탈퇴 유저 수 / 가입자
-            수 → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성 인원 수
+            (후순위) 가입자 수 → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성
+            인원 수
           </div>
         </div>
       </div>

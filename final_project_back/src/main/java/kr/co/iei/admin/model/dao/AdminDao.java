@@ -64,5 +64,17 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsWithdrawMonth();
 
+	List<AdminStatisticsDTO> statisticsFreeBoardYears();
+
+	List<AdminStatisticsDTO> statisticsFreeBoardYear();
+
+	List<AdminStatisticsDTO> statisticsFreeBoardMonth();
+
+	List<AdminStatisticsDTO> statisticsTradeBoardYears();
+
+	List<AdminStatisticsDTO> statisticsTradeBoardYear();
+
+	List<AdminStatisticsDTO> statisticsTradeBoardMonth();
+
 
 }
