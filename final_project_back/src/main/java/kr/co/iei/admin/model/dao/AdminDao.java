@@ -58,5 +58,11 @@ public interface AdminDao {
 
 	int statisticsWcDiffDay();
 
+	List<AdminStatisticsDTO> statisticsWithdrawYears();
+
+	List<AdminStatisticsDTO> statisticsWithdrawYear();
+
+	List<AdminStatisticsDTO> statisticsWithdrawMonth();
+
 
 }

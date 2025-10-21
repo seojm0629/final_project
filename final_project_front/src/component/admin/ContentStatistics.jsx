@@ -78,6 +78,9 @@ const ContentStatistics = () => {
   /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
+
+  const [withdrawLabels, setWithdrawLabels] = useState([]);
+  const [withdrawValues, setWithdrawValues] = useState([]);
   const data = {
     labels: labels,
     datasets: [
@@ -90,6 +93,17 @@ const ContentStatistics = () => {
     ],
   };
 
+  const dataWithdraw = {
+    labels: withdrawLabels,
+    datasets: [
+      {
+        label: "가입자",
+        data: withdrawValues,
+        backgroundColor: "rgba(5, 20, 160, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
   /* **************************************************************** */
 
   console.log(selectCriteria);
@@ -104,6 +118,7 @@ const ContentStatistics = () => {
         }/admin/statistics?selectCriteria=${selectCriteria}`
       )
       .then((res) => {
+        console.log("받아온 데이터");
         console.log(res.data);
         console.log(res.data.accessionCounts);
         const results = res.data.accessionCounts;
@@ -126,10 +141,23 @@ const ContentStatistics = () => {
           return r.value;
         });
         setValues(values);
+
+        const resultsWithdraw = res.data.listWithdraw;
+        const withdrawLabels = resultsWithdraw.map((r) => {
+          return r.label;
+        });
+        setWithdrawLabels(withdrawLabels);
+
+        const withdrawValues = resultsWithdraw.map((r) => {
+          return r.value;
+        });
+        setWithdrawValues(withdrawValues);
+
         console.log(labels);
 
         console.log(values);
       })
+
       .catch((err) => {
         console.log(err);
       });
@@ -249,7 +277,7 @@ const ContentStatistics = () => {
                   : "시간대별 탈퇴 유저 수"
               }
               subTitle={"기준 : " + selectCriteria}
-              chartTag={<Bar data={data} />}
+              chartTag={<Bar data={dataWithdraw} />}
             />
           </div>
           <div className="chartFlex">
