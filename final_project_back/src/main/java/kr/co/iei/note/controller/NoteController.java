@@ -77,6 +77,19 @@ public class NoteController {
 		return ResponseEntity.ok(result);
 	}
 		
+	@PatchMapping("/content")
+	public ResponseEntity<Integer> readContent(@RequestParam int noteNo ){
+		
+		System.out.println("노트번호 확인"+noteNo);
+		
+		
+		int result = noteService.readContent(noteNo);
+		
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	
 }
 
 

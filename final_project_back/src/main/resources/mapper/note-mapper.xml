@@ -25,7 +25,8 @@
 	  select 
 	  note_no, 
 	  note_content,
-	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,  
+	  note_content_read,
+	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,
 	  note_date, 
 	  send_id
 	  from note_tbl
@@ -38,7 +39,9 @@
 	  select 
 	  note_no, 
 	  note_content, 
+	  note_content_read,
 	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,  
+	  note_date,
 	  receive_id
 	  from note_tbl
 	  where send_id = #{memberId} and del_send = 0
@@ -61,6 +64,9 @@
 			</foreach>
 	</update>
 
-
+	<update id="readContent">
+		update note_tbl set note_content_read = 1
+		where note_no = #{noteNo}
+	</update>
 
 </mapper>
