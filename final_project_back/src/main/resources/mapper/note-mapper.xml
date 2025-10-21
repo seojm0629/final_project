@@ -25,7 +25,8 @@
 	  select 
 	  note_no, 
 	  note_content,
-	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,  
+	  note_content_read,
+	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,
 	  note_date, 
 	  send_id
 	  from note_tbl
@@ -38,7 +39,9 @@
 	  select 
 	  note_no, 
 	  note_content, 
+	  note_content_read,
 	  to_char(note_date, 'YYYY-MM-DD HH24:MI:SS') as noteDate,  
+	  note_date,
 	  receive_id
 	  from note_tbl
 	  where send_id = #{memberId} and del_send = 0
@@ -48,13 +51,22 @@
 	<update id="sendUpdateList">
 		update note_tbl set del_send = 1 
 		where note_no in
-			<foreach collection="selectNoteNos" item="note" open="(" close= ")" separator=",">
-				#{note.noteNos}
+			<foreach collection="selectNoteNos" item="send" open="(" close= ")" separator=",">
+				#{send.noteNos}
 			</foreach>
 	</update>
 
+	<update id="receiveUpdateList">
+		update note_tbl set del_receive = 1 
+		where note_no in
+			<foreach collection="selectNoteNos" item="receive" open="(" close= ")" separator=",">
+				#{receive.noteNos}
+			</foreach>
+	</update>
 
-
-
+	<update id="readContent">
+		update note_tbl set note_content_read = 1
+		where note_no = #{noteNo}
+	</update>
 
 </mapper>

@@ -50,5 +50,31 @@ public interface AdminDao {
 
 	int statisticsArDay();
 
+	int statisticsRuDiffDay();
+
+	int statisticsBcDiffDay();
+
+	int statisticsBccDiffDay();
+
+	int statisticsWcDiffDay();
+
+	List<AdminStatisticsDTO> statisticsWithdrawYears();
+
+	List<AdminStatisticsDTO> statisticsWithdrawYear();
+
+	List<AdminStatisticsDTO> statisticsWithdrawMonth();
+
+	List<AdminStatisticsDTO> statisticsFreeBoardYears();
+
+	List<AdminStatisticsDTO> statisticsFreeBoardYear();
+
+	List<AdminStatisticsDTO> statisticsFreeBoardMonth();
+
+	List<AdminStatisticsDTO> statisticsTradeBoardYears();
+
+	List<AdminStatisticsDTO> statisticsTradeBoardYear();
+
+	List<AdminStatisticsDTO> statisticsTradeBoardMonth();
+
 
 }

@@ -20,6 +20,10 @@ public interface NoteDao {
 
 	int sendUpdateList(List<NoteUpdateDel> selectNoteNos);
 
+	int receiveUpdateList(List<NoteUpdateDel> selectNoteNos);
+
+	int readContent(int noteNo);
+
 	
 
 }

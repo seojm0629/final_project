@@ -1,0 +1,21 @@
+.admin .admin-content-wrap > .content {
+  display: flex;
+  width: 1400px;
+}
+.admin .admin-content-wrap > .content > .content_box {
+  width: 50%;
+  height: 800px;
+  border: 1px dotted #ddc4c4;
+  padding: 20px;
+}
+.admin .content_box_title {
+  margin: 20px 0;
+  font-weight: 700;
+  color: #1f3956;
+  font-size: 22px;
+}
+.admin .admin-content-wrap > .content > .content_box > .noticeBox {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 90%;
+}

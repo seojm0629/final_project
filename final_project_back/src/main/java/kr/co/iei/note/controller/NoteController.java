@@ -64,19 +64,32 @@ public class NoteController {
 	 
 	 
 	@PatchMapping("/update")
-		public ResponseEntity<Integer> updateList(@RequestBody List<NoteUpdateDel> selectNoteNos , @RequestBody String deleteType) {
+		public ResponseEntity<Integer> updateList(@RequestBody List<NoteUpdateDel> selectNoteNos , @RequestParam String deleteType) {
 		System.out.println("눌렀을때 들어온 메뉴값 확인"+deleteType);
-		
 		System.out.println("받은 노트번호 목록" + selectNoteNos.get(0).getNoteNos());
-		int result = noteService.sendUpdateList(selectNoteNos);
-		System.out.println("컨트롤러에서 프론트갈때 확인"+result);
 		
+		int result = noteService.sendUpdateList(selectNoteNos,deleteType);
+		
+		System.out.println("컨트롤러에서 프론트갈때 확인"+result);
 		
 		
 		
 		return ResponseEntity.ok(result);
 	}
 		
+	@PatchMapping("/content")
+	public ResponseEntity<Integer> readContent(@RequestParam int noteNo ){
+		
+		System.out.println("노트번호 확인"+noteNo);
+		
+		
+		int result = noteService.readContent(noteNo);
+		
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	
 }
 
 

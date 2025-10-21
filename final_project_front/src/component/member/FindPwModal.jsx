@@ -20,7 +20,7 @@ const style = {
 
 
 
-const FindIdModal = () => {
+const FindPwModal = () => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -35,12 +35,20 @@ const FindIdModal = () => {
     };
 
     const [member, setMember] = useState({
+        memberId : "",
         memberName : "",
-        memberBirth : "",
-        memberPhone : "",
+        memberEmail : "",
     })
 
+
+    //비밀번호 찾기 전 : 0 - 비밀번호 찾기 성공 : 1 - 비밀번호 찾기 실패 : 2
     const [isAuth, setIsAuth] = useState(0);
+    // 로딩 css 띄우기
+    const [isLoader, setIsLoader] = useState(false);
+    // 닫기 useState 띄우기
+    const [isClose, setIsClose] = useState(false);
+    
+    const [isLoding, setIsLoding] = useState(false);
 
     const modalInputData = (e) => {
         const name = e.target.name;
@@ -49,38 +57,46 @@ const FindIdModal = () => {
         setMember(findMember);
     }
 
-    const findId = () => {
-        
-        if(member.memberName !== "" && member.memberBirth != "" && member.memberPhone !== ""){
+    const backServer = import.meta.env.VITE_BACK_SERVER;
+
+    const findPw = () => {
+        setIsLoding(true);
+        if(member.memberId !== "" && member.memberName !== "" && member.memberEmail){
+            setIsLoader(true);
             axios
-            .post(`${import.meta.env.VITE_BACK_SERVER}/member/find`, member)
-            .then((res)=>{
-                console.log(res);
+            .get(`${backServer}/member/findPw?memberId=${member.memberId}&&memberName=${member.memberName}
+                &&memberEmail=${member.memberEmail}`)
                 
+                
+            .then((res)=>{
+                setIsLoding(false);
+                console.log(res.data);
                 if(res.data){
-                    if(member.memberName === res.data.memberName && member.memberBirth === res.data.memberBirth && member.memberPhone === res.data.memberPhone){
-                        setMember(res.data);
-                        setIsAuth(1);
-                    }
-                    
+                    setIsAuth(1);          // 비밀번호 찾기 전 : 0 - 비밀번호 찾기 성공(trueResult) : 1 - 비밀번호 찾기 실패(falseResult) : 2
+                    setIsLoader(false);
+                    setIsClose(true);
+                    setMember({...member,
+                        memberId : "",
+                        memberName : "",
+                        memberEmail : "",
+                    })
                     
                 } else {
                     setIsAuth(2);
+                    setIsLoader(false);
+                    setIsClose(true);
+                    setMember({...member,
+                        memberId : "",
+                        memberName : "",
+                        memberEmail : "",
+                    })
                 }
                 
             })
             .catch((err)=>{
                 console.log(err);
             })
-        } else {
-            Swal.fire({
-                title : "입력 정보 확인",
-                text : "빈칸 없이 모두 입력해주세요.",
-                icon : "warning",
-            })
         }
-        
-        
     }
 
     
@@ -88,7 +104,7 @@ const FindIdModal = () => {
     return(
         <>  
         {/* 클릭 전 보여줄 내용 작성(클릭 시 open state를 true로 변경하여 모달 창을 연다) */}
-            <div onClick={handleOpen}>아이디 찾기</div>
+            <div onClick={handleOpen}>비밀번호 찾기</div>
 
             {/* 여기서부터 모달 창 
                 모달 전 내용을 클릭 했을 때 open state가 true로 바뀌어
@@ -104,21 +120,29 @@ const FindIdModal = () => {
 
                     {isAuth === 0 ? (
                         <div className="member-modal-wrap">
+
+                            {isLoader && (
+                                <div className="loader-wrap">
+                                    <span className={isLoding?"loader":""}></span>
+                                </div>
+                            )}
+
                             <div className="member-close-button">
                                     <button onClick={handleClose}>x</button>
                             </div>
 
                             <div className="member-modal-title-name">
-                                <h3>아이디 찾기</h3>
+                                <h3>비밀번호 찾기</h3>
                             </div>
+
                             <div className="member-modal-content">
                                 <div className="modal-member-name">
                                     <div className="modal-member-title">
-                                        <label htmlFor="memberName">이름</label>
+                                        <label htmlFor="memberId">아이디</label>
                                     </div>    
                                     <div className="modal-member-item">
-                                        <input type="text" name="memberName" id="memberName"
-                                        value={member.memberName} onChange={modalInputData}
+                                        <input type="text" name="memberId" id="memberId"
+                                        value={member.memberId} onChange={modalInputData}
                                         />
                                     </div>
                                     
@@ -126,33 +150,31 @@ const FindIdModal = () => {
                                 </div>    
                                 <div className="modal-member-name">
                                     <div className="modal-member-title">
-                                        <label htmlFor="memberBirth">생년월일</label>
+                                        <label htmlFor="memberName">이름</label>
                                     </div>
                                     <div className="modal-member-item">
-                                        <input type="text" name="memberBirth" id="memberBirth" 
-                                        value={member.memberBirth} onChange={modalInputData}
+                                        <input type="text" name="memberName" id="memberName" 
+                                        value={member.memberName} onChange={modalInputData}
                                         />
                                     </div>
                                 </div>
                                 
                                 <div className="modal-member-name">
                                     <div className="modal-member-title">
-                                        <label htmlFor="memberPhone">전화번호</label>
+                                        <label htmlFor="memberEmail">이메일</label>
                                     </div>
                                     <div className="modal-member-item">
-                                        <input type="text" name="memberPhone" id="memberPhone"
-                                        value={member.memberPhone} onChange={modalInputData}
+                                        <input type="text" name="memberEmail" id="memberEmail"
+                                        value={member.memberEmail} onChange={modalInputData}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="modal-button-box">
-                                    <button type="submit" className="modal-btn" onClick={findId}>                    
-                                        아이디 찾기
+                                    <button type="submit" className="modal-btn" onClick={findPw}>                    
+                                        비밀번호 찾기
                                     </button>
                                 </div>
-
-                                
                             </div>
                         </div>
                         
@@ -165,10 +187,10 @@ const FindIdModal = () => {
                                     <button onClick={handleClose}>x</button>
                                 </div>
                                 <div className="member-modal-title-name">
-                                    <h3>아이디 찾기</h3>
+                                    <h3>비밀번호 찾기</h3>
                                 </div>
                                 <div className="member-id">
-                                    <span>회원님의 아이디는 : "{member.memberId}" 입니다.</span>
+                                    <span>임시 비밀번호가 전송되었습니다.</span>
                                 </div>
                                 
                             </div>
@@ -183,7 +205,7 @@ const FindIdModal = () => {
                                 </div>
 
                                 <div className="member-modal-title-name">
-                                    <h3>아이디 찾기</h3>
+                                    <h3>비밀번호 찾기</h3>
                                 </div>
                                 <div className="member-id">
                                     <span>회원님의 아이디가 존재하지 않습니다.</span>
@@ -200,4 +222,4 @@ const FindIdModal = () => {
 
 }
 
-export default FindIdModal;
+export default FindPwModal;

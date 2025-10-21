@@ -26,7 +26,7 @@ const Note = () => {
   const [selectedContent, setSelectedContent] = useState(null); // 선택한 내용
   const [detailcontent, setDetailContent] = useState(false); // 내용의 상세보기
 
-  const [selectNoteNos, setSelectNoteNos] = useState([]); // 선택된 쪽지번호 저장하기
+  const [selectNoteNos, setSelectNoteNos] = useState([]); // 삭제할 선택된 노트번호들 배열
 
   //개별 체크박스 선택하기
   const selectCheck = (noteNo) => {
@@ -56,8 +56,8 @@ const Note = () => {
   //삭제 버튼 클릭 시 axios 요청하기
   const deleteNotes = () => {
     console.log("삭제 요청할 쪽지번호확인:", selectNoteNos);
-
-    const deleteType = selectMenu === "send" ? "send" : "receive";
+    //삭제 실행햇을때 불러오는 값들이 0이 아니고 1이므로 반대로 값을 줘야함
+    const deleteType = selectMenu === "send" ? "receive" : "send";
 
     console.log("요청한 타입", deleteType);
 
@@ -69,7 +69,10 @@ const Note = () => {
       });
     } else {
       axios
-        .patch(`${backServer}/note/update`, selectNoteNos, deleteType)
+        .patch(
+          `${backServer}/note/update?deleteType=${deleteType}`,
+          selectNoteNos
+        )
         .then((res) => {
           if (res)
             Swal.fire({
@@ -77,7 +80,8 @@ const Note = () => {
               text: "쪽지가 삭제되었습니다.",
               icon: "success",
             });
-          setSelectMenu(selectMenu);
+          //메뉴값 다시 불러오기
+          menuClick(selectMenu);
           // 선택 초기화하기
           setSelectNoteNos([]);
         })
@@ -303,6 +307,7 @@ const Note = () => {
                     </tr>
                   ) : (
                     receiveListNote.map((receive, i) => {
+                      console.log(receive);
                       return (
                         <tr key={"receive-" + i}>
                           <td>
@@ -315,6 +320,18 @@ const Note = () => {
                           <td>{receive.sendId}</td>
                           <td
                             onClick={() => {
+                              if (receive.noteContentRead === 0) {
+                                axios
+                                  .patch(
+                                    `${backServer}/note/content?noteNo=${receive.noteNo}`
+                                  )
+                                  .then((res) => {
+                                    console.log(res);
+                                  })
+                                  .catch((err) => {
+                                    console.log(err);
+                                  });
+                              }
                               setSelectedContent(receive);
                               setDetailContent(true);
                             }}

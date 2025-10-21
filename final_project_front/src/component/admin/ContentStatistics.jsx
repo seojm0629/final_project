@@ -70,10 +70,20 @@ const ContentStatistics = () => {
   const [bcc, setBcc] = useState(0);
   const [wc, setWc] = useState(0);
   const [ar, setAr] = useState(0);
+  const [ruDiff, setRuDiff] = useState(0);
+  const [bcDiff, setBcDiff] = useState(0);
+  const [bccDiff, setBccDiff] = useState(0);
+  const [wcDiff, setWcDiff] = useState(0);
 
   /* ************** [Chart (Bar) > data 에 들어갈 객체] *************** */
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
+
+  const [withdrawLabels, setWithdrawLabels] = useState([]);
+  const [withdrawValues, setWithdrawValues] = useState([]);
+
+  const [freeBoardLabels, setFreeBoardLabels] = useState([]);
+  const [freeBoardValues, setFreeBoardValues] = useState([]);
   const data = {
     labels: labels,
     datasets: [
@@ -86,6 +96,29 @@ const ContentStatistics = () => {
     ],
   };
 
+  const dataWithdraw = {
+    labels: withdrawLabels,
+    datasets: [
+      {
+        label: "탈퇴 유저 수",
+        data: withdrawValues,
+        backgroundColor: "rgba(216, 14, 0, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const dataFreeBoard = {
+    labels: freeBoardLabels,
+    datasets: [
+      {
+        label: "자유 게시판 게시글 등록 수",
+        data: freeBoardValues,
+        backgroundColor: "rgba(5, 20, 160, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
   /* **************************************************************** */
 
   console.log(selectCriteria);
@@ -100,6 +133,7 @@ const ContentStatistics = () => {
         }/admin/statistics?selectCriteria=${selectCriteria}`
       )
       .then((res) => {
+        console.log("받아온 데이터");
         console.log(res.data);
         console.log(res.data.accessionCounts);
         const results = res.data.accessionCounts;
@@ -108,6 +142,10 @@ const ContentStatistics = () => {
         setBcc(res.data.bcc);
         setWc(res.data.wc);
         setAr(res.data.ar);
+        setRuDiff(res.data.ruDiffDay);
+        setBcDiff(res.data.bcDiffDay);
+        setBccDiff(res.data.bccDiffDay);
+        setWcDiff(res.data.wcDiffDay);
 
         const labels = results.map((r) => {
           return r.label;
@@ -118,10 +156,36 @@ const ContentStatistics = () => {
           return r.value;
         });
         setValues(values);
+
+        const resultsWithdraw = res.data.listWithdraw;
+
+        const withdrawLabels = resultsWithdraw.map((r) => {
+          return r.label;
+        });
+        setWithdrawLabels(withdrawLabels);
+
+        const withdrawValues = resultsWithdraw.map((r) => {
+          return r.value;
+        });
+        setWithdrawValues(withdrawValues);
+
+        const listFreeBoard = res.data.listFreeBoard;
+
+        const freeBoardLabels = listFreeBoard.map((r) => {
+          return r.label;
+        });
+        setFreeBoardLabels(freeBoardLabels);
+
+        const freeBoardValues = listFreeBoard.map((r) => {
+          return r.value;
+        });
+        setFreeBoardValues(freeBoardValues);
+
         console.log(labels);
 
         console.log(values);
       })
+
       .catch((err) => {
         console.log(err);
       });
@@ -146,40 +210,42 @@ const ContentStatistics = () => {
           <div className="title m">통계 페이지</div>
           <div className="title s">사이트 이용 지표</div>
         </div>
-        {/*개발 중인 것 여기 넣고 테스트 해서 하단에 배치하기 */}
-        <div className="placeholder">
-          <div>테스트 영역</div>
-        </div>
+
         <div className="entireBox">
           <div className="element">
             <div className="entireBox-title">전체 가입자 수</div>
             <div className="entireBox-content">{ru} 명</div>
-            <div className="entireBox-plus">전일 대비 +6 ▲</div>
+            <div className={ruDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {ruDiff >= 0 ? `+${ruDiff} ▲` : `${ruDiff} ▼`}
+            </div>
           </div>
           <div className="element">
             <div className="entireBox-title">전체 게시글 수</div>
             <div className="entireBox-content">{bc} 건</div>
-            <div className="entireBox-minus">전일 대비 -4 ▼</div>
+            <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
+            </div>
           </div>
           <div className="element">
             <div className="entireBox-title">전체 댓글 수</div>
             <div className="entireBox-content">{bcc} 건</div>
-            <div className="entireBox-plus">전일 대비 +8 ▲</div>
+            <div
+              className={bccDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}
+            >
+              전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
+            </div>
           </div>
           <div className="element">
             <div className="entireBox-title">전체 탈퇴 유저 수</div>
             <div className="entireBox-content">{wc}명</div>
-            <div className="entireBox-minus">전일 대비 -2 ▼</div>
+            <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
+            </div>
           </div>
         </div>
-        <div className="placeholder"></div>
-        {/* 주간/월간/일간 필터 */}
+
         <div className="placeholder">
-          <div>
-            필터 (year/month/day) - 기타를 클릭하면 특정 기간 조회할 수 있도록
-            고민하기
-          </div>
-          <div>
+          <div className="chartFilter">
             {searchCriteria.map((sc, i) => {
               return (
                 <button
@@ -198,10 +264,7 @@ const ContentStatistics = () => {
               );
             })}
           </div>
-        </div>
 
-        <div className="placeholder">
-          <div>신규 가입자 수 (필터에 따라)</div>
           <div className="chartFlex">
             <ChartTemplate
               title={
@@ -242,7 +305,7 @@ const ContentStatistics = () => {
                   : "시간대별 탈퇴 유저 수"
               }
               subTitle={"기준 : " + selectCriteria}
-              chartTag={<Bar data={data} />}
+              chartTag={<Bar data={dataWithdraw} />}
             />
           </div>
           <div className="chartFlex">
@@ -257,7 +320,7 @@ const ContentStatistics = () => {
                   : "시간대별 자유 게시물 등록 수"
               }
               subTitle={"기준 : " + selectCriteria}
-              chartTag={<Line data={data} />}
+              chartTag={<Line data={dataFreeBoard} />}
             />
             <ChartTemplate
               title={
@@ -276,8 +339,8 @@ const ContentStatistics = () => {
         </div>
         <div className="placeholder">
           <div>
-            게시글 작성자 수 / 게시판 게시글 작성 비중 / 탈퇴 유저 수 / 가입자
-            수 → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성 인원 수
+            (후순위) 가입자 수 → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성
+            인원 수
           </div>
         </div>
       </div>
@@ -312,17 +375,4 @@ const ChartTemplate = (props) => {
       <div className="chartBox-content">{chartTag}</div>
     </div>
   );
-};
-
-/** 개수 표기 양식
- * title (String) : 추출된 값의 의미 (제목)
- * value : 추출된 값
- * difference : 전일 대비 얼마나 차이나는지 비율
- */
-const CountTemplate = (props) => {
-  const title = props.title;
-  const value = props.value;
-  const difference = props.difference;
-
-  return <div>아아2</div>;
 };

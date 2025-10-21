@@ -5,13 +5,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import FindId from "../member/FindId";
-import FindPw from "../member/FindPw";
-import FindModal from "../member/FindIdModal";
 import FindIdModal from "../member/FindIdModal";
+import FindPwModal from "../member/FindPwModal";
 
 const Main = () => {
     //login 정보 가져와야함
+    // 로그인 정보
     const [memberId, setMemberId] = useRecoilState(loginIdState);
     const [memberType, setMemberType] = useRecoilState(memberTypeState);
 
@@ -41,6 +40,39 @@ const Main = () => {
         window.localStorage.removeItem("refreshToken");
         navigate("/");
     }
+
+
+    //--------- 자유게시판 리스트
+    const backServer = import.meta.env.VITE_BACK_SERVER;
+    
+    // 자유게시판 리스트
+    const [freeBoardList, setFreeBoardList] = useState([]);
+    // 중고거래 게시판 리스트
+    const [tradeBoardList, setTradeBoardList] = useState([]);
+
+    useEffect(() => {
+        axios
+        .get(`${backServer}/freeBoard/mainTitle?limit=10`)
+        .then((res)=>{
+            console.log(res);
+            setFreeBoardList(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    },[])
+
+    useEffect(() => {
+        axios
+        .get(`${backServer}/tradeBoard/mainTitle?limit=10`)
+        .then((res)=>{
+            console.log(res);
+            setTradeBoardList(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    },[])
     return(
         <section className="section main-page">
             <div className="main-wrap">
@@ -52,26 +84,29 @@ const Main = () => {
                             <div className="main-board-header">
                                 <h4>중고거래 게시판</h4>
                             </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
+                            
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {tradeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"main-" + i} >
+                                                <span>{list.tradeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
                                 </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
+                                <div className="main-board-like">
+                                    {tradeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"key-" + i} >
+                                                <span>{list.memberNickname}</span>
+                                            </li>
+                                        )
+                                })}
                                 </div>
-                            </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
-                                </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
-                                </div>
-                            </div>
+                            </ul>
+                            
+                            
                             
                         </div>
 
@@ -79,26 +114,26 @@ const Main = () => {
                             <div className="main-board-header">
                                 <h4>자유게시판</h4>
                             </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {freeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"main-" + i} >
+                                                <span>{list.freeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
                                 </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
+                                <div className="main-board-like">
+                                    {freeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"member-" + i} >
+                                                <span>{list.memberNickname}</span>
+                                            </li>
+                                        )
+                                })}
                                 </div>
-                            </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
-                                </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
-                                </div>
-                            </div>
+                            </ul>
                         </div>
                         
 
@@ -208,7 +243,7 @@ const Main = () => {
                         </div>
                         <div className="login-find">
                             <FindIdModal>아이디 찾기</FindIdModal>
-                            <FindPw>비밀번호 찾기</FindPw>
+                            <FindPwModal>비밀번호 찾기</FindPwModal>
                             <Link to="/member/agree">회원가입</Link>
                         </div>
                     </div>

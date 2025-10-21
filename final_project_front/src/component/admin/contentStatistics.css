@@ -134,3 +134,7 @@
   font-weight: 900;
   text-align: center;
 }
+
+.admin-right .chartFilter {
+  text-align: right;
+}

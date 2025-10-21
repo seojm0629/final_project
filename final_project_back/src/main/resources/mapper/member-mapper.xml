@@ -4,7 +4,7 @@
 
 	<!-- 회원가입 -->
 	<insert id="join">
-		insert into member_tbl values(member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberNickname}, #{memberPhone}, #{memberEmail}, #{memberGender}, #{memberBirth}, to_char(sysdate, 'yyyy-mm-dd'), 2)		
+		insert into member_tbl values(member_seq.nextval, #{memberId}, #{memberPw}, #{memberName}, #{memberNickname}, #{memberPhone}, #{memberEmail}, #{memberGender}, #{memberBirth}, sysdate, 2)		
 	</insert>
 
 	<!-- 로그인

@@ -5,8 +5,7 @@ import ContentMember from "./ContentMember";
 import ContentBoard from "./ContentBoard";
 import ContentFreeBoard from "./ContentFreeBoard";
 import ContentDealBoard from "./ContentDealBoard";
-import ContentTest from "./ContentTest";
-import ContentSiteManagement from "./ContentSiteManagement";
+
 import ContentStatistics from "./ContentStatistics";
 import "chart.js/auto";
 
@@ -27,8 +26,6 @@ const AdminMain = () => {
         {active === "board" && <ContentBoard />}
         {active === "free-board" && <ContentFreeBoard />}
         {active === "deal-board" && <ContentDealBoard />}
-        {active === "test" && <ContentTest />}
-        {active === "site" && <ContentSiteManagement />}
       </div>
     </div>
   );
