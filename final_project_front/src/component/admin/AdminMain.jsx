@@ -5,8 +5,7 @@ import ContentMember from "./ContentMember";
 import ContentBoard from "./ContentBoard";
 import ContentFreeBoard from "./ContentFreeBoard";
 import ContentDealBoard from "./ContentDealBoard";
-import ContentTest from "./ContentTest";
-import ContentSiteManagement from "./ContentSiteManagement";
+
 import ContentStatistics from "./ContentStatistics";
 import "chart.js/auto";
 
