@@ -62,7 +62,10 @@
 		update member_tbl set member_pw = #{memberPw} where member_id = #{memberId} and member_name = #{memberName} and member_email = #{memberEmail} 
 	</update>
 	
-	
+	<!-- 채팅 닉네임 가져오기 -->
+	<select id="chat" resultType="member">
+		select member_nickname from member_tbl where member_id = #{memberId}
+	</select>
 	
 	
 	
