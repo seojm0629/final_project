@@ -109,4 +109,10 @@ public class FreeBoardService {
 		
 		return map;
 	}
+
+	public List<FreeBoardDTO> mainTitle(int limit) {
+		List<FreeBoardDTO> list = freeBoardDao.mainTitle(limit);
+		
+		return list;
+	}
 }

@@ -24,4 +24,6 @@ public interface FreeBoardDao {
 
 	List subList(int freeBoardSubcategoryNo);
 
+	List<FreeBoardDTO> mainTitle(int limit);
+
 }

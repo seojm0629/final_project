@@ -117,9 +117,8 @@ main{
 /* 메인페이지 */
 
 .main-wrap {
-  width: 1200px;
+  width: 1400px;
   margin: 0 auto;
-  
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -127,7 +126,7 @@ main{
 
 
 .main-board-list{
-  width: 750px;
+  width: 900px;
   height: 421px;
   padding-left: 10px;
   padding-top: 10px;
@@ -140,7 +139,7 @@ main{
 /* 중고거래 게시판, 자유 */
 
 .main-board-list .first {
-  width: 350px;
+  width: 450px;
   height: 450px;
   border: 1px solid #8f8f8f;
   border-radius: 10px;
@@ -148,7 +147,7 @@ main{
 }
 
 .first > div h4 {
-  padding-left: 7px;
+  padding-left: 20px;
   padding-top: 10px;
   font-size: 20px;
   
@@ -158,10 +157,20 @@ main{
 .main-board-content {
   padding-left: 7px;
   padding-top: 10px;
-  display: flex;
-  justify-content: flex-start;
-  gap: 150px;
+  display: flex;  
+  justify-content: center;
+  gap: 10px;
 }
+
+.main-board-content  div {
+  margin-top : 5px;
+}
+
+.main-board-content>div>li{
+  width: 200px;
+  padding-bottom: 15px;
+}
+
 
 .transaction-list-right {
   display: flex;
