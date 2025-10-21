@@ -111,6 +111,9 @@ const MainNavi = () => {
             </ul>
           ) : null}
         </li>
+        <li className="navi-item vote">
+          <Link to="/vote/main">투표게시판</Link>
+        </li>
       </ul>
     </nav>
   );
