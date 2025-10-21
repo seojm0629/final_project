@@ -5,14 +5,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import FindId from "../member/FindId";
-import FindPw from "../member/FindPw";
-import FindModal from "../member/FindIdModal";
 import FindIdModal from "../member/FindIdModal";
 import FindPwModal from "../member/FindPwModal";
 
 const Main = () => {
     //login 정보 가져와야함
+    // 로그인 정보
     const [memberId, setMemberId] = useRecoilState(loginIdState);
     const [memberType, setMemberType] = useRecoilState(memberTypeState);
 
@@ -42,6 +40,24 @@ const Main = () => {
         window.localStorage.removeItem("refreshToken");
         navigate("/");
     }
+
+
+    //--------- 자유게시판 리스트
+    const backServer = import.meta.env.VITE_BACK_SERVER;
+    // 게시판 넘버
+    const [freeBoardNo, setFreeBoardNo] = useState(0);
+    // 제목
+    const [freeBoardTitle, setFreeBoardTitle] = useState("");
+    // 닉네임
+    const [memberNickname, setMemberNickname] = useState("");
+    // 리스트
+    const [freeBoadrList, setFreeBoardList] = useState([]);
+
+    useEffect(() => {
+        axios
+        .get(`${backServer}/freeBoard/mainTitle?`)
+    })
+
     return(
         <section className="section main-page">
             <div className="main-wrap">
