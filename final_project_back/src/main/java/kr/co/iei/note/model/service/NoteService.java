@@ -96,4 +96,12 @@ public class NoteService {
 		return result;
 	}
 
+	@Transactional
+	public int readContent(int noteNo) {
+		
+		int result = noteDao.readContent(noteNo);
+		
+		return result;
+	}
+
 }

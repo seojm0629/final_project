@@ -26,7 +26,7 @@ const Note = () => {
   const [selectedContent, setSelectedContent] = useState(null); // 선택한 내용
   const [detailcontent, setDetailContent] = useState(false); // 내용의 상세보기
 
-  const [selectNoteNos, setSelectNoteNos] = useState([]); // 선택된 쪽지번호 저장하기
+  const [selectNoteNos, setSelectNoteNos] = useState([]); // 삭제할 선택된 노트번호들 배열
 
   //개별 체크박스 선택하기
   const selectCheck = (noteNo) => {
@@ -307,6 +307,7 @@ const Note = () => {
                     </tr>
                   ) : (
                     receiveListNote.map((receive, i) => {
+                      console.log(receive);
                       return (
                         <tr key={"receive-" + i}>
                           <td>
@@ -319,6 +320,18 @@ const Note = () => {
                           <td>{receive.sendId}</td>
                           <td
                             onClick={() => {
+                              if (receive.noteContentRead === 0) {
+                                axios
+                                  .patch(
+                                    `${backServer}/note/content?noteNo=${receive.noteNo}`
+                                  )
+                                  .then((res) => {
+                                    console.log(res);
+                                  })
+                                  .catch((err) => {
+                                    console.log(err);
+                                  });
+                              }
                               setSelectedContent(receive);
                               setDetailContent(true);
                             }}
