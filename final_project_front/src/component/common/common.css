@@ -211,6 +211,15 @@ main{
   width: 350px;
 }
 
+.login-find > div{
+  cursor: pointer;
+}
+
+.login-find > a{
+  text-decoration: none;
+  font-size: 16.5px;
+}
+
 /* 컨텐츠 박스 */
 .main-topic {
   width: 350px;
