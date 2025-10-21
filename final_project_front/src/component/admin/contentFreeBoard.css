@@ -15,7 +15,24 @@
   font-size: 22px;
 }
 .admin .admin-content-wrap > .content > .content_box > .noticeBox {
-  border: 1px solid #ddd;
   border-radius: 5px;
-  height: 90%;
+  justify-content: center;
+}
+
+.admin .ql-editor {
+  height: 600px;
+}
+
+.admin .admin-content-wrap > .content > .content_box > .noticeBox > button {
+  margin: 35px 20px;
+  width: 100px;
+}
+
+.admin
+  .admin-content-wrap
+  > .content
+  > .content_box
+  > .noticeBox
+  > button:hover {
+  background-color: #476d97;
 }
