@@ -19,6 +19,7 @@ public class TradeBoardDTO {
 	private String tradeBoardPlace;
 	private int tradeBoardStatus;
 	private int tradeBoardCategoryNo;
+	private String memberNickname;
 	private int memberNo;
 	private String tradeThumbnailPath;
 }
