@@ -269,6 +269,11 @@ main{
 }
 
 /* 챗톡 */
+.chat-content-logout{
+  text-align: center;
+  line-height: 500px;  
+}
+
 .chat-content-wrap{
   width: 350px;
   margin: 0 auto;

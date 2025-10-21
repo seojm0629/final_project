@@ -256,10 +256,8 @@ const Main = () => {
 
                     <div className="main-chat">
                         <h3>Talk&Deal 채팅</h3>
-                        <div className="chat-content-wrap">
-                            
-
-                            
+                        <div className="chat-content-logout">
+                            <h2>로그인 후 이용 부탁드립니다.</h2>
                         </div>
                     </div>
                 </div>
