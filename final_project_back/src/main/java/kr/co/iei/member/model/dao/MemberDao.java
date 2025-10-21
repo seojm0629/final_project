@@ -33,6 +33,8 @@ public interface MemberDao {
 
 	int updatePw(MemberDTO m);
 
+	MemberDTO chat(String memberId);
+
 	
 	
 	

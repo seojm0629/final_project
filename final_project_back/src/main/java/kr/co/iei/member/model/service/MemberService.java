@@ -143,6 +143,11 @@ public class MemberService {
 		return result;
 	}
 
+	public MemberDTO chat(String memberId) {
+		MemberDTO m = memberDao.chat(memberId);
+		return m;
+	}
+
 	
 
 	
