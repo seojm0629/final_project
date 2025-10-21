@@ -22,6 +22,8 @@ public interface NoteDao {
 
 	int receiveUpdateList(List<NoteUpdateDel> selectNoteNos);
 
+	int readContent(int noteNo);
+
 	
 
 }
