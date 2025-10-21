@@ -13,6 +13,8 @@ import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import FreeBoardWrite from "./FreeBoardWrite";
 import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
+import { useRecoilState } from "recoil";
+import { loginIdState } from "../utils/RecoilData";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -23,6 +25,9 @@ const FreeBoardMain = () => {
   const [selected, setSelected] = useState(-1);
   const [menus, setMenus] = useState([]);
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
+  const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
+  const [freeBoardWriteTitle, setFreeBoardWriteTitle] = useState("");
+  const [freeBoardContent, setFreeBoardContent] = useState("");
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
@@ -72,6 +77,7 @@ const FreeBoardMain = () => {
         console.log(err);
       });
   };
+  console.log(member);
   return (
     <div className="main-div">
       <div className="main-header">
@@ -129,14 +135,18 @@ const FreeBoardMain = () => {
           </section>
         </div>
         <div className="main-content">
-          <div
-            className="write-div"
-            onClick={() => {
-              navigation("/freeBoard/boardWrite");
-            }}
-          >
-            <span>글작성</span>
+          <div className="write-div">
+            {member !== "" && (
+              <div
+                onClick={() => {
+                  navigation("/freeBoard/boardWrite");
+                }}
+              >
+                <span>글작성</span>
+              </div>
+            )}
           </div>
+
           <section className="section free-board">
             <Routes>
               <Route
@@ -157,6 +167,8 @@ const FreeBoardMain = () => {
                 path="boardWrite"
                 element={
                   <FreeBoardWrite
+                    freeBoardWriteTitle={freeBoardWriteTitle} //작성페이지 입력한 제목
+                    setFreeBoardWriteTitle={setFreeBoardWriteTitle}
                     setFreeBoardTitle={setFreeBoardTitle}
                   ></FreeBoardWrite>
                 }
@@ -239,7 +251,7 @@ const FreeBoardContent = (props) => {
               </div>
             </div>
           ) : (
-            <div key={"second" + i} className="board-section" style={{}}>
+            <div key={"second" + i} className="board-section">
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
               <div className="board-content">{list.freeBoardContent}</div>

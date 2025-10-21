@@ -67,7 +67,7 @@ const FreeBoardSideMenu = (props) => {
                         <ul
                           className="side-submenu"
                           onClick={() => {
-                            setSelected(i);
+                            setSelected(m.freeBoardSubcategory[i + 1]);
                           }}
                         >
                           <li>

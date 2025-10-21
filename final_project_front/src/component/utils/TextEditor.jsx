@@ -4,18 +4,18 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 Quill.register("modules/ImageResize", ImageResize);
-
+import "../free_board/freeBoard.css";
 const TextEditor = (props) => {
   const freeBoardContent = props.freeBoardContent;
-  const setFreeBoardContent = props.freeBoardContent;
+  const setFreeBoardContent = props.setFreeBoardContent;
   const editorRef = useRef(null);
   const backServer = import.meta.env.VITE_BACK_SERVER;
+
   const imageHandler = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
-
     input.onchange = () => {
       const files = input.files;
       if (files.length !== 0) {
