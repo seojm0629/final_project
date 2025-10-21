@@ -334,9 +334,7 @@ main{
 /* 채팅을 칠 때마다 보더가 늘어나게*/
 .right .chat-message {
   border: 1px solid #ccc;
-  width : 60px;
-  height: 10px;
-  line-height: 10px;
+  width : 200px;
   background-color: #fff;
   color: black;
 }
