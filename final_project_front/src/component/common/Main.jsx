@@ -51,12 +51,21 @@ const Main = () => {
     // 닉네임
     const [memberNickname, setMemberNickname] = useState("");
     // 리스트
-    const [freeBoadrList, setFreeBoardList] = useState([]);
+    const [freeBoardList, setFreeBoardList] = useState([]);
+
+    const [menus, setMenus] = useState([]);
 
     useEffect(() => {
         axios
-        .get(`${backServer}/freeBoard/mainTitle?`)
-    })
+        .get(`${backServer}/freeBoard/mainTitle?limit=10`)
+        .then((res)=>{
+            console.log(res);
+            setFreeBoardList(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    },[])
 
     return(
         <section className="section main-page">
@@ -96,26 +105,26 @@ const Main = () => {
                             <div className="main-board-header">
                                 <h4>자유게시판</h4>
                             </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {freeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"main-" + i} >
+                                                <span>{list.freeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
                                 </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
+                                <div className="main-board-like">
+                                    {freeBoardList.map((list,i)=>{
+                                    return(
+                                        <li key={"key-" + i} >
+                                            <span>{list.memberNickname}</span>
+                                        </li>
+                                    )
+                                })}
                                 </div>
-                            </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
-                                </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
-                                </div>
-                            </div>
+                            </ul>
                         </div>
                         
 
