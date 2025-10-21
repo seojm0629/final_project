@@ -12,8 +12,7 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
-import FindId from "./component/member/FindId";
-import FindPw from "./component/member/FindPw";
+
 
 function App() {
   return (
@@ -27,9 +26,7 @@ function App() {
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
-          <Route path="/service/agree" element={<ServiceAgree />} />
-          <Route path="/member/findId" element={<FindId />} />
-          <Route path="/member/findPw" element={<FindPw />} />          
+          <Route path="/service/agree" element={<ServiceAgree />} />      
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
