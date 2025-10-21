@@ -63,19 +63,24 @@ public class AdminService {
 
 	public HashMap<String, Object> statistics(String selectCriteria) {
 		List<AdminStatisticsDTO> list = new ArrayList<>();
+		List<AdminStatisticsDTO> listWithdraw = new ArrayList<>();
+		
 		int acceessionRate = 0;
 		switch (selectCriteria) {
 		case "5년":
 			list = adminDao.statisticsYears();
 			acceessionRate = adminDao.statisticsAr();
+			listWithdraw = adminDao.statisticsWithdrawYears();
 			break;
 		case "1년":
 			list = adminDao.statisticsYear();
 			acceessionRate = adminDao.statisticsArYear();
+			listWithdraw = adminDao.statisticsWithdrawYear();
 			break;
 		case "1개월":
 			list = adminDao.statisticsMonth();
 			acceessionRate = adminDao.statisticsArMonth();
+			listWithdraw = adminDao.statisticsWithdrawMonth();
 			break;
 		case "1일":
 			acceessionRate = adminDao.statisticsArDay();
@@ -100,6 +105,7 @@ public class AdminService {
 	    map.put("bcDiffDay", bcDiffDay);
 	    map.put("bccDiffDay", bccDiffDay);
 	    map.put("wcDiffDay", wcDiffDay);
+	    map.put("listWithdraw", listWithdraw);
 		return map;
 	}
 }
