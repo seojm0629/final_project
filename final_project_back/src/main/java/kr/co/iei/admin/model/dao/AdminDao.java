@@ -50,5 +50,13 @@ public interface AdminDao {
 
 	int statisticsArDay();
 
+	int statisticsRuDiffDay();
+
+	int statisticsBcDiffDay();
+
+	int statisticsBccDiffDay();
+
+	int statisticsWcDiffDay();
+
 
 }

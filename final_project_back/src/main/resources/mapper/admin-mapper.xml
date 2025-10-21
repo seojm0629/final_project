@@ -1,415 +1,530 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace = "kr.co.iei.admin.model.dao.AdminDao">
-<select id="memberList" resultType="adminMember">
-SELECT * FROM (
-SELECT  ROWNUM RNUM,A.* FROM (
-SELECT 
-        M.*,
-        NVL(TCC.TOTAL_CLAIM_CNT,0) TOTAL_CLAIM_CNT,
-        NVL(TLC.TOTAL_LIKE_CNT,0) TOTAL_LIKE_CNT,
-        NVL(TPC.TOTAL_POST_CNT,0) TOTAL_POST_CNT,
-        NVL(TCMC.TOTAL_COMMENT_CNT,0) TOTAL_COMMENT_CNT, 
+<mapper namespace="kr.co.iei.admin.model.dao.AdminDao">
+	<select id="memberList" resultType="adminMember">
+		SELECT * FROM (
+		SELECT ROWNUM RNUM,A.* FROM (
+		SELECT
+		M.*,
+		NVL(TCC.TOTAL_CLAIM_CNT,0) TOTAL_CLAIM_CNT,
+		NVL(TLC.TOTAL_LIKE_CNT,0) TOTAL_LIKE_CNT,
+		NVL(TPC.TOTAL_POST_CNT,0) TOTAL_POST_CNT,
+		NVL(TCMC.TOTAL_COMMENT_CNT,0) TOTAL_COMMENT_CNT,
 
-        DECODE(
-            (SELECT COUNT(*) FROM MEMBER_BEN_TBL B WHERE (B.MEMBER_NO = M.MEMBER_NO) AND (SYSDATE BETWEEN B.MEMBER_BEN_START_DATE AND B.MEMBER_BEN_FINISH_DATE)),
-                0,
-                'FALSE',
-                (SELECT TO_CHAR(B.MEMBER_BEN_FINISH_DATE,'YYYY-MM-DD HH24:MI:SS') FROM MEMBER_BEN_TBL B WHERE (B.MEMBER_NO = M.MEMBER_NO) AND (SYSDATE BETWEEN B.MEMBER_BEN_START_DATE AND B.MEMBER_BEN_FINISH_DATE))
-                ) IS_BEN 
-        FROM MEMBER_TBL M 
-            LEFT JOIN (
-            -----------내가 작성한 게시글,댓글의 신고 수---------------
-                -- ④ 신고 받은 전체 사용자의 신고 카운트 출력 (전체인줄 알고 착각하고 썼는데 여기서 NVL 필요 없을 것 같음..)
-                SELECT MEMBER_NO,NVL(SUM(CNT),0) TOTAL_CLAIM_CNT FROM (
-                    -- ③ 사용자별 신고 카운트 수 합산해 출력
-                    SELECT MEMBER_NO,SUM(CNT) CNT FROM (
-                        -- ② 자유 게시판 테이블에서 게시물별 신고 수 출력
-                        SELECT * FROM FREE_BOARD_TBL LEFT JOIN (
-                        -- ① 신고 테이블에서 신고 수 출력
-                            SELECT FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO,COUNT(*) CNT FROM FB_CLAIM_TBL GROUP BY FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO
-                        ) USING (FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO)
-                    ) GROUP BY MEMBER_NO
-                    
-                    UNION ALL
-                    
-                    -- ③ 사용자별 신고 카운트 수 합산해 출력
-                    SELECT MEMBER_NO, SUM(CNT) CNT FROM (
-                        -- ② 자유 댓글별 신고 수
-                        SELECT * FROM FB_COMMENT_TBL LEFT JOIN (
-                            -- ① 자유 댓글 신고 수
-                            SELECT FB_COMMENT_NO, COUNT(*) CNT FROM FBC_CLAIM_TBL GROUP BY FB_COMMENT_NO
-                            ) USING (FB_COMMENT_NO)
-                    ) GROUP BY MEMBER_NO
-                  
-                    UNION ALL
-                    
-                    -- ③ 사용자별 신고 카운트 수 합산해 출력
-                    SELECT MEMBER_NO, SUM(CNT) CNT FROM (
-                        -- ② 거래 게시글별 신고 수
-                        SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
-                            -- ① 거래 게시글 신고 수
-                            SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_CLAIM_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
-                        ) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
-                    ) GROUP BY MEMBER_NO
-                    
-                    UNION ALL
-                    
-                SELECT MEMBER_NO, SUM(CNT) CNT FROM (
-                    -- ② 거래 댓글별 신고 수
-                    SELECT * FROM TB_COMMENT_TBL LEFT JOIN (
-                            -- ① 거래 댓글 신고 수
-                            SELECT TB_COMMENT_NO, COUNT(*) CNT FROM TBC_CLAIM_TBL GROUP BY TB_COMMENT_NO
-                        ) USING (TB_COMMENT_NO) 
-                    ) GROUP BY MEMBER_NO
-                ) GROUP BY MEMBER_NO ORDER BY MEMBER_NO
-            ) TCC ON TCC.MEMBER_NO  = M.MEMBER_NO
-            LEFT JOIN (
-            -----------내가 작성한 게시글,댓글의 좋아요 수---------------
-                -- ④ 좋아요 받은 전체 사용자의 좋아요 카운트 출력
-                SELECT MEMBER_NO,NVL(SUM(CNT),0) TOTAL_LIKE_CNT FROM (
-                    -- ③ 사용자별 좋아요 카운트 수 합산해 출력
-                    SELECT MEMBER_NO,SUM(CNT) CNT FROM (
-                        -- ② 자유 게시판 테이블에서 게시물별 좋아요 수 출력
-                        SELECT * FROM FREE_BOARD_TBL LEFT JOIN (
-                        -- ① 좋아요 테이블에서 좋아요 수 출력
-                            SELECT FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO,COUNT(*) CNT FROM FB_LIKE_TBL GROUP BY FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO
-                        ) USING (FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO)
-                    ) GROUP BY MEMBER_NO
-                    
-                    UNION ALL
-                    
-                    -- ③ 사용자별 좋아요 카운트 수 합산해 출력
-                    SELECT MEMBER_NO, SUM(CNT) CNT FROM (
-                        -- ② 자유 댓글별 좋아요 수
-                        SELECT * FROM FB_COMMENT_TBL LEFT JOIN (
-                            -- ① 자유 댓글 좋아요 수
-                            SELECT FB_COMMENT_NO, COUNT(*) CNT FROM FBC_LIKE_TBL GROUP BY FB_COMMENT_NO
-                            ) USING (FB_COMMENT_NO)
-                    ) GROUP BY MEMBER_NO
-                  
-                    UNION ALL
-                    
-                    -- ③ 사용자별 좋아요 카운트 수 합산해 출력
-                    SELECT MEMBER_NO, SUM(CNT) CNT FROM (
-                        -- ② 거래 게시글별 좋아요 수
-                        SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
-                            -- ① 거래 게시글 좋아요 수
-                            SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM TB_LIKE_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
-                        ) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
-                    ) GROUP BY MEMBER_NO
-                    
-                    UNION ALL
-                    
-                SELECT MEMBER_NO, SUM(CNT) CNT FROM (
-                    -- ② 거래 댓글별 좋아요 수
-                    SELECT * FROM TB_COMMENT_TBL LEFT JOIN (
-                            -- ① 거래 댓글 좋아요 수
-                            SELECT TB_COMMENT_NO, COUNT(*) CNT FROM TBC_LIKE_TBL GROUP BY TB_COMMENT_NO
-                        ) USING (TB_COMMENT_NO) 
-                    ) GROUP BY MEMBER_NO
-                ) GROUP BY MEMBER_NO ORDER BY MEMBER_NO
-            ) TLC ON TLC.MEMBER_NO  = M.MEMBER_NO
-            LEFT JOIN (
-            -----------내가 작성한 게시글---------------
-                -- ④ 사용자별 작성 '게시글' 총 수 출력 (자유+거래)
-                SELECT MEMBER_NO,SUM(CNT) TOTAL_POST_CNT FROM (
-                    -- ③ 자유 게시판 '게시글' 수
-                    SELECT MEMBER_NO,COUNT(*) CNT FROM FREE_BOARD_TBL GROUP BY MEMBER_NO
-            
-                    UNION ALL
-            
-                    -- ③ 거래 게시판 '게시글' 수
-                    SELECT MEMBER_NO,COUNT(*) CNT FROM TRADE_BOARD_TBL GROUP BY MEMBER_NO
-                ) GROUP BY MEMBER_NO
-            ) TPC ON TPC.MEMBER_NO  = M.MEMBER_NO
-            
-            LEFT JOIN (
-            -----------내가 작성한 댓글---------------
-                -- ④ 사용자별 작성 '댓글' 총 수 출력 (자유+거래)
-                SELECT MEMBER_NO,SUM(CNT) TOTAL_COMMENT_CNT FROM (
-                    -- ③ 자유 게시판 '댓글' 수
-                    SELECT MEMBER_NO,COUNT(*) CNT FROM FB_COMMENT_TBL GROUP BY MEMBER_NO
-            
-                    UNION ALL
-            
-                    -- ③ 거래 게시판 '댓글' 수
-                    SELECT MEMBER_NO,COUNT(*) CNT FROM TB_COMMENT_TBL GROUP BY MEMBER_NO
-                ) GROUP BY MEMBER_NO
-            ) TCMC ON TCMC.MEMBER_NO = M.MEMBER_NO
-            
-            <if test = "order == 1">
-            ORDER BY M.MEMBER_NO ASC
-            </if>
-            
-            <if test = "order == 2">
-            ORDER BY M.MEMBER_NO DESC
-            </if>
-            
-            <if test = "order == 3">
-            ORDER BY TOTAL_CLAIM_CNT ASC
-            </if>
-            
-            <if test = "order == 4">
-            ORDER BY TOTAL_CLAIM_CNT DESC
-            </if>
-            
-            <if test = "order == 5">
-            ORDER BY TOTAL_LIKE_CNT ASC
-            </if>
-            
-            <if test = "order == 6">
-            ORDER BY TOTAL_LIKE_CNT DESC
-            </if>
-            
-            <if test = "order == 7">
-            ORDER BY TOTAL_POST_CNT ASC
-            </if>
-            
-            <if test = "order == 8">
-            ORDER BY TOTAL_POST_CNT DESC
-            </if>
-            
-            <if test = "order == 9">
-            ORDER BY TOTAL_COMMENT_CNT ASC
-            </if>
-            
-            <if test = "order == 10">
-            ORDER BY TOTAL_COMMENT_CNT DESC
-            </if>
-            
-            <if test = "order == 11">
-            ORDER BY IS_BEN ASC
-            </if>
-            
-            <if test = "order == 12">
-            ORDER BY IS_BEN DESC
-            </if>
-            
-            <if test = "order == 13">
-            ORDER BY MEMBER_TYPE ASC
-            </if>
-            
-            <if test = "order == 14">
-            ORDER BY MEMBER_TYPE DESC
-            </if>
-            
-            ) A
-            <if test = "searchText!=''">
-	WHERE 
-		<if test = "searchType == 'no'">
-		MEMBER_NO=#{searchText}
-		</if>
-		<if test = "searchType == 'id'">
-		MEMBER_ID LIKE '%' || #{searchText} || '%'
-		</if>
-		<if test = "searchType == 'email'">
-		MEMBER_EMAIL LIKE '%' || #{searchText} || '%'
-		</if>
-	</if>
-            ) WHERE RNUM BETWEEN #{startRow} AND #{endRow}
-            
+		DECODE(
+		(SELECT COUNT(*) FROM MEMBER_BEN_TBL B WHERE (B.MEMBER_NO = M.MEMBER_NO) AND
+		(SYSDATE BETWEEN B.MEMBER_BEN_START_DATE AND
+		B.MEMBER_BEN_FINISH_DATE)),
+		0,
+		'FALSE',
+		(SELECT TO_CHAR(B.MEMBER_BEN_FINISH_DATE,'YYYY-MM-DD HH24:MI:SS') FROM
+		MEMBER_BEN_TBL B WHERE (B.MEMBER_NO = M.MEMBER_NO) AND (SYSDATE
+		BETWEEN B.MEMBER_BEN_START_DATE AND B.MEMBER_BEN_FINISH_DATE))
+		) IS_BEN
+		FROM MEMBER_TBL M
+		LEFT JOIN (
+		-----------내가 작성한 게시글,댓글의 신고 수---------------
+		-- ④ 신고 받은 전체 사용자의 신고 카운트 출력 (전체인줄 알고 착각하고 썼는데 여기서 NVL 필요 없을 것 같음..)
+		SELECT MEMBER_NO,NVL(SUM(CNT),0) TOTAL_CLAIM_CNT FROM (
+		-- ③ 사용자별 신고 카운트 수 합산해 출력
+		SELECT MEMBER_NO,SUM(CNT) CNT FROM (
+		-- ② 자유 게시판 테이블에서 게시물별 신고 수 출력
+		SELECT * FROM FREE_BOARD_TBL LEFT JOIN (
+		-- ① 신고 테이블에서 신고 수 출력
+		SELECT
+		FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO,COUNT(*)
+		CNT FROM FB_CLAIM_TBL GROUP BY
+		FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO
+		) USING
+		(FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO)
+		) GROUP BY MEMBER_NO
 
-</select>
-	
+		UNION ALL
+
+		-- ③ 사용자별 신고 카운트 수 합산해 출력
+		SELECT MEMBER_NO, SUM(CNT) CNT FROM (
+		-- ② 자유 댓글별 신고 수
+		SELECT * FROM FB_COMMENT_TBL LEFT JOIN (
+		-- ① 자유 댓글 신고 수
+		SELECT FB_COMMENT_NO, COUNT(*) CNT FROM FBC_CLAIM_TBL GROUP BY FB_COMMENT_NO
+		) USING (FB_COMMENT_NO)
+		) GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		-- ③ 사용자별 신고 카운트 수 합산해 출력
+		SELECT MEMBER_NO, SUM(CNT) CNT FROM (
+		-- ② 거래 게시글별 신고 수
+		SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
+		-- ① 거래 게시글 신고 수
+		SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM
+		TB_CLAIM_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
+		) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
+		) GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		SELECT MEMBER_NO, SUM(CNT) CNT FROM (
+		-- ② 거래 댓글별 신고 수
+		SELECT * FROM TB_COMMENT_TBL LEFT JOIN (
+		-- ① 거래 댓글 신고 수
+		SELECT TB_COMMENT_NO, COUNT(*) CNT FROM TBC_CLAIM_TBL GROUP BY TB_COMMENT_NO
+		) USING (TB_COMMENT_NO)
+		) GROUP BY MEMBER_NO
+		) GROUP BY MEMBER_NO ORDER BY MEMBER_NO
+		) TCC ON TCC.MEMBER_NO = M.MEMBER_NO
+		LEFT JOIN (
+		-----------내가 작성한 게시글,댓글의 좋아요 수---------------
+		-- ④ 좋아요 받은 전체 사용자의 좋아요 카운트 출력
+		SELECT MEMBER_NO,NVL(SUM(CNT),0) TOTAL_LIKE_CNT FROM (
+		-- ③ 사용자별 좋아요 카운트 수 합산해 출력
+		SELECT MEMBER_NO,SUM(CNT) CNT FROM (
+		-- ② 자유 게시판 테이블에서 게시물별 좋아요 수 출력
+		SELECT * FROM FREE_BOARD_TBL LEFT JOIN (
+		-- ① 좋아요 테이블에서 좋아요 수 출력
+		SELECT
+		FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO,COUNT(*)
+		CNT FROM FB_LIKE_TBL GROUP BY
+		FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO
+		) USING
+		(FREE_BOARD_NO,FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO)
+		) GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		-- ③ 사용자별 좋아요 카운트 수 합산해 출력
+		SELECT MEMBER_NO, SUM(CNT) CNT FROM (
+		-- ② 자유 댓글별 좋아요 수
+		SELECT * FROM FB_COMMENT_TBL LEFT JOIN (
+		-- ① 자유 댓글 좋아요 수
+		SELECT FB_COMMENT_NO, COUNT(*) CNT FROM FBC_LIKE_TBL GROUP BY FB_COMMENT_NO
+		) USING (FB_COMMENT_NO)
+		) GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		-- ③ 사용자별 좋아요 카운트 수 합산해 출력
+		SELECT MEMBER_NO, SUM(CNT) CNT FROM (
+		-- ② 거래 게시글별 좋아요 수
+		SELECT * FROM TRADE_BOARD_TBL LEFT JOIN (
+		-- ① 거래 게시글 좋아요 수
+		SELECT TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO, COUNT(*) CNT FROM
+		TB_LIKE_TBL GROUP BY TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO
+		) USING (TRADE_BOARD_CATEGORY_NO, TRADE_BOARD_NO)
+		) GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		SELECT MEMBER_NO, SUM(CNT) CNT FROM (
+		-- ② 거래 댓글별 좋아요 수
+		SELECT * FROM TB_COMMENT_TBL LEFT JOIN (
+		-- ① 거래 댓글 좋아요 수
+		SELECT TB_COMMENT_NO, COUNT(*) CNT FROM TBC_LIKE_TBL GROUP BY TB_COMMENT_NO
+		) USING (TB_COMMENT_NO)
+		) GROUP BY MEMBER_NO
+		) GROUP BY MEMBER_NO ORDER BY MEMBER_NO
+		) TLC ON TLC.MEMBER_NO = M.MEMBER_NO
+		LEFT JOIN (
+		-----------내가 작성한 게시글---------------
+		-- ④ 사용자별 작성 '게시글' 총 수 출력 (자유+거래)
+		SELECT MEMBER_NO,SUM(CNT) TOTAL_POST_CNT FROM (
+		-- ③ 자유 게시판 '게시글' 수
+		SELECT MEMBER_NO,COUNT(*) CNT FROM FREE_BOARD_TBL GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		-- ③ 거래 게시판 '게시글' 수
+		SELECT MEMBER_NO,COUNT(*) CNT FROM TRADE_BOARD_TBL GROUP BY MEMBER_NO
+		) GROUP BY MEMBER_NO
+		) TPC ON TPC.MEMBER_NO = M.MEMBER_NO
+
+		LEFT JOIN (
+		-----------내가 작성한 댓글---------------
+		-- ④ 사용자별 작성 '댓글' 총 수 출력 (자유+거래)
+		SELECT MEMBER_NO,SUM(CNT) TOTAL_COMMENT_CNT FROM (
+		-- ③ 자유 게시판 '댓글' 수
+		SELECT MEMBER_NO,COUNT(*) CNT FROM FB_COMMENT_TBL GROUP BY MEMBER_NO
+
+		UNION ALL
+
+		-- ③ 거래 게시판 '댓글' 수
+		SELECT MEMBER_NO,COUNT(*) CNT FROM TB_COMMENT_TBL GROUP BY MEMBER_NO
+		) GROUP BY MEMBER_NO
+		) TCMC ON TCMC.MEMBER_NO = M.MEMBER_NO
+
+		<if test="order == 1">
+			ORDER BY M.MEMBER_NO ASC
+		</if>
+
+		<if test="order == 2">
+			ORDER BY M.MEMBER_NO DESC
+		</if>
+
+		<if test="order == 3">
+			ORDER BY TOTAL_CLAIM_CNT ASC
+		</if>
+
+		<if test="order == 4">
+			ORDER BY TOTAL_CLAIM_CNT DESC
+		</if>
+
+		<if test="order == 5">
+			ORDER BY TOTAL_LIKE_CNT ASC
+		</if>
+
+		<if test="order == 6">
+			ORDER BY TOTAL_LIKE_CNT DESC
+		</if>
+
+		<if test="order == 7">
+			ORDER BY TOTAL_POST_CNT ASC
+		</if>
+
+		<if test="order == 8">
+			ORDER BY TOTAL_POST_CNT DESC
+		</if>
+
+		<if test="order == 9">
+			ORDER BY TOTAL_COMMENT_CNT ASC
+		</if>
+
+		<if test="order == 10">
+			ORDER BY TOTAL_COMMENT_CNT DESC
+		</if>
+
+		<if test="order == 11">
+			ORDER BY IS_BEN ASC
+		</if>
+
+		<if test="order == 12">
+			ORDER BY IS_BEN DESC
+		</if>
+
+		<if test="order == 13">
+			ORDER BY MEMBER_TYPE ASC
+		</if>
+
+		<if test="order == 14">
+			ORDER BY MEMBER_TYPE DESC
+		</if>
+
+		) A
+		<if test="searchText!=''">
+			WHERE
+			<if test="searchType == 'no'">
+				MEMBER_NO=#{searchText}
+			</if>
+			<if test="searchType == 'id'">
+				MEMBER_ID LIKE '%' || #{searchText} || '%'
+			</if>
+			<if test="searchType == 'email'">
+				MEMBER_EMAIL LIKE '%' || #{searchText} || '%'
+			</if>
+		</if>
+		) WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+
+
+	</select>
+
 	<select id="totalListCount" resultType="int">
-	SELECT COUNT(*) FROM MEMBER_TBL 
-	<if test = "searchText!=''">
-	WHERE 
-		<if test = "searchType == 'no'">
-		MEMBER_NO=#{searchText}
+		SELECT COUNT(*) FROM MEMBER_TBL
+		<if test="searchText!=''">
+			WHERE
+			<if test="searchType == 'no'">
+				MEMBER_NO=#{searchText}
+			</if>
+			<if test="searchType == 'id'">
+				MEMBER_ID LIKE '%' || #{searchText} || '%'
+			</if>
+			<if test="searchType == 'email'">
+				MEMBER_EMAIL LIKE '%' || #{searchText} || '%'
+			</if>
 		</if>
-		<if test = "searchType == 'id'">
-		MEMBER_ID LIKE '%' || #{searchText} || '%'
-		</if>
-		<if test = "searchType == 'email'">
-		MEMBER_EMAIL LIKE '%' || #{searchText} || '%'
-		</if>
-	</if>
 
 	</select>
-	
+
 	<update id="memberTypeUpdate">
-	UPDATE MEMBER_TBL SET MEMBER_TYPE=#{memberType} WHERE MEMBER_NO=#{memberNo} 
+		UPDATE MEMBER_TBL SET MEMBER_TYPE=#{memberType} WHERE MEMBER_NO=#{memberNo}
 	</update>
-	
+
 	<select id="memberDetail" resultType="memberDetail">
--- 490번 유저의 전체 작성 글 (자유, 거래, 댓글, 대댓글)
+		-- 490번 유저의 전체 작성 글 (자유, 거래, 댓글, 대댓글)
 
-SELECT * FROM
-(SELECT ROWNUM RNUM, A.* FROM (
-SELECT * FROM(
-                        -- 해당 유저가 작성한 거래 게시판 게시글 --
-                        SELECT '게시글' CATEGORY_MAIN, 
-                                        '거래' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        TRADE_BOARD_TITLE BOARD_TITLE,
-                                        TRADE_BOARD_DATE BOARD_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN TRADE_BOARD_TBL USING(MEMBER_NO) 
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 자유 게시판 게시글 --
-                        SELECT '게시글' CATEGORY_MAIN, 
-                                        '자유' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        FREE_BOARD_TITLE,
-                                        FREE_BOARD_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN FREE_BOARD_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 자유 게시판 댓글 --
-                        SELECT '댓글' CATEGORY_MAIN, 
-                                        '자유' CATEGORY_SUB,
-                                        MEMBER_NICKNAME, 
-                                        FB_COMMENT_CONTENT,
-                                        FB_COMMENT_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN FB_COMMENT_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 자유 게시판 대댓글 --
-                        SELECT '대댓글' CATEGORY_MAIN,
-                                        '자유' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        FB_SUBCOMMENT,
-                                        FB_COMMENT_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN FB_COMMENT_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 거래 게시판 댓글 --
-                        SELECT '댓글' CATEGORY_MAIN, 
-                                        '거래' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        TB_COMMENT_CONTENT,
-                                        TB_COMMENT_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN TB_COMMENT_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                                                                )
-                                                                ORDER BY BOARD_DATE DESC
-                                                                
-) A) WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+		SELECT * FROM
+		(SELECT ROWNUM RNUM, A.* FROM (
+		SELECT * FROM(
+		-- 해당 유저가 작성한 거래 게시판 게시글 --
+		SELECT '게시글' CATEGORY_MAIN,
+		'거래' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		TRADE_BOARD_TITLE BOARD_TITLE,
+		TRADE_BOARD_DATE BOARD_DATE
+		FROM MEMBER_TBL
+		JOIN TRADE_BOARD_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 자유 게시판 게시글 --
+		SELECT '게시글' CATEGORY_MAIN,
+		'자유' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		FREE_BOARD_TITLE,
+		FREE_BOARD_DATE
+		FROM MEMBER_TBL
+		JOIN FREE_BOARD_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 자유 게시판 댓글 --
+		SELECT '댓글' CATEGORY_MAIN,
+		'자유' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		FB_COMMENT_CONTENT,
+		FB_COMMENT_DATE
+		FROM MEMBER_TBL
+		JOIN FB_COMMENT_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 자유 게시판 대댓글 --
+		SELECT '대댓글' CATEGORY_MAIN,
+		'자유' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		FB_SUBCOMMENT,
+		FB_COMMENT_DATE
+		FROM MEMBER_TBL
+		JOIN FB_COMMENT_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 거래 게시판 댓글 --
+		SELECT '댓글' CATEGORY_MAIN,
+		'거래' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		TB_COMMENT_CONTENT,
+		TB_COMMENT_DATE
+		FROM MEMBER_TBL
+		JOIN TB_COMMENT_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		)
+		ORDER BY BOARD_DATE DESC
+
+		) A) WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 
 	</select>
-	
+
 	<select id="memberDetailTotalCount" resultType="int">
--- 490번 유저의 전체 작성 글 (자유, 거래, 댓글, 대댓글)
+		-- 490번 유저의 전체 작성 글 (자유, 거래, 댓글, 대댓글)
 
-SELECT COUNT(*) FROM
-(SELECT ROWNUM RNUM, A.* FROM (
-SELECT * FROM(
-                        -- 해당 유저가 작성한 거래 게시판 게시글 --
-                        SELECT '게시글' CATEGORY_MAIN, 
-                                        '거래' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        TRADE_BOARD_TITLE BOARD_TITLE,
-                                        TRADE_BOARD_DATE BOARD_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN TRADE_BOARD_TBL USING(MEMBER_NO) 
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 자유 게시판 게시글 --
-                        SELECT '게시글' CATEGORY_MAIN, 
-                                        '자유' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        FREE_BOARD_TITLE,
-                                        FREE_BOARD_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN FREE_BOARD_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 자유 게시판 댓글 --
-                        SELECT '댓글' CATEGORY_MAIN, 
-                                        '자유' CATEGORY_SUB,
-                                        MEMBER_NICKNAME, 
-                                        FB_COMMENT_CONTENT,
-                                        FB_COMMENT_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN FB_COMMENT_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 자유 게시판 대댓글 --
-                        SELECT '대댓글' CATEGORY_MAIN,
-                                        '자유' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        FB_SUBCOMMENT,
-                                        FB_COMMENT_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN FB_COMMENT_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                        UNION
-                        -- 해당 유저가 작성한 거래 게시판 댓글 --
-                        SELECT '댓글' CATEGORY_MAIN, 
-                                        '거래' CATEGORY_SUB, 
-                                        MEMBER_NICKNAME, 
-                                        TB_COMMENT_CONTENT,
-                                        TB_COMMENT_DATE 
-                                                        FROM MEMBER_TBL 
-                                                                JOIN TB_COMMENT_TBL USING(MEMBER_NO)
-                                                                WHERE MEMBER_NO = #{memberNo}
-                                                                )
-                                                                ORDER BY BOARD_DATE DESC
-                                                                
-) A)
+		SELECT COUNT(*) FROM
+		(SELECT ROWNUM RNUM, A.* FROM (
+		SELECT * FROM(
+		-- 해당 유저가 작성한 거래 게시판 게시글 --
+		SELECT '게시글' CATEGORY_MAIN,
+		'거래' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		TRADE_BOARD_TITLE BOARD_TITLE,
+		TRADE_BOARD_DATE BOARD_DATE
+		FROM MEMBER_TBL
+		JOIN TRADE_BOARD_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 자유 게시판 게시글 --
+		SELECT '게시글' CATEGORY_MAIN,
+		'자유' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		FREE_BOARD_TITLE,
+		FREE_BOARD_DATE
+		FROM MEMBER_TBL
+		JOIN FREE_BOARD_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 자유 게시판 댓글 --
+		SELECT '댓글' CATEGORY_MAIN,
+		'자유' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		FB_COMMENT_CONTENT,
+		FB_COMMENT_DATE
+		FROM MEMBER_TBL
+		JOIN FB_COMMENT_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 자유 게시판 대댓글 --
+		SELECT '대댓글' CATEGORY_MAIN,
+		'자유' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		FB_SUBCOMMENT,
+		FB_COMMENT_DATE
+		FROM MEMBER_TBL
+		JOIN FB_COMMENT_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		UNION
+		-- 해당 유저가 작성한 거래 게시판 댓글 --
+		SELECT '댓글' CATEGORY_MAIN,
+		'거래' CATEGORY_SUB,
+		MEMBER_NICKNAME,
+		TB_COMMENT_CONTENT,
+		TB_COMMENT_DATE
+		FROM MEMBER_TBL
+		JOIN TB_COMMENT_TBL USING(MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+		)
+		ORDER BY BOARD_DATE DESC
+
+		) A)
 
 	</select>
-	
+
 	<insert id="memberBan">
-			INSERT INTO MEMBER_BEN_TBL VALUES(
-				#{memberNo},SYSDATE,TO_DATE(#{memberBenFinishDate},'YYYY-MM-DD HH24:MI:SS'),#{memberBanContent}
-			)
+		INSERT INTO MEMBER_BEN_TBL VALUES(
+		#{memberNo},SYSDATE,TO_DATE(#{memberBenFinishDate},'YYYY-MM-DD
+		HH24:MI:SS'),#{memberBanContent}
+		)
 	</insert>
-	
+
 	<select id="statisticsYears" resultType="adminStatistics">
-		SELECT A.LABEL,COUNT(*) VALUE FROM (
-		SELECT TO_CHAR(MEMBER_DATE,'YYYY') LABEL FROM MEMBER_TBL WHERE TO_NUMBER(TO_CHAR(MEMBER_DATE,'YYYY')) BETWEEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))) A GROUP BY A.LABEL ORDER BY A.LABEL
+		SELECT A.LABEL,COUNT(*)
+		VALUE FROM (
+		SELECT TO_CHAR(MEMBER_DATE,'YYYY') LABEL FROM MEMBER_TBL
+		WHERE TO_NUMBER(TO_CHAR(MEMBER_DATE,'YYYY')) BETWEEN
+		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND
+		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))) A GROUP BY A.LABEL ORDER BY
+		A.LABEL
 	</select>
 	<select id="statisticsYear" resultType="adminStatistics">
-		SELECT A.LABEL||'월' AS LABEL,COUNT(*) VALUE FROM ( 
-                SELECT TO_CHAR(MEMBER_DATE,'MM') LABEL FROM MEMBER_TBL WHERE TO_CHAR(SYSDATE,'YYYY')=TO_CHAR(MEMBER_DATE,'YYYY')) A GROUP BY A.LABEL ORDER BY A.LABEL
+		SELECT A.LABEL||'월' AS
+		LABEL,COUNT(*) VALUE FROM (
+		SELECT TO_CHAR(MEMBER_DATE,'MM') LABEL FROM MEMBER_TBL WHERE
+		TO_CHAR(SYSDATE,'YYYY')=TO_CHAR(MEMBER_DATE,'YYYY')) A GROUP BY
+		A.LABEL ORDER BY A.LABEL
 	</select>
 	<select id="statisticsMonth" resultType="adminStatistics">
-		SELECT A.LABEL||'일' AS LABEL,COUNT(*) VALUE FROM ( 
-                SELECT TO_CHAR(MEMBER_DATE,'DD') LABEL FROM MEMBER_TBL WHERE TO_CHAR(SYSDATE,'YYYY-MM')=TO_CHAR(MEMBER_DATE,'YYYY-MM')) A GROUP BY A.LABEL ORDER BY A.LABEL
+		SELECT A.LABEL||'일' AS
+		LABEL,COUNT(*) VALUE FROM (
+		SELECT TO_CHAR(MEMBER_DATE,'DD') LABEL FROM MEMBER_TBL WHERE
+		TO_CHAR(SYSDATE,'YYYY-MM')=TO_CHAR(MEMBER_DATE,'YYYY-MM')) A GROUP BY
+		A.LABEL ORDER BY A.LABEL
 	</select>
-	
+
 	<select id="statisticsRu" resultType="int">
-		SELECT COUNT(*) FROM MEMBER_TBL
+		SELECT COUNT(*) FROM
+		MEMBER_TBL
 	</select>
-	
+
 	<select id="statisticsBc" resultType="int">
-	SELECT (SELECT COUNT(*) FROM FREE_BOARD_TBL) + (SELECT COUNT(*) FROM TRADE_BOARD_TBL) BOARD_COUNT FROM DUAL
+		SELECT (SELECT COUNT(*) FROM FREE_BOARD_TBL) + (SELECT COUNT(*) FROM
+		TRADE_BOARD_TBL) BOARD_COUNT FROM DUAL
 	</select>
 	<select id="statisticsBcc" resultType="int">
-	SELECT (SELECT COUNT(*) FROM FB_COMMENT_TBL) + (SELECT COUNT(*) FROM TB_COMMENT_TBL) BOARD_COMMENT_COUNT FROM DUAL
+		SELECT (SELECT COUNT(*) FROM FB_COMMENT_TBL) + (SELECT COUNT(*) FROM
+		TB_COMMENT_TBL) BOARD_COMMENT_COUNT FROM DUAL
 	</select>
 	<select id="statisticsWc" resultType="int">
-	SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL
+		SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL
 	</select>
-	
+
 	<select id="statisticsAr" resultType="int">
-		 SELECT         
-                    (ROUND((SELECT COUNT(*) ACCESSION_CNT_YEARS FROM MEMBER_TBL 
-                                            WHERE TO_NUMBER(TO_CHAR(MEMBER_DATE,'YYYY')) 
-                                                    BETWEEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 
-                                                        AND TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')))/((SELECT COUNT(*) ACCESSION_CNT_YEARS FROM MEMBER_TBL 
-                                                        WHERE TO_NUMBER(TO_CHAR(MEMBER_DATE,'YYYY')) 
-                                                    BETWEEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')))+(SELECT COUNT(*) WITHDRAW_CNT_YEARS FROM WITHDRAW_MEMBERSHIP_TBL WHERE TO_NUMBER(TO_CHAR(WITHDRAW_DATE,'YYYY')) BETWEEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')))),2))*100 ACCEESSION_RATE
-            FROM DUAL
+		SELECT
+		(ROUND((SELECT COUNT(*) ACCESSION_CNT_YEARS FROM MEMBER_TBL
+		WHERE TO_NUMBER(TO_CHAR(MEMBER_DATE,'YYYY'))
+		BETWEEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4
+		AND TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')))/((SELECT COUNT(*)
+		ACCESSION_CNT_YEARS FROM MEMBER_TBL
+		WHERE TO_NUMBER(TO_CHAR(MEMBER_DATE,'YYYY'))
+		BETWEEN TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND
+		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')))+(SELECT COUNT(*)
+		WITHDRAW_CNT_YEARS FROM WITHDRAW_MEMBERSHIP_TBL WHERE
+		TO_NUMBER(TO_CHAR(WITHDRAW_DATE,'YYYY')) BETWEEN
+		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND
+		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY')))),2))*100 ACCEESSION_RATE
+		FROM DUAL
 	</select>
-	
+
 	<select id="statisticsArYear" resultType="int">
-	SELECT ROUND((SELECT COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY'))/((SELECT COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY'))+(SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL WHERE TO_CHAR(WITHDRAW_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY'))),2)*100 AR_YEAR FROM DUAL
+		SELECT ROUND((SELECT COUNT(*) FROM MEMBER_TBL WHERE
+		TO_CHAR(MEMBER_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY'))/((SELECT
+		COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY') =
+		TO_CHAR(SYSDATE,'YYYY'))+(SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL
+		WHERE TO_CHAR(WITHDRAW_DATE,'YYYY') = TO_CHAR(SYSDATE,'YYYY'))),2)*100
+		AR_YEAR FROM DUAL
 	</select>
-	
+
 	<select id="statisticsArMonth" resultType="int">
-	SELECT ROUND((SELECT COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM') = TO_CHAR(SYSDATE,'YYYY-MM'))/((SELECT COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM') = TO_CHAR(SYSDATE,'YYYY-MM'))+(SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL WHERE TO_CHAR(WITHDRAW_DATE,'YYYY-MM') = TO_CHAR(SYSDATE,'YYYY-MM'))),2)*100 AR_MONTH FROM DUAL
+		SELECT ROUND((SELECT COUNT(*) FROM MEMBER_TBL WHERE
+		TO_CHAR(MEMBER_DATE,'YYYY-MM') = TO_CHAR(SYSDATE,'YYYY-MM'))/((SELECT
+		COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM') =
+		TO_CHAR(SYSDATE,'YYYY-MM'))+(SELECT COUNT(*) FROM
+		WITHDRAW_MEMBERSHIP_TBL WHERE TO_CHAR(WITHDRAW_DATE,'YYYY-MM') =
+		TO_CHAR(SYSDATE,'YYYY-MM'))),2)*100 AR_MONTH FROM DUAL
 	</select>
-	
+
 	<select id="statisticsArDay" resultType="int">
-	SELECT ROUND((SELECT COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD'))/((SELECT COUNT(*) FROM MEMBER_TBL WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')) + (SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL WHERE TO_CHAR(WITHDRAW_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')))) * 100 AR_DAY FROM DUAL
+		SELECT ROUND((SELECT COUNT(*) FROM MEMBER_TBL WHERE
+		TO_CHAR(MEMBER_DATE,'YYYY-MM-DD') =
+		TO_CHAR(SYSDATE,'YYYY-MM-DD'))/((SELECT COUNT(*) FROM MEMBER_TBL WHERE
+		TO_CHAR(MEMBER_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')) +
+		(SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL WHERE
+		TO_CHAR(WITHDRAW_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD'))))
+		* 100 AR_DAY FROM DUAL
+	</select>
+
+	<select id="statisticsRuDiffDay" resultType="int">
+	SELECT
+    (SELECT COUNT(*) FROM MEMBER_TBL
+      WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+  -
+    (SELECT COUNT(*) FROM MEMBER_TBL
+      WHERE TO_CHAR(MEMBER_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE-1,'YYYY-MM-DD'))
+  AS RU_DIFF_DAY
+  FROM DUAL
+	</select>
+
+	<select id="statisticsBcDiffDay" resultType="int">
+	 SELECT
+    (
+      (SELECT COUNT(*) FROM FREE_BOARD_TBL
+        WHERE TO_CHAR(FREE_BOARD_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+      +
+      (SELECT COUNT(*) FROM TRADE_BOARD_TBL
+        WHERE TO_CHAR(TRADE_BOARD_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+    )
+  -
+    (
+      (SELECT COUNT(*) FROM FREE_BOARD_TBL
+        WHERE TO_CHAR(FREE_BOARD_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE-1,'YYYY-MM-DD'))
+      +
+      (SELECT COUNT(*) FROM TRADE_BOARD_TBL
+        WHERE TO_CHAR(TRADE_BOARD_DATE,'YYYY-MM-DD')<![CDATA[<=]]> TO_CHAR(SYSDATE-1,'YYYY-MM-DD'))
+    )
+  AS BC_DIFF_DAY
+  FROM DUAL
+	</select>
+
+	<select id="statisticsBccDiffDay" resultType="int">
+	SELECT
+    (
+      (SELECT COUNT(*) FROM FB_COMMENT_TBL
+        WHERE TO_CHAR(FB_COMMENT_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+      +
+      (SELECT COUNT(*) FROM TB_COMMENT_TBL
+        WHERE TO_CHAR(TB_COMMENT_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+    )
+  -
+    (
+      (SELECT COUNT(*) FROM FB_COMMENT_TBL
+        WHERE TO_CHAR(FB_COMMENT_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE-1,'YYYY-MM-DD'))
+      +
+      (SELECT COUNT(*) FROM TB_COMMENT_TBL
+        WHERE TO_CHAR(TB_COMMENT_DATE,'YYYY-MM-DD') <![CDATA[<=]]> TO_CHAR(SYSDATE-1,'YYYY-MM-DD'))
+    )
+  AS BCC_DIFF_DAY
+  FROM DUAL
+	</select>
+
+	<select id="statisticsWcDiffDay" resultType="int">
+	 SELECT
+    (SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL
+      WHERE TO_CHAR(WITHDRAW_DATE,'YYYY-MM-DD')<![CDATA[<=]]> TO_CHAR(SYSDATE,'YYYY-MM-DD'))
+  -
+    (SELECT COUNT(*) FROM WITHDRAW_MEMBERSHIP_TBL
+      WHERE TO_CHAR(WITHDRAW_DATE,'YYYY-MM-DD')<![CDATA[<=]]> TO_CHAR(SYSDATE-1,'YYYY-MM-DD'))
+  AS WC_DIFF_DAY
+  FROM DUAL
 	</select>
 </mapper>

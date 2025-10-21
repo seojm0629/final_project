@@ -22,10 +22,13 @@ const FreeBoardSideMenu = (props) => {
         <p style={{ fontWeight: "600" }}>카테고리</p>
         <span>홈 &gt; 자유게시판 &gt; {menuNavi}</span>
       </section>
-      <div className="header-title" onClick={() => {
-        setSelected(-1);
-        setMenuNavi("");
-      }}>
+      <div
+        className="header-title"
+        onClick={() => {
+          setSelected(-1);
+          setMenuNavi("");
+        }}
+      >
         <span>자유게시판</span>
       </div>
       <ul className="category">
@@ -47,7 +50,10 @@ const FreeBoardSideMenu = (props) => {
                   <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                 )}
               </span>
-              <div className="menu-down" style={{display: naviDown === i ? "block":"none"}}>
+              <div
+                className="menu-down"
+                style={{ display: naviDown === i ? "block" : "none" }}
+              >
                 {m.freeBoardSubcategory.map((n, i) => {
                   return (
                     <ul

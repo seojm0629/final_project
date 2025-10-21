@@ -55,27 +55,43 @@ public class NoteService {
     }
 	
 	@Transactional
-	public int sendUpdateList(List<NoteUpdateDel> selectNoteNos) {
+	public int sendUpdateList(List<NoteUpdateDel> selectNoteNos, String deleteType) {
 		
 		System.out.println("서비스에서확인"+selectNoteNos);
 		System.out.println("서비스에서확인"+selectNoteNos.get(0).getNoteNos());
 		System.out.println("리스트 크기: " + selectNoteNos.size());
 		List<NoteUpdateDel> newList = new ArrayList();
+		int result = 0;
 		
-		int result = noteDao.sendUpdateList(selectNoteNos);
 		
-		System.out.println("서비스에서 넘어가는값확인"+result);
+		if(deleteType.equals("send")) {
+			 result = noteDao.sendUpdateList(selectNoteNos);
+			
+			for (int i = 0; i < selectNoteNos.size(); i++) {
+				NoteUpdateDel note = selectNoteNos.get(i); 
+				int noteNo = note.getNoteNos(); 
+				System.out.println("리스트 요소 " + i + ": noteNo = " + noteNo);
+				
+				newList.add(note);
+				
+			}
+
+		}else if (deleteType.equals("receive")) {
+			
+			result = noteDao.receiveUpdateList(selectNoteNos);
+			
+			for (int i = 0; i < selectNoteNos.size(); i++) {
+				NoteUpdateDel note = selectNoteNos.get(i); 
+				int noteNo = note.getNoteNos(); 
+				System.out.println("리스트 요소 " + i + ": noteNo = " + noteNo);
+				
+				newList.add(note);
+				
+			}
+		}
 		
-		 for (int i = 0; i < selectNoteNos.size(); i++) {
-		        NoteUpdateDel note = selectNoteNos.get(i); 
-		        int noteNo = note.getNoteNos(); 
-		        System.out.println("리스트 요소 " + i + ": noteNo = " + noteNo);
-		  
-		        newList.add(note);
-		 
-		 }
-		
-		 System.out.println("새로운 리스트 크기: " + newList.size());
+		System.out.println("서비스에서 받는 result 값"+ result);
+
 		
 		return result;
 	}

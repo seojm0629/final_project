@@ -27,8 +27,6 @@ const AdminMain = () => {
         {active === "board" && <ContentBoard />}
         {active === "free-board" && <ContentFreeBoard />}
         {active === "deal-board" && <ContentDealBoard />}
-        {active === "test" && <ContentTest />}
-        {active === "site" && <ContentSiteManagement />}
       </div>
     </div>
   );
