@@ -115,6 +115,7 @@ public class AdminService {
 	    map.put("wcDiffDay", wcDiffDay);
 	    map.put("listWithdraw", listWithdraw);
 	    map.put("listFreeBoard", listFreeBoard);
+	    map.put("listTradeBoard", listTradeBoard);
 		return map;
 	}
 }
