@@ -21,8 +21,7 @@
    </select>
    <!-- 게시글 상세보기 -->
    <select id="selectOneBoard" parameterType="int" resultType="tradeBoard">
-        select
-            trade_board_no,
+        select trade_board_no,
             trade_board_title,
             trade_board_content,
             TO_CHAR(trade_board_date, 'YYYY-MM-DD HH24:MI:SS'),
@@ -30,9 +29,8 @@
             trade_board_place,
             trade_board_status,
             trade_board_category_no,
-            member_no,
-            trade_thumbnail_path
-        from trade_board_tbl
+            member_nickname,
+            trade_thumbnail_path from trade_board_tbl left join member_tbl using (member_no)
         where trade_board_no = #{tradeBoardNo}
     </select>
     <!-- 댓글 목록 -->
@@ -40,10 +38,10 @@
         SELECT 
             trade_comment_no,
             trade_board_no,
-            member_no,
+            member_nickname,
             trade_comment_content,
             TO_CHAR(trade_comment_date, 'YYYY-MM-DD HH24:MI:SS')
-        FROM trade_comment_tbl
+        FROM trade_comment_tbl left join member_tbl using (member_no)
         WHERE trade_board_no = #{tradeBoardNo}
         ORDER BY trade_comment_no ASC
     </select>
@@ -103,5 +101,26 @@
             SYSDATE
         )
     </insert>
+    
+    <!-- 정민 -->
+    <select id="mainTitle" resultType="tradeBoard">
+	 	<![CDATA[
+		    SELECT b.trade_board_no,
+		           b.trade_board_title,
+		           b.member_no,
+		           m.member_nickname
+		    FROM (
+		        SELECT trade_board_no,
+		               trade_board_title,
+		               member_no
+		        FROM trade_board_tbl
+		        ORDER BY trade_board_no DESC
+		    ) b
+		    JOIN member_tbl m
+		    ON b.member_no = m.member_no
+		    WHERE ROWNUM <= #{limit}
+		]]>
+	 </select>
+    
     
 </mapper>
