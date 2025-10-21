@@ -44,16 +44,11 @@ const Main = () => {
 
     //--------- 자유게시판 리스트
     const backServer = import.meta.env.VITE_BACK_SERVER;
-    // 게시판 넘버
-    const [freeBoardNo, setFreeBoardNo] = useState(0);
-    // 제목
-    const [freeBoardTitle, setFreeBoardTitle] = useState("");
-    // 닉네임
-    const [memberNickname, setMemberNickname] = useState("");
-    // 리스트
+    
+    // 자유게시판 리스트
     const [freeBoardList, setFreeBoardList] = useState([]);
-
-    const [menus, setMenus] = useState([]);
+    // 중고거래 게시판 리스트
+    const [tradeBoardList, setTradeBoardList] = useState([]);
 
     useEffect(() => {
         axios
@@ -67,6 +62,17 @@ const Main = () => {
         })
     },[])
 
+    useEffect(() => {
+        axios
+        .get(`${backServer}/tradeBoard/mainTitle?limit=10`)
+        .then((res)=>{
+            console.log(res);
+            setTradeBoardList(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    },[])
     return(
         <section className="section main-page">
             <div className="main-wrap">
@@ -78,26 +84,29 @@ const Main = () => {
                             <div className="main-board-header">
                                 <h4>중고거래 게시판</h4>
                             </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
+                            
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {tradeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"main-" + i} >
+                                                <span>{list.tradeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
                                 </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
+                                <div className="main-board-like">
+                                    {tradeBoardList.map((list,i)=>{
+                                        return(
+                                            <li key={"key-" + i} >
+                                                <span>{list.memberNickname}</span>
+                                            </li>
+                                        )
+                                })}
                                 </div>
-                            </div>
-                            <div className="main-board-content">
-                                <div className="transaction-list-left">
-                                    <div>제목</div>
-                                </div>
-                                <div className="transaction-list-right">
-                                    <div>익명</div>
-                                    <div>1시간 전</div>
-                                    <div>좋아요</div>
-                                </div>
-                            </div>
+                            </ul>
+                            
+                            
                             
                         </div>
 
@@ -117,11 +126,11 @@ const Main = () => {
                                 </div>
                                 <div className="main-board-like">
                                     {freeBoardList.map((list,i)=>{
-                                    return(
-                                        <li key={"key-" + i} >
-                                            <span>{list.memberNickname}</span>
-                                        </li>
-                                    )
+                                        return(
+                                            <li key={"member-" + i} >
+                                                <span>{list.memberNickname}</span>
+                                            </li>
+                                        )
                                 })}
                                 </div>
                             </ul>

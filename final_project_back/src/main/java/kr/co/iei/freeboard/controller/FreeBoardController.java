@@ -72,7 +72,7 @@ public class FreeBoardController {
 	
 	//정민 작업
 	@GetMapping(value="/mainTitle")
-	public ResponseEntity<List<FreeBoardDTO>> mainTitle(@RequestParam(defaultValue = "7") int limit){
+	public ResponseEntity<List<FreeBoardDTO>> mainTitle(@RequestParam(defaultValue = "10") int limit){
 		List<FreeBoardDTO> list = freeBoardService.mainTitle(limit);
 		return ResponseEntity.ok(list);
 	}

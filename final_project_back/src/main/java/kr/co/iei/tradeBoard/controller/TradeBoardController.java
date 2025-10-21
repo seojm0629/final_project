@@ -61,4 +61,13 @@ public class TradeBoardController {
         tradeBoardService.insertReport(tradeBoardNo, report);
         return ResponseEntity.ok("reported");
     }
+    
+    //정민
+    @GetMapping("/mainTitle")
+    public ResponseEntity<List<TradeBoardDTO>> mainTitle(@RequestParam(defaultValue = "10") int limit){
+    	List<TradeBoardDTO> list = tradeBoardService.mainTitle(limit);
+    	return ResponseEntity.ok(list);
+    }
+    
+    
 }

@@ -104,4 +104,25 @@
         )
     </insert>
     
+    <!-- 정민 -->
+    <select id="mainTitle" resultType="tradeBoard">
+	 	<![CDATA[
+		    SELECT b.trade_board_no,
+		           b.trade_board_title,
+		           b.member_no,
+		           m.member_nickname
+		    FROM (
+		        SELECT trade_board_no,
+		               trade_board_title,
+		               member_no
+		        FROM trade_board_tbl
+		        ORDER BY trade_board_no DESC
+		    ) b
+		    JOIN member_tbl m
+		    ON b.member_no = m.member_no
+		    WHERE ROWNUM <= #{limit}
+		]]>
+	 </select>
+    
+    
 </mapper>

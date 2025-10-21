@@ -65,4 +65,9 @@ public class TradeBoardService {
         report.setTradeBoardNo(tradeBoardNo);
         tradeBoardDao.insertReport(report);
     }
+
+	public List<TradeBoardDTO> mainTitle(int limit) {
+		List<TradeBoardDTO> list = tradeBoardDao.mainTitle(limit);
+		return list;
+	}
 }
