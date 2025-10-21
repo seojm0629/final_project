@@ -13,7 +13,7 @@ const FreeBoardSideMenu = (props) => {
   const setSelected = props.setSelected;
   const [naviDown, setNaviDown] = useState(null);
   const [menuNavi, setMenuNavi] = useState(""); //카테고리 밑 메뉴 네비
-  const [subClick, setSubClick] = useState("subcategory");
+  const [subClick, setSubClick] = useState("side-submenu.active");
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
   };
@@ -68,13 +68,13 @@ const FreeBoardSideMenu = (props) => {
                       {i % 2 === 0 && (
                         <ul
                           className={
-                            subClick === "subcategory"
-                              ? "side-submenu"
-                              : "side-submenu active"
+                            subClick === "side-submenu"
+                              ? "side-submenu active"
+                              : "side-submenu"
                           }
                           onClick={() => {
                             setSelected(m.freeBoardSubcategory[i + 1]);
-                            setSubClick("subcat");
+                            setSubClick("side-submenu.active");
                           }}
                         >
                           <li>

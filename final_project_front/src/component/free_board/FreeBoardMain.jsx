@@ -146,7 +146,6 @@ const FreeBoardMain = () => {
               </div>
             )}
           </div>
-
           <section className="section free-board">
             <Routes>
               <Route
