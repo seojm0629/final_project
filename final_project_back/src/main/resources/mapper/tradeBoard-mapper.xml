@@ -35,26 +35,26 @@
     </select>
     <!-- 댓글 목록 -->
     <select id="selectCommentList" parameterType="int" resultType="tradeComment">
-        SELECT 
+        select 
             trade_comment_no,
             trade_board_no,
             member_nickname,
             trade_comment_content,
             TO_CHAR(trade_comment_date, 'YYYY-MM-DD HH24:MI:SS')
-        FROM trade_comment_tbl left join member_tbl using (member_no)
-        WHERE trade_board_no = #{tradeBoardNo}
-        ORDER BY trade_comment_no ASC
+        from trade_comment_tbl left join member_tbl using (member_no)
+        where trade_board_no = #{tradeBoardNo}
+        order by trade_comment_no asc
     </select>
     <!-- 댓글 등록 -->
     <insert id="insertComment" parameterType="tradeComment">
-        INSERT INTO trade_comment_tbl (
+        insert into trade_comment_tbl (
             trade_comment_no,
             trade_board_no,
             member_no,
             trade_comment_content,
             trade_comment_date
-        ) VALUES (
-            trade_comment_seq.NEXTVAL,
+        ) values (
+            trade_comment_seq.nextval,
             #{tradeBoardNo},
             #{memberNo},
             #{tradeCommentContent},
@@ -101,6 +101,7 @@
             SYSDATE
         )
     </insert>
+
     
     <!-- 정민 -->
     <select id="mainTitle" resultType="tradeBoard">
@@ -123,4 +124,19 @@
 	 </select>
     
     
-</mapper>
+
+    <!-- 
+    <select id="selectSellerBoards" parameterType="int" resultType="tradeBoard">
+	    select trade_board_no,
+            trade_board_title,
+            trade_board_content,
+            TO_CHAR(trade_board_date, 'YYYY-MM-DD HH24:MI:SS'),
+            trade_board_price,
+            trade_board_place,
+            trade_board_status,
+            trade_board_category_no,
+            member_nickname,
+            trade_thumbnail_path from trade_board_tbl left join member_tbl using (member_no)
+        where trade_board_no = #{tradeBoardNo}
+	</select>
+ -->

@@ -23,7 +23,7 @@ const TradeBoardView = () => {
       .then((res) => {
         const data = res.data || {};
         setTradeBoard(data);
-
+        console.log(data);
         // 댓글 불러오기
         axios
           .get(
@@ -125,9 +125,7 @@ const TradeBoardView = () => {
             <p className="trade-price">
               {Number(tradeBoard.tradeBoardPrice).toLocaleString()}원
             </p>
-            <p className="trade-place">
-              📍 {tradeBoard.tradeBoardPlace || "지역 정보 없음"}
-            </p>
+            <p className="trade-place">📍 {tradeBoard.tradeBoardPlace}</p>
             <p className="trade-status">
               상태: {getStatusText(tradeBoard.tradeBoardStatus)}
             </p>
@@ -144,9 +142,7 @@ const TradeBoardView = () => {
       {/* 판매자 정보 */}
       <div className="seller-box">
         <div className="seller-info">
-          <p className="seller-name">
-            {tradeBoard.sellerNickname || tradeBoard.memberId}
-          </p>
+          <p className="seller-name">{tradeBoard.memberNickname}</p>
           <p className="seller-score">
             매너점수 {tradeBoard.mannerScore ?? 0}점
           </p>
@@ -221,7 +217,7 @@ const TradeBoardView = () => {
       {sellerProducts.length > 0 && (
         <div className="seller-products">
           <div className="seller-products-header">
-            <h3>📦 {tradeBoard.sellerNickname || "판매자"} 님의 다른 물품</h3>
+            <h3>📦 {tradeBoard.memberNickname || "판매자"} 님의 다른 물품</h3>
           </div>
           <div className="product-grid">
             {sellerProducts.map((item) => (

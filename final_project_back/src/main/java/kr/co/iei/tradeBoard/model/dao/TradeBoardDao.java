@@ -27,5 +27,10 @@ public interface TradeBoardDao {
 
     // 신고
     int insertReport(TradeReportDTO report);
+
 	List<TradeBoardDTO> mainTitle(int limit);
+
+    
+	List<TradeBoardDTO> selectSellerBoards(int memberNo);
+
 }

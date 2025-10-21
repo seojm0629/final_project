@@ -62,6 +62,7 @@ public class TradeBoardController {
         return ResponseEntity.ok("reported");
     }
     
+
     //정민
     @GetMapping("/mainTitle")
     public ResponseEntity<List<TradeBoardDTO>> mainTitle(@RequestParam(defaultValue = "10") int limit){
@@ -70,4 +71,12 @@ public class TradeBoardController {
     }
     
     
+
+    @GetMapping("/seller/{memberNo}")
+    public ResponseEntity<List<TradeBoardDTO>> selectSellerBoards(@PathVariable int memberNo) {
+        List<TradeBoardDTO> list = tradeBoardService.selectSellerBoards(memberNo);
+        return ResponseEntity.ok(list);
+    }
+
+
 }
