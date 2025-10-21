@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import FindIdModal from "../member/FindIdModal";
 import FindPwModal from "../member/FindPwModal";
+import AllMemberChat from "../utils/AllMemberChat";
 
 const Main = () => {
     //login 정보 가져와야함
@@ -226,10 +227,10 @@ const Main = () => {
                         </div>
                     </div>
 
-                    <div className="main-topic">
-                        <h3>today's topic</h3>
-                        <div className="topic-list">
-                            <h1>준비중</h1>
+                    <div className="main-chat">
+                        <h3>Talk&Deal 채팅</h3>
+                        <div className="chat-content-wrap">
+                            <AllMemberChat />
                         </div>
                     </div>
                 </div>
@@ -248,10 +249,12 @@ const Main = () => {
                         </div>
                     </div>
 
-                    <div className="main-topic">
-                        <h3>today's topic</h3>
-                        <div className="topic-list">
-                            <h1>준비중</h1>
+                    <div className="main-chat">
+                        <h3>Talk&Deal 채팅</h3>
+                        <div className="chat-content-wrap">
+                            
+
+                            
                         </div>
                     </div>
                 </div>
