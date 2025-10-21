@@ -269,6 +269,16 @@
   cursor: pointer;
 }
 
+.inquiry-btn {
+  width: 300px;
+  border: none;
+  background: #234f8c;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .btn:hover {
   opacity: 0.9;
 }

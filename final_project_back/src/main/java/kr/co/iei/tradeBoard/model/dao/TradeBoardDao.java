@@ -27,4 +27,6 @@ public interface TradeBoardDao {
 
     // 신고
     int insertReport(TradeReportDTO report);
+    
+	List<TradeBoardDTO> selectSellerBoards(int memberNo);
 }

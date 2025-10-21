@@ -61,4 +61,11 @@ public class TradeBoardController {
         tradeBoardService.insertReport(tradeBoardNo, report);
         return ResponseEntity.ok("reported");
     }
+    
+    @GetMapping("/seller/{memberNo}")
+    public ResponseEntity<List<TradeBoardDTO>> selectSellerBoards(@PathVariable int memberNo) {
+        List<TradeBoardDTO> list = tradeBoardService.selectSellerBoards(memberNo);
+        return ResponseEntity.ok(list);
+    }
+
 }
