@@ -84,6 +84,9 @@ const ContentStatistics = () => {
 
   const [freeBoardLabels, setFreeBoardLabels] = useState([]);
   const [freeBoardValues, setFreeBoardValues] = useState([]);
+
+  const [tradeBoardLabels, setTradeBoardLabels] = useState([]);
+  const [tradeBoardValues, setTradeBoardValues] = useState([]);
   const data = {
     labels: labels,
     datasets: [
@@ -114,6 +117,17 @@ const ContentStatistics = () => {
       {
         label: "자유 게시판 게시글 등록 수",
         data: freeBoardValues,
+        backgroundColor: "rgba(5, 20, 160, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  const dataTradeBoard = {
+    labels: tradeBoardLabels,
+    datasets: [
+      {
+        label: "거래 게시판 게시글 등록 수",
+        data: tradeBoardValues,
         backgroundColor: "rgba(5, 20, 160, 0.5)",
         borderWidth: 1,
       },
@@ -180,6 +194,18 @@ const ContentStatistics = () => {
           return r.value;
         });
         setFreeBoardValues(freeBoardValues);
+
+        const listTradeBoard = res.data.listTradeBoard;
+
+        const tradeBoardLabels = listTradeBoard.map((r) => {
+          return r.label;
+        });
+        setTradeBoardLabels(tradeBoardLabels);
+
+        const tradeBoardValues = listTradeBoard.map((r) => {
+          return r.value;
+        });
+        setTradeBoardValues(tradeBoardValues);
 
         console.log(labels);
 
@@ -333,7 +359,7 @@ const ContentStatistics = () => {
                   : "시간대별 거래 게시물 등록 수"
               }
               subTitle={"기준 : " + selectCriteria}
-              chartTag={<Line data={data} />}
+              chartTag={<Line data={dataTradeBoard} />}
             />
           </div>
         </div>
