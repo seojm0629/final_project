@@ -9,6 +9,7 @@ import FindId from "../member/FindId";
 import FindPw from "../member/FindPw";
 import FindModal from "../member/FindIdModal";
 import FindIdModal from "../member/FindIdModal";
+import FindPwModal from "../member/FindPwModal";
 
 const Main = () => {
     //login 정보 가져와야함
@@ -208,7 +209,7 @@ const Main = () => {
                         </div>
                         <div className="login-find">
                             <FindIdModal>아이디 찾기</FindIdModal>
-                            <FindPw>비밀번호 찾기</FindPw>
+                            <FindPwModal>비밀번호 찾기</FindPwModal>
                             <Link to="/member/agree">회원가입</Link>
                         </div>
                     </div>

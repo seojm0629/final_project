@@ -14,9 +14,6 @@ const FindPw = () => {
         memberEmail : "",
     })
 
-    const [mailCode, setMailCode] = useState(null);
-    const [domain, setDomain] = useState("naver.com") //기본도메인
-    const [customDomain, setCustomDomain] = useState("");
 
     //비밀번호 찾기 전 : 0 - 비밀번호 찾기 성공 : 1 - 비밀번호 찾기 실패 : 2
     const [isAuth, setIsAuth] = useState(0);
