@@ -75,7 +75,7 @@ const ContentFreeBoard = () => {
   }, [toggle]);
 
   return (
-    <div>
+    <div className="admin-right">
       <div className="admin-content-wrap">
         <div className="content">
           <div className="content_box">
@@ -90,17 +90,19 @@ const ContentFreeBoard = () => {
                 placeholder="여기에 작성하세요"
               />
             </div>
-            <div className="noticeBox search-text">
-              <button>적용</button>
-              <button>미리보기</button>
-              <button>초기화</button>
+            <div className="noticeBox">
+              <button className="admin-btn">적용</button>
+              <button className="admin-btn">미리보기</button>
+              <button className="admin-btn">초기화</button>
             </div>
           </div>
           <div className="content_box">
             <div className="content_box_title">카테고리</div>
-            <div className="categoryBox">양식이 들어갈 자리</div>
             <div>
-              <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
+              <div>미리보기</div>
+              <div>
+                <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
+              </div>
             </div>
             <div>
               <div>메인 카테고리</div>
@@ -112,6 +114,7 @@ const ContentFreeBoard = () => {
                 }}
               ></input>
               <button
+                className="admin-btn"
                 onClick={() => {
                   setToggle(!toggle);
                 }}
