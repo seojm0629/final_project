@@ -127,7 +127,7 @@ const FreeBoardMain = () => {
       <div className="main-page">
         <div className="main-side">
           <section className="sidemenu-section">
-            <FreeBoardSideMenu
+            <FreeBoardSideMenuMap
               menus={menus}
               setMenus={setMenus}
               setSelectMenu={addMenu}
@@ -326,11 +326,26 @@ const FreeBoardContent = (props) => {
  * 
  * 
  */
-const FreeBoardSideMenuMap = (props) => {
-  const menus = props.menus;
-  const setMenus = props.setMenus;
-  const setSelectMenu = props.addMenu;
-  const setSelected = props.setSelected;
+const FreeBoardSideMenuMap = () => {
+  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const [selectMenu, setSelectMenu] = useState([]);
+  const [selected, setSelected] = useState(-1);
+  const [menus, setMenus] = useState([]);
+  const addMenu = (menu) => {
+    if (!selectMenu.includes(menu)) {
+      setSelectMenu([...selectMenu, menu]);
+    }
+  };
+  useEffect(() => {
+    axios
+      .get(`${backServer}/freeBoard/mainPage`)
+      .then((res) => {
+        setMenus(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <FreeBoardSideMenu
       menus={menus}
