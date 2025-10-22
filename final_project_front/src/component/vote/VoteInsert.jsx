@@ -1,9 +1,8 @@
 import { useState } from "react";
-import "./voteCss.css";
+import "./voteinsert.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import VoteMain from "./VoteMain";
 import { useRecoilValue } from "recoil";
 import { memberNoState } from "../utils/RecoilData";
 const VoteInsert = () => {
