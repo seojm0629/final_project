@@ -8,7 +8,6 @@ import axios from "axios";
 const AllMemberChat = () => {
     
     
-
     //로그인 후 세팅을 수행하기 위해 로그인 체크(로그인이 되었는지)
     const isLogin = useRecoilState(isLoginState);   
     //로그인 한 memberId 가져오기(채팅 유저 식별자)
@@ -17,29 +16,43 @@ const AllMemberChat = () => {
     const [chatList, setChatList] = useState([]);
     //웹소켓 객체를 저장할 state
     const [ws, setWs] = useState({});
-    const [chatMsg, setChatMsg] = useState({
-        type : "enter",     
-        memberId : memberId,
-        message : "",
-    })
-    const backServer = import.meta.env.VITE_BACK_SERVER;
-    const socketServer = backServer.replace("http://", "ws://");
-    
+
     const [member, setMember] = useState({
         memberId :memberId,
         memberNickname : "",
+    });
+
+    console.log("member : ", member);
+    
+    
+
+    const [chatMsg, setChatMsg] = useState({
+        type : "enter",     
+        memberId : memberId,
+        memberNickname : member.memberNickname,
+        message : "",
     })
+    
+    console.log(chatMsg);
+    
+    
+    const backServer = import.meta.env.VITE_BACK_SERVER;
+    const socketServer = backServer.replace("http://", "ws://");
+
+    
 
     useEffect(()=>{
         axios
         .get(`${backServer}/member/chat?memberId=${member.memberId}`)
-        .then((res)=>{
-            setMember(res.data.memberNickname);
+        .then((res)=>{   
+            setChatMsg({...chatMsg, memberNickname : res.data.memberNickname});
+            setMember(res.data);
+            
         })
         .catch((err)=>{
             console.log(err);
         })
-    },[])
+    },[]);
 
     //메세지를 전송할 input 태그
     const inputChatMessage = (e) => {
@@ -48,7 +61,8 @@ const AllMemberChat = () => {
 
     //WebSocket에 접속하기 위한 코드
     useEffect(() => {
-        if(isLogin){
+        if(isLogin && member.memberNickname !== ""){
+            console.log(member)
             const socket = new WebSocket(`${socketServer}/allChat`); //서버를 웹소켓 버전으로 접속..
             setWs(socket);
 
@@ -57,7 +71,7 @@ const AllMemberChat = () => {
                 socket.close();
             };
         }
-    }, []);
+    }, [member]);
 
     //웹 소켓 연결(채팅 시작 시)
     const startChat = () => {
@@ -65,8 +79,11 @@ const AllMemberChat = () => {
 
         //웹소켓으로 데이터를 전송 시 문자열로 전송
         //우리가 보내고 싶은 데이터는 객체 -> 문자열로 변환해서 전송
+        
         const data = JSON.stringify(chatMsg); //객체를 문자열로 변환
         ws.send(data);
+
+        console.log(data);
 
         //최초 접속 메세지를 보낸 후에는 계속 채팅 메세지만 전송할 예정으로 type 변경
         setChatMsg({...chatMsg, type : "chat"});
@@ -78,8 +95,6 @@ const AllMemberChat = () => {
         
         //문자열을 JS 객체 타입으로 변환
         const data = JSON.parse(receiveData.data);
-        console.log(data);
-
         setChatList([...chatList, data]);
     };
 
@@ -88,7 +103,8 @@ const AllMemberChat = () => {
     }
 
     //소켓 연결
-    ws.onopen = startChat;
+    
+    ws.onopen = startChat;    
     ws.onmessage = receiveMSg;
     ws.onclose = endChat;
     
