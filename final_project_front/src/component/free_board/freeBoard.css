@@ -132,7 +132,7 @@
   user-select: none;
   flex-wrap: wrap;
 }
-.side-submenu.active {
+.active-submenu {
   background-color: #43688f;
   color: white;
 }
