@@ -146,10 +146,10 @@ const Main = () => {
                     </div>
 
                     <div className="main-board-list">
-                        {/* 스포츠 게시판, 게임 게시판 */}
+                        {/* 취미/여가 게시판, 정보공유 게시판 */}
                         <div className="sports-board first">
                             <div className="pre-board-header">
-                                <h4>스포츠 게시판</h4>
+                                <h4>취미/여가 게시판</h4>
                             </div>
                             <div className="pre-board-content">
                                 <h1>준비중</h1>
@@ -160,7 +160,7 @@ const Main = () => {
 
                         <div className="game-board first">
                             <div className="pre-board-header">
-                                <h4>게임 게시판</h4>
+                                <h4>정보공유 게시판</h4>
                             </div>
                             <div className="pre-board-content">
                                 <h1>준비중</h1>
@@ -170,10 +170,10 @@ const Main = () => {
                     </div>
 
                     <div className="main-board-list">
-                        {/* 연예 게시판, 경제 게시판 */}
+                        {/* 유머/이슈 게시판, 직장 게시판 */}
                         <div className="sports-board first">
                             <div className="pre-board-header">
-                                <h4>연예 게시판</h4>
+                                <h4>유머/이슈 게시판</h4>
                             </div>
                             <div className="pre-board-content">
                                 <h1>준비중</h1>
@@ -184,13 +184,35 @@ const Main = () => {
 
                         <div className="game-board first">
                             <div className="pre-board-header">
-                                <h4>경제 게시판</h4>
+                                <h4>직장 게시판</h4>
                             </div>
                             <div className="pre-board-content">
                                 <h1>준비중</h1>
                             </div>
                         </div>
+                    </div>
 
+                    <div className="main-board-list">
+                        {/* 게임 게시판, 일상 게시판 */}
+                        <div className="sports-board first">
+                            <div className="pre-board-header">
+                                <h4>게임 게시판</h4>
+                            </div>
+                            <div className="pre-board-content">
+                                <h1>준비중</h1>
+                            </div>
+                            
+                            
+                        </div>
+
+                        <div className="game-board first">
+                            <div className="pre-board-header">
+                                <h4>일상 게시판</h4>
+                            </div>
+                            <div className="pre-board-content">
+                                <h1>준비중</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

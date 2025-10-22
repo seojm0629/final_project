@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
-import { loginIdState, memberTypeState } from "../utils/RecoilData";
+import { loginIdState, memberNoState, memberTypeState } from "../utils/RecoilData";
 
 import FindIdModal from "./FindIdModal";
 import FindPwModal from "./FindPwModal";
@@ -13,7 +13,8 @@ const MemberLogin = () => {
     //recoil에 선언한 데이터(state)를 가져오는 방법
     const [memberId, setMemberId] = useRecoilState(loginIdState);
     const [memberType, setMemberType] = useRecoilState(memberTypeState);
-
+    const [memberNo, setMemberNo] = useRecoilState(memberNoState);
+    
 
     //member 로그인 시 초기값 세팅
     const [member, setMember] = useState({
@@ -41,6 +42,7 @@ const MemberLogin = () => {
                 //로그인 성공시점에 받아온 회원 정보를 recoil의 저장소에 저장
                 setMemberId(res.data.memberId);
                 setMemberType(res.data.memberType);
+                setMemberNo(res.data.memberNo);
 
                 //로그인 이후 axios를 통한 요청을 수행하는 경우 토큰값을 자동으로 axios를 추가하는 로직
                 axios.defaults.headers.common["Authorization"] = res.data.access;
