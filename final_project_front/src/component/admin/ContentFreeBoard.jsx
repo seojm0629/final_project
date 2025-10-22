@@ -75,12 +75,12 @@ const ContentFreeBoard = () => {
   }, [toggle]);
 
   return (
-    <div className="admin-right">
+    <div className="admin-right freeBoard">
       <div className="admin-content-wrap">
         <div className="content">
           <div className="content_box">
             <div className="content_box_title">공지사항</div>
-            <div>
+            <div className="editor-wrap">
               <ReactQuill
                 theme="snow"
                 value={value}
@@ -98,32 +98,51 @@ const ContentFreeBoard = () => {
           </div>
           <div className="content_box">
             <div className="content_box_title">카테고리</div>
-            <div>
-              <div>미리보기</div>
-              <div>
-                <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
+            <div className="cate-wrap">
+              <div className="cate-left">
+                <div className="section-title">미리보기</div>
+                <div className="category-preview">
+                  <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
+                </div>
               </div>
-            </div>
-            <div>
-              <div>메인 카테고리</div>
-              <input
-                type="text"
-                value={categoryAddText}
-                onChange={(e) => {
-                  setCategoryAddText(e.target.value);
-                }}
-              ></input>
-              <button
-                className="admin-btn"
-                onClick={() => {
-                  setToggle(!toggle);
-                }}
-              >
-                등록
-              </button>
-            </div>
-            <div>
-              <div>서브 카테고리</div>
+              <div className="cate-right">
+                <div>
+                  <div className="form-label">메인 카테고리</div>
+                  <input
+                    type="text"
+                    value={categoryAddText}
+                    onChange={(e) => {
+                      setCategoryAddText(e.target.value);
+                    }}
+                  ></input>
+                  <button
+                    className="admin-btn"
+                    onClick={() => {
+                      setToggle(!toggle);
+                    }}
+                  >
+                    등록
+                  </button>
+                </div>
+                <div>
+                  <div className="form-label">서브 카테고리</div>
+                  <input
+                    type="text"
+                    value={categoryAddText}
+                    onChange={(e) => {
+                      setCategoryAddText(e.target.value);
+                    }}
+                  ></input>
+                  <button
+                    className="admin-btn"
+                    onClick={() => {
+                      setToggle(!toggle);
+                    }}
+                  >
+                    등록
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

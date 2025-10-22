@@ -25,6 +25,10 @@
 .admin .admin-content-wrap > .content > .content_box > .noticeBox {
   border-radius: 5px;
   justify-content: center;
+  display: flex;
+
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .admin .admin-content-wrap > .content > .content_box .admin-btn {
@@ -59,5 +63,54 @@
   border-radius: 5px;
   padding: 8px 10px;
   margin: 8px 0;
-  width: 70%;
+  width: 50%;
+}
+.admin .admin-right.freeBoard .admin-content-wrap .content-head {
+  border: 1px solid #d6dae2;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 25px;
+  box-shadow: 0 2px 6px #e5e7eb;
+}
+
+.admin .editor-wrap .ql-toolbar {
+  background-color: #e2e2e2;
+  border: 1px solid #d6dae2;
+}
+
+.admin .editor-wrap .ql-editor {
+  min-height: 350px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.admin .content_box .section-title {
+  margin-top: 11px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f3956;
+}
+
+.admin .content_box .category-preview {
+  border: 1px solid #e5e7eb;
+  background-color: #fafbfc;
+  border-radius: 5px;
+  padding: 12px;
+  padding-bottom: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+.admin .content_box .cate-wrap {
+  display: flex;
+  gap: 20px;
+}
+
+.admin .content_box .form-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f3956;
+  margin-top: 16px;
+  margin-bottom: 6px;
 }
