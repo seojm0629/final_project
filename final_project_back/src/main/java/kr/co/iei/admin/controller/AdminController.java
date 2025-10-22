@@ -79,11 +79,18 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="statistics")
-	public HashMap<String, Object> statistics(@RequestParam String selectCriteria){
+	public ResponseEntity<HashMap<String, Object>> statistics(@RequestParam String selectCriteria){
 		System.out.println(selectCriteria);
 		HashMap<String, Object> map = adminService.statistics(selectCriteria);
 		System.out.println(map);
-		return map;
+		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping(value="insertFreeCate")
+	public ResponseEntity<Integer> insertFreeCate(@RequestBody HashMap<String, String> insertCateSet) {
+		System.out.println(insertCateSet);
+		int result = adminService.insertFreeCate(insertCateSet);
+		return ResponseEntity.ok(result);
 	}
 	
 	

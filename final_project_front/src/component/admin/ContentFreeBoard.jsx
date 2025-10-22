@@ -1,15 +1,17 @@
 import ReactQuill, { Quill } from "react-quill";
 import "./contentFreeBoard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { memberNoState, loginIdState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 
 import { FreeBoardSideMenuMap } from "../free_board/FreeBoardMain";
+import axios from "axios";
 
 const ContentFreeBoard = () => {
   const [value, setValue] = useState("");
   const [refreshToggle, setRefreshToggle] = useState(true);
   console.log(value);
+
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   const [memberId, setMemberId] = useRecoilState(loginIdState);
   console.log(memberNoState);
@@ -43,6 +45,35 @@ const ContentFreeBoard = () => {
     "blockquote",
     "code-block",
   ];
+
+  const [categoryAddText, setCategoryAddText] = useState("");
+  console.log(categoryAddText);
+
+  const insertCate = { categoryAddText: categoryAddText, memberNo: memberNo };
+
+  console.log(insertCate);
+  const [toggle, setToggle] = useState(false);
+  useEffect(() => {
+    axios
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/admin/insertFreeCate`,
+        insertCate
+      )
+      .then((res) => {
+        console.log(res.data);
+        setRefreshToggle(!refreshToggle);
+        Swal.fire({
+          title: "알림",
+          text: `카테고리 추가가 완료되었습니다.`,
+
+          icon: "success",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [toggle]);
+
   return (
     <div>
       <div className="admin-content-wrap">
@@ -71,6 +102,20 @@ const ContentFreeBoard = () => {
             <div>
               <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
             </div>
+            <input
+              type="text"
+              value={categoryAddText}
+              onChange={(e) => {
+                setCategoryAddText(e.target.value);
+              }}
+            ></input>
+            <button
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+            >
+              등록
+            </button>
           </div>
         </div>
       </div>

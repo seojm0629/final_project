@@ -39,6 +39,8 @@
 
 .admin .content_box .side-menu {
   height: 100%;
+  background-color: transparent;
+  border-right: none;
 }
 
 .admin .content_box .side-menu .side-header,

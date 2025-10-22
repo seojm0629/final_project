@@ -606,4 +606,9 @@
 		TO_CHAR(SYSDATE,'YYYY-MM')=TO_CHAR(TRADE_BOARD_DATE,'YYYY-MM')) A GROUP BY
 		A.LABEL ORDER BY A.LABEL
 	</select>
+	
+	<insert id="insertFreeCate">
+		INSERT INTO FREE_BOARD_CATEGORY_TBL VALUES(
+	FB_CATEGORY_SEQ.NEXTVAL,#{categoryAddText})
+	</insert>
 </mapper>

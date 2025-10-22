@@ -118,4 +118,9 @@ public class AdminService {
 	    map.put("listTradeBoard", listTradeBoard);
 		return map;
 	}
+
+	public int insertFreeCate(HashMap<String, String> insertCateSet) {
+		int result = adminDao.insertFreeCate(insertCateSet);
+		return result;
+	}
 }
