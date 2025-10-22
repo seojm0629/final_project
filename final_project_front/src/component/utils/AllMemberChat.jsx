@@ -135,11 +135,11 @@ const AllMemberChat = () => {
                             <div key={"chat-" + i}>
                                 {chat.type === "enter" ? (
                                     <p className="chat-info">
-                                        <span>{chat.memberId}님 입장.</span>
+                                        <span>{chat.memberNickname} 님 입장.</span>
                                     </p>
                                 ) : chat.type === "out" ? (
                                     <p className="chat-info">
-                                        <span>{chat.memberId}</span>님이 퇴장.
+                                        <span>{chat.memberNickname}</span>님이 퇴장.
                                     </p>
                                 ) : (
                                     <div
@@ -149,7 +149,7 @@ const AllMemberChat = () => {
                                     >
                                         <div className="user">
                                             <AccountCircleIcon />
-                                            <span className="chat-id">{chat.memberId}</span>
+                                            <span className="chat-id">{chat.memberNickname}</span>
                                         </div>
                                         <div className="chat-message">{chat.message}</div>
                                     </div>
