@@ -98,7 +98,7 @@ const MemberMypage = () => {
                 <section className="section site-path">
                     <div className="mypage-tab">
                         <section ref={infoRef} className="section site-path">
-                            <MemberInfo member={member} memberId={memberId} />
+                            <MemberInfo member={member} memberId={memberId} setMember={setMember} />
                         </section>
                         <section ref={accountRef} className="section site-path">
                             <MemberAccount memberId={memberId} />
@@ -155,6 +155,7 @@ const MemberInfo = (props) => {
         })
     }
 
+    
     return(      
         <div className="mypage-info tab-menu">
             <div className="info-title mypage-title">
@@ -169,7 +170,7 @@ const MemberInfo = (props) => {
                             닉네임
                         </div>
                         <input name="memberNickname" id="memberNickname"
-                        value={member.memberNickname} onChange={(e)=>{setMember({...member, [e.target.name] : e.target.value})}}></input>
+                        value={member.memberNickname} onChange={(e) => setMember({...member, memberNickname : e.target.value})}></input>
                     </div>
                 </div>
                 <div className="mypage-nick-btn-box">
