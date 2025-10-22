@@ -5,6 +5,12 @@ import Swal from "sweetalert2";
 import { useRecoilValue } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import "./tradeBoard.css";
+import dayjs from "dayjs"; // 날짜js
+import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
+import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
+
+dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
+dayjs.locale("ko"); // 한국어 로케일 설정
 
 const TradeBoardView = () => {
   const { tradeBoardNo } = useParams();
@@ -16,6 +22,17 @@ const TradeBoardView = () => {
   const [commentInput, setCommentInput] = useState("");
   const [sellerProducts, setSellerProducts] = useState([]);
 
+  const nowDate = (dateString) => {
+    const now = dayjs(); //현재 날짜/시간 가져오는 함수
+    const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
+    const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
+    // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
+    if (diffDays >= 7) {
+      return target.format("YYYY-MM-DD"); // 7일 이상이면 날짜로 변형
+    }
+    return target.fromNow(); //한국어로 ?? 시간전 표시하기
+  };
+
   // 상세 데이터 불러오기
   useEffect(() => {
     axios
@@ -24,6 +41,7 @@ const TradeBoardView = () => {
         const data = res.data || {};
         setTradeBoard(data);
         console.log(data);
+        console.log(tradeBoardNo);
         // 댓글 불러오기
         axios
           .get(
@@ -33,6 +51,7 @@ const TradeBoardView = () => {
           )
           .then((res2) => {
             const data = res2.data;
+            console.log(data);
             if (Array.isArray(data)) setComments(data);
             else if (Array.isArray(data.comments)) setComments(data.comments);
             else setComments([]);
@@ -40,14 +59,22 @@ const TradeBoardView = () => {
           .catch((err) => console.error("댓글 불러오기 실패", err));
 
         // 판매자 다른 물품
-        if (data.sellerId) {
+        if (data.memberNo) {
           axios
             .get(
               `${import.meta.env.VITE_BACK_SERVER}/tradeBoard/seller/${
-                data.sellerId
+                data.memberNo
               }`
             )
-            .then((res3) => setSellerProducts(res3.data?.filter(Boolean) || []))
+            .then((res3) => {
+              console.log(res3);
+              // 자기 자신의 현재 게시글은 제외
+              const otherProducts =
+                res3.data?.filter(
+                  (item) => item.tradeBoardNo !== data.tradeBoardNo
+                ) || [];
+              setSellerProducts(otherProducts);
+            })
             .catch((err) => console.error("판매자 물품 불러오기 실패", err));
         }
       })
@@ -90,6 +117,48 @@ const TradeBoardView = () => {
     return "";
   };
 
+  const write = () => {
+    if (!loginId) {
+      Swal.fire("로그인 필요", "댓글을 작성하려면 로그인해주세요.", "warning");
+      return;
+    }
+
+    if (commentInput.trim() === "") {
+      Swal.fire("입력 오류", "댓글 내용을 입력해주세요.", "error");
+      return;
+    }
+
+    const newComment = {
+      memberNo: Number(loginId), // 로그인한 회원 번호
+      tbCommentContent: commentInput,
+    };
+
+    axios
+      .post(
+        `${
+          import.meta.env.VITE_BACK_SERVER
+        }/tradeBoard/${tradeBoardNo}/comments`,
+        newComment
+      )
+      .then((res) => {
+        if (res.data === "success") {
+          Swal.fire("등록 완료", "댓글이 등록되었습니다.", "success");
+          setCommentInput(""); // 입력창 초기화
+          // 새로고침 없이 댓글 목록 다시 불러오기
+          axios
+            .get(
+              `${
+                import.meta.env.VITE_BACK_SERVER
+              }/tradeBoard/${tradeBoardNo}/comments`
+            )
+            .then((res2) => {
+              setComments(res2.data);
+            });
+        }
+      })
+      .catch((err) => console.error("댓글 등록 실패", err));
+  };
+
   return (
     <div className="trade-view-wrap">
       {/* 상단: 썸네일 + 제목/가격 */}
@@ -117,7 +186,8 @@ const TradeBoardView = () => {
               )}
             </h1>
             <p className="trade-meta">
-              #{tradeBoard.categoryName || "기타"} · {tradeBoard.timeAgo || ""}
+              #{tradeBoard.tradeBoardCategory || "기타"} ·{" "}
+              {nowDate(tradeBoard.tradeBoardDate)}
             </p>
           </div>
 
@@ -125,15 +195,21 @@ const TradeBoardView = () => {
             <p className="trade-price">
               {Number(tradeBoard.tradeBoardPrice).toLocaleString()}원
             </p>
-            <p className="trade-place">📍 {tradeBoard.tradeBoardPlace}</p>
+            <p className="trade-place">
+              거래 희망 지역 : {tradeBoard.tradeBoardPlace}
+            </p>
             <p className="trade-status">
               상태: {getStatusText(tradeBoard.tradeBoardStatus)}
             </p>
           </div>
 
+          <div className="trade-claim">
+            <p>관심 0 조회수 0</p>
+            <button className="icon-btn claim-btn">🚨 신고</button>
+          </div>
+
           <div className="trade-actions">
             <button className="icon-btn like-btn">❤️ 찜</button>
-            <button className="icon-btn report-btn">🚩 신고</button>
             <button className="btn inquiry-btn">문의하기</button>
           </div>
         </div>
@@ -181,7 +257,9 @@ const TradeBoardView = () => {
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
           />
-          <button className="btn comment-submit-btn">등록</button>
+          <button className="btn comment-submit-btn" onClick={write}>
+            등록
+          </button>
         </div>
 
         <div className="comment-list">
