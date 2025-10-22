@@ -140,3 +140,5 @@
         where trade_board_no = #{tradeBoardNo}
 	</select>
  -->
+ 
+ </mapper>
