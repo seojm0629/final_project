@@ -20,7 +20,6 @@ const AllMemberChat = () => {
     const [chatMsg, setChatMsg] = useState({
         type : "enter",     
         memberId : memberId,
-        memberType : "",
         message : "",
     })
     const backServer = import.meta.env.VITE_BACK_SERVER;
