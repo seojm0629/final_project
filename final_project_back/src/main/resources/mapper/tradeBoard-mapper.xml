@@ -46,20 +46,28 @@
     </select>
 
     <insert id="insertComment" parameterType="tradeComment">
-        insert into tb_comment_tbl (
-            tb_comment_no,
-            trade_board_no,
-            member_no,
-            tb_comment_content,
-            tb_comment_date
-        ) values (
-            tb_comment_seq.nextval,
-            #{tradeBoardNo},
-            #{memberNo},
-            #{tbCommentContent},
-            SYSDATE
-        )
-    </insert>
+	    INSERT INTO tb_comment_tbl (
+	        tb_comment_no,
+	        trade_board_no,
+	        trade_board_category_no,   
+	        member_no,
+	        tb_comment_content,
+	        tb_comment_date
+	    ) VALUES (
+	        tb_comment_seq.nextval,
+	        #{tradeBoardNo},
+	        #{tradeBoardCategoryNo},   
+	        #{memberNo},
+	        #{tbCommentContent},
+	        SYSDATE
+	    )
+	</insert>
+	
+	<select id="selectCategoryNoByTradeBoardNo" parameterType="int" resultType="int">
+	    SELECT trade_board_category_no
+	    FROM trade_board_tbl
+	    WHERE trade_board_no = #{tradeBoardNo}
+	</select>
 
     <insert id="insertLike" parameterType="tradeLike">
         INSERT INTO tb_like_tbl (
