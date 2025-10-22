@@ -29,6 +29,7 @@ public interface FreeBoardDao {
 	int totalSubListCount(HashMap<String, Object> freeBoardList);
 	List<FreeBoardDTO> mainTitle(int limit);
 
+	List isSubCategory(String cate);
 	List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo);
 	
 

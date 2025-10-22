@@ -1,6 +1,9 @@
 .logo-img {
   filter: brightness(0) invert(1); /*로고 색 반전*/
 }
+.wrap {
+  width: 100%;
+}
 .header {
   width: 100%;
   display: flex;
@@ -118,7 +121,6 @@ main {
   font-size: 12px;
   line-height: 23px;
   padding: 20px;
-
   margin-top: 50px;
   position: relative;
 }
@@ -329,7 +331,7 @@ main {
   margin-left: 20px;
   border: 1px solid #ccc;
   color: black;
-  margin-top : 8px;
+  margin-top: 8px;
 }
 
 /* 채팅을 칠 때마다 보더가 늘어나게*/
@@ -338,7 +340,7 @@ main {
   width: 100px;
   background-color: #fff;
   color: black;
-  margin-top : 8px;
+  margin-top: 8px;
 }
 
 .input-item {

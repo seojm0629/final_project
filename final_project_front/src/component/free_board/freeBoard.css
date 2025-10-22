@@ -132,9 +132,13 @@
   user-select: none;
   flex-wrap: wrap;
 }
+.side-submenu li {
+}
 .active-submenu {
+  border-radius: 5px;
   background-color: #43688f;
   color: white;
+  cursor: pointer;
 }
 .freeBoard-section {
   display: flex;
@@ -302,7 +306,7 @@
 }
 .category-area {
   display: flex;
-  gap: 35px;
+  gap: 23px;
   color: #2f4e70;
   font-weight: 600;
   align-items: center;
@@ -315,16 +319,23 @@
   display: flex;
   gap: 10px;
 }
-
+.category-text svg {
+  display: flex;
+  gap: 10px;
+}
 .title-area {
   display: flex;
   gap: 55px;
   color: #2f4e70;
   font-weight: 500;
 }
+.title-area input {
+  height: 35px;
+}
 .title-area div:first-child {
   display: flex;
   gap: 5px;
+  align-items: center;
   color: #2f4e70;
   font-weight: 600;
 }

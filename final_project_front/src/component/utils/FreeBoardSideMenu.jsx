@@ -13,17 +13,11 @@ const FreeBoardSideMenu = (props) => {
   const setSelected = props.setSelected;
   const [naviDown, setNaviDown] = useState(null);
   const [menuNavi, setMenuNavi] = useState(""); //카테고리 밑 메뉴 네비
-  //const [subClick, setSubClick] = useState(""); // 하위 카테고리 클릭 시 클래스 명 변경 state
+  const [subClick, setSubClick] = useState(""); // 하위 카테고리 클릭 시 클래스 명 변경 state
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
   };
-  /*
-  console.log(m.freeBoardSubcategory[i + 1]);
-  {
-    m.freeBoardSubcategory[i + 1] === n &&
-      (subClick === "" ? "side-submenu" : "active-submenu");
-  }
-      */
+
   return (
     <div className="side-menu">
       <section className="side-header">
@@ -76,7 +70,7 @@ const FreeBoardSideMenu = (props) => {
                           className="side-submenu"
                           onClick={() => {
                             setSelected(m.freeBoardSubcategory[i + 1]);
-                            //setSubClick("active-submenu");
+                            setSubClick("active-submenu");
                           }}
                         >
                           <li>

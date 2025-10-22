@@ -78,6 +78,12 @@ public class FreeBoardController {
 		return ResponseEntity.ok(list);
 	}
 	
+	@GetMapping(value= "/boardWrite")
+	public ResponseEntity<List> isSubCategory(@RequestParam String cate){
+		List subList = freeBoardService.isSubCategory(cate);
+		System.out.println(subList);
+		return ResponseEntity.ok(subList);
+	}
 	@GetMapping(value="/mainCategory")
 	public ResponseEntity<List<FreeBoardDTO>> mainCategory(@RequestParam int freeBoardCategoryNo){
 		List<FreeBoardDTO> list = freeBoardService.mainCategory(freeBoardCategoryNo);
