@@ -28,6 +28,7 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [freeBoardWriteTitle, setFreeBoardWriteTitle] = useState("");
+  const [refreshToggle, setRefreshToggle] = useState(true); // 관리자 페이지에서 하위 카테고리 추가 시
   const [freeBoardContent, setFreeBoardContent] = useState("");
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
@@ -132,6 +133,7 @@ const FreeBoardMain = () => {
               setMenus={setMenus}
               setSelectMenu={addMenu}
               setSelected={setSelected}
+              refreshToggle={refreshToggle}
             />
           </section>
         </div>
@@ -331,12 +333,12 @@ const FreeBoardSideMenuMap = (props) => {
   const [selectMenu, setSelectMenu] = useState([]);
   const [selected, setSelected] = useState(-1);
   const [menus, setMenus] = useState([]);
+  const toggle = props.refreshToggle;
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
       setSelectMenu([...selectMenu, menu]);
     }
   };
-  const toggle = props.refreshToggle;
 
   useEffect(() => {
     axios
