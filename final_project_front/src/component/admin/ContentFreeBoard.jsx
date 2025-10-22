@@ -48,9 +48,12 @@ const ContentFreeBoard = () => {
 
   const [categoryAddText, setCategoryAddText] = useState("");
   console.log(categoryAddText);
-
+  const [subCategoryAddText, setSubCategoryAddText] = useState("");
   const insertCate = { categoryAddText: categoryAddText, memberNo: memberNo };
-
+  const insertSubCate = {
+    subCategoryAddText: subCategoryAddText,
+    memberNo: memberNo,
+  };
   console.log(insertCate);
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
@@ -110,7 +113,7 @@ const ContentFreeBoard = () => {
                   <div className="form-label">메인 카테고리</div>
                   <input
                     type="text"
-                    value={categoryAddText}
+                    value={subCategoryAddText}
                     onChange={(e) => {
                       setCategoryAddText(e.target.value);
                     }}
@@ -128,9 +131,9 @@ const ContentFreeBoard = () => {
                   <div className="form-label">서브 카테고리</div>
                   <input
                     type="text"
-                    value={categoryAddText}
+                    value={subCategoryAddText}
                     onChange={(e) => {
-                      setCategoryAddText(e.target.value);
+                      setSubCategoryAddText(e.target.value);
                     }}
                   ></input>
                   <button
