@@ -1,0 +1,8 @@
+.vote-insert-box {
+  height: 800px;
+  display: flex;
+  justify-content: center;
+}
+.vote-insert-title {
+  font-size: 1rem;
+}
