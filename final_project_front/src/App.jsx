@@ -7,7 +7,7 @@ import Header from "./component/common/Header";
 import MemberMypage from "./component/member/MemberMypage";
 import Footer from "./component/common/Footer";
 import AdminMain from "./component/admin/AdminMain";
-import FreeBoardMain from "./component/free_board/FreeBoardMain";
+import { FreeBoardMain } from "./component/free_board/FreeBoardMain"; // export 형식에 따라 달라짐
 import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/note/Test";
