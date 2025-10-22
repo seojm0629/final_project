@@ -326,7 +326,7 @@ const FreeBoardContent = (props) => {
  * 
  * 
  */
-const FreeBoardSideMenuMap = () => {
+const FreeBoardSideMenuMap = (props) => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const [selectMenu, setSelectMenu] = useState([]);
   const [selected, setSelected] = useState(-1);
@@ -336,6 +336,8 @@ const FreeBoardSideMenuMap = () => {
       setSelectMenu([...selectMenu, menu]);
     }
   };
+  const toggle = props.refreshToggle;
+
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainPage`)
@@ -345,7 +347,7 @@ const FreeBoardSideMenuMap = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [toggle]);
   return (
     <FreeBoardSideMenu
       menus={menus}
