@@ -48,4 +48,4 @@ const isLoginState = selector({
     }
 })
 
-export { loginIdState, memberTypeState, isLoginState, authReadyState };
+export { loginIdState, memberTypeState, memberNoState, isLoginState, authReadyState };
