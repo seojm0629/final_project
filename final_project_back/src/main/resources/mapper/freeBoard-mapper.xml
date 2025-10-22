@@ -73,7 +73,7 @@
     			order by free_board_no asc
     		</if>
           	)
-        where fbnum between #{startRow} and #{endRow}
+        where fbnum between #{startRow} and #{endRow} 
 	</select>
 	
 	<select id="totalSubListCount" resultType = "int">
@@ -99,7 +99,13 @@
 		]]>
 	 </select>
 	 
-	 
+	 <select id="isSubCategory" resultType = "freeBoardCategory">
+	 	select rownum no, a.* 
+		    from (free_board_sub_category  
+		        from (select * from free_board_category_tbl 
+            where free_board_category = #{cate}) 
+            join free_board_sub_category_tbl using(free_board_category_no)) a
+	 </select>
 	 
 	 
 	 

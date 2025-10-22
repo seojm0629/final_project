@@ -77,18 +77,12 @@ public class FreeBoardController {
 		return ResponseEntity.ok(list);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@GetMapping(value= "/boardWrite")
+	public ResponseEntity<List> isSubCategory(@RequestParam String cate){
+		List subList = freeBoardService.isSubCategory(cate);
+		System.out.println(subList);
+		return ResponseEntity.ok(subList);
+	}
 	
 	
 }

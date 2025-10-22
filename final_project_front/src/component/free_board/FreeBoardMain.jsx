@@ -180,6 +180,7 @@ const FreeBoardMain = () => {
                     freeBoardWriteTitle={freeBoardWriteTitle} //작성페이지 입력한 제목
                     setFreeBoardWriteTitle={setFreeBoardWriteTitle}
                     setFreeBoardTitle={setFreeBoardTitle}
+                    menus={menus}
                   ></FreeBoardWrite>
                 }
               ></Route>
@@ -317,16 +318,9 @@ const FreeBoardContent = (props) => {
     </section>
   );
 };
+
 /**
- *   const selected = props.selected;
-  const reqPageInfo = props.reqPageInfo;
-  const setReqPageInfo = props.setReqPageInfo;
-  const totalListCount = props.totalListCount;
-  const setTotalListCount = props.setTotalListCount;
-  const freeBoardList = props.freeBoardList;
-  const setFreeBoardList = props.setFreeBoardList;
- * 
- * 
+ * props : refreshToggle (관리자페이지 새로고침용)
  */
 const FreeBoardSideMenuMap = (props) => {
   const backServer = import.meta.env.VITE_BACK_SERVER;

@@ -107,7 +107,7 @@ public class FreeBoardService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("boardList", boardList);
 		map.put("totalListCount", totalListCount);
-	
+		
 		return map;
 	}
 
@@ -115,5 +115,10 @@ public class FreeBoardService {
 		List<FreeBoardDTO> list = freeBoardDao.mainTitle(limit);
 		
 		return list;
+	}
+
+	public List isSubCategory(String cate) {
+		List subList = freeBoardDao.isSubCategory(cate);
+		return subList;
 	}
 }
