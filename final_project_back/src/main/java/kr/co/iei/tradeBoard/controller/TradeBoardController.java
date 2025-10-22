@@ -49,6 +49,7 @@ public class TradeBoardController {
             @PathVariable int tradeBoardNo,
             @RequestBody TradeCommentDTO comment
     ) {
+    	System.out.println(comment);
         comment.setTradeBoardNo(tradeBoardNo);
         tradeBoardService.insertComment(comment);
         return ResponseEntity.ok("success");
