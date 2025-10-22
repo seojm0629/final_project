@@ -30,6 +30,7 @@ const memberNoState = atom({
     effects_UNSTABLE : [persistAtom],
 })
 
+
 //refresh 초기화 확인용 데이터
 const authReadyState = atom({
     key: "authReadyState",
