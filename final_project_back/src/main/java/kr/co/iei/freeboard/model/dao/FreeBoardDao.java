@@ -30,5 +30,7 @@ public interface FreeBoardDao {
 	List<FreeBoardDTO> mainTitle(int limit);
 
 	List isSubCategory(String cate);
+	List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo);
+	
 
 }

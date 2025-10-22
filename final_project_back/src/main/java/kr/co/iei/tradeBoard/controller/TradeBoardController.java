@@ -43,6 +43,18 @@ public class TradeBoardController {
         List<TradeCommentDTO> list = tradeBoardService.selectCommentList(tradeBoardNo);
         return ResponseEntity.ok(list);
     }
+    
+    @PostMapping("/{tradeBoardNo}/comments")
+    public ResponseEntity<String> insertComment(
+            @PathVariable int tradeBoardNo,
+            @RequestBody TradeCommentDTO comment
+    ) {
+    	System.out.println(comment);
+        comment.setTradeBoardNo(tradeBoardNo);
+        tradeBoardService.insertComment(comment);
+        return ResponseEntity.ok("success");
+    }
+
 
     @GetMapping("/{tradeBoardNo}/likes")
     public ResponseEntity<Map<String, Object>> getLikes(@PathVariable int tradeBoardNo, @RequestParam int memberNo) {

@@ -76,5 +76,7 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsTradeBoardMonth();
 
+	int insertFreeCate(HashMap<String, String> insertCateSet);
+
 
 }

@@ -76,5 +76,13 @@ public class TradeBoardService {
         return tradeBoardDao.selectSellerBoards(memberNo);
     }
 
+    public void insertComment(TradeCommentDTO comment) {
+        // tradeBoardNo로 카테고리 번호 가져오기
+        int categoryNo = tradeBoardDao.selectCategoryNoByTradeBoardNo(comment.getTradeBoardNo());
+        comment.setTradeBoardCategoryNo(categoryNo);
+
+        tradeBoardDao.insertComment(comment);
+    }
+
 
 }

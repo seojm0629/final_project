@@ -121,4 +121,12 @@ public class FreeBoardService {
 		List subList = freeBoardDao.isSubCategory(cate);
 		return subList;
 	}
+	public List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo) {
+		List<FreeBoardDTO> list = freeBoardDao.mainCategory(freeBoardCategoryNo);
+		System.out.println(list);
+		
+		return list;
+	}
+
+	
 }
