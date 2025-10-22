@@ -1,9 +1,18 @@
 import ReactQuill, { Quill } from "react-quill";
 import "./contentFreeBoard.css";
 import { useState } from "react";
+import { memberNoState, loginIdState } from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
+import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 
 const ContentFreeBoard = () => {
   const [value, setValue] = useState("");
+  console.log(value);
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState);
+  const [memberId, setMemberId] = useRecoilState(loginIdState);
+  console.log(memberNoState);
+  console.log(memberNo);
+  console.log(memberId);
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -57,6 +66,9 @@ const ContentFreeBoard = () => {
           <div className="content_box">
             <div className="content_box_title">카테고리</div>
             <div className="categoryBox">양식이 들어갈 자리</div>
+            <div>
+              <FreeBoardSideMenu></FreeBoardSideMenu>
+            </div>
           </div>
         </div>
       </div>
