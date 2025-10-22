@@ -48,9 +48,12 @@ const ContentFreeBoard = () => {
 
   const [categoryAddText, setCategoryAddText] = useState("");
   console.log(categoryAddText);
-
+  const [subCategoryAddText, setSubCategoryAddText] = useState("");
   const insertCate = { categoryAddText: categoryAddText, memberNo: memberNo };
-
+  const insertSubCate = {
+    subCategoryAddText: subCategoryAddText,
+    memberNo: memberNo,
+  };
   console.log(insertCate);
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
@@ -75,12 +78,12 @@ const ContentFreeBoard = () => {
   }, [toggle]);
 
   return (
-    <div>
+    <div className="admin-right freeBoard">
       <div className="admin-content-wrap">
         <div className="content">
           <div className="content_box">
             <div className="content_box_title">공지사항</div>
-            <div>
+            <div className="editor-wrap">
               <ReactQuill
                 theme="snow"
                 value={value}
@@ -90,37 +93,59 @@ const ContentFreeBoard = () => {
                 placeholder="여기에 작성하세요"
               />
             </div>
-            <div className="noticeBox search-text">
-              <button>적용</button>
-              <button>미리보기</button>
-              <button>초기화</button>
+            <div className="noticeBox">
+              <button className="admin-btn">적용</button>
+              <button className="admin-btn">미리보기</button>
+              <button className="admin-btn">초기화</button>
             </div>
           </div>
           <div className="content_box">
             <div className="content_box_title">카테고리</div>
-            <div className="categoryBox">양식이 들어갈 자리</div>
-            <div>
-              <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
-            </div>
-            <div>
-              <div>메인 카테고리</div>
-              <input
-                type="text"
-                value={categoryAddText}
-                onChange={(e) => {
-                  setCategoryAddText(e.target.value);
-                }}
-              ></input>
-              <button
-                onClick={() => {
-                  setToggle(!toggle);
-                }}
-              >
-                등록
-              </button>
-            </div>
-            <div>
-              <div>서브 카테고리</div>
+            <div className="cate-wrap">
+              <div className="cate-left">
+                <div className="section-title">미리보기</div>
+                <div className="category-preview">
+                  <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
+                </div>
+              </div>
+              <div className="cate-right">
+                <div>
+                  <div className="form-label">메인 카테고리</div>
+                  <input
+                    type="text"
+                    value={subCategoryAddText}
+                    onChange={(e) => {
+                      setCategoryAddText(e.target.value);
+                    }}
+                  ></input>
+                  <button
+                    className="admin-btn"
+                    onClick={() => {
+                      setToggle(!toggle);
+                    }}
+                  >
+                    등록
+                  </button>
+                </div>
+                <div>
+                  <div className="form-label">서브 카테고리</div>
+                  <input
+                    type="text"
+                    value={subCategoryAddText}
+                    onChange={(e) => {
+                      setSubCategoryAddText(e.target.value);
+                    }}
+                  ></input>
+                  <button
+                    className="admin-btn"
+                    onClick={() => {
+                      setToggle(!toggle);
+                    }}
+                  >
+                    등록
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
