@@ -24,7 +24,7 @@ const memberTypeState = atom({
 })
 
 //회원 번호를 저장하는 저장소(atom)
-const memberNoState = aton({
+const memberNoState = atom({
     key : "memberNoState",
     default : "",
     effects_UNSTABLE : [persistAtom],
