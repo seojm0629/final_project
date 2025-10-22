@@ -311,27 +311,11 @@
   display: flex;
   gap: 5px;
 }
-.category-area div:last-child div {
-  height: 50px;
-}
 .category-text {
   display: flex;
-  gap: 50px;
+  gap: 10px;
 }
-.category-text div {
-  display: flex;
-  gap: 12px;
-}
-.category-text div > div:first-child {
-  display: flex;
-  gap: 12px;
-  height: 40px;
-}
-.category-text div > div:first-child > div:first-child {
-  display: flex;
-  align-items: center;
-  width: max-content;
-}
+
 .title-area {
   display: flex;
   gap: 55px;

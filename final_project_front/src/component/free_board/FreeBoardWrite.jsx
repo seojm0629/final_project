@@ -46,22 +46,24 @@ const FreeBoardWrite = (props) => {
           {/*카테고리 개수만큼 처리*/}
           <div className="category-text">
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
+              <InputLabel id="demo-simple-select-helper-label">
+                category
+              </InputLabel>
               <Select
+                sx={{ height: 40 }}
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
                 value={cate}
-                label="Age"
+                label="cate"
                 onChange={handleChange}
               >
-                <MenuItem value="">
+                <MenuItem value="cate">
                   <em>None</em>
                 </MenuItem>
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
-              <FormHelperText>With label + helper text</FormHelperText>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <Select
@@ -70,14 +72,13 @@ const FreeBoardWrite = (props) => {
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
               >
-                <MenuItem value="">
+                <MenuItem value="cate">
                   <em>None</em>
                 </MenuItem>
                 <MenuItem value={10}>Ten</MenuItem>
                 <MenuItem value={20}>Twenty</MenuItem>
                 <MenuItem value={30}>Thirty</MenuItem>
               </Select>
-              <FormHelperText>Without label</FormHelperText>
             </FormControl>
           </div>
         </div>
