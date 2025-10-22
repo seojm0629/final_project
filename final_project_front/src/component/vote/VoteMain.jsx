@@ -28,7 +28,7 @@ const VoteMain = () => {
                   width: "65%",
                 }}
               >
-                제목test
+                제목
               </th>
               <th style={{ width: "10%" }}>투표상황</th>
               <th style={{ width: "15%" }}>작성날짜</th>
