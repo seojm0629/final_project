@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
 import "./voteMain.css";
 import { useNavigate } from "react-router-dom";
 const VoteMain = () => {
+  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const [list, setList] = useState([]); //4개 값 받을 리스트 생성
+
   const navigate = useNavigate();
 
   const writebutton = () => {
