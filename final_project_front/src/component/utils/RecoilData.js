@@ -23,6 +23,13 @@ const memberTypeState = atom({
     effects_UNSTABLE : [persistAtom],
 })
 
+//회원 번호를 저장하는 저장소(atom)
+const memberNoState = aton({
+    key : "memberNoState",
+    default : "",
+    effects_UNSTABLE : [persistAtom],
+})
+
 //refresh 초기화 확인용 데이터
 const authReadyState = atom({
     key: "authReadyState",
@@ -36,7 +43,8 @@ const isLoginState = selector({
         //매개변수 state는 recoil에 저장된 데이터를 불러오기 위한 객체
         const loginId = state.get(loginIdState);
         const memberType = state.get(memberTypeState);
-        return loginId !== "" && memberType !== 0;
+        const memberNo = state.get(memberNoState);
+        return loginId !== "" && memberType !== 0 && memberNo !== 0; 
     }
 })
 
