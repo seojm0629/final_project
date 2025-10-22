@@ -62,7 +62,11 @@ const VoteInsert = () => {
         navigate("/vote/main");
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          title: "에러!",
+          text: "항목을 모두 채우세요.",
+          icon: "error",
+        });
       });
   };
 
@@ -73,7 +77,7 @@ const VoteInsert = () => {
       </div>
       <div className="vote-insert-content-box">
         <div className="vote-content-title">투표 생성 하기</div>
-        <div>
+        <div className="vote-list-title">
           <input
             type="text"
             placeholder="제목을 입력하세요"
@@ -121,6 +125,9 @@ const VoteInsert = () => {
           })}
         </div>
         <div className="vote-date-box">
+          <div className="vote-addbutton">
+            <button onClick={addList}>항목 추가</button>
+          </div>
           <input
             type="date"
             value={endDate}
@@ -132,11 +139,10 @@ const VoteInsert = () => {
             onChange={(e) => setEndTime(e.target.value)}
           />
         </div>
-        <div className="vote-addbutton">
-          <button onClick={addList}>항목 추가</button>
+        <div className="check-box">
+          <button onClick={insertSubmit}>확인</button>
+          <button onClick={mainVote}>취소</button>
         </div>
-        <button onClick={insertSubmit}>만들기</button>
-        <button onClick={mainVote}>취소</button>
       </div>
     </div>
   );
