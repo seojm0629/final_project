@@ -44,7 +44,7 @@ const VoteInsert = () => {
       memberNo: memberNo,
       voteTitle: voteTitle,
       voteContent: voteList,
-      voteEndate: endDate + endTime,
+      voteEndDate: endDate + endTime,
     };
 
     console.log(voteData);

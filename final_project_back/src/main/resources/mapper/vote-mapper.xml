@@ -3,6 +3,6 @@
 <mapper namespace="kr.co.iei.vote.model.dao.VoteDao">
 	<insert id="insertVote">
 	 	insert into vote_tbl 
-	 	values(vote_seq.nextvla,#{voteTitle},sysdate,to_date(#{voteEndDate},'yyyy-mm-dd HH24:MI'),0,#{memberNo})
+	 	values(vote_seq.nextval,#{voteTitle},sysdate,to_date(#{voteEndDate},'yyyy-mm-dd HH24:MI'),0,#{memberNo})
 	</insert>
 </mapper>
