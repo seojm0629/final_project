@@ -24,21 +24,18 @@ public class VoteService {
 
 	@Transactional
 	public int insertVote(VoteDTO vote) {
-		int voteNo = vote.getVoteNo();
-		
+		int voteNo = voteDao.getVoteNo();
+		vote.setVoteNo(voteNo);
 		int result = voteDao.insertVote(vote);
-		
-		
-		for(int i = 0; i< vote.getVoteContent().size(); i++) {
+
+	
+		for(int i = 0; i < vote.getVoteContent().size(); i++) {
 			VoteOption option = new VoteOption();
 			option.setVoteNo(voteNo);
-			
-			//int result2 = voteDao.insertContent(option);
-			
-			
+			option.setVoteContent(vote.getVoteContent().get(i));
+			result += voteDao.insertContent(option);
+
 		}
-		
-		
 		return result;
 	}
 }
