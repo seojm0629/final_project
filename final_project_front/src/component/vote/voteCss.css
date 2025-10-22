@@ -14,11 +14,95 @@
 .vote-insert-content-box {
   width: 700px;
   height: 600px;
-  border: 1px solid black;
+  border: 2px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 15px;
 }
 .vote-content-title {
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2f4e70;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.vote-list-title {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+.vote-list-title > input {
+  width: 400px;
+  height: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+}
+.vote-list-box {
+  width: 500px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+  min-height: 200px;
+}
+.vote-content-list > input {
+  width: 350px;
+  height: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+.delete-button {
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.vote-date-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  height: 50px;
+}
+.vote-addbutton > button {
+  width: 100px;
+  height: 25px;
+  cursor: pointer;
+  color: white;
+  background-color: #2f4e70;
+  border-radius: 5px;
+  border: none;
+}
+
+.check-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  width: 300px;
+  height: 100px;
+}
+.check-box > button {
+  width: 100px;
+  height: 30px;
+  background-color: #2f4e70;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
 }

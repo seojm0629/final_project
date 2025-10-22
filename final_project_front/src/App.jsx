@@ -12,8 +12,8 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
-import VoteMain from "./component/vote/voteMain";
 import VoteInsert from "./component/vote/VoteInsert";
+import VoteMain from "./component/vote/VoteMain";
 
 function App() {
   return (
