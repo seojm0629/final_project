@@ -53,6 +53,11 @@ const Main = () => {
     // 자유게시판 카테고리 리스트
     const [freeBoardWorkList, setFreeBoardWorkList] = useState([]);
     const [freeBoardGameList, setFreeBoardGameList] = useState([]);
+    const [freeBoardHumorList, setFreeBoardHumorList] = useState([]);
+    const [freeBoardHobbyList, setFreeBoardHobbyList] = useState([]);
+    const [freeBoardInfoList, setFreeBoardInfoList] = useState([]);
+    const [freeBoardRoutineList, setFreeBoardRoutineList] = useState([]);
+
     const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState(1);
     
 
@@ -81,6 +86,42 @@ const Main = () => {
         .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=2`)
         .then((res) => {
             setFreeBoardGameList(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+        axios
+        .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=3`)
+        .then((res) => {
+            setFreeBoardRoutineList(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+        axios
+        .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=4`)
+        .then((res) => {
+            setFreeBoardHobbyList(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+        axios
+        .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=5`)
+        .then((res) => {
+            setFreeBoardInfoList(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+        axios
+        .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=6`)
+        .then((res) => {
+            setFreeBoardHumorList(res.data);
         })
         .catch((err) => {
             console.log(err);
@@ -240,48 +281,136 @@ const Main = () => {
                     </div>
 
                     <div className="main-board-list">
-                        {/* 유머/이슈 게시판, 취미/여가 게시판 */}
-                        <div className="sports-board first">
-                            <div className="pre-board-header">
-                                <h4>유머/이슈 게시판</h4>
+                        {/* 일상 게시판, 취미/여가 게시판 */}
+                        <div className="routine-board first">
+                            <div className="main-board-header">
+                                <h4>일상 게시판</h4>
                             </div>
-                            <div className="pre-board-content">
-                                <h1>준비중</h1>
-                            </div>
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {freeBoardRoutineList
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i}>
+                                                <span>{list.freeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                                <div className="main-board-like">
+                                    {freeBoardRoutineList
+                                    
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i} className="main-board-info">
+                                                <span>{list.memberNickname}</span>
+                                                <span>1시간전</span>
+                                                <span>좋아요</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                            </ul>
                             
                             
                         </div>
 
-                        <div className="game-board first">
-                            <div className="pre-board-header">
+                        <div className="hobby-board first">
+                            <div className="main-board-header">
                                 <h4>취미/여가 게시판</h4>
                             </div>
-                            <div className="pre-board-content">
-                                <h1>준비중</h1>
-                            </div>
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {freeBoardHobbyList
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i}>
+                                                <span>{list.freeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                                <div className="main-board-like">
+                                    {freeBoardHobbyList
+                                    
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i} className="main-board-info">
+                                                <span>{list.memberNickname}</span>
+                                                <span>1시간전</span>
+                                                <span>좋아요</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                            </ul>
                         </div>
                     </div>
 
                     <div className="main-board-list">
-                        {/* 정보공유 게시판, 일상 게시판 */}
-                        <div className="sports-board first">
-                            <div className="pre-board-header">
+                        {/* 정보공유 게시판, 유머/이슈 게시판 */}
+                        <div className="info-board first">
+                            <div className="main-board-header">
                                 <h4>정보공유 게시판</h4>
                             </div>
-                            <div className="pre-board-content">
-                                <h1>준비중</h1>
-                            </div>
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {freeBoardInfoList
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i}>
+                                                <span>{list.freeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                                <div className="main-board-like">
+                                    {freeBoardInfoList
+                                    
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i} className="main-board-info">
+                                                <span>{list.memberNickname}</span>
+                                                <span>1시간전</span>
+                                                <span>좋아요</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                            </ul>
                             
                             
                         </div>
 
-                        <div className="game-board first">
-                            <div className="pre-board-header">
-                                <h4>일상 게시판</h4>
+                        <div className="humor-board first">
+                            <div className="main-board-header">
+                                <h4>유머/이슈 게시판</h4>
                             </div>
-                            <div className="pre-board-content">
-                                <h1>준비중</h1>
-                            </div>
+                            <ul className="main-board-content">
+                                <div className="main-board-title">
+                                    {freeBoardHumorList
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i}>
+                                                <span>{list.freeBoardTitle}</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                                <div className="main-board-like">
+                                    {freeBoardHumorList
+                                    
+                                    .map((list, i)=>{
+                                        return(
+                                            <li key={"category-" + i} className="main-board-info">
+                                                <span>{list.memberNickname}</span>
+                                                <span>1시간전</span>
+                                                <span>좋아요</span>
+                                            </li>
+                                        )
+                                    })}
+                                </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
