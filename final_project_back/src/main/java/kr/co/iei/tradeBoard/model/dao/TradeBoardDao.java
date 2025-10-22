@@ -18,7 +18,9 @@ public interface TradeBoardDao {
 
     // 댓글
     List<TradeCommentDTO> selectCommentList(int tradeBoardNo);
+    int insertComment(TradeCommentDTO comment);
 
+    
     // 좋아요
     int selectLikeCount(int tradeBoardNo);
     int isLiked(int tradeBoardNo, int memberNo);
@@ -32,5 +34,6 @@ public interface TradeBoardDao {
 
     
 	List<TradeBoardDTO> selectSellerBoards(int memberNo);
+	
 
 }
