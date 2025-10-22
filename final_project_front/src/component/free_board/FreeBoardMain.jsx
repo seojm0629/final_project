@@ -132,7 +132,7 @@ const FreeBoardMain = () => {
               setMenus={setMenus}
               setSelectMenu={addMenu}
               setSelected={setSelected}
-            ></FreeBoardSideMenu>
+            />
           </section>
         </div>
         <div className="main-content">
@@ -315,4 +315,29 @@ const FreeBoardContent = (props) => {
     </section>
   );
 };
-export default FreeBoardMain;
+/**
+ *   const selected = props.selected;
+  const reqPageInfo = props.reqPageInfo;
+  const setReqPageInfo = props.setReqPageInfo;
+  const totalListCount = props.totalListCount;
+  const setTotalListCount = props.setTotalListCount;
+  const freeBoardList = props.freeBoardList;
+  const setFreeBoardList = props.setFreeBoardList;
+ * 
+ * 
+ */
+const FreeBoardSideMenuMap = (props) => {
+  const menus = props.menus;
+  const setMenus = props.setMenus;
+  const setSelectMenu = props.addMenu;
+  const setSelected = props.setSelected;
+  return (
+    <FreeBoardSideMenu
+      menus={menus}
+      setMenus={setMenus}
+      setSelectMenu={addMenu}
+      setSelected={setSelected}
+    ></FreeBoardSideMenu>
+  );
+};
+export { FreeBoardMain, FreeBoardSideMenuMap };
