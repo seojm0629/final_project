@@ -102,20 +102,26 @@ const ContentFreeBoard = () => {
             <div>
               <FreeBoardSideMenuMap refreshToggle={refreshToggle} />
             </div>
-            <input
-              type="text"
-              value={categoryAddText}
-              onChange={(e) => {
-                setCategoryAddText(e.target.value);
-              }}
-            ></input>
-            <button
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-            >
-              등록
-            </button>
+            <div>
+              <div>메인 카테고리</div>
+              <input
+                type="text"
+                value={categoryAddText}
+                onChange={(e) => {
+                  setCategoryAddText(e.target.value);
+                }}
+              ></input>
+              <button
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+              >
+                등록
+              </button>
+            </div>
+            <div>
+              <div>서브 카테고리</div>
+            </div>
           </div>
         </div>
       </div>
