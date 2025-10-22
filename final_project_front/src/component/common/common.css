@@ -332,6 +332,7 @@ main {
   margin-left: 20px;
   border: 1px solid #ccc;
   color: black;
+  margin-top : 8px;
 }
 
 /* 채팅을 칠 때마다 보더가 늘어나게*/
@@ -340,6 +341,7 @@ main {
   width: 100px;
   background-color: #fff;
   color: black;
+  margin-top : 8px;
 }
 
 .input-item {

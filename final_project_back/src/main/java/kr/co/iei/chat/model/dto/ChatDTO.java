@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class ChatDTO {
 	private String type;
 	private String memberId;
+	private String memberNickname;
 	private String message;
 }
