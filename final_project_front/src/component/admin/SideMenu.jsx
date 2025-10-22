@@ -44,7 +44,7 @@ const SideMenu = ({ active, setActive }) => {
   // 3. 각 버튼들에서는 현재 자신의 가명과 일치하는지 확인하고, 일치하면 active 클래스를 추가한다.
 
   return (
-    <aside className="side-menu">
+    <aside className="admin-side-menu">
       {/*시멘틱 태그로 영역 구분*/}
       <h2>관리자용 메뉴</h2>
       <ul>

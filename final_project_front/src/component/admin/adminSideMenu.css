@@ -1,4 +1,4 @@
-.admin .side-menu {
+.admin .admin-side-menu {
   width: 260px;
   height: 360px;
   background-color: #2f4e70;
@@ -7,23 +7,23 @@
   padding: 20px;
 }
 
-.admin .side-menu h2 {
+.admin .admin-side-menu h2 {
   margin: 0 0 12px 0;
   color: #fff;
   font-size: 16px;
 }
 
-.admin .side-menu ul {
+.admin .admin-side-menu ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.admin .side-menu > ul > li {
+.admin .admin-side-menu > ul > li {
   margin: 4px 0;
 }
 
-.admin .side-menu button {
+.admin .admin-side-menu button {
   width: 100%;
   text-align: left;
   border: none;
@@ -32,24 +32,24 @@
   cursor: pointer;
 }
 
-.admin .side-menu button:hover:not(.active) {
+.admin .admin-side-menu button:hover:not(.active) {
   background-color: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
 
-.admin .side-menu ul > li > ul {
+.admin .admin-side-menu ul > li > ul {
   margin-left: 10px;
 }
-.admin .side-menu button {
+.admin .admin-side-menu button {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.admin .side-menu .material-icons {
+.admin .admin-side-menu .material-icons {
   font-size: 20px;
 }
 
-.admin .side-menu .active {
+.admin .admin-side-menu .active {
   background-color: #fff;
   color: #2f4e70;
   font-weight: 700;

@@ -36,3 +36,12 @@
   > button:hover {
   background-color: #476d97;
 }
+
+.admin .content_box .side-menu {
+  height: 100%;
+}
+
+.admin .content_box .side-menu .side-header,
+.admin .content_box .side-menu .header-title {
+  display: none;
+}

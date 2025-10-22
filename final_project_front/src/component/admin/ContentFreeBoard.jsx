@@ -3,7 +3,8 @@ import "./contentFreeBoard.css";
 import { useState } from "react";
 import { memberNoState, loginIdState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
-import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
+
+import { FreeBoardSideMenuMap } from "../free_board/FreeBoardMain";
 
 const ContentFreeBoard = () => {
   const [value, setValue] = useState("");
@@ -67,7 +68,7 @@ const ContentFreeBoard = () => {
             <div className="content_box_title">카테고리</div>
             <div className="categoryBox">양식이 들어갈 자리</div>
             <div>
-              <FreeBoardSideMenu></FreeBoardSideMenu>
+              <FreeBoardSideMenuMap />
             </div>
           </div>
         </div>
