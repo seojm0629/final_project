@@ -52,7 +52,13 @@ const VoteInsert = () => {
     axios
       .post(`${backServer}/vote`, voteData)
       .then((res) => {
-        console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "완료!",
+            text: "투표가 생성되었습니다.",
+            icon: "success",
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
