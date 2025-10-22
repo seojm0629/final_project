@@ -13,10 +13,10 @@ const VoteInsert = () => {
   const [voteList, setVoteList] = useState(["", ""]); //기본 2개항목 생성
   const [endDate, setEndDate] = useState(""); //끝나는 날짜 받기
   const [endTime, setEndTime] = useState(""); //끝나는 시간 받기
-  const naviGate = useNavigate();
+  const navigate = useNavigate();
 
   const mainVote = () => {
-    naviGate("/vote/main");
+    navigate("/vote/main");
   };
   //리스트 항목 추가
   const addList = () => {
@@ -59,6 +59,7 @@ const VoteInsert = () => {
             icon: "success",
           });
         }
+        navigate("/vote/main");
       })
       .catch((err) => {
         console.log(err);

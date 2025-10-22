@@ -26,6 +26,8 @@ public class VoteController {
 		System.out.println("제목확인" + vote);
 		int result = voteService.insertVote(vote);
 		
+		
+		
 		return ResponseEntity.ok(result);
 	}
 	
