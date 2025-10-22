@@ -76,5 +76,9 @@ public class TradeBoardService {
         return tradeBoardDao.selectSellerBoards(memberNo);
     }
 
+    public void insertComment(TradeCommentDTO comment) {
+        tradeBoardDao.insertComment(comment);
+    }
+
 
 }

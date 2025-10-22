@@ -248,6 +248,19 @@
   color: #666;
 }
 
+.trade-claim {
+  display: flex;
+  justify-content: space-between;
+}
+
+.trade-claim > p {
+  float: left;
+}
+
+.claim-btn {
+  float: right;
+}
+
 .trade-actions {
   margin-top: 20px;
 }
@@ -277,6 +290,7 @@
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
+  float: right;
 }
 
 .btn:hover {
@@ -288,13 +302,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
-  margin-top: 30px;
+  padding-top: 10px;
 }
 
 .seller-info {
   color: #444;
+  overflow: hidden;
+  width: 400px;
+}
+
+.seller-name {
+  float: left;
+}
+
+.seller-score {
+  float: right;
 }
 
 .seller-actions .btn {
@@ -310,7 +332,7 @@
 
 /* 본문 */
 .trade-content {
-  margin-top: 40px;
+  margin-top: 20px;
   border-top: 1px solid #eee;
   padding-top: 20px;
   font-size: 16px;
@@ -321,7 +343,7 @@
 .comment-section {
   margin-top: 40px;
   border-top: 1px solid #eee;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .comment-input-area {

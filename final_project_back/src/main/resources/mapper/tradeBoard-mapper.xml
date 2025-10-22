@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.tradeBoard.model.dao.TradeBoardDao">
-	
-	<!-- 게시글 전체 개수 -->
-	<select id="totalCount" resultType="int">
-		select count(*) from trade_board_tbl where trade_board_status = 1
-	</select>
-	<!-- 게시글 목록 (페이징) -->
-	<select id="selectTradeBoardList" resultType="tradeBoard">
-	  	select * from
-	    (select rownum as rnum, b.*
-	        from
-	            (select
-	            	trade_board_no,
-	                trade_thumbnail_path,
-	                trade_board_title,
-	                trade_board_price
-	            from trade_board_tbl where trade_board_status = 1 order by trade_board_no desc)b)
-	    where rnum BETWEEN #{startRow} and #{endRow}
-   </select>
-   <!-- 게시글 상세보기 -->
-   <select id="selectOneBoard" parameterType="int" resultType="tradeBoard">
+    <select id="totalCount" resultType="int">
+        select count(*) from trade_board_tbl where trade_board_status = 1
+    </select>
+
+    <select id="selectTradeBoardList" resultType="tradeBoard">
+        select * from
+        (select rownum as rnum, b.*
+            from
+                (select
+                    trade_board_no,
+                    trade_thumbnail_path,
+                    trade_board_title,
+                    trade_board_price
+                from trade_board_tbl where trade_board_status = 1 order by trade_board_no desc)b)
+        where rnum BETWEEN #{startRow} and #{endRow}
+    </select>
+
+    <select id="selectOneBoard" parameterType="int" resultType="tradeBoard">
         select trade_board_no,
             trade_board_title,
             trade_board_content,
-            TO_CHAR(trade_board_date, 'YYYY-MM-DD HH24:MI:SS'),
+            member_no,
+            TO_CHAR(trade_board_date, 'YYYY-MM-DD HH24:MI:SS') as trade_board_date,
             trade_board_price,
             trade_board_place,
             trade_board_status,
@@ -33,112 +32,106 @@
             trade_thumbnail_path from trade_board_tbl left join member_tbl using (member_no)
         where trade_board_no = #{tradeBoardNo}
     </select>
-    <!-- 댓글 목록 -->
+
     <select id="selectCommentList" parameterType="int" resultType="tradeComment">
         select 
-            trade_comment_no,
+            tb_comment_no,
             trade_board_no,
             member_nickname,
-            trade_comment_content,
-            TO_CHAR(trade_comment_date, 'YYYY-MM-DD HH24:MI:SS')
-        from trade_comment_tbl left join member_tbl using (member_no)
+            tb_comment_content,
+            TO_CHAR(tb_comment_date, 'YYYY-MM-DD HH24:MI:SS')
+        from tb_comment_tbl left join member_tbl using (member_no)
         where trade_board_no = #{tradeBoardNo}
-        order by trade_comment_no asc
+        order by tb_comment_no asc
     </select>
-    <!-- 댓글 등록 -->
+
     <insert id="insertComment" parameterType="tradeComment">
-        insert into trade_comment_tbl (
-            trade_comment_no,
+        insert into tb_comment_tbl (
+            tb_comment_no,
             trade_board_no,
             member_no,
-            trade_comment_content,
-            trade_comment_date
+            tb_comment_content,
+            tb_comment_date
         ) values (
-            trade_comment_seq.nextval,
+            tb_comment_seq.nextval,
             #{tradeBoardNo},
             #{memberNo},
-            #{tradeCommentContent},
+            #{tbCommentContent},
             SYSDATE
         )
     </insert>
-    <!-- 좋아요 등록 -->
+
     <insert id="insertLike" parameterType="tradeLike">
-        INSERT INTO trade_like_tbl (
+        INSERT INTO tb_like_tbl (
             trade_like_no,
             trade_board_no,
             member_no
         ) VALUES (
-            trade_like_seq.NEXTVAL,
+            tb_like_seq.NEXTVAL,
             #{tradeBoardNo},
             #{memberNo}
         )
     </insert>
-    <!-- 좋아요 취소 -->
+
     <delete id="deleteLike" parameterType="tradeLike">
-        DELETE FROM trade_like_tbl
+        DELETE FROM tb_like_tbl
         WHERE trade_board_no = #{tradeBoardNo}
           AND member_no = #{memberNo}
     </delete>
-    <!-- 좋아요 개수 -->
+
     <select id="selectLikeCount" parameterType="int" resultType="int">
         SELECT COUNT(*) 
-        FROM trade_like_tbl
+        FROM tb_like_tbl
         WHERE trade_board_no = #{tradeBoardNo}
     </select>
-    <!-- 신고 등록 -->
+
     <insert id="insertReport" parameterType="tradeReport">
-        INSERT INTO trade_report_tbl (
-            trade_report_no,
+        INSERT INTO tb_claim_tbl (
             trade_board_no,
-            reporter_member_no,
-            report_reason,
-            report_date
+            member_no,
+            tb_claim_reason,
+            tb_claim_date
         ) VALUES (
-            trade_report_seq.NEXTVAL,
+            tb_claim_seq.NEXTVAL,
             #{tradeBoardNo},
-            #{reporterMemberNo},
-            #{reportReason},
+            #{MemberNo},
+            #{tbClaimReason},
             SYSDATE
         )
     </insert>
 
-    
-    <!-- 정민 -->
     <select id="mainTitle" resultType="tradeBoard">
-	 	<![CDATA[
-		    SELECT b.trade_board_no,
-		           b.trade_board_title,
-		           b.member_no,
-		           m.member_nickname
-		    FROM (
-		        SELECT trade_board_no,
-		               trade_board_title,
-		               member_no
-		        FROM trade_board_tbl
-		        ORDER BY trade_board_no DESC
-		    ) b
-		    JOIN member_tbl m
-		    ON b.member_no = m.member_no
-		    WHERE ROWNUM <= #{limit}
-		]]>
-	 </select>
+        <![CDATA[
+            SELECT b.trade_board_no,
+                   b.trade_board_title,
+                   b.member_no,
+                   m.member_nickname
+            FROM (
+                SELECT trade_board_no,
+                       trade_board_title,
+                       member_no
+                FROM trade_board_tbl
+                ORDER BY trade_board_no DESC
+            ) b
+            JOIN member_tbl m
+            ON b.member_no = m.member_no
+            WHERE ROWNUM <= #{limit}
+        ]]>
+    </select>
     
-    
-
-    <!-- 
     <select id="selectSellerBoards" parameterType="int" resultType="tradeBoard">
-	    select trade_board_no,
-            trade_board_title,
-            trade_board_content,
-            TO_CHAR(trade_board_date, 'YYYY-MM-DD HH24:MI:SS'),
-            trade_board_price,
-            trade_board_place,
-            trade_board_status,
-            trade_board_category_no,
-            member_nickname,
-            trade_thumbnail_path from trade_board_tbl left join member_tbl using (member_no)
-        where trade_board_no = #{tradeBoardNo}
+	    SELECT 
+	        trade_board_no,
+	        trade_board_title,
+	        trade_board_price,
+	        trade_thumbnail_path,
+	        member_no
+	    FROM trade_board_tbl
+	    WHERE member_no = #{memberNo}
+	    ORDER BY trade_board_no DESC
 	</select>
- -->
- 
- </mapper>
+
+
+    
+</mapper>
+
