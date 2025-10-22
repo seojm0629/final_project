@@ -15,6 +15,7 @@ import FreeBoardWrite from "./FreeBoardWrite";
 import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
+import Swal from "sweetalert2";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -136,15 +137,23 @@ const FreeBoardMain = () => {
         </div>
         <div className="main-content">
           <div className="write-div">
-            {member !== "" && (
-              <div
-                onClick={() => {
-                  navigation("/freeBoard/boardWrite");
-                }}
-              >
-                <span>글작성</span>
-              </div>
-            )}
+            <div
+              onClick={() => {
+                {
+                  member === ""
+                    ? Swal.fire({
+                        title: "로그인",
+                        text: "로그인 후 이용해주세요.",
+                        icon: "warning",
+                      }).then(() => {
+                        navigation("/member/login");
+                      })
+                    : navigation("/freeBoard/boardWrite");
+                }
+              }}
+            >
+              <span>글작성</span>
+            </div>
           </div>
           <section className="section free-board">
             <Routes>
