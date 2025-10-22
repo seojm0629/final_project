@@ -14,7 +14,7 @@ const MemberLogin = () => {
     const [memberId, setMemberId] = useRecoilState(loginIdState);
     const [memberType, setMemberType] = useRecoilState(memberTypeState);
     const [memberNo, setMemberNo] = useRecoilState(memberNoState);
-    
+    console.log(memberNo);
 
     //member 로그인 시 초기값 세팅
     const [member, setMember] = useState({

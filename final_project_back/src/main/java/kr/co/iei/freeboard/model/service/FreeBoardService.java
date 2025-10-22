@@ -116,4 +116,13 @@ public class FreeBoardService {
 		
 		return list;
 	}
+
+	public List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo) {
+		List<FreeBoardDTO> list = freeBoardDao.mainCategory(freeBoardCategoryNo);
+		System.out.println(list);
+		
+		return list;
+	}
+
+	
 }
