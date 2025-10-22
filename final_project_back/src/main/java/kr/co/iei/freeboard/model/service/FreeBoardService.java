@@ -32,7 +32,7 @@ public class FreeBoardService {
 	            List<Object> list = categoryList.get(c.getFreeBoardCategory());
 	            list.add(c.getFreeBoardSubcategory());
 	            list.add(c.getFreeBoardSubcategoryNo());
-	            System.out.println(list);
+	            //System.out.println(list);
 	        } else {
 	            List<Object> list = new ArrayList<>();
 	            list.add(c.getFreeBoardSubcategory());

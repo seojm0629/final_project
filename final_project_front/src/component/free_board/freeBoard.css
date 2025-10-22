@@ -133,6 +133,8 @@
   flex-wrap: wrap;
 }
 .side-submenu.active {
+  background-color: #43688f;
+  color: white;
 }
 .freeBoard-section {
   display: flex;
@@ -309,11 +311,8 @@
   display: flex;
   gap: 5px;
 }
-.category-area input:first-child {
-  display: flex;
-  gap: 5px;
-  color: #2f4e70;
-  font-weight: 600;
+.category-area div:last-child div {
+  height: 50px;
 }
 .category-text div:first-child {
   display: flex;
@@ -323,8 +322,9 @@
   display: flex;
   gap: 50px;
 }
-.category-text span {
-  font-weight: 500;
+.category-text div div:first-child div {
+  display: flex;
+  gap: 50px;
 }
 .title-area {
   display: flex;
@@ -412,30 +412,30 @@
   box-sizing: border-box;
   max-height: 450px;
 }
-.content-write .quill {
+.quill {
   border: 1px solid #ccc !important;
   max-width: 680px;
   max-height: 400px;
   box-sizing: border-box;
 }
-.content-write .ql-tooltip {
+.ql-tooltip {
   display: none !important;
 }
-.content-editor .ql-toolbar.ql-snow {
+.ql-toolbar.ql-snow {
   border: none !important;
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #ccc !important;
   overflow: visible !important;
 }
-.content-editor .ql-container.ql-snow {
+.ql-container.ql-snow {
   max-width: 100%;
   max-height: 100%;
   overflow: hidden;
   border: none !important;
 }
-.content-editor .ql-editor {
+.ql-editor {
   display: flex !important;
   flex-direction: column;
   max-width: 100%;

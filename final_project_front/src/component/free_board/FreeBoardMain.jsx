@@ -15,6 +15,7 @@ import FreeBoardWrite from "./FreeBoardWrite";
 import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
+import Swal from "sweetalert2";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -131,22 +132,29 @@ const FreeBoardMain = () => {
               setMenus={setMenus}
               setSelectMenu={addMenu}
               setSelected={setSelected}
-            ></FreeBoardSideMenu>
+            />
           </section>
         </div>
         <div className="main-content">
           <div className="write-div">
-            {member !== "" && (
-              <div
-                onClick={() => {
-                  navigation("/freeBoard/boardWrite");
-                }}
-              >
-                <span>글작성</span>
-              </div>
-            )}
+            <div
+              onClick={() => {
+                {
+                  member === ""
+                    ? Swal.fire({
+                        title: "로그인",
+                        text: "로그인 후 이용해주세요.",
+                        icon: "warning",
+                      }).then(() => {
+                        navigation("/member/login");
+                      })
+                    : navigation("/freeBoard/boardWrite");
+                }
+              }}
+            >
+              <span>글작성</span>
+            </div>
           </div>
-
           <section className="section free-board">
             <Routes>
               <Route
@@ -307,4 +315,29 @@ const FreeBoardContent = (props) => {
     </section>
   );
 };
-export default FreeBoardMain;
+/**
+ *   const selected = props.selected;
+  const reqPageInfo = props.reqPageInfo;
+  const setReqPageInfo = props.setReqPageInfo;
+  const totalListCount = props.totalListCount;
+  const setTotalListCount = props.setTotalListCount;
+  const freeBoardList = props.freeBoardList;
+  const setFreeBoardList = props.setFreeBoardList;
+ * 
+ * 
+ */
+const FreeBoardSideMenuMap = (props) => {
+  const menus = props.menus;
+  const setMenus = props.setMenus;
+  const setSelectMenu = props.addMenu;
+  const setSelected = props.setSelected;
+  return (
+    <FreeBoardSideMenu
+      menus={menus}
+      setMenus={setMenus}
+      setSelectMenu={addMenu}
+      setSelected={setSelected}
+    ></FreeBoardSideMenu>
+  );
+};
+export { FreeBoardMain, FreeBoardSideMenuMap };

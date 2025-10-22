@@ -81,7 +81,7 @@ const TextEditor = (props) => {
         color: "#fff",
         height: "100%",
         minHeight: 400,
-        borderRadius: 15,
+        borderRadius: 5,
       }}
     ></ReactQuill>
   );
