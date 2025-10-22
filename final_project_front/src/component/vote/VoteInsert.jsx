@@ -4,7 +4,11 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import VoteMain from "./VoteMain";
+import { useRecoilValue } from "recoil";
+import { memberNoState } from "../utils/RecoilData";
 const VoteInsert = () => {
+  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const memberNo = useRecoilValue(memberNoState); // 사용자 ID
   const [voteTitle, setVoteTitle] = useState("");
   const [voteList, setVoteList] = useState(["", ""]); //기본 2개항목 생성
   const [endDate, setEndDate] = useState(""); //끝나는 날짜 받기
@@ -37,12 +41,22 @@ const VoteInsert = () => {
   //확인 누를때 값 저장
   const insertSubmit = () => {
     const voteData = {
-      title: voteTitle,
-      voteList,
-      endDate,
-      endTime,
+      memberNo: memberNo,
+      voteTitle: voteTitle,
+      voteContent: voteList,
+      voteEndate: endDate + endTime,
     };
+
     console.log(voteData);
+
+    axios
+      .post(`${backServer}/vote`, voteData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
