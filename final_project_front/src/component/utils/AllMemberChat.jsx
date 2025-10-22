@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const AllMemberChat = () => {
-    
-    
     //로그인 후 세팅을 수행하기 위해 로그인 체크(로그인이 되었는지)
     const isLogin = useRecoilState(isLoginState);   
     //로그인 한 memberId 가져오기(채팅 유저 식별자)
@@ -20,11 +18,7 @@ const AllMemberChat = () => {
     const [member, setMember] = useState({
         memberId :memberId,
         memberNickname : "",
-    });
-
-    console.log("member : ", member);
-    
-    
+    });  
 
     const [chatMsg, setChatMsg] = useState({
         type : "enter",     
@@ -33,7 +27,7 @@ const AllMemberChat = () => {
         message : "",
     })
     
-    console.log(chatMsg);
+    
     
     
     const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -62,7 +56,7 @@ const AllMemberChat = () => {
     //WebSocket에 접속하기 위한 코드
     useEffect(() => {
         if(isLogin && member.memberNickname !== ""){
-            console.log(member)
+            
             const socket = new WebSocket(`${socketServer}/allChat`); //서버를 웹소켓 버전으로 접속..
             setWs(socket);
 
@@ -83,7 +77,7 @@ const AllMemberChat = () => {
         const data = JSON.stringify(chatMsg); //객체를 문자열로 변환
         ws.send(data);
 
-        console.log(data);
+        
 
         //최초 접속 메세지를 보낸 후에는 계속 채팅 메세지만 전송할 예정으로 type 변경
         setChatMsg({...chatMsg, type : "chat"});
@@ -91,7 +85,7 @@ const AllMemberChat = () => {
 
     //메세지를 서버가 받으면 실행되는 함수
     const receiveMSg = (receiveData) => {
-        console.log("서버가 데이터를 받으면 실행되는 함수", receiveData);
+        
         
         //문자열을 JS 객체 타입으로 변환
         const data = JSON.parse(receiveData.data);

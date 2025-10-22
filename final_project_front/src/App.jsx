@@ -15,6 +15,7 @@ import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteMain from "./component/vote/voteMain";
 import VoteInsert from "./component/vote/VoteInsert";
 
+
 function App() {
   return (
     <div className="wrap">
@@ -28,7 +29,7 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
-
+          
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}

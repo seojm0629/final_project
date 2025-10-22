@@ -12,4 +12,5 @@ public class LoginMemberDTO {
 	private String refreshToken;
 	private String memberId;
 	private int memberType;
+	private int memberNo;
 }

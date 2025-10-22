@@ -36,17 +36,15 @@ public class MemberService {
 	}
 	
 	public LoginMemberDTO login(MemberDTO member) {
-		MemberDTO m = memberDao.selectOneMember(member.getMemberId());
-		System.out.println("member.getMemberPw() : " + member.getMemberPw());
-		System.out.println("m.getMemberPw() : " + m.getMemberPw());
-		
+		MemberDTO m = memberDao.selectOneMember(member.getMemberId());		
 		
 		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
-			String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType());
-			String refreshToken = jwtUtil.createRefreshToken(m.getMemberId(), m.getMemberType());
+			String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType(), m.getMemberNo());
+			String refreshToken = jwtUtil.createRefreshToken(m.getMemberId(), m.getMemberType(), m.getMemberNo());
 			
-			//실제 클라이언트에게 되돌려주는 정보 -> 회원아이디, 회원등급, accessToken, refreshToken
-			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberId(), m.getMemberType());
+			//실제 클라이언트에게 되돌려주는 정보 -> 회원아이디, 회원등급, 회원번호, accessToken, refreshToken
+			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberId(), m.getMemberType(), m.getMemberNo());
+			System.out.println(loginMember);
 			return loginMember;
 		}
 		return null;

@@ -45,42 +45,40 @@ const FreeBoardWrite = (props) => {
           </div>
           {/*카테고리 개수만큼 처리*/}
           <div className="category-text">
-            <div>
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-helper-label">
-                  카테고리
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={cate}
-                  label="cate"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>상위카테고리 </em>
-                  </MenuItem>
-                  <MenuItem value={1}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl sx={{ m: 1, minWidth: 120, minHeight: 10 }}>
-                <Select
-                  value={cate}
-                  onChange={handleChange}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem value="cate">
-                    <em>카테고리</em>
-                  </MenuItem>
-                  <MenuItem value={10}>sub1</MenuItem>
-                  <MenuItem value={20}>sub2</MenuItem>
-                  <MenuItem value={30}>sub3</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={cate}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+              <FormHelperText>With label + helper text</FormHelperText>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <Select
+                value={cate}
+                onChange={handleChange}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+              <FormHelperText>Without label</FormHelperText>
+            </FormControl>
           </div>
         </div>
       </div>
