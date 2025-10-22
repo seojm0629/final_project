@@ -2,9 +2,13 @@ import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRen
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import SubtitlesOutlinedIcon from "@mui/icons-material/SubtitlesOutlined";
 import ContentPasteOutlinedIcon from "@mui/icons-material/ContentPasteOutlined";
-import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
 import { isLoginState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import TextEditor from "../utils/TextEditor";
@@ -16,6 +20,10 @@ const FreeBoardWrite = (props) => {
   const [memberId, setMemberId] = useRecoilState(isLoginState); // 로그인된 memberId, memberType
   const [freeBoardWriteTitle, setFreeBoardWriteTitle] = useState("");
   const [freeBoardContent, setFreeBoardContent] = useState("");
+  const [cate, setCate] = useState([]); //받아올 카테고리
+  const handleChange = (e) => {
+    setCate(e.target.value);
+  };
   return (
     <div className="write-wrap">
       <div className="nickname section-area">
@@ -38,42 +46,40 @@ const FreeBoardWrite = (props) => {
           {/*카테고리 개수만큼 처리*/}
           <div className="category-text">
             <div>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  sx={{
-                    "& .MuiSvgIcon-root": { fontSize: 20 },
-                  }}
-                  label="test1" //카테고리 name
-                ></FormControlLabel>
-              </FormGroup>
-            </div>
-            <div>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
-                  label="test2" //카테고리 name
-                ></FormControlLabel>
-              </FormGroup>
-            </div>
-            <div>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
-                  label="test3" //카테고리 name
-                ></FormControlLabel>
-              </FormGroup>
-            </div>
-            <div>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  sx={{ "& .MuiSvgIcon-root": { fontSize: 20 } }}
-                  label="test4" //카테고리 name
-                ></FormControlLabel>
-              </FormGroup>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-helper-label">
+                  카테고리
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={cate}
+                  label="cate"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>상위카테고리 </em>
+                  </MenuItem>
+                  <MenuItem value={1}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl sx={{ m: 1, minWidth: 120, minHeight: 10 }}>
+                <Select
+                  value={cate}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="cate">
+                    <em>카테고리</em>
+                  </MenuItem>
+                  <MenuItem value={10}>sub1</MenuItem>
+                  <MenuItem value={20}>sub2</MenuItem>
+                  <MenuItem value={30}>sub3</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           </div>
         </div>
