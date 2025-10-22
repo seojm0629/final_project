@@ -55,7 +55,7 @@ const Main = () => {
         axios
         .get(`${backServer}/freeBoard/mainTitle?limit=10`)
         .then((res)=>{
-            console.log(res);
+            
             setFreeBoardList(res.data);
         })
         .catch((err)=>{
@@ -67,7 +67,7 @@ const Main = () => {
         axios
         .get(`${backServer}/tradeBoard/mainTitle?limit=10`)
         .then((res)=>{
-            console.log(res);
+            
             setTradeBoardList(res.data);
         })
         .catch((err)=>{
@@ -90,7 +90,7 @@ const Main = () => {
                                 <div className="main-board-title">
                                     {tradeBoardList.map((list,i)=>{
                                         return(
-                                            <li key={"main-" + i} >
+                                            <li key={"main-" + i}>
                                                 <span>{list.tradeBoardTitle}</span>
                                             </li>
                                         )
@@ -99,8 +99,10 @@ const Main = () => {
                                 <div className="main-board-like">
                                     {tradeBoardList.map((list,i)=>{
                                         return(
-                                            <li key={"key-" + i} >
+                                            <li key={"key-" + i} className="main-board-info" >
                                                 <span>{list.memberNickname}</span>
+                                                <span>1시간전</span>
+                                                <span>좋아요</span>
                                             </li>
                                         )
                                 })}
@@ -121,6 +123,7 @@ const Main = () => {
                                         return(
                                             <li key={"main-" + i} >
                                                 <span>{list.freeBoardTitle}</span>
+                                                
                                             </li>
                                         )
                                     })}
@@ -128,8 +131,10 @@ const Main = () => {
                                 <div className="main-board-like">
                                     {freeBoardList.map((list,i)=>{
                                         return(
-                                            <li key={"member-" + i} >
+                                            <li key={"member-" + i} className="main-board-info">
                                                 <span>{list.memberNickname}</span>
+                                                <span>1시간전</span>
+                                                <span>좋아요</span>
                                             </li>
                                         )
                                 })}
@@ -251,10 +256,8 @@ const Main = () => {
 
                     <div className="main-chat">
                         <h3>Talk&Deal 채팅</h3>
-                        <div className="chat-content-wrap">
-                            
-
-                            
+                        <div className="chat-content-logout">
+                            <h2>로그인 후 이용 부탁드립니다.</h2>
                         </div>
                     </div>
                 </div>

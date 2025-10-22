@@ -12,8 +12,8 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
-
-
+import VoteMain from "./component/vote/voteMain";
+import VoteInsert from "./component/vote/VoteInsert";
 
 function App() {
   return (
@@ -27,8 +27,8 @@ function App() {
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
-          <Route path="/service/agree" element={<ServiceAgree />} />   
-          
+          <Route path="/service/agree" element={<ServiceAgree />} />
+
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
@@ -39,6 +39,8 @@ function App() {
             element={<TradeBoardView />}
           />
           <Route path="/note/test" element={<Test />} />
+          <Route path="/vote/main" element={<VoteMain />} />
+          <Route path="/vote/voteInsert" element={<VoteInsert />} />
         </Routes>
       </main>
       <Footer></Footer>

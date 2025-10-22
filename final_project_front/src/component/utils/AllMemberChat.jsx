@@ -3,6 +3,7 @@ import { isLoginState, loginIdState } from "./RecoilData";
 import { useEffect, useRef, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const AllMemberChat = () => {
     
@@ -23,6 +24,22 @@ const AllMemberChat = () => {
     })
     const backServer = import.meta.env.VITE_BACK_SERVER;
     const socketServer = backServer.replace("http://", "ws://");
+    
+    const [member, setMember] = useState({
+        memberId :memberId,
+        memberNickname : "",
+    })
+
+    useEffect(()=>{
+        axios
+        .get(`${backServer}/member/chat?memberId=${member.memberId}`)
+        .then((res)=>{
+            setMember(res.data.memberNickname);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    },[])
 
     //메세지를 전송할 input 태그
     const inputChatMessage = (e) => {
@@ -74,7 +91,7 @@ const AllMemberChat = () => {
     ws.onopen = startChat;
     ws.onmessage = receiveMSg;
     ws.onclose = endChat;
-
+    
     const sendMessage = () => {
         if(chatMsg.message !== ""){
             const data = JSON.stringify(chatMsg);
@@ -91,7 +108,7 @@ const AllMemberChat = () => {
         }
     },[chatList]);
 
-    //구성
+    //구성(닉네임 띄우는 법 질문)
     return(
         <div className="chat-wrap">
             {isLogin ? (
@@ -102,7 +119,7 @@ const AllMemberChat = () => {
                             <div key={"chat-" + i}>
                                 {chat.type === "enter" ? (
                                     <p className="chat-info">
-                                        <span>{chat.memberId}</span>님이 입장.
+                                        <span>{chat.memberId}님 입장.</span>
                                     </p>
                                 ) : chat.type === "out" ? (
                                     <p className="chat-info">
@@ -138,8 +155,9 @@ const AllMemberChat = () => {
                                 sendMessage();
                             }
                         }}
+                        placeholder="메시지 입력"
                         />
-                        <button className="btn-primary" onClick={sendMessage}>
+                        <button className="btn-chat" onClick={sendMessage}>
                             전송
                         </button>
                     </div>
