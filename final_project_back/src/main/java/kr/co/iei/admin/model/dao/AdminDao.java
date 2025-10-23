@@ -76,13 +76,13 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsTradeBoardMonth();
 
-	int insertFreeCate(HashMap<String, String> insertCateSet);
+	int insertFreeCate(HashMap<String, Object> insertCateSet);
 
-	int searchFreeCate(String categoryAddText);
+	int searchFreeCate(Object object);
 
-	String searchFreeCateNo(String categoryAddText);
+	int searchFreeCateNo(Object object);
 
-	int insertSubFreeCate(HashMap<String, String> insertCateSet);
+	int insertSubFreeCate(HashMap<String, Object> insertCateSet);
 
 
 }

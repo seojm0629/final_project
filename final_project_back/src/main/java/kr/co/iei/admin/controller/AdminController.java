@@ -87,7 +87,7 @@ public class AdminController {
 	}
 	
 	@PostMapping(value="insertFreeCate")
-	public ResponseEntity<Integer> insertFreeCate(@RequestBody HashMap<String, String> insertCateSet) {
+	public ResponseEntity<Integer> insertFreeCate(@RequestBody HashMap<String, Object> insertCateSet) {
 		System.out.println(insertCateSet);
 		int result = adminService.insertFreeCate(insertCateSet);
 		return ResponseEntity.ok(result);
