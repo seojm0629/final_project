@@ -12,6 +12,7 @@ import { DiffCount } from "../admin/ContentStatistics";
 import "../admin/contentStatistics.css";
 import WeatherApi from "../utils/WeatherApi";
 import ForecastWeather from "../utils/ForecastWeather";
+import OpenWeather from "../utils/OpenWeather";
 
 const Main = () => {
     //login 정보 가져와야함
@@ -153,8 +154,7 @@ const Main = () => {
                             <DiffCount />
                         </div>
                         <div className="main-weather">
-                            <WeatherApi />
-                            <ForecastWeather />
+                            <OpenWeather />
                         </div>
                     </div>
 

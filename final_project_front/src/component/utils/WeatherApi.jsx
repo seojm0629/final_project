@@ -56,7 +56,7 @@ const WeatherApi = () => {
         }
 
         return(
-            <div className="container">
+            <div className="weather-container">
                 <form onSubmit={handleSubmit}>
                     <div className="search-region">
                         <div className="search-weather">
