@@ -28,7 +28,7 @@ public class AllMemberChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		System.out.println("클라이언트 접속!!");
-		System.out.println("session : " + session);
+		
 	}
 	
 	//클라이언트가 소켓으로 데이터를 전송하면 실행되는 메소드
@@ -49,9 +49,7 @@ public class AllMemberChatHandler extends TextWebSocketHandler{
 		//최초 채팅페이지 접속이면 members에 추가
 		if(chat.getType().equals("enter")) {
 			members.put(session, chat.getMemberId());
-			members.put(session, chat.getMemberNickname());
-			System.out.println("members : " + members);
-			
+
 		}
 		
 		//받은 메세지를 채팅에 접속한 모든 회원에게 다시 전송
