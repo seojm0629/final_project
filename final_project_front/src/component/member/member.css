@@ -262,6 +262,10 @@ input[type="radio"]:checked+label{
     padding: 5px 0;
 }
 
+.service-btn>input{
+    margin-right: 6px;
+}
+
 /* 메인 페이지 */
 .main-login{
     background-color: #fff;

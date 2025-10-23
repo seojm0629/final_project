@@ -366,4 +366,10 @@ main {
   font-size: 18px;
 }
 
-/* 투표 게시판 */
+/* 메인 모달 */
+.member-close-button>button{
+  cursor: pointer;
+}
+
+
+
