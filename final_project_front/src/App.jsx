@@ -17,6 +17,7 @@ import VoteMain from "./component/vote/VoteMain";
 
 
 
+
 function App() {
   return (
     <div className="wrap">
