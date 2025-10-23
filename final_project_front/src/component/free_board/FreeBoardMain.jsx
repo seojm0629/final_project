@@ -27,7 +27,6 @@ const FreeBoardMain = () => {
   const [menus, setMenus] = useState([]);
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
-  const [freeBoardWriteTitle, setFreeBoardWriteTitle] = useState("");
   const [refreshToggle, setRefreshToggle] = useState(true); // 관리자 페이지에서 하위 카테고리 추가 시
   const [freeBoardContent, setFreeBoardContent] = useState("");
   const [reqPageInfo, setReqPageInfo] = useState({
@@ -176,8 +175,6 @@ const FreeBoardMain = () => {
                 path="boardWrite"
                 element={
                   <FreeBoardWrite
-                    freeBoardWriteTitle={freeBoardWriteTitle} //작성페이지 입력한 제목
-                    setFreeBoardWriteTitle={setFreeBoardWriteTitle}
                     setFreeBoardTitle={setFreeBoardTitle}
                     menus={menus}
                   ></FreeBoardWrite>
@@ -240,7 +237,10 @@ const FreeBoardContent = (props) => {
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
-              <div className="board-content">{list.freeBoardContent}</div>
+              <div className="board-content">
+                {list.freeBoardContent}
+                <div className="board-thumbnail"></div>
+              </div>
               <div className="nickname-id">
                 <span>{list.memberNickname}</span>
                 <span>{list.memberId}</span>

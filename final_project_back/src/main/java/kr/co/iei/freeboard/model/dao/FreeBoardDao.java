@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 
 @Mapper
 public interface FreeBoardDao {
@@ -31,6 +32,12 @@ public interface FreeBoardDao {
 
 	List isSubCategory(String freeBoardCategory);
 	List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo);
+
+	int getFreeBoardNo();
+
+	int insertFreeBoard(FreeBoardDTO freeBoard);
+
+	int insertFreeBoardFile(FreeBoardPhotoDTO boardFile);
 	
 
 }

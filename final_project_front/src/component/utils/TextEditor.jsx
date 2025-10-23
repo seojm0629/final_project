@@ -6,10 +6,11 @@ import "react-quill/dist/quill.snow.css";
 Quill.register("modules/ImageResize", ImageResize);
 import "../free_board/freeBoard.css";
 const TextEditor = (props) => {
-  const freeBoardContent = props.freeBoardContent;
-  const setFreeBoardContent = props.setFreeBoardContent;
+  const data = props.data;
+  const setData = props.setData;
   const editorRef = useRef(null);
   const backServer = import.meta.env.VITE_BACK_SERVER;
+  console.log(data);
 
   const imageHandler = () => {
     const input = document.createElement("input");
@@ -70,11 +71,11 @@ const TextEditor = (props) => {
   }, []);
   return (
     <ReactQuill
-      modules={modules}
       ref={editorRef}
-      value={freeBoardContent}
+      value={data}
+      onChange={setData}
       theme="snow"
-      onChange={setFreeBoardContent}
+      modules={modules}
       style={{
         backgroundColor: "",
         border: "1px solid #2f4e70",

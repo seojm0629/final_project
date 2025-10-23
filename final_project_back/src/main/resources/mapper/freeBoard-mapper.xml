@@ -101,7 +101,7 @@
 	 
 	 <select id="isSubCategory" resultType = "freeBoardCategory">
 	 	select rownum no, a.* 
-    		from (select free_board_subCategory 
+    		from (select free_board_category_no, free_board_subcategory_no, free_board_subCategory 
         		from (select * from free_board_category_tbl 
             where free_board_category=#{cate}) 
         join free_board_sub_category_tbl using(free_board_category_no)) a
@@ -130,9 +130,32 @@
 		]]>		
 	 </select>
 	 
+	 <select id="getFreeBoardNo" resultType ="int">
+	 	select free_board_seq.nextval from dual
+	 </select>
 	 
+	 <insert id="insertFreeBoard">
+	 	insert into free_board_tbl values
+	 		(free_board_seq.nextval, 
+	 		#{freeBoardSubcategoryNo}, 
+	 		#{freeBoardCategoryNo}, 
+	 		#{freeBoardTitle}, 
+	 		#{memberNo}, 
+	 		#{freeBoardContent}, 
+	 		TO_CHAR(SYSDATE,'YYYY-MM-DD'), 
+	 		#{freeBoardThumbnail})
+	 </insert>
 	 
-	 
+	 <insert id="insertFreeBoardFile">
+	 	insert into fb_photo_tbl values
+	 		(
+	 		#{freeBoardCategoryNo}, 
+	 		#{freeBoardSubcategoryNo},
+	 		#{freeBoardNo}, 
+	 		fb_photo_seq.nextval, 
+	 		#{FBPhotopath}, 
+	 		#{FBPhotoname})
+	 </insert>
 	 
 	 
 	 

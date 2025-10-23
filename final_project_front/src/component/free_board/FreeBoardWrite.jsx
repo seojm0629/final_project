@@ -9,7 +9,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-import { isLoginState } from "../utils/RecoilData";
+import { loginIdState, memberNoState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import TextEditor from "../utils/TextEditor";
 import { useEffect, useState } from "react";
@@ -17,21 +17,69 @@ import axios from "axios";
 
 const FreeBoardWrite = (props) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const setFreeBoardTitle = props.setFreeBoardTitle;
-  const [memberId, setMemberId] = useRecoilState(isLoginState); // 로그인된 memberId, memberType
+  const [memberId, setMemberId] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState);
+  const [memberNickname, setMemberNickname] = useState(""); //작성자 닉네임
   const backServer = import.meta.env.VITE_BACK_SERVER;
-  const [freeBoardWriteTitle, setFreeBoardWriteTitle] = useState("");
+  const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const [freeBoardContent, setFreeBoardContent] = useState("");
   const [cate, setCate] = useState(""); //받아올 상위 카테고리
   const [subCate, setSubCate] = useState([]); // 받아올 하위 카테고리
   const [selectedSub, setSelectedSub] = useState(""); //받아온 하위카테고리 value값으로 지정하여 출력하는 용도
+  const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
+  const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
+  const [freeBoardThumbnail, setFreeBoardThumbnail] = useState(null);
   const menus = props.menus;
+  const [freeBoard, setFreeBoard] = useState({
+    freeBoardCategoryNo: freeBoardCategoryNo,
+    freeBoardSubcategoryNo: freeBoardSubcategoryNo,
+    freeBoardTitle: freeBoardTitle,
+    memberNo: memberNo,
+    freeBoardContent: freeBoardContent,
+    freeBoardThumbnail: freeBoardThumbnail,
+  });
+  //게시글 작성 state
 
+  const writeFreeBoard = () => {
+    const formData = new FormData();
+    formData.append("freeBoardCategoryNo", freeBoard.freeBoardCategoryNo);
+    formData.append("freeBoardSubcategoryNo", freeBoard.freeBoardSubcategoryNo);
+    formData.append("freeBoardTitle", freeBoard.freeBoardTitle);
+    formData.append("memberNo", freeBoard.memberNo);
+    formData.append("freeBoardContent", freeBoard.freeBoardContent);
+
+    if (freeBoardThumbnail) {
+      formData.append("freeBoardThumbnail", freeBoard.freeBoardThumbnail);
+    }
+
+    axios
+      .post(`${backServer}/freeBoard/write`, formData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    //회원 아이디 조회 후 회원 닉네임 get
+    axios
+      .get(`${backServer}/member/${memberId}`)
+      .then((res) => {
+        setMemberNickname(res.data.memberNickname);
+        setMemberNo(res.data.memberNo);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [memberId]);
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/boardWrite?freeBoardCategory=${cate}`)
       .then((res) => {
         setSubCate(res.data);
+        //freeBoard State에 들어갈 상위 카테고리 NO
       })
       .catch((err) => {
         console.log(err);
@@ -52,7 +100,7 @@ const FreeBoardWrite = (props) => {
             <span>닉네임</span>
           </div>
           <div className="nickname-text">
-            <span>작성자</span>
+            <span>{memberNickname}</span>
           </div>
         </div>
       </div>
@@ -89,8 +137,7 @@ const FreeBoardWrite = (props) => {
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-helper-label">SUB</InputLabel>
-              {}
+              <InputLabel id="demo-simple-select-helper-label">Sub</InputLabel>
               <Select
                 sx={{ height: 40 }}
                 value={selectedSub}
@@ -100,10 +147,18 @@ const FreeBoardWrite = (props) => {
                 inputProps={{ "aria-label": "Without label" }}
               >
                 {subCate.map((sub, i) => {
-                  console.log(subCate);
                   console.log(sub);
+                  console.log(sub.freeBoardCategoryNo);
+                  console.log(sub.freeBoardSubcategoryNo);
                   return (
-                    <MenuItem key={"sub" + i} value={sub.freeBoardSubcategory}>
+                    <MenuItem
+                      key={"sub" + i}
+                      value={sub.freeBoardSubcategory}
+                      onChange={() => {
+                        setFreeBoardCategoryNo(sub.freeBoardCategoryNo);
+                        setFreeBoardSubcategoryNo(sub.freeBoardSubcategoryNo);
+                      }}
+                    >
                       <em>{sub.freeBoardSubcategory}</em>
                     </MenuItem>
                   );
@@ -124,10 +179,10 @@ const FreeBoardWrite = (props) => {
               type="text"
               id="freeBoardTitle"
               name="freeBoardTitle"
-              value={freeBoardWriteTitle}
+              value={freeBoardTitle}
               placeholder="제목 입력"
               onChange={(e) => {
-                setFreeBoardWriteTitle(e.target.value);
+                setFreeBoardTitle(e.target.value);
               }}
             ></input>
           </div>
@@ -141,15 +196,22 @@ const FreeBoardWrite = (props) => {
         <div className="content-area">
           <div className="content-editor">
             <TextEditor
-              setFreeBoardContent={setFreeBoardContent}
-              freeBoardContent={freeBoardContent}
+              setData={setFreeBoardContent}
+              data={freeBoardContent}
             ></TextEditor>
           </div>
         </div>
       </div>
       <div className="submit-section">
         <div className="write-button">
-          <button className="submit-btn">작성하기</button>
+          <button
+            className="submit-btn"
+            onClick={() => {
+              writeFreeBoard();
+            }}
+          >
+            작성하기
+          </button>
         </div>
         <div className="cancel-button">
           <button className="cancel-btn">취소하기</button>
