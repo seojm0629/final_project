@@ -24,15 +24,13 @@ const FreeBoardWrite = (props) => {
   const [freeBoardContent, setFreeBoardContent] = useState("");
   const [cate, setCate] = useState(""); //받아올 상위 카테고리
   const [subCate, setSubCate] = useState([]); // 받아올 하위 카테고리
-  const [selectedSub, setSelectedSub] = useState("");
+  const [selectedSub, setSelectedSub] = useState(""); //받아온 하위카테고리 value값으로 지정하여 출력하는 용도
   const menus = props.menus;
 
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/boardWrite?freeBoardCategory=${cate}`)
       .then((res) => {
-        console.log(res.data);
-        console.log(subCate);
         setSubCate(res.data);
       })
       .catch((err) => {
@@ -43,9 +41,8 @@ const FreeBoardWrite = (props) => {
     setCate(e.target.value);
   };
   const subHandleChange = (e) => {
-    setSubCate(e.target.value);
+    setSelectedSub(e.target.value);
   };
-  console.log(subCate);
   return (
     <div className="write-wrap">
       <div className="nickname section-area">
@@ -69,7 +66,7 @@ const FreeBoardWrite = (props) => {
           <div className="category-text">
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-helper-label">
-                <ContentPasteOutlinedIcon></ContentPasteOutlinedIcon>
+                Catogory
               </InputLabel>
               <Select
                 sx={{ height: 40 }}
@@ -92,17 +89,16 @@ const FreeBoardWrite = (props) => {
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">SUB</InputLabel>
+              {}
               <Select
                 sx={{ height: 40 }}
-                value={subCate}
+                value={selectedSub}
                 onChange={subHandleChange}
                 label="subCate"
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
               >
-                <MenuItem value="">
-                  <em>카테고리</em> {/*default = 카테고리*/}
-                </MenuItem>
                 {subCate.map((sub, i) => {
                   console.log(subCate);
                   console.log(sub);
@@ -112,18 +108,6 @@ const FreeBoardWrite = (props) => {
                     </MenuItem>
                   );
                 })}
-                {/*menus
-                  .filter((m) => {
-                    m.freeBoardCategory === cate[0];
-                  }) // 필터링하여 선택된 상위 카테고리에 맞는 하위 카테고리만 표시
-                  .map((m, i) => {
-                    console.log(m);
-                    return m.freeBoardSubcategory.map((sub, j) => (
-                      <MenuItem key={"sub" + j} value={sub}>
-                        {sub}
-                      </MenuItem>
-                    ));
-                  })*/}
               </Select>
             </FormControl>
           </div>

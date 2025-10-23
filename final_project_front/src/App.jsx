@@ -14,8 +14,6 @@ import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
 import VoteMain from "./component/vote/VoteMain";
-import Address from "./component/utils/Address.JSX";
-
 
 function App() {
   return (
@@ -30,7 +28,7 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
-          <Route path="/address" element={<Address />} />
+
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
