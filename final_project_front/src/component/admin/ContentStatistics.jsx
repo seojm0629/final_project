@@ -412,6 +412,9 @@ const DiffCount = () => {
   }, [selectCriteria]);
 
   return (
+    <div className="admin-right">
+
+    
     <div className="entireBox">
       <div className="element">
         <div className="entireBox-title">전체 가입자 수</div>
@@ -441,6 +444,7 @@ const DiffCount = () => {
           전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
         </div>
       </div>
+    </div>
     </div>
   );
 };

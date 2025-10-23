@@ -8,6 +8,8 @@ import axios from "axios";
 import FindIdModal from "../member/FindIdModal";
 import FindPwModal from "../member/FindPwModal";
 import AllMemberChat from "../utils/AllMemberChat";
+import { DiffCount } from "../admin/ContentStatistics";
+import "../admin/contentStatistics.css";
 
 const Main = () => {
     //login 정보 가져와야함
@@ -141,8 +143,12 @@ const Main = () => {
     return(
         <section className="section main-page">
             <div className="main-wrap">
-
+                
                 <div className="list-box">
+
+                    <div className="diff-count">
+                        <DiffCount />
+                    </div>
                     <div className="main-board-list">
                         {/* 중고거래 게시판, 자유게시판 */}
                         <div className="transaction-board first">
