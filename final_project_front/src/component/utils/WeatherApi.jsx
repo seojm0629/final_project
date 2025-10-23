@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import "../utils/weather.css";
+
 
 const WeatherApi = () => {
 
