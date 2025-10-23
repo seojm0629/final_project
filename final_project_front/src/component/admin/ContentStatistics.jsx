@@ -343,7 +343,7 @@ const ContentStatistics = () => {
   );
 };
 
-export default ContentStatistics;
+export { ContentStatistics, DiffCount };
 
 //ContentStatistics 컴포넌트의 하위 컴포넌트 위치 ▼
 
