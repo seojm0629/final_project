@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
+import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
 
 @Service
@@ -144,5 +145,15 @@ public class AdminService {
 		System.out.println(result);
 		
 		return result;
+	}
+
+	public List<AdminNoticeDTO> insertNotice(HashMap<String, Object> insertNoticeSet) {
+		int result = adminDao.insertNotice(insertNoticeSet);
+		List<AdminNoticeDTO> selectAllNotice = new ArrayList<>();
+		if(result==1) {
+			selectAllNotice = adminDao.selectAllNotice();
+		}
+		System.out.println(selectAllNotice);
+		return selectAllNotice;
 	}
 }

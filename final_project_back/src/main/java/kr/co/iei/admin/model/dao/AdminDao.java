@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
+import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
 
 
@@ -83,6 +84,10 @@ public interface AdminDao {
 	int searchFreeCateNo(Object object);
 
 	int insertSubFreeCate(HashMap<String, Object> insertCateSet);
+
+	int insertNotice(HashMap<String, Object> insertNoticeSet);
+
+	List<AdminNoticeDTO> selectAllNotice();
 
 
 }
