@@ -621,7 +621,7 @@
 	SELECT COUNT(*) FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{categoryAddText}
 	</select>
 	
-	<select id="searchFreeCateNo" resultType="String">
+	<select id="searchFreeCateNo" resultType="int">
 	SELECT FREE_BOARD_CATEGORY_NO FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{categoryAddText}
 	</select>
 </mapper>
