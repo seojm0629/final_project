@@ -120,7 +120,25 @@ public class AdminService {
 	}
 
 	public int insertFreeCate(HashMap<String, String> insertCateSet) {
-		int result = adminDao.insertFreeCate(insertCateSet);
+		System.out.println(insertCateSet.get("categoryAddText"));
+		int count = adminDao.searchFreeCate(insertCateSet.get("categoryAddText"));
+		String searchFreeCateNo = null;
+		
+		if (count==1) {
+			searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
+			insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
+			System.out.println("searchFreeCateNo : "+searchFreeCateNo);
+		}
+		int result = 0;
+		
+		if(count==1) {
+			result += adminDao.insertSubFreeCate(insertCateSet); 
+		}else {
+			result += adminDao.insertFreeCate(insertCateSet);
+			result += adminDao.insertSubFreeCate(insertCateSet); 
+		}
+		System.out.println(result);
+		
 		return result;
 	}
 }
