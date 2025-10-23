@@ -126,14 +126,36 @@ main {
 }
 
 /* 메인페이지 */
-
-.main-wrap {
-  width: 1400px;
-  margin: 0 auto;
-  box-sizing: border-box;
+.main-content-wrap{
   display: flex;
-  justify-content: center;
 }
+
+
+.list-box{
+  width: 1400px;
+}
+.diff-count-banner{
+  display: flex;
+}
+
+.diff-count-box>.admin-right{
+  width: 920px;
+  box-sizing: border-box;
+  
+}
+
+.diff-count-box{
+  width: 900px;
+  border: 1px solid #ccc;
+  background-color: antiquewhite;
+  margin-left: 25px;
+  box-sizing: border-box;
+}
+
+.diff-count-box>.admin-right>.entireBox{
+  width: 900px;
+}
+
 
 .main-board-list {
   width: 900px;
@@ -226,6 +248,17 @@ main {
   border: 1px solid #8f8f8f;
   border-radius: 5px;
   background-color: #f5f8fb;
+}
+
+.main-weather{
+  width: 348px;
+  height: 200px;
+  background-color: antiquewhite;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-left : 20px;
+  overflow: auto;
+  scrollbar-width: none;
 }
 .login-btn {
   width: 350px;

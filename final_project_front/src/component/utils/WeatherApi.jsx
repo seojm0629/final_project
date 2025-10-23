@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import "../utils/weather.css";
 
 const WeatherApi = () => {
 
@@ -59,10 +60,10 @@ const WeatherApi = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="search-region">
                         <div className="search-weather">
-                            <h3>원하는 지역을 검색해주세요 : </h3>
                             <input type="text" 
                             value={inputValue} 
                             onChange={(e)=>setInputValue(e.target.value)}
+                            placeholder="원하는 지역 검색"
                             />
                             <button type="submit">검색</button>
                         </div>

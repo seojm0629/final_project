@@ -62,9 +62,7 @@ const ForecastWeather = () => {
 
     return(
         <div className="container">
-            <div className="title">
-                <h3>forecast test page</h3>
-            </div>
+            
             <form onSubmit={handleSubmit}>
                 <div className="search-region">
                     <div className="search-weather">
