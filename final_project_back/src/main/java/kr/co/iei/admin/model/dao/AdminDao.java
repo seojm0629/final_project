@@ -78,5 +78,11 @@ public interface AdminDao {
 
 	int insertFreeCate(HashMap<String, String> insertCateSet);
 
+	int searchFreeCate(String categoryAddText);
+
+	String searchFreeCateNo(String categoryAddText);
+
+	int insertSubFreeCate(HashMap<String, String> insertCateSet);
+
 
 }

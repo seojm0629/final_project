@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 
 import { FreeBoardSideMenuMap } from "../free_board/FreeBoardMain";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ContentFreeBoard = () => {
   const [value, setValue] = useState("");
@@ -49,12 +50,15 @@ const ContentFreeBoard = () => {
   const [categoryAddText, setCategoryAddText] = useState("");
   console.log(categoryAddText);
   const [subCategoryAddText, setSubCategoryAddText] = useState("");
-  const insertCate = { categoryAddText: categoryAddText, memberNo: memberNo };
-  const insertSubCate = {
+  console.log(subCategoryAddText);
+  const insertCate = {
+    categoryAddText: categoryAddText,
     subCategoryAddText: subCategoryAddText,
     memberNo: memberNo,
   };
+
   console.log(insertCate);
+
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     axios
@@ -113,19 +117,11 @@ const ContentFreeBoard = () => {
                   <div className="form-label">메인 카테고리</div>
                   <input
                     type="text"
-                    value={subCategoryAddText}
+                    value={categoryAddText}
                     onChange={(e) => {
                       setCategoryAddText(e.target.value);
                     }}
                   ></input>
-                  <button
-                    className="admin-btn"
-                    onClick={() => {
-                      setToggle(!toggle);
-                    }}
-                  >
-                    등록
-                  </button>
                 </div>
                 <div>
                   <div className="form-label">서브 카테고리</div>
