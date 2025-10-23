@@ -15,6 +15,7 @@ import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
 import VoteMain from "./component/vote/VoteMain";
 import WeatherApi from "./component/utils/WeatherApi";
+import ForecastWeather from "./component/utils/ForecastWeather";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
           <Route path="/weather" element={<WeatherApi />} />
+          <Route path="/forecast" element={<ForecastWeather />} />
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
