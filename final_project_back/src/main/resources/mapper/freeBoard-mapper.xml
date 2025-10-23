@@ -101,11 +101,12 @@
 	 
 	 <select id="isSubCategory" resultType = "freeBoardCategory">
 	 	select rownum no, a.* 
-		    from (free_board_sub_category  
-		        from (select * from free_board_category_tbl 
-            where free_board_category = #{cate}) 
-            join free_board_sub_category_tbl using(free_board_category_no)) a
+    		from (select free_board_subCategory 
+        		from (select * from free_board_category_tbl 
+            where free_board_category=#{cate}) 
+        join free_board_sub_category_tbl using(free_board_category_no)) a
 	 </select>
+	 
 	 <select id="mainCategory" resultType="freeBoard">	
 	 	<![CDATA[ 
 		    SELECT  b.free_board_no,

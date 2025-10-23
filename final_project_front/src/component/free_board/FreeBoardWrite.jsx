@@ -24,32 +24,28 @@ const FreeBoardWrite = (props) => {
   const [freeBoardContent, setFreeBoardContent] = useState("");
   const [cate, setCate] = useState(""); //받아올 상위 카테고리
   const [subCate, setSubCate] = useState([]); // 받아올 하위 카테고리
+  const [selectedSub, setSelectedSub] = useState("");
   const menus = props.menus;
 
   useEffect(() => {
-    if (cate) {
-      clickSub();
-    }
-  }, [cate]);
-
-  const clickSub = () => {
     axios
       .get(`${backServer}/freeBoard/boardWrite?freeBoardCategory=${cate}`)
       .then((res) => {
         console.log(res.data);
-        //setSubCate(res.data.freeBoardSubcategory);
+        console.log(subCate);
+        setSubCate(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
+  }, [cate]);
   const handleChange = (e) => {
     setCate(e.target.value);
   };
   const subHandleChange = (e) => {
     setSubCate(e.target.value);
   };
+  console.log(subCate);
   return (
     <div className="write-wrap">
       <div className="nickname section-area">
@@ -83,18 +79,12 @@ const FreeBoardWrite = (props) => {
                 label="cate"
                 onChange={handleChange}
               >
-                <MenuItem value="null">
+                <MenuItem value="">
                   <em>카테고리</em> {/*default = 카테고리*/}
                 </MenuItem>
                 {menus.map((m, i) => {
                   return (
-                    <MenuItem
-                      key={"m" + i}
-                      value={m.freeBoardCategory}
-                      onChange={() => {
-                        clickSub();
-                      }}
-                    >
+                    <MenuItem key={"m" + i} value={m.freeBoardCategory}>
                       <em>{m.freeBoardCategory}</em>
                     </MenuItem>
                   );
@@ -106,26 +96,22 @@ const FreeBoardWrite = (props) => {
                 sx={{ height: 40 }}
                 value={subCate}
                 onChange={subHandleChange}
+                label="subCate"
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
               >
                 <MenuItem value="">
                   <em>카테고리</em> {/*default = 카테고리*/}
                 </MenuItem>
-
-                {/*menus.map((m, i) => {
-                  return m.freeBoardSubcategory.map((n, j) => {
-                    console.log(n);
-                    return (
-                      j % 2 === 0 && (
-                        <MenuItem key={"n" + j} value={n}>
-                          <em>{n}</em>
-                        </MenuItem>
-                      )
-                    );
-                  });
-                })*/}
-
+                {subCate.map((sub, i) => {
+                  console.log(subCate);
+                  console.log(sub);
+                  return (
+                    <MenuItem key={"sub" + i} value={sub.freeBoardSubcategory}>
+                      <em>{sub.freeBoardSubcategory}</em>
+                    </MenuItem>
+                  );
+                })}
                 {/*menus
                   .filter((m) => {
                     m.freeBoardCategory === cate[0];

@@ -12,7 +12,7 @@ import "./freeBoard.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import FreeBoardWrite from "./FreeBoardWrite";
-import FreeBoardSideMenu from "../utils/freeBoardSideMenu";
+import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
@@ -79,7 +79,6 @@ const FreeBoardMain = () => {
         console.log(err);
       });
   };
-  console.log(member);
   return (
     <div className="main-div">
       <div className="main-header">
@@ -128,7 +127,7 @@ const FreeBoardMain = () => {
       <div className="main-page">
         <div className="main-side">
           <section className="sidemenu-section">
-            <FreeBoardSideMenuMap
+            <FreeBoardSideMenu
               menus={menus}
               setMenus={setMenus}
               setSelectMenu={addMenu}

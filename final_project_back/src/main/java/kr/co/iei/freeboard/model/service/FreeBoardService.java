@@ -117,16 +117,14 @@ public class FreeBoardService {
 		return list;
 	}
 
-	public List isSubCategory(String cate) {
-		List subList = freeBoardDao.isSubCategory(cate);
+	public List isSubCategory(String freeBoardCategory) {
+		List subList = freeBoardDao.isSubCategory(freeBoardCategory);
 		return subList;
 	}
 	public List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo) {
 		List<FreeBoardDTO> list = freeBoardDao.mainCategory(freeBoardCategoryNo);
-		System.out.println(list);
 		
 		return list;
 	}
-
 	
 }

@@ -22,7 +22,7 @@ const TextEditor = (props) => {
         const form = new FormData();
         form.append("image", files[0]);
         axios
-          .post(`${backServer}/board/image`, form, {
+          .post(`${backServer}/freeBoard/image`, form, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -33,7 +33,7 @@ const TextEditor = (props) => {
             editor.insertEmbed(
               range.index,
               "image",
-              `${backServer}/editor/${res.data}`
+              `${backServer}/freeBoard/editor/${res.data}`
             );
             editor.setSelection(range.index + 1);
           })

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
+import kr.co.iei.utils.FileUtil;
 
 @CrossOrigin("*")
 @RestController
@@ -27,6 +30,12 @@ public class FreeBoardController {
 	
 	@Autowired
 	private FreeBoardService freeBoardService;
+	
+	@Autowired
+	private FileUtil fileUtil;
+	
+	@Value("${file.root}")
+	private String root;
 	
 	@GetMapping(value = "/mainPage")
 	public ResponseEntity<List<Map<String, Object>>> categoryList(){
@@ -79,8 +88,9 @@ public class FreeBoardController {
 	}
 	
 	@GetMapping(value= "/boardWrite")
-	public ResponseEntity<List> isSubCategory(@RequestParam String cate){
-		List subList = freeBoardService.isSubCategory(cate);
+	public ResponseEntity<List> isSubCategory(@RequestParam String freeBoardCategory){
+		System.out.println("dd");
+		List subList = freeBoardService.isSubCategory(freeBoardCategory);
 		System.out.println(subList);
 		return ResponseEntity.ok(subList);
 	}
@@ -89,8 +99,12 @@ public class FreeBoardController {
 		List<FreeBoardDTO> list = freeBoardService.mainCategory(freeBoardCategoryNo);
 		return ResponseEntity.ok(list);
 	}
-	
-	
+	@PostMapping(value = "/image")
+	public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
+		String savepath = root+"/freeBoard/editor/";
+		String filepath = fileUtil.fileUpload(savepath, image);
+		return ResponseEntity.ok(filepath);
+}
 	
 	
 	
