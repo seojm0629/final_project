@@ -259,7 +259,7 @@ const MemberJoin = () => {
                         confirmButtonText : "확인",
                     }).then((isconfirmed)=>{
                         if(isconfirmed){
-                            navigate("/");
+                            navigate("/member/login");
                         }
                     });
 
