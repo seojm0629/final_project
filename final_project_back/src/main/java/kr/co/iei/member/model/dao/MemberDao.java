@@ -35,6 +35,8 @@ public interface MemberDao {
 
 	MemberDTO chat(String memberId);
 
+	int phone(String memberPhone);
+
 	
 	
 	

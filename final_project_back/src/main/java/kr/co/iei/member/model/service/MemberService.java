@@ -146,6 +146,11 @@ public class MemberService {
 		return m;
 	}
 
+	public int phone(String memberPhone) {
+		int result = memberDao.phone(memberPhone);
+		return result;
+	}
+
 	
 
 	

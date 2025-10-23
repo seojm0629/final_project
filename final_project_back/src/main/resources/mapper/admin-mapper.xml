@@ -611,4 +611,17 @@
 		INSERT INTO FREE_BOARD_CATEGORY_TBL VALUES(
 	FB_CATEGORY_SEQ.NEXTVAL,#{categoryAddText})
 	</insert>
+	
+	<insert id="insertSubFreeCate">
+	INSERT INTO FREE_BOARD_SUB_CATEGORY_TBL VALUES(
+	FB_SUBCATEGORY_SEQ.NEXTVAL,#{searchFreeCateNo},#{subCategoryAddText})
+	</insert>
+	
+	<select id="searchFreeCate" resultType="int">
+	SELECT COUNT(*) FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{categoryAddText}
+	</select>
+	
+	<select id="searchFreeCateNo" resultType="String">
+	SELECT FREE_BOARD_CATEGORY_NO FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{categoryAddText}
+	</select>
 </mapper>

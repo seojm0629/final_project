@@ -224,7 +224,7 @@ main {
   height: 170px;
   padding-top: 20px;
   border: 1px solid #8f8f8f;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #f5f8fb;
 }
 .login-btn {
@@ -263,7 +263,7 @@ main {
   height: 610px;
   margin-top: 30px;
   border: 1px solid #8f8f8f;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #f5f8fb;
 }
 

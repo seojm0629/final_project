@@ -178,6 +178,12 @@ public class MemberController {
 	}
 	
 	
+	@GetMapping(value="/phone")
+	public ResponseEntity<Integer> phone(@RequestParam String memberPhone){
+		int result = memberService.phone(memberPhone);
+		return ResponseEntity.ok(result);
+	}
+	
 	
 	
 	

@@ -27,15 +27,7 @@ const MemberJoin = () => {
     const [time, setTime] = useState(0);
 
 
-    //인증하기 버튼 클릭시 인증 코드 입력창을 보이게 설정
-    const clickConfirm = () => {
-        setShowCodeInput(true);
-
-        //이메일 인증 버튼 클릭시 타이머 시작
-        setTime(180);
-
-
-    }
+    
     //타이머
     useEffect(()=>{
         const timer = setInterval(()=>{
@@ -216,6 +208,29 @@ const MemberJoin = () => {
             })
         } else {
             setNickNameCheck(2);
+        }
+    }
+
+    // ------------ 전화번호 중복 ------------
+    // 0 : 미입력 / 1 : 사용 가능한 전화번호 / 2 : 중복중인 전화번호
+    const [phoneNoCheck, setPhoneNoCheck] = useState(0);
+    const checKPhone = () => {
+        if(member.memberPhone && member.memberPhone.trim() !== "" && member.memberPhone.length < 14){
+            axios
+            .get(`${backServer}/member/phone?memberPhone=${member.memberPhone}`)
+            .then((res)=>{
+                console.log(res);
+                if(res.data === 1){
+                    setPhoneNoCheck(3);
+                } else {
+                    setPhoneNoCheck(1);
+                }
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        } else {
+            setPhoneNoCheck(2);
         }
     }
     
@@ -421,7 +436,18 @@ const MemberJoin = () => {
                             <input type="text" name="memberPhone" id="memberPhone" 
                             value={member.memberPhone} onChange={inputMemberData}
                             placeholder="ex. 010-0000-0000"
+                            onBlur={checKPhone}
                             />
+                            <p className="input-msg">
+                                {phoneNoCheck === 0 ? ""
+                                : phoneNoCheck === 1 
+                                ? <span style={{color:"blue"}}>사용 가능한 전화번호입니다.</span>
+                                : phoneNoCheck === 2
+                                ? <span style={{color:"red"}}>전화번호를 입력해주세요.</span>
+                                : phoneNoCheck === 3
+                                ? <span style={{color:"red"}}>중복된 전화번호입니다.</span>
+                                : ""}
+                            </p>
                         </div>
                     </div>
 

@@ -67,6 +67,11 @@
 		select member_nickname from member_tbl where member_id = #{memberId}
 	</select>
 	
+	<!-- 전화번호 중복 -->
+	<select id="phone" resultType="int">
+		select count(*) from member_tbl where member_phone = #{memberPhone}
+	</select>
+	
 	
 	
 	
