@@ -74,29 +74,35 @@ const TradeBoardItem = (props) => {
 
   return (
     <li
-      className={`posting-item ${isTradeCompleted ? "completed" : ""}`} // 거래 완료 시 'completed' 클래스 추가
-      onClick={() => {
-        navigate(`/tradeBoard/view/${tradeBoard.tradeBoardNo}`);
-      }}
+      className={`posting-item ${isTradeCompleted ? "completed" : ""}`}
+      onClick={() => navigate(`/tradeBoard/view/${tradeBoard.tradeBoardNo}`)}
     >
       <div className="posting-img">
         <img
           src={
-            tradeBoard.tradeBoardThumb !== null
+            tradeBoard.tradeBoardThumb
               ? `${import.meta.env.VITE_BACK_SERVER}/tradeBoard/thumb/${
                   tradeBoard.tradeBoardThumb
                 }`
               : "/image/default_img.png"
           }
-        ></img>
+          alt="thumbnail"
+        />
       </div>
+
       <div className="posting-info">
-        <div className="posting-title">{tradeBoard.tradeBoardTitle}</div>
-        <div className="posting-price">
+        <div className="posting-title">
+          {/* ✅ 제목 앞에 거래완료 표시 */}
           {isTradeCompleted && (
-            <span className="trade-completed-text">거래 완료</span>
+            <span className="trade-completed-text">[거래완료] </span>
           )}
-          <span className="price-amount">{tradeBoard.tradeBoardPrice}원</span>
+          {tradeBoard.tradeBoardTitle}
+        </div>
+
+        <div className="posting-price">
+          <span className="price-amount">
+            {tradeBoard.tradeBoardPrice?.toLocaleString()}원
+          </span>
         </div>
       </div>
     </li>

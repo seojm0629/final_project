@@ -16,7 +16,7 @@ import VoteInsert from "./component/vote/VoteInsert";
 
 import VoteList from "./component/vote/VoteList";
 
-import VoteMain from "./component/vote/VoteMain";
+//import VoteMain from "./component/vote/VoteMain";
 import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
 
 function App() {
