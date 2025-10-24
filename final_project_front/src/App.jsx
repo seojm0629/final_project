@@ -14,7 +14,6 @@ import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
 import VoteList from "./component/vote/VoteList";
-import FreeBoardDetail from "./component/free_board/FreeBoardDetail";
 
 function App() {
   return (

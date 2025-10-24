@@ -7,7 +7,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
@@ -63,7 +63,6 @@ const FreeBoardMain = () => {
       });
   }, []);
   const searchTitle = () => {
-    //수정 필요
     axios
       .get(
         `${backServer}/freeBoard/content/freeBoardTitle?pageNo=${reqPageInfo.pageNo}
@@ -75,8 +74,6 @@ const FreeBoardMain = () => {
       .then((res) => {
         setFreeBoardList(res.data.boardList);
         setTotalListCount(res.data.totalListCount);
-        setFreeBoardTitle("");
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -203,7 +200,7 @@ const FreeBoardContent = (props) => {
   const setTotalListCount = props.setTotalListCount;
   const freeBoardList = props.freeBoardList;
   const setFreeBoardList = props.setFreeBoardList;
-  const navigate = useNavigate();
+
   const listUrl =
     selected === -1
       ? `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
@@ -272,10 +269,7 @@ const FreeBoardContent = (props) => {
             <div key={"second" + i} className="board-section">
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
-              <div
-                className="board-content"
-                dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
-              ></div>
+              <div className="board-content">{list.freeBoardContent}</div>
               <div className="nickname-id">
                 <span>{list.memberNickname}</span>
                 <span>{list.memberId}</span>

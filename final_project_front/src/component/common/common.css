@@ -123,70 +123,25 @@ body {
 }
 
 /* 메인페이지 */
-.main-content-wrap {
-}
-.main-vote {
-  width: 895px;
-  margin-left: 25px;
-  margin-top: 50px;
-  border: 1px solid #8f8f8f;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background-color: #f5f8fb;
-  display: flex;
-  justify-content: space-between;
-}
-.main-content-board-list > a {
-  text-decoration: none;
-}
-.main-vote-header h4 {
-  padding-left: 20px;
-  padding-top: 10px;
-  font-size: 20px;
-}
-
-.main-vote-content {
-  padding-left: 7px;
-  padding-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: 8px;
-}
-
-.main-vote-content > div > li {
-  padding-bottom: 10px;
-}
-
-.vote-map {
-  width: 423.5px;
-}
-
-.main-vote-info > span {
-  padding-left: 20px;
-}
-
-.main-vote-content > div > li > span {
-  font-family: ns-l;
-  font-size: 14px;
-}
-
-.main-content-wrap {
+.main-content-wrap{
   display: flex;
 }
-.list-box {
+
+
+.list-box{
   width: 1400px;
 }
-.diff-count-banner {
+.diff-count-banner{
   display: flex;
 }
 
-.diff-count-box > .admin-right {
+.diff-count-box>.admin-right{
   width: 920px;
   box-sizing: border-box;
+  
 }
 
-.diff-count-box {
+.diff-count-box{
   width: 890px;
   border: 1px solid #8f8f8f;
   border-radius: 5px;
@@ -195,17 +150,18 @@ body {
   box-sizing: border-box;
   padding-top: 13px;
 }
-.diff-count-box > .admin-right > .entireBox div {
+.diff-count-box>.admin-right>.entireBox div{
+  
   border: none;
 }
 
-.diff-count-box > .admin-right > .entireBox {
+.diff-count-box>.admin-right>.entireBox{
   width: 890px;
+  
 }
-.main-content-board-list > div:nth-child(2) {
-  margin-top: 20px;
-}
-.main .main-board-list {
+
+
+.main-board-list {
   width: 900px;
   height: 421px;
   padding-left: 10px;
@@ -281,6 +237,7 @@ body {
 
 /* 스포츠, 게임 게시판*/
 
+
 /* 로그인 */
 
 /* 로그인 박스*/
@@ -299,13 +256,13 @@ body {
   background-color: #f5f8fb;
 }
 
-.main-weather {
+.main-weather{
   width: 348px;
   height: 200px;
   background-color: #f5f8fb;
   border: 1px solid #8f8f8f;
   box-sizing: border-box;
-  margin-left: 20px;
+  margin-left : 20px;
   overflow: auto;
   scrollbar-width: none;
   border-radius: 5px;
@@ -450,6 +407,9 @@ body {
 }
 
 /* 메인 모달 */
-.member-close-button > button {
+.member-close-button>button{
   cursor: pointer;
 }
+
+
+
