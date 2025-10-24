@@ -44,13 +44,23 @@ const OpenWeather = () => {
     }, [])
 
     const getWeatherByCity = () => {
-        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
 
         axios
         .get(url)
         .then((res) => {
             console.log(res.data);
             setWeather(res.data);
+
+            let dt = res.data.dt;
+            let time = new Date(dt*1000);
+            let hours = time.getHours();
+
+            if(hours > 7 && hours < 19){
+                setDayYN(true);
+            } else {
+                setDayYN(false);
+            }
 
             
         })
@@ -62,7 +72,7 @@ const OpenWeather = () => {
         } else {
             getWeatherByCity();
         }
-    }, [])
+    }, [city])
     return(
         <div className="app">
             

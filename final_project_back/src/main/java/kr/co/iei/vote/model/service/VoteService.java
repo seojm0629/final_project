@@ -1,9 +1,12 @@
 package kr.co.iei.vote.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import kr.co.iei.note.model.service.NoteService;
+import kr.co.iei.note.controller.NoteController;
 import kr.co.iei.vote.model.dao.VoteDao;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
@@ -11,15 +14,19 @@ import kr.co.iei.vote.model.dto.VoteOption;
 @Service
 public class VoteService {
 
-    private final NoteService noteService;
+    private final NoteController noteController;
+
+	
 	
 	@Autowired
 	private VoteDao voteDao;
 
 
-    VoteService(NoteService noteService) {
-        this.noteService = noteService;
+    VoteService(NoteController noteController) {
+        this.noteController = noteController;
     }
+
+
 	
 
 	@Transactional
@@ -37,5 +44,15 @@ public class VoteService {
 
 		}
 		return result;
+	}
+
+	//게시물 조회하기
+	public Map selectVoteList(int reqPage) {
+		
+		List voteList = voteDao.selectVoteList();
+				
+		System.out.println(voteList);
+		
+		return null;
 	}
 }

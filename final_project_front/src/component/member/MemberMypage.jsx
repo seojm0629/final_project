@@ -65,7 +65,7 @@ const MemberMypage = () => {
         {url : "/member/community", text : "커뮤니티"},
         {url : "/member/notice", text:"이용약관"},
         {url : "/member/etc", text:"기타"},
-        {url : "/member/admin", text:"관리자 페이지"},
+        {url : "/admin", text:"관리자 페이지"},
 
     ]):
     ([
@@ -213,24 +213,20 @@ const MemberCommunity = (props) => {
     const navigate = useNavigate();
     const agree = props.agree;
 
-    const board = () => {
-        navigate("") //게시판 링크 필요
-    }
-    const community = () => {
-        navigate("") //커뮤니티 이용 규칙 링크 필요
-    }
+    
     return(
         <div className="mypage-community-wrap tab-menu">
             <div className="community-title">
                 <h2>커뮤니티</h2>
             </div>
             <div className="mypage-community">
+                <div className="notice tab-div">
+                    <button type="submit">공지사항</button>
+                </div>
                 <div className="community-manage tab-div">
                     <button type="submit">게시판 관리</button>
                 </div>
-                <div className="commnuity-rule tab-div">
-                    <button type="submit" onClick={agree}>커뮤니티 이용규칙</button>
-                </div>
+                
             </div>
         </div>
     )
@@ -245,8 +241,8 @@ const MemberNotice = (props) => {
                 <h2>이용약관</h2>
             </div>
             <div className="mypage-notice">
-                <div className="notice tab-div">
-                    <button type="submit">공지사항</button>
+                <div className="commnuity-rule tab-div">
+                    <button type="submit" onClick={agree}>커뮤니티 이용규칙</button>
                 </div>
                 <div className="mypage-service tab-div">
                     <button type="submit" onClick={agree}>서비스 이용약관</button>
