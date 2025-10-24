@@ -10,7 +10,6 @@ import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
 import Note from "../note/note";
 import SurveyModal from "../survey/SurveyModal";
 
-
 const Header = () => {
   return (
     <header className="header">
@@ -114,7 +113,7 @@ const MainNavi = () => {
           ) : null}
         </li>
         <li className="navi-item vote">
-          <Link to="/vote/main">투표게시판</Link>
+          <Link to="/vote/list">투표게시판</Link>
         </li>
       </ul>
     </nav>
