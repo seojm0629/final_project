@@ -8,9 +8,7 @@ const OpenWeather = () => {
     const [dayYN, setDayYN] = useState(true);
     const [city, setCity] = useState("");
     const cities = ["seoul", "busan"]
-    const dayYnHandler = () => {
-        
-    }
+    
 
     const apiKey = "0fe2985439b43837084388bfd8faf780";
 
