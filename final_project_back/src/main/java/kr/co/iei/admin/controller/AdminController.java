@@ -127,10 +127,21 @@ public class AdminController {
 		System.out.println(cateMainNo);
 		System.out.println(subCate);
 		HashMap<String, Object> delCateSet = new HashMap<>();
-		delCateSet.put("main", cateMainNo);
-		delCateSet.put("sub", subCate);
+		delCateSet.put("mainCateNo", cateMainNo);
+		delCateSet.put("subCate", subCate);
 		int result = adminService.deleteFreeCate2(delCateSet);
-		
+		if(result == 1) {
+			
+			return ResponseEntity.ok(result);
+		}else {
+			return ResponseEntity.status(400).build();
+		}
+	}
+	
+	@DeleteMapping(value="delNotice")
+	public ResponseEntity<Integer> delNotice(@RequestParam int noticeNo){
+		System.out.println(noticeNo);
+		int result = adminService.delNotice(noticeNo);
 		return ResponseEntity.ok(result);
 	}
 	

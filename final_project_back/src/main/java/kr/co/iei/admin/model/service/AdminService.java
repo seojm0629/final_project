@@ -178,12 +178,18 @@ public class AdminService {
 		System.out.println("실제삭제 : "+delCateSet);
 		int result = adminDao.deleteFreeCate2(delCateSet);
 		System.out.println(result);
+		System.out.println("아아아아");
 		return result;
 	}
 
 	public int searchMainNo(String delCate) {
 		int cateMainNo = adminDao.searchMainNo(delCate);
 		return cateMainNo;
+	}
+
+	public int delNotice(int noticeNo) {
+		int result = adminDao.delNotice(noticeNo);
+		return result;
 	}
 	
 	

@@ -65,7 +65,7 @@
   border-radius: 5px;
   padding: 8px 10px;
   margin: 8px 0;
-  width: 45%;
+  width: 100%;
 }
 .admin .admin-right.freeBoard .admin-content-wrap .content-head {
   border: 1px solid #d6dae2;
@@ -143,4 +143,9 @@
 
 .admin .content-body .member-table.freeBoard th:nth-of-type(6) {
   width: 10%;
+}
+
+.admin .cate-right .flexClass {
+  display: flex;
+  flex-direction: column;
 }

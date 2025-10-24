@@ -97,5 +97,7 @@ public interface AdminDao {
 
 	int searchMainNo(String delCate);
 
+	int delNotice(int noticeNo);
+
 
 }

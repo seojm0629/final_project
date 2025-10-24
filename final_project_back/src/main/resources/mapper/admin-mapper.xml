@@ -644,7 +644,11 @@
 	</select>
 	
 	<delete id="deleteFreeCate2">
-	DELETE FROM FREE_BOARD_SUB_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY_NO=#{main} AND FREE_BOARD_SUBCATEGORY=#{sub}
+	DELETE FROM FREE_BOARD_SUB_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY_NO=#{mainCateNo} AND FREE_BOARD_SUBCATEGORY=#{subCate}
+	</delete>
+	
+	<delete id="delNotice">
+	DELETE FROM NOTICE_ALERT_TBL WHERE NOTICE_NO = #{noticeNo}
 	</delete>
 
 </mapper>

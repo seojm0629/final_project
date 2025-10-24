@@ -85,6 +85,8 @@ const ContentFreeBoard = () => {
   //console.log(noticeSet);
 
   const [noticeList, setNoticeList] = useState();
+  const [delNoticeNo, setDelNoticeNo] = useState();
+  const [noticeToggle, setNoticeToggle] = useState(false);
 
   useEffect(() => {
     axios
@@ -96,7 +98,7 @@ const ContentFreeBoard = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [noticeToggle]);
   useEffect(() => {
     axios
       .post(`${import.meta.env.VITE_BACK_SERVER}/admin/insertNotice`, noticeSet)
@@ -110,6 +112,27 @@ const ContentFreeBoard = () => {
   }, [noticeSet]);
   console.log(noticeList);
 
+  useEffect(() => {
+    axios
+      .delete(
+        `${
+          import.meta.env.VITE_BACK_SERVER
+        }/admin/delNotice?noticeNo=${delNoticeNo}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setNoticeToggle(!noticeToggle);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "알림",
+            text: "메인 카테고리 삭제가 완료되었습니다.",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
   useEffect(() => {
     if (deleteCate === undefined) {
       return;
@@ -164,22 +187,17 @@ const ContentFreeBoard = () => {
             setRefreshToggle(!refreshToggle);
             Swal.fire({
               title: "알림",
-              text: "메인 카테고리 삭제가 완료되었습니다.",
+              text: "카테고리 삭제가 완료되었습니다.",
             });
           }
         })
         .catch((err) => {
+          console.log(err);
           Swal.fire({
             title: "알림",
             text: "값이 잘못 입력되었습니다. 다시 입력하세요",
           });
         });
-      //2. 카테고리 번호를 리턴 받아오기
-      //3. 카테고리 번호가 두개 모두 존재하면
-      //3-1. 삭제 로직 실행
-      //3-2.
-      //4. 카테고리 번호가 하나라도 존재하지 않으면
-      //4-1. 값이 잘못 입력되었습니다. 다시 입력하세요 팝업
     } else {
       Swal.fire({
         title: "알림",
@@ -238,7 +256,7 @@ const ContentFreeBoard = () => {
                 </div>
               </div>
               <div className="cate-right">
-                <div>
+                <div className="flexClass">
                   <div className="form-label">메인 카테고리</div>
                   <input
                     type="text"
@@ -247,8 +265,7 @@ const ContentFreeBoard = () => {
                       setCategoryAddText(e.target.value);
                     }}
                   ></input>
-                </div>
-                <div>
+
                   <div className="form-label">서브 카테고리</div>
                   <input
                     type="text"
@@ -257,30 +274,32 @@ const ContentFreeBoard = () => {
                       setSubCategoryAddText(e.target.value);
                     }}
                   ></input>
-                  <button
-                    className="admin-btn"
-                    onClick={() => {
-                      setInsertCate({
-                        categoryAddText: categoryAddText,
-                        subCategoryAddText: subCategoryAddText,
-                        memberNo: memberNo,
-                      });
-                    }}
-                  >
-                    등록
-                  </button>
-                  <button
-                    className="admin-btn"
-                    onClick={() => {
-                      setDeleteCate({
-                        categoryAddText: categoryAddText,
-                        subCategoryAddText: subCategoryAddText,
-                        memberNo: memberNo,
-                      });
-                    }}
-                  >
-                    삭제
-                  </button>
+                  <div className="btnC">
+                    <button
+                      className="admin-btn"
+                      onClick={() => {
+                        setInsertCate({
+                          categoryAddText: categoryAddText,
+                          subCategoryAddText: subCategoryAddText,
+                          memberNo: memberNo,
+                        });
+                      }}
+                    >
+                      등록
+                    </button>
+                    <button
+                      className="admin-btn"
+                      onClick={() => {
+                        setDeleteCate({
+                          categoryAddText: categoryAddText,
+                          subCategoryAddText: subCategoryAddText,
+                          memberNo: memberNo,
+                        });
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -324,7 +343,14 @@ const ContentFreeBoard = () => {
                         </td>
                         <td>{notice.memberNo}</td>
                         <td>
-                          <button className="admin-btn">삭제하기</button>
+                          <button
+                            className="admin-btn"
+                            onClick={() => {
+                              setDelNoticeNo(notice.noticeNo);
+                            }}
+                          >
+                            삭제하기
+                          </button>
                         </td>
                       </tr>
                     );
