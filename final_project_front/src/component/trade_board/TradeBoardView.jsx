@@ -3,11 +3,13 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useRecoilValue } from "recoil";
-import { loginIdState, memberNoState } from "../utils/RecoilData"; // ✅ memberNoState 추가
+import { loginIdState, memberNoState } from "../utils/RecoilData";
 import "./tradeBoard.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
+import { useSetRecoilState } from "recoil";
+import { noteModalState } from "../utils/RecoilData";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -17,7 +19,8 @@ const TradeBoardView = () => {
   const navigate = useNavigate();
 
   const loginId = useRecoilValue(loginIdState);
-  const memberNo = useRecoilValue(memberNoState); // ✅ 회원번호 가져오기
+  const memberNo = useRecoilValue(memberNoState);
+  const setNoteModal = useSetRecoilState(noteModalState);
 
   const [tradeBoard, setTradeBoard] = useState(null);
   const [comments, setComments] = useState([]);
@@ -168,6 +171,11 @@ const TradeBoardView = () => {
       .catch((err) => console.error("댓글 등록 실패", err));
   };
 
+  const handleInquiry = () => {
+    if (!tradeBoard) return;
+    setNoteModal({ isOpen: true, targetId: tradeBoard.memberId });
+  };
+
   return (
     <div className="trade-view-wrap">
       {/* 상단: 썸네일 + 제목/가격 */}
@@ -219,7 +227,9 @@ const TradeBoardView = () => {
 
           <div className="trade-actions">
             <button className="icon-btn like-btn">❤️ 찜</button>
-            <button className="btn inquiry-btn">문의하기</button>
+            <button className="btn inquiry-btn" onClick={handleInquiry}>
+              문의하기
+            </button>
           </div>
         </div>
       </div>

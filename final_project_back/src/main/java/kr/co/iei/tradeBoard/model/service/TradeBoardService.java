@@ -1,5 +1,6 @@
 package kr.co.iei.tradeBoard.model.service;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import kr.co.iei.tradeBoard.model.dto.TradeReportDTO;
 public class TradeBoardService {
 	@Autowired
 	private TradeBoardDao tradeBoardDao;
+	private final String uploadPath = "C:/upload/tradeBoard/";
 
 	public Map selectBoardList(int reqPage, int listCnt) {
 		int startRow = (reqPage-1)*listCnt+1;
@@ -84,5 +86,7 @@ public class TradeBoardService {
         tradeBoardDao.insertComment(comment);
     }
 
-
+    public void insertTradeBoard(TradeBoardDTO tradeBoard) {
+        tradeBoardDao.insertTradeBoard(tradeBoard);
+    }
 }

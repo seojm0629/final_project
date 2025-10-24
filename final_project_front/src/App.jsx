@@ -14,9 +14,7 @@ import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
 import VoteMain from "./component/vote/VoteMain";
-
-
-
+import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
 
 function App() {
   return (
@@ -31,7 +29,7 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
-          
+
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
@@ -44,6 +42,7 @@ function App() {
           <Route path="/note/test" element={<Test />} />
           <Route path="/vote/main" element={<VoteMain />} />
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
+          <Route path="/tradeBoard/write" element={<TradeBoardWrite />} />
         </Routes>
       </main>
       <Footer></Footer>

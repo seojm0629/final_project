@@ -139,7 +139,27 @@
 	    ORDER BY trade_board_no DESC
 	</select>
 
-
+	<insert id="insertTradeBoard" parameterType="tradeBoard">
+    INSERT INTO trade_board (
+      trade_board_no,
+      trade_board_title,
+      trade_board_content,
+      trade_board_price,
+      trade_board_place,
+      trade_board_status,
+      trade_board_category_no,
+      member_no
+    ) VALUES (
+      trade_board_seq.NEXTVAL,
+      #{tradeBoardTitle},
+      #{tradeBoardContent},
+      #{tradeBoardPrice},
+      #{tradeBoardPlace},
+      0,
+      #{tradeBoardCategoryNo},
+      #{memberNo}
+    )
+  </insert>
     
 </mapper>
 
