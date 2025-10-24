@@ -79,4 +79,12 @@ public class VoteService {
 		
 		return map;
 	}
+
+
+
+
+	public List<VoteDTO> mainTitle(int limit) {
+		List<VoteDTO> list = voteDao.mainTitle(limit);
+		return list;
+	}
 }
