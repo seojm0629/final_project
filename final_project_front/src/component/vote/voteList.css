@@ -25,7 +25,7 @@
 }
 
 .vote-tbl-box {
-  width: 100%;
+  width: 1600px;
   display: flex;
   justify-content: center;
 }
@@ -34,7 +34,6 @@
   border-radius: 10px;
   table-layout: fixed;
   text-align: center;
-  white-space: nowrap;
 }
 
 .vote-tbl thead th {
@@ -47,9 +46,9 @@
   white-space: nowrap;
   word-wrap: break-word;
 }
-.vote-tr > td {
-}
+
 .voteList-paging-wrap {
+  width: 50%;
 }
 
 .vote-tbody > tr > td {
