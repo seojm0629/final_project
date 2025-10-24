@@ -172,6 +172,7 @@ const Main = () => {
 
                     <div className="main-content-wrap">
                         <div className="main-content-board-list">
+                            {/* 
                             <Link to="/vote/list">
                                 <div className="main-vote">
                                     <div className="vote-board">
@@ -208,6 +209,7 @@ const Main = () => {
                                     </div>
                                 </div>
                             </Link>
+                            */}
                             <div className="main-board-list">
                                 {/* 중고거래 게시판, 자유게시판 */}
                                 <div className="transaction-board first">

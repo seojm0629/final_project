@@ -9,32 +9,32 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileUtil {
 	
-	public String fileUpload(String savepath, MultipartFile file) {
+	public String fileUpload(String savePath, MultipartFile file) {
 		//파일원본 이름
-		String filename = file.getOriginalFilename();
+		String fileName = file.getOriginalFilename();
 		//원본 파일 이름에서 처음을 기준으로 마지막을 .까지 파일 이름 가져옴 
-		String onlyFileName = filename.substring(0, filename.lastIndexOf("."));
+		String onlyFileName = fileName.substring(0, fileName.lastIndexOf("."));
 		//원본 파일 이름을 .기준으로 뒤를 가져옴
-		String extention = filename.substring(filename.lastIndexOf("."));
+		String extention = fileName.substring(fileName.lastIndexOf("."));
 		
 		//파일 경로 빈 값으로 선언
-		String filepath = null;
+		String filePath = null;
 		
 		int count = 0;
 		while(true) {
 			if(count == 0) {
-				filepath = onlyFileName+extention;
+				filePath = onlyFileName+extention;
 			}else {
-				filepath = onlyFileName + "("+count+")"+extention;
+				filePath = onlyFileName + "("+count+")"+extention;
 			}
-			File fileCheck = new File(savepath+filepath);
+			File fileCheck = new File(savePath+filePath);
 			
 			if(!fileCheck.exists()) {
 				break;
 			}
 			count++;
 		}
-		File uploadFile = new File(savepath+filepath);
+		File uploadFile = new File(savePath+filePath);
 		try {
 			//파일 업로드
 			file.transferTo(uploadFile);
@@ -42,6 +42,6 @@ public class FileUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return filepath;
+		return filePath;
 	}
 }
