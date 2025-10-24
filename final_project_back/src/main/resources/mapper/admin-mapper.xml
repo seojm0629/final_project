@@ -621,7 +621,17 @@
 	SELECT COUNT(*) FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{categoryAddText}
 	</select>
 	
-	<select id="searchFreeCateNo" resultType="String">
+	<select id="searchFreeCateNo" resultType="int">
 	SELECT FREE_BOARD_CATEGORY_NO FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{categoryAddText}
+	</select>
+	
+	<insert id="insertNotice">
+	INSERT INTO NOTICE_ALERT_TBL VALUES(
+		NOTICE_SEQ.NEXTVAL, #{noticeContent},SYSDATE,#{noticeTarget},'FALSE',#{memberNo}
+	)
+	</insert>
+	
+	<select id="selectAllNotice" resultType="adminNotice">
+	SELECT * FROM NOTICE_ALERT_TBL
 	</select>
 </mapper>

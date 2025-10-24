@@ -65,11 +65,12 @@ const ContentStatistics = () => {
   console.log(dayLabels());
   */
   /* **************************************************************** */
+  const [ar, setAr] = useState(0);
   const [ru, setRu] = useState(0);
   const [bc, setBc] = useState(0);
   const [bcc, setBcc] = useState(0);
   const [wc, setWc] = useState(0);
-  const [ar, setAr] = useState(0);
+
   const [ruDiff, setRuDiff] = useState(0);
   const [bcDiff, setBcDiff] = useState(0);
   const [bccDiff, setBccDiff] = useState(0);
@@ -236,39 +237,7 @@ const ContentStatistics = () => {
           <div className="title m">통계 페이지</div>
           <div className="title s">사이트 이용 지표</div>
         </div>
-
-        <div className="entireBox">
-          <div className="element">
-            <div className="entireBox-title">전체 가입자 수</div>
-            <div className="entireBox-content">{ru} 명</div>
-            <div className={ruDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-              전일 대비 {ruDiff >= 0 ? `+${ruDiff} ▲` : `${ruDiff} ▼`}
-            </div>
-          </div>
-          <div className="element">
-            <div className="entireBox-title">전체 게시글 수</div>
-            <div className="entireBox-content">{bc} 건</div>
-            <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-              전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
-            </div>
-          </div>
-          <div className="element">
-            <div className="entireBox-title">전체 댓글 수</div>
-            <div className="entireBox-content">{bcc} 건</div>
-            <div
-              className={bccDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}
-            >
-              전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
-            </div>
-          </div>
-          <div className="element">
-            <div className="entireBox-title">전체 탈퇴 유저 수</div>
-            <div className="entireBox-content">{wc}명</div>
-            <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-              전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
-            </div>
-          </div>
-        </div>
+        <DiffCount />
 
         <div className="placeholder">
           <div className="chartFilter">
@@ -374,7 +343,7 @@ const ContentStatistics = () => {
   );
 };
 
-export default ContentStatistics;
+export { ContentStatistics, DiffCount };
 
 //ContentStatistics 컴포넌트의 하위 컴포넌트 위치 ▼
 
@@ -399,6 +368,83 @@ const ChartTemplate = (props) => {
         </div>
       </div>
       <div className="chartBox-content">{chartTag}</div>
+    </div>
+  );
+};
+
+const DiffCount = () => {
+  const [ru, setRu] = useState(0);
+  const [bc, setBc] = useState(0);
+  const [bcc, setBcc] = useState(0);
+  const [wc, setWc] = useState(0);
+  const [ar, setAr] = useState(0);
+  const [ruDiff, setRuDiff] = useState(0);
+  const [bcDiff, setBcDiff] = useState(0);
+  const [bccDiff, setBccDiff] = useState(0);
+  const [wcDiff, setWcDiff] = useState(0);
+  const searchCriteria = ["5년", "1년", "1개월", "1일"];
+  const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
+  useEffect(() => {
+    axios
+      .get(
+        `${
+          import.meta.env.VITE_BACK_SERVER
+        }/admin/statistics?selectCriteria=${selectCriteria}`
+      )
+      .then((res) => {
+        console.log("받아온 데이터");
+        console.log(res.data);
+        console.log(res.data.accessionCounts);
+        const results = res.data.accessionCounts;
+        setRu(res.data.ru);
+        setBc(res.data.bc);
+        setBcc(res.data.bcc);
+        setWc(res.data.wc);
+        setAr(res.data.ar);
+        setRuDiff(res.data.ruDiffDay);
+        setBcDiff(res.data.bcDiffDay);
+        setBccDiff(res.data.bccDiffDay);
+        setWcDiff(res.data.wcDiffDay);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [selectCriteria]);
+
+  return (
+    <div className="admin-right">
+
+    
+    <div className="entireBox">
+      <div className="element">
+        <div className="entireBox-title">전체 가입자 수</div>
+        <div className="entireBox-content">{ru} 명</div>
+        <div className={ruDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+          전일 대비 {ruDiff >= 0 ? `+${ruDiff} ▲` : `${ruDiff} ▼`}
+        </div>
+      </div>
+      <div className="element">
+        <div className="entireBox-title">전체 게시글 수</div>
+        <div className="entireBox-content">{bc} 건</div>
+        <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+          전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
+        </div>
+      </div>
+      <div className="element">
+        <div className="entireBox-title">전체 댓글 수</div>
+        <div className="entireBox-content">{bcc} 건</div>
+        <div className={bccDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+          전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
+        </div>
+      </div>
+      <div className="element">
+        <div className="entireBox-title">전체 탈퇴 유저 수</div>
+        <div className="entireBox-content">{wc}명</div>
+        <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+          전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
+        </div>
+      </div>
+    </div>
     </div>
   );
 };

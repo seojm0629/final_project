@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
+import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
 
 import kr.co.iei.admin.model.service.AdminService;
@@ -87,10 +88,18 @@ public class AdminController {
 	}
 	
 	@PostMapping(value="insertFreeCate")
-	public ResponseEntity<Integer> insertFreeCate(@RequestBody HashMap<String, String> insertCateSet) {
+	public ResponseEntity<Integer> insertFreeCate(@RequestBody HashMap<String, Object> insertCateSet) {
 		System.out.println(insertCateSet);
 		int result = adminService.insertFreeCate(insertCateSet);
 		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping(value="insertNotice")
+	public ResponseEntity<List<AdminNoticeDTO>> insertNotice(@RequestBody HashMap<String, Object> insertNoticeSet){
+		System.out.println(insertNoticeSet);
+		List<AdminNoticeDTO> selectAllNotice = adminService.insertNotice(insertNoticeSet);
+		System.out.println(selectAllNotice);
+		return ResponseEntity.ok(selectAllNotice);
 	}
 	
 	

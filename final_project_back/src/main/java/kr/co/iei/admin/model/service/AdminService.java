@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
+import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
 
 @Service
@@ -119,10 +120,10 @@ public class AdminService {
 		return map;
 	}
 
-	public int insertFreeCate(HashMap<String, String> insertCateSet) {
+	public int insertFreeCate(HashMap<String, Object> insertCateSet) {
 		System.out.println(insertCateSet.get("categoryAddText"));
 		int count = adminDao.searchFreeCate(insertCateSet.get("categoryAddText"));
-		String searchFreeCateNo = null;
+		int searchFreeCateNo = 0;
 		
 		if (count==1) {
 			searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
@@ -131,14 +132,28 @@ public class AdminService {
 		}
 		int result = 0;
 		
+		
 		if(count==1) {
 			result += adminDao.insertSubFreeCate(insertCateSet); 
 		}else {
+			
 			result += adminDao.insertFreeCate(insertCateSet);
+			searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
+			insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
 			result += adminDao.insertSubFreeCate(insertCateSet); 
 		}
 		System.out.println(result);
 		
 		return result;
+	}
+
+	public List<AdminNoticeDTO> insertNotice(HashMap<String, Object> insertNoticeSet) {
+		int result = adminDao.insertNotice(insertNoticeSet);
+		List<AdminNoticeDTO> selectAllNotice = new ArrayList<>();
+		if(result==1) {
+			selectAllNotice = adminDao.selectAllNotice();
+		}
+		System.out.println(selectAllNotice);
+		return selectAllNotice;
 	}
 }

@@ -6,7 +6,7 @@ import ContentBoard from "./ContentBoard";
 import ContentFreeBoard from "./ContentFreeBoard";
 import ContentDealBoard from "./ContentDealBoard";
 
-import ContentStatistics from "./ContentStatistics";
+import { ContentStatistics } from "./ContentStatistics";
 import "chart.js/auto";
 
 const AdminMain = () => {
