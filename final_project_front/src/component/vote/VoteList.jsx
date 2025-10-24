@@ -3,6 +3,12 @@ import "./voteList.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const VoteList = () => {
+  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const navigate = useNavigate();
+  const writebutton = () => {
+    navigate("/vote/voteInsert");
+  };
+
   // 필수: 페이지 정보 (프론트에서 바로 세팅)
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 몇 개의 버튼을 보여줄지
@@ -10,25 +16,22 @@ const VoteList = () => {
     listCnt: 10, // 한 페이지에 보여줄 개수
   });
   // 필수: 전체 개수 (서버한테 받아 세팅)
-  const [totalListCount, setTotalListCount] = useState(0);
-
-  const backServer = import.meta.env.VITE_BACK_SERVER;
+  const [totalListCount, setTotalListCount] = useState(10);
   const [votelist, setVoteList] = useState([]); //4개 값 받을 리스트 생성
   const [pi, setPi] = useState(null); // 기본값 세팅
-  const navigate = useNavigate();
-
-  const writebutton = () => {
-    navigate("/vote/voteInsert");
-  };
 
   useEffect(() => {
     axios
-      .get(`${backServer}/vote?reqPage=${reqPageInfo}`)
+      .get(
+        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}
+        &listCnt=${reqPageInfo.listCnt}
+        &sideBtnCount=${reqPageInfo.sideBtnCount}`
+      )
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
-        console.log(res);
+        console.log(err);
       });
   }, []);
 
