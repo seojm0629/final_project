@@ -137,7 +137,7 @@
 	 <insert id="insertFreeBoard">
 	 	insert into free_board_tbl values
 	 		(
-	 		free_board_seq.nextval, 
+	 		#{freeBoardNo}, 
 	 		#{freeBoardSubcategoryNo}, 
 	 		#{freeBoardCategoryNo}, 
 	 		#{freeBoardTitle}, 
@@ -147,7 +147,7 @@
 	 		#{freeBoardThumbnail}
 	 		)
 	 </insert>
-	 
+	 <!-- 
 	 <insert id="insertFreeBoardFile">
 	 	insert into fb_photo_tbl values
 	 		(
@@ -159,7 +159,7 @@
 	 		#{FBPhotoname}
 	 		)
 	 </insert>
-	 
+	  -->
 	 
 	 
 	 

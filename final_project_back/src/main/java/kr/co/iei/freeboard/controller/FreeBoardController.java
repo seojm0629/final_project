@@ -119,6 +119,7 @@ public class FreeBoardController {
 			
 			freeBoard.setFreeBoardThumbnail(filepath);
 		}
+		/*
 		List<FreeBoardPhotoDTO> freeBoardPhotoList = new ArrayList<FreeBoardPhotoDTO>();
 		if(freeBoardPhoto != null) {
 			String savepath = root+ "/freeBoard/image/";
@@ -132,8 +133,8 @@ public class FreeBoardController {
 				freeBoardPhotoList.add(fileDTO);
 				System.out.println(freeBoardPhotoList);
 			}
-		}
-		int result = freeBoardService.insertFreeBoard(freeBoard, freeBoardPhotoList);
+		}*/
+		int result = freeBoardService.insertFreeBoard(freeBoard);
 		return ResponseEntity.ok(result);
 	}
 }

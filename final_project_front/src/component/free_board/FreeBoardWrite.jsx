@@ -15,6 +15,7 @@ import TextEditor from "../utils/TextEditor";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const FreeBoardWrite = (props) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -68,10 +69,6 @@ const FreeBoardWrite = (props) => {
     if (freeBoardThumbnail !== null) {
       formData.append("freeBoardThumbnail", freeBoardThumbnail);
     }
-    for (let i = 0; i < freeBoardPhoto.length; i++) {
-      formData.append("freeBoardPhoto", freeBoardPhoto[i]);
-    }
-    console.log(freeBoardPhoto);
     axios
       .post(`${backServer}/freeBoard/boardWrite`, formData, {
         headers: {
@@ -88,9 +85,6 @@ const FreeBoardWrite = (props) => {
         console.log(err);
       });
   };
-  console.log(freeBoardContent);
-  console.log(freeBoardCategoryNo);
-  console.log(freeBoardSubcategoryNo);
   useEffect(() => {
     //회원 아이디 조회 후 회원 닉네임 get
     axios
@@ -128,6 +122,33 @@ const FreeBoardWrite = (props) => {
       setFreeBoardCategoryNo(selected.freeBoardCategoryNo);
       setFreeBoardSubcategoryNo(selected.freeBoardSubcategoryNo);
     }
+  };
+  const cancelWrite = () => {
+    Swal.fire({
+      title: "취소",
+      text: "취소하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then((confirm) => {
+      if (confirm.isConfirmed) {
+        if (
+          freeBoardTitle !== "" ||
+          freeBoardContent !== "" ||
+          freeBoardCategoryNo !== undefined ||
+          freeBoardSubcategoryNo !== undefined ||
+          freeBoardThumbnail !== null
+        ) {
+          setFreeBoardTitle("");
+          setFreeBoardContent("");
+          setFreeBoardCategoryNo();
+          setFreeBoardSubcategoryNo();
+          setFreeBoardThumbnail(null);
+        }
+        navigate("/freeBoard/content");
+      }
+    });
   };
   return (
     <div className="write-wrap">
@@ -245,7 +266,9 @@ const FreeBoardWrite = (props) => {
           </button>
         </div>
         <div className="cancel-button">
-          <button className="cancel-btn">취소하기</button>
+          <button className="cancel-btn" onClick={cancelWrite}>
+            취소하기
+          </button>
         </div>
       </div>
     </div>

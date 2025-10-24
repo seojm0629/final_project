@@ -129,19 +129,19 @@ public class FreeBoardService {
 		return list;
 	}
 	@Transactional
-	public int insertFreeBoard(FreeBoardDTO freeBoard, List<FreeBoardPhotoDTO> freeBoardPhotoList) {
+	public int insertFreeBoard(FreeBoardDTO freeBoard) {
 		int freeBoardNo = freeBoardDao.getFreeBoardNo();
 		freeBoard.setFreeBoardNo(freeBoardNo);
 	
 		int result = freeBoardDao.insertFreeBoard(freeBoard);
-		//System.out.println(freeBoard);
-		System.out.println(freeBoardPhotoList);
+		
+		/*
 		for(FreeBoardPhotoDTO freeBoardPhoto : freeBoardPhotoList) {
 			System.out.println(freeBoardPhoto);
 			
 			freeBoardPhoto.setFreeBoardNo(freeBoardNo);
 			result += freeBoardDao.insertFreeBoardFile(freeBoardPhoto);
-		}
+		}*/
 		return result;
 	}
 	

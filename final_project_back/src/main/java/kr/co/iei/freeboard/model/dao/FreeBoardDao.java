@@ -37,7 +37,7 @@ public interface FreeBoardDao {
 
 	int insertFreeBoard(FreeBoardDTO freeBoard);
 
-	int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
+	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	
 
 }

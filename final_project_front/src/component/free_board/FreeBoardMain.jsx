@@ -16,6 +16,7 @@ import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
+import FreeBoardDetail from "./FreeBoardDetail";
 //import FreeBoardDetail from "./FreeBoardDetail";
 
 // * 메인페이지 최상위 컴포넌트 *
@@ -23,7 +24,7 @@ import Swal from "sweetalert2";
 const FreeBoardMain = () => {
   const [selectMenu, setSelectMenu] = useState([]); //클릭 시 선택된 글씨가 나타나도록 구현하는 state
   const backServer = import.meta.env.VITE_BACK_SERVER;
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(-1);
   const [menus, setMenus] = useState([]);
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
@@ -107,7 +108,7 @@ const FreeBoardMain = () => {
             <ManageSearchIcon></ManageSearchIcon>
           </form>
         </div>
-        <div className="freeBoard-detail"></div>
+
         <div className="status-box">
           <div className="status-bar">
             {selectMenu.map((menu, i) => {
@@ -148,9 +149,9 @@ const FreeBoardMain = () => {
                         text: "로그인 후 이용해주세요.",
                         icon: "warning",
                       }).then(() => {
-                        navigation("/member/login");
+                        navigate("/member/login");
                       })
-                    : navigation("/freeBoard/boardWrite");
+                    : navigate("/freeBoard/boardWrite");
                 }
               }}
             >
@@ -159,6 +160,10 @@ const FreeBoardMain = () => {
           </div>
           <section className="section free-board">
             <Routes>
+              <Route
+                path="detail"
+                element={<FreeBoardDetail></FreeBoardDetail>}
+              ></Route>
               <Route
                 path="content"
                 element={
@@ -224,6 +229,9 @@ const FreeBoardContent = (props) => {
         console.log(err);
       });
   }, [reqPageInfo.order, reqPageInfo.pageNo, selected]);
+  const detailNavi = () => {
+    navigate("/detail");
+  };
   return (
     <section className="freeBoard-section">
       <div className="board-div">
@@ -235,9 +243,7 @@ const FreeBoardContent = (props) => {
               style={{
                 borderRight: "1px solid #ccc",
               }}
-              onClick={() => {
-                navigate("/freeBoard/detail");
-              }}
+              onClick={detailNavi}
             >
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
@@ -269,7 +275,10 @@ const FreeBoardContent = (props) => {
             <div key={"second" + i} className="board-section">
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
-              <div className="board-content">{list.freeBoardContent}</div>
+              <div
+                className="board-content"
+                dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
+              ></div>
               <div className="nickname-id">
                 <span>{list.memberNickname}</span>
                 <span>{list.memberId}</span>
