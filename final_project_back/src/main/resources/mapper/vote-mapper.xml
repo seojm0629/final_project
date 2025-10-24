@@ -15,10 +15,16 @@
 	</insert>
 	
 	<select id="selectVoteList" resultType="vote">
-		select member_nickname, vote_title, vote_date, vote_check
-		from member_tbl
-		join vote_tbl using(member_no)
- 		order by vote_check asc, vote_date desc
+	select B.* from (
+	select rownum rnum,A.* from(
+	select member_nickname , vote_title, vote_date, vote_check 
+	from member_tbl 
+	join vote_tbl using(member_no) 
+	order by vote_check asc, vote_date desc)A)B where rnum between #{startRow} and #{endRow}
+	</select>
+	
+ 	<select id="totalListCount" resultType="int">
+ 		select count(*) from vote_tbl
  	</select>
 		
 </mapper>
