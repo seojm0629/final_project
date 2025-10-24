@@ -10,7 +10,7 @@ const TextEditor = (props) => {
   const setData = props.setData;
   const editorRef = useRef(null);
   const backServer = import.meta.env.VITE_BACK_SERVER;
-  const setFreeBoardThumbnail = props.setFreeBoardThumbnail; //썸네일 컬럼에 들어갈 경로
+  //const setFreeBoardThumbnail = props.setFreeBoardThumbnail; //썸네일 컬럼에 들어갈 경로
   const imageHandler = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");

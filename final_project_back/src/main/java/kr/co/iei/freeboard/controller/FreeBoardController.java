@@ -111,14 +111,13 @@ public class FreeBoardController {
 	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto){
 		//root : freeBoard 폴더 -> thumbnail폴더 안쪽
 		
-		System.out.println(freeBoardThumbnail);
-		
 		if(freeBoardThumbnail != null) {
 			String savepath = root + "/freeBoard/thumbnail/";
 			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
 			
 			freeBoard.setFreeBoardThumbnail(filepath);
 		}
+		/*
 		List<FreeBoardPhotoDTO> freeBoardPhotoList = new ArrayList<FreeBoardPhotoDTO>();
 		if(freeBoardPhoto != null) {
 			String savepath = root+ "/freeBoard/image/";
@@ -130,10 +129,10 @@ public class FreeBoardController {
 				fileDTO.setFBPhotopath(FBPhotopath);
 				
 				freeBoardPhotoList.add(fileDTO);
-				System.out.println(freeBoardPhotoList);
+				
 			}
-		}
-		int result = freeBoardService.insertFreeBoard(freeBoard, freeBoardPhotoList);
+		}*/
+		int result = freeBoardService.insertFreeBoard(freeBoard);
 		return ResponseEntity.ok(result);
 	}
 }

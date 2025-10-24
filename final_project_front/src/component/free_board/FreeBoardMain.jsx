@@ -7,7 +7,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
@@ -16,6 +16,7 @@ import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
+import FreeBoardDetail from "./FreeBoardDetail";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -62,6 +63,7 @@ const FreeBoardMain = () => {
       });
   }, []);
   const searchTitle = () => {
+    //수정 필요
     axios
       .get(
         `${backServer}/freeBoard/content/freeBoardTitle?pageNo=${reqPageInfo.pageNo}
@@ -73,6 +75,8 @@ const FreeBoardMain = () => {
       .then((res) => {
         setFreeBoardList(res.data.boardList);
         setTotalListCount(res.data.totalListCount);
+        setFreeBoardTitle("");
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +109,13 @@ const FreeBoardMain = () => {
             />
             <ManageSearchIcon></ManageSearchIcon>
           </form>
+        </div>
+        <div className="freeBoard-detail">
+          <Routes>
+            <Route>
+              <FreeBoardDetail></FreeBoardDetail>
+            </Route>
+          </Routes>
         </div>
         <div className="status-box">
           <div className="status-bar">
@@ -198,7 +209,7 @@ const FreeBoardContent = (props) => {
   const setTotalListCount = props.setTotalListCount;
   const freeBoardList = props.freeBoardList;
   const setFreeBoardList = props.setFreeBoardList;
-
+  const navigate = useNavigate();
   const listUrl =
     selected === -1
       ? `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
@@ -233,6 +244,7 @@ const FreeBoardContent = (props) => {
               style={{
                 borderRight: "1px solid #ccc",
               }}
+              onClick={navigate("/freeBoard/detail")}
             >
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
@@ -264,7 +276,10 @@ const FreeBoardContent = (props) => {
             <div key={"second" + i} className="board-section">
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
-              <div className="board-content">{list.freeBoardContent}</div>
+              <div
+                className="board-content"
+                dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
+              ></div>
               <div className="nickname-id">
                 <span>{list.memberNickname}</span>
                 <span>{list.memberId}</span>
