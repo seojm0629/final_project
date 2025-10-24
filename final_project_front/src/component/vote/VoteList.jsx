@@ -25,9 +25,7 @@ const VoteList = () => {
   useEffect(() => {
     axios
       .get(
-        `${backServer}/vote?pageNo=${reqPageInfo.pageNo} 
-        &listCnt=${reqPageInfo.listCnt}
-        &sideBtnCount=${reqPageInfo.sideBtnCount}`
+        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}`
       )
       .then((res) => {
         console.log(res);
@@ -92,9 +90,16 @@ const VoteList = () => {
             ) : (
               voteList.map((list, i) => {
                 return (
-                  <tr key={"list-" + 1}>
+                  <tr key={"list-" + i}>
                     <td>{list.memberNickname}</td>
-                    <td>{list.voteTitle}</td>
+                    <td
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        navigate(`/vote/VoteDetail/${list.voteNo}`)
+                      }
+                    >
+                      {list.voteTitle}
+                    </td>
                     <td>{list.voteCheck === 0 ? "진행중" : "종료"}</td>
                     <td>{list.voteDate}</td>
                   </tr>

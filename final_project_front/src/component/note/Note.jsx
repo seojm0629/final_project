@@ -1,7 +1,7 @@
 import BaseModal from "../utils/BaseModal";
 import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
 import "./note.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   isLoginState,

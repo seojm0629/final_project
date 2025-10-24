@@ -22,7 +22,10 @@ const BaseModal = ({
 
   return (
     <div>
-      <button className="modal-button" onClick={handleOpen}>
+      <button
+        className="modal-button"
+        //onClick={handleOpen}
+      >
         {buttonLabel}
       </button>
       <Modal open={open} onClose={close} style={{ zIndex: 100 }}>
@@ -56,7 +59,7 @@ const BaseModal = ({
                       fontWeight: "bold",
                       fontSize: "0.9rem",
                     }}
-                    onClick={handleClose}
+                    //onClick={handleClose}
                   >
                     {end}
                   </Button>

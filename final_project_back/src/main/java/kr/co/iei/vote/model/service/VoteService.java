@@ -47,18 +47,6 @@ public class VoteService {
 		return result;
 	}
 
-	/*//게시물 조회하기
-	public Map selectVoteList(int reqPage) {
-		
-		List voteList = voteDao.selectVoteList();
-				
-		System.out.println(voteList);
-		
-		return null;
-	}
-	*/
-
-
 
 	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount) {
 		HashMap<String, Object> voteList = new HashMap<String,Object>();

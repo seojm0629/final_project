@@ -18,6 +18,7 @@ import VoteList from "./component/vote/VoteList";
 
 //import VoteMain from "./component/vote/VoteMain";
 import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
+import VoteDetail from "./component/vote/VoteDetail";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/note/test" element={<Test />} />
           <Route path="/vote/list" element={<VoteList />} />
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
+          <Route path="/vote/voteDetail/:voteNo" element={<VoteDetail />} />
           <Route path="/tradeBoard/write" element={<TradeBoardWrite />} />
         </Routes>
       </main>
