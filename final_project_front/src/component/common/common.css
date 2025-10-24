@@ -127,6 +127,54 @@ main {
 
 /* 메인페이지 */
 .main-content-wrap {
+}
+.main-vote {
+  width: 895px;
+  margin-left: 25px;
+  margin-top: 50px;
+  border: 1px solid #8f8f8f;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #f5f8fb;
+  display: flex;
+  justify-content: space-between;
+}
+.main-content-board-list > a {
+  text-decoration: none;
+}
+.main-vote-header h4 {
+  padding-left: 20px;
+  padding-top: 10px;
+  font-size: 20px;
+}
+
+.main-vote-content {
+  padding-left: 7px;
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.main-vote-content > div > li {
+  padding-bottom: 10px;
+}
+
+.vote-map {
+  width: 423.5px;
+}
+
+.main-vote-info > span {
+  padding-left: 20px;
+}
+
+.main-vote-content > div > li > span {
+  font-family: ns-l;
+  font-size: 14px;
+}
+
+.main-content-wrap {
   display: flex;
 }
 .list-box {
@@ -157,12 +205,16 @@ main {
 .diff-count-box > .admin-right > .entireBox {
   width: 890px;
 }
-
-.main-board-list {
+.main-content-board-list > div:nth-child(2) {
+  margin-top: 20px;
+}
+.main .main-board-list {
   width: 900px;
   height: 421px;
   padding-left: 10px;
   box-sizing: border-box;
+  padding-left: 4px;
+  margin-top: 50px;
   margin-left: 20px;
   display: flex;
   gap: 23px;
@@ -173,6 +225,7 @@ main {
 .main-board-list .first {
   width: 450px;
   height: 450px;
+
   border: 1px solid #8f8f8f;
   border-radius: 5px;
   box-sizing: border-box;

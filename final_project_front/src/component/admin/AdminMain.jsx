@@ -8,6 +8,7 @@ import ContentDealBoard from "./ContentDealBoard";
 
 import { ContentStatistics } from "./ContentStatistics";
 import "chart.js/auto";
+import { Route, Routes } from "react-router-dom";
 
 const AdminMain = () => {
   //관리자 페이지 최상위 컴포넌트로 정의하고, 하위 컴포넌트에 필요한 props 를 모두 넘겨주고, 화면에 표현하는 역할을 한다.
