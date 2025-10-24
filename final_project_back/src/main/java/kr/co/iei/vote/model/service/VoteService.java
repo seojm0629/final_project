@@ -1,9 +1,13 @@
 package kr.co.iei.vote.model.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import kr.co.iei.note.model.service.NoteService;
+import kr.co.iei.note.controller.NoteController;
 import kr.co.iei.vote.model.dao.VoteDao;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
@@ -11,15 +15,19 @@ import kr.co.iei.vote.model.dto.VoteOption;
 @Service
 public class VoteService {
 
-    private final NoteService noteService;
+    private final NoteController noteController;
+
+	
 	
 	@Autowired
 	private VoteDao voteDao;
 
 
-    VoteService(NoteService noteService) {
-        this.noteService = noteService;
+    VoteService(NoteController noteController) {
+        this.noteController = noteController;
     }
+
+
 	
 
 	@Transactional
@@ -37,5 +45,38 @@ public class VoteService {
 
 		}
 		return result;
+	}
+
+	/*//게시물 조회하기
+	public Map selectVoteList(int reqPage) {
+		
+		List voteList = voteDao.selectVoteList();
+				
+		System.out.println(voteList);
+		
+		return null;
+	}
+	*/
+
+
+
+	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount) {
+		HashMap<String, Object> voteList = new HashMap<String,Object>();
+		voteList.put("startRow", startRow);
+		voteList.put("endRow", endRow);
+		voteList.put("sideBtnCount", sideBtnCount);
+
+		
+		List<VoteDTO> selectVoteList = voteDao.selectVoteList(voteList);// 리스트 출력
+		int totalListCount = voteDao.totalListCount(voteList); // 리스트 갯수의 총 합
+		
+		//구한 값들을 해쉬맵으로 다시 넣어서 리턴값 보내기
+		HashMap<String , Object> map = new HashMap<String,Object>();
+		map.put("selectVoteList", selectVoteList);
+		map.put("totalListCount", totalListCount);
+		
+		System.out.println("투표게시판 맵값 확인" + map);
+		
+		return map;
 	}
 }

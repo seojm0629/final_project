@@ -7,12 +7,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.iei.freeboard.model.dao.FreeBoardDao;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 
@@ -125,6 +127,22 @@ public class FreeBoardService {
 		List<FreeBoardDTO> list = freeBoardDao.mainCategory(freeBoardCategoryNo);
 		
 		return list;
+	}
+	@Transactional
+	public int insertFreeBoard(FreeBoardDTO freeBoard, List<FreeBoardPhotoDTO> freeBoardPhotoList) {
+		int freeBoardNo = freeBoardDao.getFreeBoardNo();
+		freeBoard.setFreeBoardNo(freeBoardNo);
+	
+		int result = freeBoardDao.insertFreeBoard(freeBoard);
+		//System.out.println(freeBoard);
+		System.out.println(freeBoardPhotoList);
+		for(FreeBoardPhotoDTO freeBoardPhoto : freeBoardPhotoList) {
+			System.out.println(freeBoardPhoto);
+			
+			freeBoardPhoto.setFreeBoardNo(freeBoardNo);
+			result += freeBoardDao.insertFreeBoardFile(freeBoardPhoto);
+		}
+		return result;
 	}
 	
 }

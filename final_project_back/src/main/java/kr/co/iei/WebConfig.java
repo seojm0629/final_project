@@ -42,7 +42,7 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer{
 			.addResourceLocations("file:///"+root+"/freeBoard/editor/"); //로컬 파일 시스템 경로 url
 		registry
 			.addResourceHandler("/freeBoard/thumbnail/**")
-			.addResourceLocations("file:///"+root+"/thumbnail/"); //  C:/Temp/react/thumb라는 폴더 지칭
+			.addResourceLocations("file:///"+root+"/freeBoard/thumbnail/"); //  C:/Temp/react/thumb라는 폴더 지칭
 	}
 	
 	

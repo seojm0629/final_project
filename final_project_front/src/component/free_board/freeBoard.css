@@ -166,22 +166,28 @@
   user-select: none;
   background-color: #2f4e70;
   color: white;
-  margin: 20px 0px 0px 25px;
+  margin: 20px 0px 0px 18px;
   border-radius: 3px;
 }
 .board-title {
   width: max-content;
-  font-size: 25px;
-  margin: 15px 0px 5px 45px;
+  font-size: 23px;
+  margin: 15px 0px 5px 20px;
   font-weight: 600;
 }
 .board-content {
-  max-width: 330px;
+  max-width: 280px;
   max-height: 48px;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin: 10px 0px 20px 90px;
+  margin: 10px 0px 20px 40px;
   box-sizing: content-box;
+}
+.board-thumbnail {
+  max-width: 100px;
+  height: 150px;
+  display: flex;
+  background-color: #2f4e70;
 }
 .nickname-id {
   font-weight: 500;
@@ -323,6 +329,13 @@
   display: flex;
   gap: 10px;
 }
+.category-text div > input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2f4e70;
+}
+
 .title-area {
   display: flex;
   gap: 55px;

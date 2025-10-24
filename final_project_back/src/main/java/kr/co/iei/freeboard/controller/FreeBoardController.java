@@ -1,5 +1,6 @@
 package kr.co.iei.freeboard.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
 import kr.co.iei.utils.FileUtil;
 
@@ -89,9 +91,9 @@ public class FreeBoardController {
 	
 	@GetMapping(value= "/boardWrite")
 	public ResponseEntity<List> isSubCategory(@RequestParam String freeBoardCategory){
-		System.out.println("dd");
+
 		List subList = freeBoardService.isSubCategory(freeBoardCategory);
-		System.out.println(subList);
+
 		return ResponseEntity.ok(subList);
 	}
 	@GetMapping(value="/mainCategory")
@@ -104,16 +106,34 @@ public class FreeBoardController {
 		String savepath = root+"/freeBoard/editor/";
 		String filepath = fileUtil.fileUpload(savepath, image);
 		return ResponseEntity.ok(filepath);
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}
+	@PostMapping(value = "/boardWrite")
+	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto){
+		//root : freeBoard 폴더 -> thumbnail폴더 안쪽
+		
+		System.out.println(freeBoardThumbnail);
+		
+		if(freeBoardThumbnail != null) {
+			String savepath = root + "/freeBoard/thumbnail/";
+			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
+			
+			freeBoard.setFreeBoardThumbnail(filepath);
+		}
+		List<FreeBoardPhotoDTO> freeBoardPhotoList = new ArrayList<FreeBoardPhotoDTO>();
+		if(freeBoardPhoto != null) {
+			String savepath = root+ "/freeBoard/image/";
+			for(MultipartFile file : freeBoardPhoto) {
+				String FBPhotopath = file.getOriginalFilename();
+				String FBPhotoname = fileUtil.fileUpload(savepath, file);
+				FreeBoardPhotoDTO fileDTO = new FreeBoardPhotoDTO();
+				fileDTO.setFBPhotoname(FBPhotoname);
+				fileDTO.setFBPhotopath(FBPhotopath);
+				
+				freeBoardPhotoList.add(fileDTO);
+				System.out.println(freeBoardPhotoList);
+			}
+		}
+		int result = freeBoardService.insertFreeBoard(freeBoard, freeBoardPhotoList);
+		return ResponseEntity.ok(result);
+	}
 }

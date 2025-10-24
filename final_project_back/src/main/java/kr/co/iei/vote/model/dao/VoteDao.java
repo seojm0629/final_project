@@ -1,5 +1,8 @@
 package kr.co.iei.vote.model.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.vote.model.dto.VoteDTO;
@@ -13,5 +16,10 @@ public interface VoteDao {
 	int getVoteNo();
 
 	int insertContent(VoteOption option);
+
+	List<VoteDTO> selectVoteList(HashMap<String, Object> voteList);
+	
+	int totalListCount(HashMap<String, Object> voteList);
+
 	
 }
