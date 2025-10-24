@@ -14,4 +14,11 @@
 		insert into vote_option_tbl values(vote_option_seq.nextval,#{voteContent},#{voteNo})
 	</insert>
 	
+	<select id="selectVoteList" resultType="vote">
+		select member_nickname, vote_title, vote_date, vote_check
+		from member_tbl
+		join vote_tbl using(member_no)
+ 		order by vote_check asc, vote_date desc
+ 	</select>
+		
 </mapper>

@@ -15,7 +15,7 @@ const VoteInsert = () => {
   const navigate = useNavigate();
 
   const mainVote = () => {
-    navigate("/vote/main");
+    navigate("/vote/list");
   };
   //리스트 항목 추가
   const addList = () => {
@@ -58,7 +58,7 @@ const VoteInsert = () => {
             icon: "success",
           });
         }
-        navigate("/vote/main");
+        navigate("/vote/list");
       })
       .catch((err) => {
         Swal.fire({

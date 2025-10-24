@@ -13,10 +13,7 @@ import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
-import VoteMain from "./component/vote/VoteMain";
-
-
-
+import VoteList from "./component/vote/VoteList";
 
 function App() {
   return (
@@ -31,7 +28,7 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
-          
+
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
@@ -42,7 +39,7 @@ function App() {
             element={<TradeBoardView />}
           />
           <Route path="/note/test" element={<Test />} />
-          <Route path="/vote/main" element={<VoteMain />} />
+          <Route path="/vote/list" element={<VoteList />} />
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
         </Routes>
       </main>
