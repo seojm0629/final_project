@@ -592,3 +592,9 @@
 .write-btn:hover {
   background-color: #1f3a50;
 }
+
+.trade-completed-text {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-right: 4px;
+}
