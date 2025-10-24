@@ -13,7 +13,11 @@ import ServiceAgree from "./component/member/ServiceAgree";
 import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
+
 import VoteList from "./component/vote/VoteList";
+
+import VoteMain from "./component/vote/VoteMain";
+import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
 
 function App() {
   return (
@@ -41,6 +45,7 @@ function App() {
           <Route path="/note/test" element={<Test />} />
           <Route path="/vote/list" element={<VoteList />} />
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
+          <Route path="/tradeBoard/write" element={<TradeBoardWrite />} />
         </Routes>
       </main>
       <Footer></Footer>

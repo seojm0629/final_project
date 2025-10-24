@@ -12,6 +12,7 @@ const TradeBoardList = () => {
     listCnt: 16,
   });
   const [totalListCount, setTotalListCount] = useState(10);
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(
@@ -33,6 +34,12 @@ const TradeBoardList = () => {
   return (
     <section className="section tradeBoard-list">
       <div className="page-title">중고거래 게시판</div>
+      <button
+        className="btn write-btn"
+        onClick={() => navigate("/tradeBoard/write")}
+      >
+        글쓰기
+      </button>
       <div className="tradeBoard-list-wrap">
         <ul className="posting-wrap">
           {tradeBoardList.map((tradeBoard, index) => {
