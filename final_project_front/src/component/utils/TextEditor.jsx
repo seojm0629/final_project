@@ -10,8 +10,7 @@ const TextEditor = (props) => {
   const setData = props.setData;
   const editorRef = useRef(null);
   const backServer = import.meta.env.VITE_BACK_SERVER;
-  console.log(data);
-
+  const setFreeBoardThumbnail = props.setFreeBoardThumbnail; //썸네일 컬럼에 들어갈 경로
   const imageHandler = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -29,14 +28,14 @@ const TextEditor = (props) => {
             },
           })
           .then((res) => {
+            const imageUrl = `${backServer}/freeBoard/editor/${res.data}`;
             const editor = editorRef.current.getEditor();
             const range = editor.getSelection();
-            editor.insertEmbed(
-              range.index,
-              "image",
-              `${backServer}/freeBoard/editor/${res.data}`
-            );
+            editor.insertEmbed(range.index, "image", imageUrl);
             editor.setSelection(range.index + 1);
+            if (setFreeBoardThumbnail !== null) {
+              setFreeBoardThumbnail(imageUrl);
+            }
           })
           .catch((err) => {
             console.log(err);

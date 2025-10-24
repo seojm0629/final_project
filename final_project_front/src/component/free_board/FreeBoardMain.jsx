@@ -237,10 +237,10 @@ const FreeBoardContent = (props) => {
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
-              <div className="board-content">
-                {list.freeBoardContent}
-                <div className="board-thumbnail"></div>
-              </div>
+              <div
+                className="board-content"
+                dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
+              ></div>
               <div className="nickname-id">
                 <span>{list.memberNickname}</span>
                 <span>{list.memberId}</span>

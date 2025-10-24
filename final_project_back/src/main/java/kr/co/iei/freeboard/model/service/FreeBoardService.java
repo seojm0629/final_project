@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -127,16 +128,19 @@ public class FreeBoardService {
 		
 		return list;
 	}
-
+	@Transactional
 	public int insertFreeBoard(FreeBoardDTO freeBoard, List<FreeBoardPhotoDTO> freeBoardPhotoList) {
-		int boardNo = freeBoardDao.getFreeBoardNo();
-		freeBoard.setFreeBoardNo(boardNo);
-		
+		int freeBoardNo = freeBoardDao.getFreeBoardNo();
+		freeBoard.setFreeBoardNo(freeBoardNo);
+	
 		int result = freeBoardDao.insertFreeBoard(freeBoard);
 		//System.out.println(freeBoard);
-		for(FreeBoardPhotoDTO boardFile : freeBoardPhotoList) {
-			boardFile.setFreeBoardNo(boardNo);
-			result += freeBoardDao.insertFreeBoardFile(boardFile);
+		System.out.println(freeBoardPhotoList);
+		for(FreeBoardPhotoDTO freeBoardPhoto : freeBoardPhotoList) {
+			System.out.println(freeBoardPhoto);
+			
+			freeBoardPhoto.setFreeBoardNo(freeBoardNo);
+			result += freeBoardDao.insertFreeBoardFile(freeBoardPhoto);
 		}
 		return result;
 	}

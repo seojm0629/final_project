@@ -136,14 +136,16 @@
 	 
 	 <insert id="insertFreeBoard">
 	 	insert into free_board_tbl values
-	 		(free_board_seq.nextval, 
+	 		(
+	 		free_board_seq.nextval, 
 	 		#{freeBoardSubcategoryNo}, 
 	 		#{freeBoardCategoryNo}, 
 	 		#{freeBoardTitle}, 
 	 		#{memberNo}, 
 	 		#{freeBoardContent}, 
 	 		TO_CHAR(SYSDATE,'YYYY-MM-DD'), 
-	 		#{freeBoardThumbnail})
+	 		#{freeBoardThumbnail}
+	 		)
 	 </insert>
 	 
 	 <insert id="insertFreeBoardFile">
@@ -154,7 +156,8 @@
 	 		#{freeBoardNo}, 
 	 		fb_photo_seq.nextval, 
 	 		#{FBPhotopath}, 
-	 		#{FBPhotoname})
+	 		#{FBPhotoname}
+	 		)
 	 </insert>
 	 
 	 

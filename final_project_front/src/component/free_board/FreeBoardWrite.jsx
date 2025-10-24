@@ -14,6 +14,7 @@ import { useRecoilState } from "recoil";
 import TextEditor from "../utils/TextEditor";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FreeBoardWrite = (props) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -29,7 +30,10 @@ const FreeBoardWrite = (props) => {
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardThumbnail, setFreeBoardThumbnail] = useState(null);
+  const [freeBoardPhoto, setFreeBoardPhoto] = useState([]);
+  const navigate = useNavigate();
   const menus = props.menus;
+  /*
   const [freeBoard, setFreeBoard] = useState({
     freeBoardCategoryNo: freeBoardCategoryNo,
     freeBoardSubcategoryNo: freeBoardSubcategoryNo,
@@ -39,29 +43,54 @@ const FreeBoardWrite = (props) => {
     freeBoardThumbnail: freeBoardThumbnail,
   });
   //게시글 작성 state
-
+  */
   const writeFreeBoard = () => {
-    const formData = new FormData();
-    formData.append("freeBoardCategoryNo", freeBoard.freeBoardCategoryNo);
-    formData.append("freeBoardSubcategoryNo", freeBoard.freeBoardSubcategoryNo);
-    formData.append("freeBoardTitle", freeBoard.freeBoardTitle);
-    formData.append("memberNo", freeBoard.memberNo);
-    formData.append("freeBoardContent", freeBoard.freeBoardContent);
-
-    if (freeBoardThumbnail) {
-      formData.append("freeBoardThumbnail", freeBoard.freeBoardThumbnail);
+    if (
+      freeBoardCategoryNo === undefined ||
+      freeBoardSubcategoryNo === undefined
+    ) {
+      alert("카테고리 선택해주세요.");
+      return;
+    } else if (freeBoardTitle === null) {
+      alert("제목을 입력해주세요.");
+      return;
+    } else if (freeBoardContent === null) {
+      alert("내용을 입력해주세요.");
+      return;
     }
+    const formData = new FormData();
+    formData.append("freeBoardCategoryNo", freeBoardCategoryNo);
+    formData.append("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
+    formData.append("freeBoardTitle", freeBoardTitle);
+    formData.append("memberNo", memberNo);
+    formData.append("freeBoardContent", freeBoardContent);
 
+    if (freeBoardThumbnail !== null) {
+      formData.append("freeBoardThumbnail", freeBoardThumbnail);
+    }
+    for (let i = 0; i < freeBoardPhoto.length; i++) {
+      formData.append("freeBoardPhoto", freeBoardPhoto[i]);
+    }
+    console.log(freeBoardPhoto);
     axios
-      .post(`${backServer}/freeBoard/write`, formData)
+      .post(`${backServer}/freeBoard/boardWrite`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         console.log(res.data);
+        if (res.data === 1) {
+          navigate("/freeBoard/content");
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  console.log(freeBoardContent);
+  console.log(freeBoardCategoryNo);
+  console.log(freeBoardSubcategoryNo);
   useEffect(() => {
     //회원 아이디 조회 후 회원 닉네임 get
     axios
@@ -89,7 +118,16 @@ const FreeBoardWrite = (props) => {
     setCate(e.target.value);
   };
   const subHandleChange = (e) => {
+    const selected = subCate.find(
+      (sub) => sub.freeBoardSubcategory === e.target.value
+    );
+
     setSelectedSub(e.target.value);
+
+    if (selected) {
+      setFreeBoardCategoryNo(selected.freeBoardCategoryNo);
+      setFreeBoardSubcategoryNo(selected.freeBoardSubcategoryNo);
+    }
   };
   return (
     <div className="write-wrap">
@@ -147,9 +185,6 @@ const FreeBoardWrite = (props) => {
                 inputProps={{ "aria-label": "Without label" }}
               >
                 {subCate.map((sub, i) => {
-                  console.log(sub);
-                  console.log(sub.freeBoardCategoryNo);
-                  console.log(sub.freeBoardSubcategoryNo);
                   return (
                     <MenuItem
                       key={"sub" + i}
@@ -198,18 +233,14 @@ const FreeBoardWrite = (props) => {
             <TextEditor
               setData={setFreeBoardContent}
               data={freeBoardContent}
+              setFreeBoardThumbnail={setFreeBoardThumbnail}
             ></TextEditor>
           </div>
         </div>
       </div>
       <div className="submit-section">
         <div className="write-button">
-          <button
-            className="submit-btn"
-            onClick={() => {
-              writeFreeBoard();
-            }}
-          >
+          <button className="submit-btn" onClick={writeFreeBoard}>
             작성하기
           </button>
         </div>

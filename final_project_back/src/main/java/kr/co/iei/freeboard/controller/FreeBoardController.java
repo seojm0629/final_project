@@ -107,27 +107,30 @@ public class FreeBoardController {
 		String filepath = fileUtil.fileUpload(savepath, image);
 		return ResponseEntity.ok(filepath);
 	}
-	@PostMapping(value = "/write")
-	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile thumbnail, @ModelAttribute MultipartFile[] freeBoardFile){
+	@PostMapping(value = "/boardWrite")
+	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto){
 		//root : freeBoard 폴더 -> thumbnail폴더 안쪽
 		
-		if(thumbnail != null) {
+		System.out.println(freeBoardThumbnail);
+		
+		if(freeBoardThumbnail != null) {
 			String savepath = root + "/freeBoard/thumbnail/";
-			String filepath = fileUtil.fileUpload(savepath, thumbnail);
+			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
 			
 			freeBoard.setFreeBoardThumbnail(filepath);
 		}
 		List<FreeBoardPhotoDTO> freeBoardPhotoList = new ArrayList<FreeBoardPhotoDTO>();
-		if(freeBoardFile != null) {
-			String savepath = root+ "/freeBoard/";
-			for(MultipartFile file : freeBoardFile) {
-				String filename = file.getOriginalFilename();
-				String filepath = fileUtil.fileUpload(savepath, file);
+		if(freeBoardPhoto != null) {
+			String savepath = root+ "/freeBoard/image/";
+			for(MultipartFile file : freeBoardPhoto) {
+				String FBPhotopath = file.getOriginalFilename();
+				String FBPhotoname = fileUtil.fileUpload(savepath, file);
 				FreeBoardPhotoDTO fileDTO = new FreeBoardPhotoDTO();
-				fileDTO.setFBPhotoname(filename);
-				fileDTO.setFBPhotopath(savepath);
+				fileDTO.setFBPhotoname(FBPhotoname);
+				fileDTO.setFBPhotopath(FBPhotopath);
 				
 				freeBoardPhotoList.add(fileDTO);
+				System.out.println(freeBoardPhotoList);
 			}
 		}
 		int result = freeBoardService.insertFreeBoard(freeBoard, freeBoardPhotoList);

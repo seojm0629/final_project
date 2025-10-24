@@ -25,7 +25,7 @@ public class FreeBoardDTO {
 	private String memberId;
 	private int likeCount;
 	private String freeBoardThumbnail;
-	private List<FreeBoardPhotoDTO> freeboardPhotoList;  
+	private List<FreeBoardPhotoDTO> freeBoardPhotoList;  
 	private int[] delFileNo;
 	
 }
