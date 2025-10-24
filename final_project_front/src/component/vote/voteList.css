@@ -33,6 +33,8 @@
   width: 50%;
   border-radius: 10px;
   table-layout: fixed;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .vote-tbl thead th {
@@ -42,4 +44,15 @@
   border-radius: 5px;
   color: white;
   text-align: center;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+.vote-tr > td {
+}
+.voteList-paging-wrap {
+}
+
+.vote-tbody > tr > td {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

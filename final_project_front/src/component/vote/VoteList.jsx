@@ -3,12 +3,13 @@ import "./voteList.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
+import { useRecoilState } from "recoil";
+import { loginIdState } from "../utils/RecoilData";
+import Swal from "sweetalert2";
 const VoteList = () => {
+  const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
-  const writebutton = () => {
-    navigate("/vote/voteInsert");
-  };
 
   // 필수: 페이지 정보 (프론트에서 바로 세팅)
   const [reqPageInfo, setReqPageInfo] = useState({
@@ -46,7 +47,23 @@ const VoteList = () => {
       </div>
       <div>
         <div className="vote-write-box">
-          <button onClick={writebutton}>글작성</button>
+          <button
+            onClick={() => {
+              {
+                member === ""
+                  ? Swal.fire({
+                      title: "로그인",
+                      text: "로그인 후 이용해주세요",
+                      icon: "warning",
+                    }).then(() => {
+                      navigate("/member/login");
+                    })
+                  : navigate("/vote/voteInsert");
+              }
+            }}
+          >
+            글작성
+          </button>
         </div>
       </div>
       <div className="vote-tbl-box">
@@ -65,7 +82,7 @@ const VoteList = () => {
               <th style={{ width: "15%" }}>작성날짜</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="vote-tbody">
             {voteList.length === 0 ? (
               <tr>
                 <td colSpan={"4"} style={{ textAlign: "center" }}>
