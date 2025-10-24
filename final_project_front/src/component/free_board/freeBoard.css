@@ -2,19 +2,19 @@
   margin: 0;
   padding: 0;
 }
-.main-wrap {
+.main-div .main-wrap {
   display: flex;
   flex: 1;
   box-sizing: content-box;
 }
-.main-header {
+.main-div .main-header {
   height: 80px;
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
   align-items: center;
 }
-.search-div {
+.main-div .search-div {
   width: max-content;
   margin: 0 auto;
   display: flex;
@@ -24,7 +24,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-.search-div input {
+.main-div .search-div input {
   width: 400px;
   padding: 8px 12px;
   border: none;
@@ -32,20 +32,20 @@
   border-left: 1px solid #ccc;
   background-color: #f0f2f5;
 }
-.search-menu {
+.main-div .search-menu {
   width: 140px;
   margin: 8px;
   display: flex;
   justify-content: center;
   cursor: pointer;
 }
-.search-menu span {
+.main-div .search-menu span {
   width: max-content;
 }
-.search-menu svg {
+.main-div .search-menu svg {
   margin: 1px 0px 0px 10px;
 }
-.search-btn {
+.main-div .search-btn {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -53,10 +53,10 @@
   align-items: center;
   justify-content: center;
 }
-.search-btn:hover {
+.main-div .search-btn:hover {
   color: #2f4e70;
 }
-.status-box {
+.main-div .status-box {
   width: max-content;
   height: 50px;
   display: flex;
@@ -64,13 +64,13 @@
   gap: 6px;
   justify-content: center;
 }
-.status-bar {
+.main-div .status-bar {
   width: 100%;
   height: 100%;
   display: flex;
   gap: 6px;
 }
-.menu-tag {
+.main-div .menu-tag {
   display: flex;
   align-items: center;
   background-color: #43688f;
@@ -83,25 +83,25 @@
   width: max-content;
   user-select: none;
 }
-.menu-tag:hover {
+.main-div .menu-tag:hover {
   margin: 1px;
 }
-.menu-tag svg {
+.main-div .menu-tag svg {
   margin-left: 4px;
   font-size: 16px;
   cursor: pointer;
 }
-.menu-tag svg:hover {
+.main-div .menu-tag svg:hover {
   color: #000;
 }
 /*메인페이지 글 목록 css*/
-.main-page {
+.main-div .main-page {
   display: flex;
 }
-.section-company {
+.main-div .section-company {
   width: 70%;
 }
-.main-content {
+.main-div .main-content {
   width: 50%;
   height: 850px;
   flex-grow: 1;
@@ -111,17 +111,17 @@
   align-items: center;
   box-sizing: content-box;
 }
-.free-board {
+.main-div .free-board {
   width: 95%;
   height: 89%;
 }
-.write-div {
+.main-div .write-div {
   width: 60px;
   min-height: 30px;
   margin: 0px 0px 10px 830px;
   text-align: center;
 }
-.write-div div {
+.main-div .write-div div {
   width: 100%;
   height: 100%;
   border: 1px solid #ccc;
@@ -132,19 +132,19 @@
   user-select: none;
   flex-wrap: wrap;
 }
-.side-submenu li {
+.main-div .side-submenu li {
 }
-.active-submenu {
+.main-div .active-submenu {
   border-radius: 5px;
   background-color: #43688f;
   color: white;
   cursor: pointer;
 }
-.freeBoard-section {
+.main-div .freeBoard-section {
   display: flex;
   flex-direction: column;
 }
-.board-div {
+.main-div .board-div {
   width: 100%;
   height: 100%;
   border: 1px solid #ccc;
@@ -152,7 +152,7 @@
   grid-template-columns: 1fr 1fr; /*grid 1행에 2칸 분배*/
   grid-area: auto;
 }
-.board-section {
+.main-div .board-section {
   width: 100%;
   height: 100%;
   display: flex;
@@ -161,7 +161,7 @@
   box-sizing: content-box;
   border-bottom: 1px solid #ccc;
 }
-.board-status {
+.main-div .board-status {
   width: max-content;
   user-select: none;
   background-color: #2f4e70;
@@ -169,13 +169,13 @@
   margin: 20px 0px 0px 18px;
   border-radius: 3px;
 }
-.board-title {
+.main-div .board-title {
   width: max-content;
   font-size: 23px;
   margin: 15px 0px 5px 20px;
   font-weight: 600;
 }
-.board-content {
+.main-div .board-content {
   max-width: 280px;
   max-height: 48px;
   text-overflow: ellipsis;
@@ -183,34 +183,34 @@
   margin: 10px 0px 20px 40px;
   box-sizing: content-box;
 }
-.board-thumbnail {
+.main-div .board-thumbnail {
   max-width: 100px;
   height: 150px;
   display: flex;
   background-color: #2f4e70;
 }
-.nickname-id {
+.main-div .nickname-id {
   font-weight: 500;
   margin: 0px 0px 10px 25px;
   display: flex;
   gap: 6px;
   font-size: 13px;
 }
-.view-heart {
+.main-div .view-heart {
   display: flex;
   margin: 5px 25px 15px 25px;
   gap: 12px;
   font-size: 13px;
 }
-.view {
+.main-div .view {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.view svg {
+.main-div .view svg {
   font-size: 20px;
 }
-.heart {
+.main-div .heart {
   width: max-content;
   flex-grow: 1;
   display: flex;

@@ -16,7 +16,7 @@ import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
-import FreeBoardDetail from "./FreeBoardDetail";
+//import FreeBoardDetail from "./FreeBoardDetail";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -110,13 +110,7 @@ const FreeBoardMain = () => {
             <ManageSearchIcon></ManageSearchIcon>
           </form>
         </div>
-        <div className="freeBoard-detail">
-          <Routes>
-            <Route>
-              <FreeBoardDetail></FreeBoardDetail>
-            </Route>
-          </Routes>
-        </div>
+        <div className="freeBoard-detail"></div>
         <div className="status-box">
           <div className="status-bar">
             {selectMenu.map((menu, i) => {
@@ -244,7 +238,9 @@ const FreeBoardContent = (props) => {
               style={{
                 borderRight: "1px solid #ccc",
               }}
-              onClick={navigate("/freeBoard/detail")}
+              onClick={() => {
+                navigate("/freeBoard/detail");
+              }}
             >
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
