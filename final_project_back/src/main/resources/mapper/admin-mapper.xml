@@ -634,4 +634,17 @@
 	<select id="selectAllNotice" resultType="adminNotice">
 	SELECT * FROM NOTICE_ALERT_TBL
 	</select>
+	
+	<delete id="deleteFreeCate">
+	DELETE FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{delCate}
+	</delete>
+	
+	<select id="searchMainNo" resultType="int">
+	SELECT FREE_BOARD_CATEGORY_NO FROM FREE_BOARD_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY=#{delCate}
+	</select>
+	
+	<delete id="deleteFreeCate2">
+	DELETE FROM FREE_BOARD_SUB_CATEGORY_TBL WHERE FREE_BOARD_CATEGORY_NO=#{main} AND FREE_BOARD_SUBCATEGORY=#{sub}
+	</delete>
+
 </mapper>
