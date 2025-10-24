@@ -89,5 +89,13 @@ public interface AdminDao {
 
 	List<AdminNoticeDTO> selectAllNotice();
 
+	int deleteFreeCate(HashMap<String, Object> deleteCateSet);
+
+	int deleteFreeCate(String delCate);
+
+	int deleteFreeCate2(HashMap<String, Object> delCateSet);
+
+	int searchMainNo(String delCate);
+
 
 }

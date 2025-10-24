@@ -1,5 +1,7 @@
+import { Link, Route, Routes } from "react-router-dom";
 import "./adminSideMenu.css";
 import { useState } from "react";
+import ContentFreeBoard from "./ContentFreeBoard";
 
 const SideMenu = ({ active, setActive }) => {
   //[카테고리 접고 펼치기]

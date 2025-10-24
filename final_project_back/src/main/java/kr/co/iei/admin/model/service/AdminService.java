@@ -122,28 +122,32 @@ public class AdminService {
 
 	public int insertFreeCate(HashMap<String, Object> insertCateSet) {
 		System.out.println(insertCateSet.get("categoryAddText"));
-		int count = adminDao.searchFreeCate(insertCateSet.get("categoryAddText"));
-		int searchFreeCateNo = 0;
-		
-		if (count==1) {
-			searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
-			insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
-			System.out.println("searchFreeCateNo : "+searchFreeCateNo);
-		}
 		int result = 0;
-		
-		
-		if(count==1) {
-			result += adminDao.insertSubFreeCate(insertCateSet); 
-		}else {
+		if(insertCateSet.get("categoryAddText")!="") {
 			
-			result += adminDao.insertFreeCate(insertCateSet);
-			searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
-			insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
-			result += adminDao.insertSubFreeCate(insertCateSet); 
+			int count = adminDao.searchFreeCate(insertCateSet.get("categoryAddText"));
+			int searchFreeCateNo = 0;
+			
+			if (count==1) {
+				searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
+				insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
+				System.out.println("searchFreeCateNo : "+searchFreeCateNo);
+			}
+			
+			
+			
+			if(count==1) {
+				result += adminDao.insertSubFreeCate(insertCateSet); 
+			}else {
+				
+				result += adminDao.insertFreeCate(insertCateSet);
+				searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
+				insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
+				result += adminDao.insertSubFreeCate(insertCateSet); 
+			}
+			System.out.println(result);
+			
 		}
-		System.out.println(result);
-		
 		return result;
 	}
 
@@ -156,4 +160,31 @@ public class AdminService {
 		System.out.println(selectAllNotice);
 		return selectAllNotice;
 	}
+
+	public List<AdminNoticeDTO> selectAllNotice() {
+		List<AdminNoticeDTO> selectAllNotice = new ArrayList<>();
+		selectAllNotice = adminDao.selectAllNotice();
+		System.out.println(selectAllNotice);
+		return selectAllNotice;
+	}
+
+	public int deleteFreeCate(String delCate) {
+		System.out.println(delCate);
+		int result = adminDao.deleteFreeCate(delCate);
+		return result;
+	}
+
+	public int deleteFreeCate2(HashMap<String, Object> delCateSet) {
+		System.out.println("실제삭제 : "+delCateSet);
+		int result = adminDao.deleteFreeCate2(delCateSet);
+		System.out.println(result);
+		return result;
+	}
+
+	public int searchMainNo(String delCate) {
+		int cateMainNo = adminDao.searchMainNo(delCate);
+		return cateMainNo;
+	}
+	
+	
 }

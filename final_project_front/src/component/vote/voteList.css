@@ -9,7 +9,7 @@
   height: 100px;
 }
 .vote-write-box {
-  width: 500px;
+  width: 790px;
   display: flex;
   flex-direction: row-reverse;
   height: 30px;
@@ -22,10 +22,11 @@
   width: 100px;
   color: white;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .vote-tbl-box {
-  width: 100%;
+  width: 1600px;
   display: flex;
   justify-content: center;
 }
@@ -33,13 +34,28 @@
   width: 50%;
   border-radius: 10px;
   table-layout: fixed;
+  text-align: center;
+  background-color: white;
 }
 
 .vote-tbl thead th {
   position: sticky;
   top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background-color: #2f4e70;
   border-radius: 5px;
   color: white;
   text-align: center;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+.voteList-paging-wrap {
+  width: 50%;
+}
+
+.vote-tbody > tr > td {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

@@ -51,4 +51,15 @@ public class VoteController {
 		return ResponseEntity.ok(map);
 	}
 	
+	@GetMapping(value="/mainTitle")
+	public ResponseEntity<List<VoteDTO>> mainTitle(@RequestParam(defaultValue = "10") int limit){
+		List<VoteDTO> list = voteService.mainTitle(limit);
+		return ResponseEntity.ok(list);
+	}
+	
+	
+	
+	
+	
+	
 }

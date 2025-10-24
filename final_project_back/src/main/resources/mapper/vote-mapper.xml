@@ -15,16 +15,36 @@
 	</insert>
 	
 	<select id="selectVoteList" resultType="vote">
-	select B.* from (
-	select rownum rnum,A.* from(
-	select member_nickname , vote_title, vote_date, vote_check 
-	from member_tbl 
-	join vote_tbl using(member_no) 
-	order by vote_check asc, vote_date desc)A)B where rnum between #{startRow} and #{endRow}
+		select B.* from (
+		select rownum rnum,A.* from(
+		select member_nickname , vote_title, to_char(vote_date,'yyyy-mm-dd') as vote_date, vote_check 
+		from member_tbl
+		join vote_tbl using(member_no)
+		order by vote_check asc, vote_date desc)A)B where rnum between #{startRow} and #{endRow}
 	</select>
 	
  	<select id="totalListCount" resultType="int">
  		select count(*) from vote_tbl
+ 	</select>
+ 	
+ 	<!-- 정민 작업(메인페이지 리스트 출력)-->
+ 	<select id="mainTitle" resultType="vote">
+ 		<![CDATA[
+		    SELECT v.vote_no,
+		           v.vote_title,
+		           v.member_no,
+		           m.member_nickname
+		    FROM (
+		        SELECT vote_no,
+		               vote_title,
+		               member_no
+		        FROM vote_tbl
+		        ORDER BY vote_no DESC
+		    ) v
+		    JOIN member_tbl m
+		    ON v.member_no = m.member_no
+		    WHERE ROWNUM <= #{limit}
+		]]>
  	</select>
 		
 </mapper>
