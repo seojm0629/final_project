@@ -46,6 +46,8 @@ public class VoteController {
 		
 		HashMap<String, Object> map = voteService.voteList(startRow, endRow , sideBtnCount);
 		
+		System.out.println("투표 컨트롤러 맵 확인값" + map); 
+	
 		return ResponseEntity.ok(map);
 	}
 	
