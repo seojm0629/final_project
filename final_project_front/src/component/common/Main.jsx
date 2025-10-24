@@ -62,8 +62,20 @@ const Main = () => {
     const [freeBoardHobbyList, setFreeBoardHobbyList] = useState([]);
     const [freeBoardInfoList, setFreeBoardInfoList] = useState([]);
     const [freeBoardRoutineList, setFreeBoardRoutineList] = useState([]);
+    const [voteBoardList, setVoteBoardList] = useState([]);
 
     const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState(1);
+
+    useEffect(() => {
+        axios
+        .get(`${backServer}/vote/mainTitle`)
+        .then((res)=>{
+            setVoteBoardList(res.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    })
     
 
     useEffect(() => {
@@ -160,6 +172,42 @@ const Main = () => {
 
                     <div className="main-content-wrap">
                         <div className="main-content-board-list">
+                            <Link to="/vote/list">
+                                <div className="main-vote">
+                                    <div className="vote-board">
+                                        <div className="main-vote-header">
+                                            <h4>투표 게시판</h4>
+                                        </div>
+                                        <div className="vote-map">
+                                            <ul className="main-vote-content">
+                                                <div className="vote-title">
+                                                    {voteBoardList.map((list, i)=>{
+                                                        return(
+                                                            <li key={"vote-" + i}>
+                                                                <span>{list.voteTitle}</span>
+                                                            </li>
+                                                        )
+                                                    })}
+                                                </div>
+                                                <div className="vote-nickname">
+                                                    {voteBoardList.map((list, i)=>{
+                                                        return(
+                                                            <li key={"nick-" + i} className="main-vote-info">
+                                                                <span>{list.memberNickname}</span>
+                                                                <span>1시간전</span>
+                                                                <span>좋아요</span>
+                                                            </li>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="goto-vote">
+                                        투표하러 가기
+                                    </div>
+                                </div>
+                            </Link>
                             <div className="main-board-list">
                                 {/* 중고거래 게시판, 자유게시판 */}
                                 <div className="transaction-board first">

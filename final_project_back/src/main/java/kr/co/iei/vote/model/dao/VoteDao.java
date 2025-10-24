@@ -21,5 +21,7 @@ public interface VoteDao {
 	
 	int totalListCount(HashMap<String, Object> voteList);
 
+	List<VoteDTO> mainTitle(int limit);
+
 	
 }
