@@ -67,8 +67,8 @@ public class FreeBoardService {
 		freeBoardList.put("order", order);
 		freeBoardList.put("freeBoardTitle", freeBoardTitle);
 		
-		List<FreeBoardDTO> boardList = freeBoardDao.totalBoardList(freeBoardList);
-		int totalListCount = freeBoardDao.totalListCount(freeBoardList);
+		List<FreeBoardDTO> boardList = freeBoardDao.searchTitle(freeBoardList);
+		int totalListCount = freeBoardDao.totalSearchListCount(freeBoardList);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("boardList", boardList);

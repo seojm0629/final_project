@@ -51,7 +51,7 @@ public class FreeBoardController {
 		int endRow = pageNo * listCnt;
 		
 		HashMap<String, Object> map = freeBoardService.searchTitle(startRow, endRow ,sideBtnCount , order, freeBoardTitle);
-	
+		System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 	@GetMapping(value = "/content")

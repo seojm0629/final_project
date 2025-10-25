@@ -7,7 +7,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
@@ -39,6 +39,11 @@ const FreeBoardMain = () => {
   });
   const [totalListCount, setTotalListCount] = useState(0);
   const [freeBoardList, setFreeBoardList] = useState([]);
+  const [titleState, setTitleState] = useState(""); //url 넘길 state
+  const searchTitle = () => {
+    setReqPageInfo({...reqPageInfo, pageNo: 1});
+    setTitleState(freeBoardTitle);
+  }
   // * freeBoardListNo (최상위 컴포넌트에서 -> sideMenu -> main -> content) *
   const addMenu = (menu) => {
     if (!selectMenu.includes(menu)) {
@@ -49,7 +54,9 @@ const FreeBoardMain = () => {
     //item에 menu를 제외하고 출력
     setSelectMenu(
       selectMenu.filter((item, index) => {
-        item !== menu;
+        return(
+          item !== menu
+        );
       })
     );
   };
@@ -63,23 +70,9 @@ const FreeBoardMain = () => {
         console.log(err);
       });
   }, []);
-  const searchTitle = () => {
-    axios
-      .get(
-        `${backServer}/freeBoard/content/freeBoardTitle?pageNo=${reqPageInfo.pageNo}
-        &listCnt=${reqPageInfo.listCnt}
-        &sideBtnCount=${reqPageInfo.sideBtnCount}
-        &order=${reqPageInfo.order}
-        &freeBoardTitle=${freeBoardTitle}`
-      )
-      .then((res) => {
-        setFreeBoardList(res.data.boardList);
-        setTotalListCount(res.data.totalListCount);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const changeTitle = (e) => {
+    setFreeBoardTitle(e.target.value);
+  }
   return (
     <div className="main-div">
       <div className="main-header">
@@ -101,9 +94,7 @@ const FreeBoardMain = () => {
               id="freeBoardTitle"
               name="freeBoardTitle"
               value={freeBoardTitle}
-              onChange={(e) => {
-                setFreeBoardTitle(e.target.value);
-              }}
+              onChange={changeTitle}
             />
             <ManageSearchIcon></ManageSearchIcon>
           </form>
@@ -175,6 +166,8 @@ const FreeBoardMain = () => {
                     setTotalListCount={setTotalListCount}
                     freeBoardList={freeBoardList}
                     setFreeBoardList={setFreeBoardList}
+                    titleState = {titleState}
+                    freeBoardTitle = {freeBoardTitle}
                   ></FreeBoardContent>
                 }
               ></Route>
@@ -205,7 +198,9 @@ const FreeBoardContent = (props) => {
   const setTotalListCount = props.setTotalListCount;
   const freeBoardList = props.freeBoardList;
   const setFreeBoardList = props.setFreeBoardList;
-
+  const navigate = useNavigate();
+  const titleState = props.titleState;
+  const [result, setResult] = useState(false); //리스트 조회 결과에 따라 출력
   const listUrl =
     selected === -1
       ? `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
@@ -217,24 +212,43 @@ const FreeBoardContent = (props) => {
               &sideBtnCount=${reqPageInfo.sideBtnCount}
               &order=${reqPageInfo.order}
               &selected=${selected}`;
+  const searchFreeBoardUrl = 
+  `${backServer}/freeBoard/content/freeBoardTitle?pageNo=${reqPageInfo.pageNo}
+        &listCnt=${reqPageInfo.listCnt}
+        &sideBtnCount=${reqPageInfo.sideBtnCount}
+        &order=${reqPageInfo.order}
+        &freeBoardTitle=${titleState}`;
+  const boardUrl = titleState && titleState.trim() !== "" ? searchFreeBoardUrl : listUrl;
   useEffect(() => {
     //게시글이 카테고리와 하위 카테고리에 해당하는 게시글만 조회되도록
     axios
-      .get(listUrl)
+      .get(boardUrl)
       .then((res) => {
-        setFreeBoardList(res.data.boardList);
-        setTotalListCount(res.data.totalListCount);
+        const list = res.data.boardList;
+        if(list.length !== 0 ){
+          setFreeBoardList(res.data.boardList);
+          setTotalListCount(res.data.totalListCount);
+        }else{
+          setFreeBoardList([]);
+          setTotalListCount(0);
+        }
       })
       .catch((err) => {
         console.log(err);
+        setResult(true);
       });
-  }, [reqPageInfo.order, reqPageInfo.pageNo, selected]);
+  }, [reqPageInfo.order, reqPageInfo.pageNo, selected, titleState]);
   const detailNavi = () => {
     navigate("/detail");
   };
   return (
     <section className="freeBoard-section">
-      <div className="board-div">
+      {result ? (
+        <div className="no-result">
+          검색 결과가 없습니다.
+        </div>
+      ) : (
+              <div className="board-div">
         {freeBoardList.map((list, i) => {
           return i % 2 === 0 ? (
             <div
@@ -243,7 +257,7 @@ const FreeBoardContent = (props) => {
               style={{
                 borderRight: "1px solid #ccc",
               }}
-              onClick={detailNavi}
+              //onClick={detailNavi}
             >
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
@@ -272,7 +286,9 @@ const FreeBoardContent = (props) => {
               </div>
             </div>
           ) : (
-            <div key={"second" + i} className="board-section">
+            <div key={"second" + i} className="board-section"
+              //onClick={detailNavi}
+            >
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>
               <div
@@ -300,6 +316,7 @@ const FreeBoardContent = (props) => {
           );
         })}
       </div>
+      )}
       <div
         className="order-div"
         onClick={() => {

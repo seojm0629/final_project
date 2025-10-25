@@ -15,8 +15,9 @@ public interface FreeBoardDao {
 
 	List<FreeBoardCategoryDTO> selectCategoryList();
 
-	List searchTitle(String freeBoardTitle);
-
+	List searchTitle(HashMap<String, Object> freeBoardList);
+	int totalSearchListCount(HashMap<String, Object> freeBoardList);
+	
 	List<FreeBoardDTO> boardList(FreeBoardDTO freeBoardList);
 
 	List<FreeBoardDTO> totalBoardList(HashMap<String, Object> freeBoardList);
@@ -36,6 +37,8 @@ public interface FreeBoardDao {
 	int getFreeBoardNo();
 
 	int insertFreeBoard(FreeBoardDTO freeBoard);
+
+	
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	

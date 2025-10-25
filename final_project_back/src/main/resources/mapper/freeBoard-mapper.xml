@@ -10,23 +10,31 @@
 	</select>  
 	
 	<select id="searchTitle" resultType = "freeBoard">
-		select * from
-    		(select rownum as fbnum, fb.* from
-            	(select f.*, m.member_nickname, m.member_id, (select count(*) from fb_like_tbl where free_board_no=f.free_board_no) as like_count
-                from free_board_tbl f
+		select * 
+		from (
+    		select rownum as fbnum, fb.* 
+    			from (
+            		select f.*, 
+            		m.member_nickname, 
+            		m.member_id, 
+            		(select count(*) from fb_like_tbl where free_board_no=f.free_board_no) as like_count
+            from free_board_tbl f
             left join member_tbl m on (f.member_no = m.member_no)
-            ) fb
+            where free_board_title like '%' || #{freeBoardTitle} || '%'
             <if test="order == 2">
             	order by free_board_no desc
             </if>
     		<if test="order == 1">
     			order by free_board_no asc
     		</if>
-          	)
-          	<if test="selected == null || selected == -1">
-          		where fbnum between #{startRow} and #{endRow} and free_board_title like '%' || #{freeBoardTitle} || '%'
-          	</if>
+          	) fb
+        )  	
+        where fbnum between #{startRow} and #{endRow}
 	</select>
+	
+	 <select id="totalSearchListCount" resultType="int">
+	 	select count(*) from free_board_tbl where free_board_title like '%' || #{freeBoardTitle} || '%'
+	 </select>
 	 
 	<select id="boardList" resultType="freeBoard">
 		select * from free_board_tbl
