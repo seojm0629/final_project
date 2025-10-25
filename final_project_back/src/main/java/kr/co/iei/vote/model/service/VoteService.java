@@ -75,4 +75,20 @@ public class VoteService {
 		List<VoteDTO> list = voteDao.mainTitle(limit);
 		return list;
 	}
+
+
+	public VoteDTO selectOneVote(int voteNo) {
+
+		VoteDTO vote = voteDao.selectOneVote(voteNo);
+		
+		return vote;
+	}
+
+
+	public List<VoteOption> selectVoteOptions(int voteNo) {
+		
+		List<VoteOption> optionList = voteDao.selectVoteOptions(voteNo);
+			
+		return optionList;
+	}
 }

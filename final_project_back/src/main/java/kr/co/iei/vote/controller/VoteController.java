@@ -8,22 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import kr.co.iei.note.model.service.NoteService;
 import kr.co.iei.vote.model.dto.VoteDTO;
-
+import kr.co.iei.vote.model.dto.VoteOption;
 import kr.co.iei.vote.model.service.VoteService;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value="/vote")
 public class VoteController {
+
+    private final NoteService noteService;
 	@Autowired
 	private VoteService voteService;
+
+    VoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 	
 	@PostMapping
 	public ResponseEntity<Integer> insertVote(@RequestBody VoteDTO vote ) {
@@ -46,9 +53,7 @@ public class VoteController {
 		
 		HashMap<String, Object> map = voteService.voteList(startRow, endRow , sideBtnCount);
 		
-		System.out.println("투표 컨트롤러 맵 확인값" + map); 
 	
-
 		return ResponseEntity.ok(map);
 	}
 	
@@ -58,5 +63,25 @@ public class VoteController {
 		return ResponseEntity.ok(list);
 	}
 	
+	@GetMapping(value="/{voteNo}") // 경로에 있는 값을 가져오는게 @PathVariable
+	public ResponseEntity<VoteDTO> selectOneVote(@PathVariable int voteNo) {
+		
+		VoteDTO vote = voteService.selectOneVote(voteNo);
+		
+		System.out.println(vote);
+		
+		return ResponseEntity.ok(vote);
+	}
+	
+	@GetMapping(value="/option/{voteNo}") 
+	public ResponseEntity<List<VoteOption>> getVoteOptions(@PathVariable int voteNo) {
+	   
+		System.out.println("값확인"+voteNo);
+		List<VoteOption> optionList = voteService.selectVoteOptions(voteNo);
+	    
+		System.out.println(optionList);
+		
+	    return ResponseEntity.ok(optionList);
+	}
 	
 }

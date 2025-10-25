@@ -1,13 +1,64 @@
-import { useParams } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginIdState } from "../utils/RecoilData";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./voteDetail.css";
 const VoteDetail = () => {
-  const { voteNo } = useParams(); // URL에서 숫자 꺼내기
-  console.log("받은 voteNo:", voteNo);
+  const params = useParams(); //주소값에서 불러오는 파람값
+  const voteNo = params.voteNo;
+  const [memberId, setMemberId] = useRecoilState(loginIdState); // 로그인된 memberId
+  const navigate = useNavigate();
+  const backServer = import.meta.env.VITE_BACK_SERVER;
 
+  const [vote, setVote] = useState(null); // 기본정보 담을 스테이트
+  const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
+
+  //눌렀던 게시글의 기본정보들 다 가져오기
+  useEffect(() => {
+    axios
+      .get(`${backServer}/vote/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+        setVote(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  //리스트 항목 가져오는 엑시오스
+  useEffect(() => {
+    axios
+      .get(`${backServer}/vote/option/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+        setVoteList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  console.log(voteList);
   return (
-    <div>
-      <h1>투표 상세페이지</h1>
-      <p>투표 번호: {voteNo}</p>
+    <div className="vote-detail-wrap">
+      <div className="vote-detail-title">
+        <h3>투표 상세보기</h3>
+      </div>
+      <div className="vote-detail-list">
+        {vote && (
+          <div className="vote-detail-list">
+            <div className="vote-detail-list-title">{vote.voteTitle}</div>
+            {voteList.map((list, i) => {
+              return (
+                <div className="vote-detail-content" key={"list" + i}>
+                  {list.voteContent}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

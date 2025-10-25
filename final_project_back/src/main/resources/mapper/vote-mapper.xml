@@ -46,5 +46,18 @@
 		    WHERE ROWNUM <= #{limit}
 		]]>
  	</select>
+ 	
+ 	<select id="selectOneVote" resultType="vote">
+ 	select * from vote_tbl
+	where vote_no = #{voteNo}
+ 	</select>
+ 	
+ 	<select id="selectVoteOptions" resultType="voteOption">
+ 	select * from vote_option_tbl
+	where vote_no = #{voteNo}
+	order by vote_option_no
+ 	</select>
+ 	
+ 	
 		
 </mapper>
