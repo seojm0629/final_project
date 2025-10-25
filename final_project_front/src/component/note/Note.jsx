@@ -1,7 +1,7 @@
 import BaseModal from "../utils/BaseModal";
 import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
 import "./note.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   isLoginState,
@@ -14,8 +14,10 @@ import dayjs from "dayjs"; // 진원이형이 다운받은 날짜js
 import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
 import { MenuList } from "@mui/material";
+import { noteModalState } from "../utils/RecoilData";
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
+
 const Note = () => {
   const memberId = useRecoilValue(loginIdState); // 사용자 ID
   const memberType = useRecoilValue(memberTypeState); // 사용자 타입
@@ -27,6 +29,18 @@ const Note = () => {
   const [detailcontent, setDetailContent] = useState(false); // 내용의 상세보기
 
   const [selectNoteNos, setSelectNoteNos] = useState([]); // 삭제할 선택된 노트번호들 배열
+  const [noteModal, setNoteModal] = useRecoilState(noteModalState);
+
+  // 기존 모달 열기 부분 대신 아래로 수정
+  useEffect(() => {
+    if (noteModal.isOpen) {
+      setNote((prev) => ({ ...prev, noteReceiverId: noteModal.targetId }));
+    }
+  }, [noteModal]);
+
+  const closeModal = () => {
+    setNoteModal({ isOpen: false, targetId: "" });
+  };
 
   //개별 체크박스 선택하기
   const selectCheck = (noteNo) => {
@@ -472,6 +486,8 @@ const Note = () => {
   return (
     <div>
       <BaseModal
+        open={noteModal.isOpen}
+        close={closeModal}
         title={title}
         buttonLabel={buttonLabel}
         contentBoxStyle={contentBoxStyle}

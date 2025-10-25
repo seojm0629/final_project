@@ -48,6 +48,7 @@ public class VoteController {
 		
 		System.out.println("투표 컨트롤러 맵 확인값" + map); 
 	
+
 		return ResponseEntity.ok(map);
 	}
 	
@@ -56,10 +57,6 @@ public class VoteController {
 		List<VoteDTO> list = voteService.mainTitle(limit);
 		return ResponseEntity.ok(list);
 	}
-	
-	
-	
-	
 	
 	
 }

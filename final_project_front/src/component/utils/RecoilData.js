@@ -1,9 +1,7 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
-
 const { persistAtom } = recoilPersist();
-
 
 //key : atom 중 구별할 식별표
 //default : 최초의 값을 무엇을 설정할 것인지
@@ -11,42 +9,57 @@ const { persistAtom } = recoilPersist();
 
 //회원 아이디를 저장하는 저장소(atom)
 const loginIdState = atom({
-    key : "loginIdState",
-    default : "",
-    effects_UNSTABLE : [persistAtom],
-})
+  key: "loginIdState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 
 //회원 타입을 저장하는 저장소(atom)
 const memberTypeState = atom({
-    key : "memberTypeState",
-    default : "",
-    effects_UNSTABLE : [persistAtom],
-})
+  key: "memberTypeState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 
 //회원 번호를 저장하는 저장소(atom)
 const memberNoState = atom({
-    key : "memberNoState",
-    default : "",
-    effects_UNSTABLE : [persistAtom],
-})
-
+  key: "memberNoState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 
 //refresh 초기화 확인용 데이터
 const authReadyState = atom({
-    key: "authReadyState",
-    default: false,
-})
+  key: "authReadyState",
+  default: false,
+});
 
 //selector : atom으로 생성한 데이터를 이용해서 함수를 실행하고 결과를 리턴
 const isLoginState = selector({
-    key: "isLoginState",
-    get: (state) => {
-        //매개변수 state는 recoil에 저장된 데이터를 불러오기 위한 객체
-        const loginId = state.get(loginIdState);
-        const memberType = state.get(memberTypeState);
-        const memberNo = state.get(memberNoState);
-        return loginId !== "" && memberType !== 0 && memberNo !== 0; 
-    }
-})
+  key: "isLoginState",
+  get: (state) => {
+    //매개변수 state는 recoil에 저장된 데이터를 불러오기 위한 객체
+    const loginId = state.get(loginIdState);
+    const memberType = state.get(memberTypeState);
+    const memberNo = state.get(memberNoState);
+    return loginId !== "" && memberType !== 0 && memberNo !== 0;
+  },
+});
 
-export { loginIdState, memberTypeState, memberNoState, isLoginState, authReadyState };
+// 쪽지 모달 전역 상태 추가
+const noteModalState = atom({
+  key: "noteModalState",
+  default: {
+    isOpen: false, // 모달 열림 여부
+    targetId: "", // 받는 사람 ID
+  },
+});
+
+export {
+  loginIdState,
+  memberTypeState,
+  memberNoState,
+  isLoginState,
+  authReadyState,
+  noteModalState,
+};

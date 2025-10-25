@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.tradeBoard.model.dto.TradeBoardDTO;
+import kr.co.iei.tradeBoard.model.dto.TradeBoardImageDTO;
 import kr.co.iei.tradeBoard.model.dto.TradeCommentDTO;
 import kr.co.iei.tradeBoard.model.dto.TradeLikeDTO;
 import kr.co.iei.tradeBoard.model.dto.TradeReportDTO;
@@ -34,6 +35,7 @@ public interface TradeBoardDao {
 
     
 	List<TradeBoardDTO> selectSellerBoards(int memberNo);
+	void insertTradeBoard(TradeBoardDTO tradeBoard);
 	
 	
 

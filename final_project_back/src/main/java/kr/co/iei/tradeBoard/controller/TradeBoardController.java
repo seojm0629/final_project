@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.tradeBoard.model.dto.TradeBoardDTO;
 import kr.co.iei.tradeBoard.model.dto.TradeCommentDTO;
@@ -90,5 +92,9 @@ public class TradeBoardController {
         return ResponseEntity.ok(list);
     }
 
-
+    @PostMapping("/write")
+    public ResponseEntity<String> insertTradeBoard(@RequestBody TradeBoardDTO tradeBoard) {
+        tradeBoardService.insertTradeBoard(tradeBoard);
+        return ResponseEntity.ok("success");
+    }
 }

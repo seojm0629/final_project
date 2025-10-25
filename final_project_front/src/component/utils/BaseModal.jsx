@@ -1,8 +1,10 @@
-import { Button, Grow, Modal, Slide } from "@mui/material";
+import { Button, Grow, Modal } from "@mui/material";
 import { useState } from "react";
 import "./baseModal.css";
 
 const BaseModal = ({
+  open,
+  close,
   title,
   content,
   buttonLabel,
@@ -10,17 +12,17 @@ const BaseModal = ({
   end,
   result,
 }) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open2, setOpen2] = useState(false);
+  const handleOpen = () => setOpen2(true);
+  const handleClose = () => setOpen2(false);
 
   return (
     <div>
       <button className="modal-button" onClick={handleOpen}>
         {buttonLabel}
       </button>
-      <Modal open={open} onClose={handleClose} style={{ zIndex: 100 }}>
-        <Grow in={open}>
+      <Modal open={open2} onClose={close} style={{ zIndex: 100 }}>
+        <Grow in={open2}>
           <div className="modal-box">
             <div className="modal-contentbox" style={contentBoxStyle}>
               <header className="modal-header">
@@ -30,7 +32,7 @@ const BaseModal = ({
               <footer className="modal-footer">
                 {result && (
                   <Button
-                    variant="contined"
+                    variant="contained"
                     style={{
                       backgroundColor: "white",
                       color: "#2f4e70",
@@ -43,7 +45,7 @@ const BaseModal = ({
                 )}
                 {end && (
                   <Button
-                    variant="contined"
+                    variant="contained"
                     style={{
                       backgroundColor: "white",
                       color: "#2f4e70",

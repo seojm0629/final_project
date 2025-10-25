@@ -35,16 +35,21 @@
   border-radius: 10px;
   table-layout: fixed;
   text-align: center;
-  background-color: white;
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.3);
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  border-collapse: separate; /*collapse 값 초기화*/
+  border-spacing: 0; /*셀 간격 없애기*/
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .vote-tbl thead th {
   position: sticky;
   top: 0;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #2f4e70;
-  border-radius: 5px;
   color: white;
   text-align: center;
   white-space: nowrap;
@@ -58,4 +63,5 @@
 .vote-tbody > tr > td {
   padding-top: 10px;
   padding-bottom: 10px;
+  border-bottom: 1px solid rgb(221, 208, 208);
 }
