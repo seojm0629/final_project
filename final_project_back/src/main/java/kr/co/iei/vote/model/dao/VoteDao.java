@@ -23,5 +23,9 @@ public interface VoteDao {
 
 	List<VoteDTO> mainTitle(int limit);
 
+	VoteDTO selectOneVote(int voteNo);
+
+	List<VoteOption> selectVoteOptions(int voteNo);
+
 	
 }
