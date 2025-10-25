@@ -45,20 +45,29 @@ const VoteDetail = () => {
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-      <div className="vote-detail-list">
-        {vote && (
-          <div className="vote-detail-list">
-            <div className="vote-detail-list-title">{vote.voteTitle}</div>
+      {vote && (
+        <div className="vote-detail-list">
+          <div className="vote-detail-list-title">{vote.voteTitle}</div>
+          <ul className="vote-detail-ul">
             {voteList.map((list, i) => {
               return (
-                <div className="vote-detail-content" key={"list" + i}>
-                  {list.voteContent}
-                </div>
+                <li className="vote-detail-content" key={"list" + i}>
+                  <input
+                    type="radio"
+                    name="voteOption"
+                    value={list.voteContent}
+                    className="vote-radio"
+                  ></input>
+                  <label className="vote-label">{list.voteContent}</label>
+                </li>
               );
             })}
+          </ul>
+          <div className="vote-detail-button-box">
+            <button className="vote-detail-check-button">투표하기</button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

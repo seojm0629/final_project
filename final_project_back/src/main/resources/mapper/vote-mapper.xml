@@ -58,6 +58,5 @@
 	order by vote_option_no
  	</select>
  	
- 	
 		
 </mapper>

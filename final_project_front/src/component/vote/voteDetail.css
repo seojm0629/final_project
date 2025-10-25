@@ -8,7 +8,6 @@
 .vote-detail-title {
   width: 200px;
   height: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,6 +15,66 @@
 
 .vote-detail-list {
   width: 800px;
-  height: 500px;
-  background-color: antiquewhite;
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid black;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.vote-detail-list-title {
+  width: 100%;
+  height: 50px;
+  background-color: #2f4e70;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vote-detail-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.vote-detail-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  border-top: 1px solid #ddd;
+  font-weight: bold;
+}
+.vote-radio {
+  cursor: pointer;
+}
+.vote-label {
+  cursor: pointer;
+}
+.vote-detail-button-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  border-top: 1px solid #ddd;
+}
+.vote-detail-check-button {
+  width: 150px;
+  height: 40px;
+  background-color: #2f4e70;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.vote-detail-check-button:hover {
+  background-color: #136bd6;
 }
