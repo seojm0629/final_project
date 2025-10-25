@@ -27,5 +27,7 @@ public interface VoteDao {
 
 	List<VoteOption> selectVoteOptions(int voteNo);
 
+	int updateVoteCheck();
+
 	
 }
