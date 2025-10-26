@@ -64,7 +64,7 @@ const VoteDetail = () => {
       voteOptionNo: selectedOption,
     };
 
-    axios
+    axios //결과 테이블에 인설트 완료
       .post(`${backServer}/vote/result`, resultData)
       .then((res) => {
         Swal.fire({
@@ -86,7 +86,7 @@ const VoteDetail = () => {
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-      {vote && (
+      {vote && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
         <div className="vote-detail-list">
           <div className="vote-detail-list-title">{vote.voteTitle}</div>
           <ul className="vote-detail-ul">
