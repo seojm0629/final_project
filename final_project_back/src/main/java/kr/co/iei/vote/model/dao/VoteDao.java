@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
+import kr.co.iei.vote.model.dto.VoteResult;
 
 @Mapper
 public interface VoteDao {
@@ -28,6 +29,8 @@ public interface VoteDao {
 	List<VoteOption> selectVoteOptions(int voteNo);
 
 	int updateVoteCheck();
+
+	int insertResultVote(VoteResult result);
 
 	
 }

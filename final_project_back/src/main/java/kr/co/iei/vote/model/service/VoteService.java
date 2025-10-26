@@ -11,6 +11,7 @@ import kr.co.iei.note.controller.NoteController;
 import kr.co.iei.vote.model.dao.VoteDao;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
+import kr.co.iei.vote.model.dto.VoteResult;
 
 @Service
 public class VoteService {
@@ -86,11 +87,18 @@ public class VoteService {
 		return vote;
 	}
 
-
 	public List<VoteOption> selectVoteOptions(int voteNo) {
 		
 		List<VoteOption> optionList = voteDao.selectVoteOptions(voteNo);
 			
 		return optionList;
+	}
+	
+	@Transactional
+	public int insertResultVote(VoteResult result) {
+	
+		int voteResult = voteDao.insertResultVote(result);
+		
+		return voteResult;
 	}
 }

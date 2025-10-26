@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.iei.note.model.service.NoteService;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
+import kr.co.iei.vote.model.dto.VoteResult;
 import kr.co.iei.vote.model.service.VoteService;
 
 @CrossOrigin("*")
@@ -83,5 +84,16 @@ public class VoteController {
 		
 	    return ResponseEntity.ok(optionList);
 	}
+	
+	@PostMapping(value = "/result")
+	public ResponseEntity<Integer> insertResultVote(@RequestBody VoteResult result) {
+		System.out.println("리절트 값 확인" +  result);
+	
+		int voteResult = voteService.insertResultVote(result);
+		
+		
+		return ResponseEntity.ok(voteResult);
+	}
+	
 	
 }
