@@ -94,9 +94,21 @@ const VoteList = () => {
                     <td>{list.memberNickname}</td>
                     <td
                       style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        navigate(`/vote/VoteDetail/${list.voteNo}`)
-                      }
+                      onClick={() => {
+                        if (!member) {
+                          // 로그인되지 않은 경우, 투표 상세 페이지로 가지 않음
+                          Swal.fire({
+                            title: "로그인",
+                            text: "로그인 후 투표를 확인할 수 있습니다.",
+                            icon: "warning",
+                          }).then(() => {
+                            navigate("/member/login"); // 로그인 페이지로 이동
+                          });
+                        } else {
+                          // 로그인된 경우 투표 상세 페이지로 이동
+                          navigate(`/vote/VoteDetail/${list.voteNo}`);
+                        }
+                      }}
                     >
                       {list.voteTitle}
                     </td>

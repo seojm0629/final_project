@@ -66,7 +66,7 @@ public class VoteController {
 	
 	@GetMapping(value="/{voteNo}") // 경로에 있는 값을 가져오는게 @PathVariable
 	public ResponseEntity<VoteDTO> selectOneVote(@PathVariable int voteNo) {
-		
+		//눌렀던 게시글의 기본정보들 다 가져오기
 		VoteDTO vote = voteService.selectOneVote(voteNo);
 		
 		System.out.println(vote);
@@ -76,7 +76,7 @@ public class VoteController {
 	
 	@GetMapping(value="/option/{voteNo}") 
 	public ResponseEntity<List<VoteOption>> getVoteOptions(@PathVariable int voteNo) {
-	   
+	   //게시글 안에 있는 목록값 다 가져오기
 		System.out.println("값확인"+voteNo);
 		List<VoteOption> optionList = voteService.selectVoteOptions(voteNo);
 	    
