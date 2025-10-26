@@ -28,7 +28,7 @@ const VoteList = () => {
         `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}`
       )
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setTotalListCount(res.data.totalListCount); //받아오는 총 게시물 수
         setVoteList(res.data.selectVoteList); // 받아오는 게시물 수를 배열에 저장
       })

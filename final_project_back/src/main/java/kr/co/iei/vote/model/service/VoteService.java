@@ -47,8 +47,10 @@ public class VoteService {
 		return result;
 	}
 
-
+	@Transactional
 	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount) {
+		int voteCheck = voteDao.updateVoteCheck();
+		
 		HashMap<String, Object> voteList = new HashMap<String,Object>();
 		voteList.put("startRow", startRow);
 		voteList.put("endRow", endRow);
