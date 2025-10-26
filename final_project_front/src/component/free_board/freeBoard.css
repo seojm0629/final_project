@@ -160,6 +160,12 @@
   justify-content: center;
   box-sizing: content-box;
   border-bottom: 1px solid #ccc;
+  transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+.main-div .board-section:hover{
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateX(-2px) translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */
 }
 .main-div .board-status {
   width: max-content;
@@ -462,4 +468,120 @@
 .content-editor div {
   display: flex;
   flex-grow: 1;
+}
+/* 자유게시판 상세페이지 */
+.freeboard-detail {
+  width: 100%;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+.detail-content {
+  display: flex;
+  padding: 40px 80px;
+  gap: 30px;
+}
+
+.detail-image {
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 200px;
+  color: #888;
+}
+
+.detail-text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* 이전/다음글 */
+.detail-navigation {
+  text-align: right;
+  padding: 0 80px 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-btn {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 6px 14px;
+  margin-left: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* 댓글 */
+.detail-comment-section {
+  padding: 30px 80px 80px;
+}
+
+.detail-comment-section h3 {
+  margin-bottom: 15px;
+}
+
+.comment-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.comment-input input {
+  flex: 1;
+  height: 40px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+  border-radius: 4px;
+}
+
+.comment-btn {
+  padding: 8px 16px;
+  border: none;
+  background-color: #003366;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-item {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.comment-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #777;
+  font-size: 14px;
+  position: relative;
+}
+
+.report-icon {
+  color: #d9534f;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.comment-text {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.comment-actions {
+  margin-top: 5px;
+}
+
+.comment-actions button {
+  margin-right: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 4px;
 }

@@ -7,7 +7,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./freeBoard.css";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
@@ -16,8 +16,6 @@ import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
-import FreeBoardDetail from "./FreeBoardDetail";
-//import FreeBoardDetail from "./FreeBoardDetail";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -151,10 +149,7 @@ const FreeBoardMain = () => {
           </div>
           <section className="section free-board">
             <Routes>
-              <Route
-                path="detail"
-                element={<FreeBoardDetail></FreeBoardDetail>}
-              ></Route>
+              
               <Route
                 path="content"
                 element={
@@ -224,8 +219,7 @@ const FreeBoardContent = (props) => {
     axios
       .get(boardUrl)
       .then((res) => {
-        const list = res.data.boardList;
-        if(list.length !== 0 ){
+        if(res.data.boardList.length !== 0 ){
           setFreeBoardList(res.data.boardList);
           setTotalListCount(res.data.totalListCount);
         }else{
@@ -239,7 +233,7 @@ const FreeBoardContent = (props) => {
       });
   }, [reqPageInfo.order, reqPageInfo.pageNo, selected, titleState]);
   const detailNavi = () => {
-    navigate("/detail");
+    navigate("/freeBoard/detail");
   };
   return (
     <section className="freeBoard-section">
@@ -257,7 +251,7 @@ const FreeBoardContent = (props) => {
               style={{
                 borderRight: "1px solid #ccc",
               }}
-              //onClick={detailNavi}
+              onClick={detailNavi}
             >
               {/*상태넣을꺼*/}
               <div className="board-status">{list.freeBoardNo}</div>
@@ -287,7 +281,7 @@ const FreeBoardContent = (props) => {
             </div>
           ) : (
             <div key={"second" + i} className="board-section"
-              //onClick={detailNavi}
+              onClick={detailNavi}
             >
               <div className="board-status">{list.freeBoardNo}</div>
               <div className="board-title">{list.freeBoardTitle}</div>

@@ -19,6 +19,7 @@ import VoteList from "./component/vote/VoteList";
 //import VoteMain from "./component/vote/VoteMain";
 import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
 import VoteDetail from "./component/vote/VoteDetail";
+import FreeBoardDetail from "./component/free_board/FreeBoardDetail";
 
 function App() {
   return (
@@ -33,7 +34,10 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
-
+          <Route
+                path="/freeBoard/detail"
+                element={<FreeBoardDetail></FreeBoardDetail>}
+              ></Route>
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
