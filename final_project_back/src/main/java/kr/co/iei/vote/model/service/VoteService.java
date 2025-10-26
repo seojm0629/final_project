@@ -16,20 +16,11 @@ import kr.co.iei.vote.model.dto.VoteResult;
 @Service
 public class VoteService {
 
-    private final NoteController noteController;
 
-	
 	
 	@Autowired
 	private VoteDao voteDao;
 
-
-    VoteService(NoteController noteController) {
-        this.noteController = noteController;
-    }
-
-
-	
 
 	@Transactional
 	public int insertVote(VoteDTO vote) {
@@ -50,7 +41,7 @@ public class VoteService {
 
 	@Transactional
 	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount) {
-		int voteCheck = voteDao.updateVoteCheck();
+		int voteCheck = voteDao.updateVoteCheck(); // 종료일 비교해서 0 에서 1로 바꾸기
 		
 		HashMap<String, Object> voteList = new HashMap<String,Object>();
 		voteList.put("startRow", startRow);
