@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginIdState, memberNoState } from "../utils/RecoilData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./voteDetail.css";
@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const VoteDetail = () => {
   const params = useParams(); //주소값에서 불러오는 파람값
   const voteNo = params.voteNo;
-  const [memberId, setMemberId] = useRecoilState(loginIdState); // 로그인된 memberId
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState); // 로그인된 memberNo
   const navigate = useNavigate();
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const [selectedOption, setSelectedOption] = useState(null); // 레디오 선택한값 담기
@@ -58,6 +58,27 @@ const VoteDetail = () => {
       });
       return;
     }
+    const resultData = {
+      voteNo: vote.voteNo,
+      memberNo: memberNo,
+      voteOptionNo: selectedOption,
+    };
+
+    axios
+      .post(`${backServer}/vote/result`, resultData)
+      .then((res) => {
+        Swal.fire({
+          title: "투표 완료",
+          icon: "success",
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: "투표 실패",
+          text: "이미 투표에 참여하셨습니다.",
+          icon: "error",
+        });
+      });
   };
 
   return (

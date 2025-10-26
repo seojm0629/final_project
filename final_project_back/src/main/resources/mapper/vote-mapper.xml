@@ -14,7 +14,7 @@
 		insert into vote_option_tbl values(vote_option_seq.nextval,#{voteContent},#{voteNo})
 	</insert>
 	
-	<!-- < > 기호를 쓸때 필요한 CDATA  -->
+	<!-- < > 기호를 쓸때 필요한 CDATA -->
 	<update id="updateVoteCheck">
 	<![CDATA[
         update vote_tbl set vote_check = 1 where vote_end_date <= sysdate and vote_check = 0
@@ -70,6 +70,10 @@
 	where vote_no = #{voteNo}
 	order by vote_option_no
  	</select>
+ 	
+ 	<insert id="insertResultVote">
+ 	insert into vote_result_tbl values(#{voteNo},#{memberNo},#{voteOptionNo})
+ 	</insert>
  	
 		
 </mapper>
