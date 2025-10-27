@@ -31,7 +31,7 @@ const FreeBoardWrite = (props) => {
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardThumbnail, setFreeBoardThumbnail] = useState(null);
-  const [freeBoardPhoto, setFreeBoardPhoto] = useState([]);
+  //const [freeBoardPhoto, setFreeBoardPhoto] = useState([]);
   const navigate = useNavigate();
   const menus = props.menus;
   /*

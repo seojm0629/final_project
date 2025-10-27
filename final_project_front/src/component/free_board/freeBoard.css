@@ -132,8 +132,6 @@
   user-select: none;
   flex-wrap: wrap;
 }
-.main-div .side-submenu li {
-}
 .main-div .active-submenu {
   border-radius: 5px;
   background-color: #43688f;
@@ -163,7 +161,7 @@
   transition: box-shadow 0.3s ease-in-out;
   cursor: pointer;
 }
-.main-div .board-section:hover{
+.main-div .board-section:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateX(-2px) translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */
 }
@@ -473,6 +471,7 @@
 
 .detail-container {
   width: 1200px;
+  height: 1400px;
   margin: 50px auto;
   color: #1e1e1e;
 }
@@ -494,9 +493,11 @@
 }
 .detail-buttonBox {
   text-align: center;
-  margin-right: 50px;;
+  margin-right: 50px;
+  display: flex;
+  gap: 10px;
 }
-.detail-view{
+.detail-view {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -530,7 +531,8 @@
 .detail-view .hour svg {
   font-size: 17px;
 }
-.modify-btn, .delete-btn {
+.modify-btn,
+.delete-btn {
   background: none;
   border: 1px solid #003366;
   border-radius: 3px;
@@ -558,7 +560,7 @@
   border: none;
   border-top: 1px solid #ccc;
 }
-.detail-main-line{
+.detail-main-line {
   margin: 20px 0;
   border: none;
   border-top: 1px solid #ccc;
@@ -568,7 +570,6 @@
   justify-content: space-between;
   height: 500px;
 }
-
 .detail-content {
   width: 75%;
   height: 450px;
@@ -595,33 +596,31 @@
   display: flex;
   justify-content: flex-start;
   align-content: center;
-  margin: 20px 0px 0px 50px;
-  gap: 620px;
-  
+  margin: 20px 0px 0px 10px;
+  gap: 660px;
 }
-.detail-buttons div{
+.detail-buttons div {
   display: flex;
   gap: 20px;
 }
-.detail-report{
-  width:900px;
+.detail-report {
+  width: 900px;
   display: flex;
   justify-content: flex-end;
   gap: 5px;
   color: #d00;
-  cursor:pointer;
-  
+  cursor: pointer;
 }
-.detail-report span{
+.detail-report span {
   display: flex;
 }
-.detail-report span:hover{
+.detail-report span:hover {
   transform: translateX(-1px) translateY(-1px);
 }
 .list-btn,
 .prev-btn,
 .next-btn {
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   background: none;
   padding: 6px 14px;
   font-size: 14px;
@@ -662,8 +661,22 @@
 .comment-header {
   display: flex;
   justify-content: flex-start;
-  gap: 600px;
-  margin: 0px 0px 10px 50px;
+  width: max-content;
+  gap: 700px;
+  margin: 0px 0px 20px 20px;
+}
+.comment-header span:first-child {
+  display: flex;
+  align-items: flex-end;
+}
+.comment-order {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 4px 5px 4px 5px;
+  cursor: pointer;
+  user-select: none;
+  gap: 3px;
 }
 .comment-input {
   display: flex;
@@ -671,13 +684,24 @@
   align-items: center;
   border: 1px solid #ccc;
   padding: 8px 12px;
+  height: 100px;
 }
-.comment-input input {
+.comment-input textarea {
+  display: flex;
+  align-items: center;
   flex: 1;
   border: none;
-  outline: none;
   font-size: 14px;
   padding-left: 10px;
+  background-color: #f0f2f5; /* 바탕 배경색과 동일 */
+  border-right: 1px solid #ccc;
+  margin-right: 10px;
+  padding-right: 10px;
+  width: 100px;
+  height: 80px;
+
+  resize: none;
+  scrollbar-width: none;
 }
 .camera-icon {
   color: #777;
@@ -687,16 +711,20 @@
   color: white;
   border: none;
   padding: 6px 16px;
-  margin-left: 10px;
+  margin: 0px 10px 0px 10px;
   cursor: pointer;
   border-radius: 3px;
 }
 
 /* 댓글 아이템 */
 .comment-item {
-  margin-top: 20px;
-  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
+  gap: 10px;
 }
 .comment-report {
   text-align: right;
@@ -706,20 +734,51 @@
   justify-content: flex-end;
   align-items: center;
   gap: 3px;
+  margin-right: 10px;
+  margin-top: 20px;
 }
 .comment-text {
   margin: 10px 0;
   font-size: 15px;
   line-height: 1.5;
 }
-.comment-meta {
-  font-size: 13px;
-  color: #666;
+.comment-writer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  margin: 10px 0px 0px 15px;
 }
-.comment-actions {
+.comment-text {
+  display: flex;
+  margin-left: 25px;
+}
+.comment-sub {
+  font-size: 13px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  margin-left: 20px;
+}
+.comment-sub .heart {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+}
+.comment-sub .heart svg {
+  font-size: 15px;
+}
+.comment-sub .hour {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+}
+.comment-sub .hour svg {
+  font-size: 15px;
+}
+.comment-button {
   text-align: right;
-  margin-top: 8px;
+  margin: 8px 10px 0px 0px;
 }
