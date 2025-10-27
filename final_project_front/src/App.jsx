@@ -10,7 +10,6 @@ import AdminMain from "./component/admin/AdminMain";
 import { FreeBoardMain } from "./component/free_board/FreeBoardMain"; // export 형식에 따라 달라짐
 import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ServiceAgree from "./component/member/ServiceAgree";
-import Test from "./component/note/Test";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
 
@@ -35,9 +34,9 @@ function App() {
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
           <Route
-                path="/freeBoard/detail"
-                element={<FreeBoardDetail></FreeBoardDetail>}
-              ></Route>
+            path="/freeBoard/detail"
+            element={<FreeBoardDetail></FreeBoardDetail>}
+          ></Route>
           <Route
             path="/freeBoard/*"
             element={<FreeBoardMain></FreeBoardMain>}
@@ -47,7 +46,6 @@ function App() {
             path="/tradeBoard/view/:tradeBoardNo"
             element={<TradeBoardView />}
           />
-          <Route path="/note/test" element={<Test />} />
           <Route path="/vote/list" element={<VoteList />} />
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
           <Route path="/vote/voteDetail/:voteNo" element={<VoteDetail />} />
