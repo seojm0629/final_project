@@ -8,7 +8,7 @@ import { useRecoilState } from "recoil";
 import { loginIdState, memberTypeState } from "../utils/RecoilData";
 import MarkAsUnreadOutlinedIcon from "@mui/icons-material/MarkAsUnreadOutlined";
 import Note from "../note/note";
-import SurveyModal from "../survey/SurveyModal";
+import NoteId from "../note/NoteId";
 
 const Header = () => {
   return (
