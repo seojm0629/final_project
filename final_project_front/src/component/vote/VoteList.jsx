@@ -6,8 +6,14 @@ import PageNavigation from "../utils/PageNavigation";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
+import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
+dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
+dayjs.locale("ko"); // 한국어 로케일 설정
 const VoteList = () => {
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
+  const [voteAlready, setVoteAlready] = useState(false);
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -21,6 +27,18 @@ const VoteList = () => {
   const [totalListCount, setTotalListCount] = useState(10);
   const [voteList, setVoteList] = useState([]); //리스트 값들 생성
   const [pi, setPi] = useState(null); // 기본값 세팅
+
+  const nowDate = (dateString) => {
+    const now = dayjs(); //현재 날짜/시간 가져오는 함수
+    const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
+    const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
+    // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
+  };
+  console.log("시간확인", dayjs().$y);
+  console.log("시간확인", dayjs().$M + 1);
+  console.log("시간확인", dayjs().$D);
+  const date = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D;
+  console.log(date);
 
   useEffect(() => {
     axios
@@ -71,13 +89,15 @@ const VoteList = () => {
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
-                  width: "65%",
+                  width: "45%",
                 }}
               >
                 제목
               </th>
+              <th style={{ width: "5%" }}></th>
               <th style={{ width: "10%" }}>투표상황</th>
-              <th style={{ width: "15%" }}>작성날짜</th>
+              <th style={{ width: "15%" }}>시작날짜</th>
+              <th style={{ width: "15%" }}>종료날짜</th>
             </tr>
           </thead>
           <tbody className="vote-tbody">
@@ -112,8 +132,10 @@ const VoteList = () => {
                     >
                       {list.voteTitle}
                     </td>
+                    <td></td>
                     <td>{list.voteCheck === 0 ? "진행중" : "종료"}</td>
                     <td>{list.voteDate}</td>
+                    <td>{list.voteEndDate}</td>
                   </tr>
                 );
               })

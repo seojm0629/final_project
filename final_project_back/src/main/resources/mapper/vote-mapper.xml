@@ -25,8 +25,8 @@
 		select B.* from (
 		select rownum rnum,A.* from(
 		select vote_no,member_nickname , vote_title, 
-		to_char(vote_date,'yyyy-mm-dd') as vote_date,
-		to_char(vote_end_date,'yyyy-mm-dd HH24:MI:SS') as vote_end_date
+		to_char(vote_date,'yyyy-mm-dd HH24:MI') as vote_date,
+		to_char(vote_end_date,'yyyy-mm-dd HH24:MI') as vote_end_date
 		, vote_check 
 		from member_tbl
 		join vote_tbl using(member_no)
@@ -83,6 +83,14 @@
 					where vote_no = #{voteNo}
 				
 	</select>	
+	
+	<delete id="deleteVote">
+		delete from vote_tbl where vote_no = #{voteNo}
+	</delete>
 		
+	<update id="updateEndDate">
+		update vote_tbl set vote_check = 1 where vote_no = #{voteNo}
+	</update>
+	
 		
 </mapper>
