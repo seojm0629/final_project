@@ -138,28 +138,3 @@
 .admin-right .chartFilter {
   text-align: right;
 }
-
-/* 쪽지 버튼 css*/
-.login-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-}
-.login-text span {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.login-text button {
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}

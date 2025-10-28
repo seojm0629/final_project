@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./voteDetail.css";
 import Swal from "sweetalert2";
+import { Bar } from "react-chartjs-2";
 const VoteDetail = () => {
   const params = useParams(); //주소값에서 불러오는 파람값
   const voteNo = params.voteNo;
@@ -14,7 +15,20 @@ const VoteDetail = () => {
   const [selectedOption, setSelectedOption] = useState(null); // 레디오 선택한값 담기
   const [vote, setVote] = useState(null); // 기본정보 담을 스테이트
   const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
-
+  const [labels, setLabels] = useState([]);
+  const [values, setValues] = useState([]);
+  //차트 안에 들어갈 data (찾아보면 더 있음)
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "투표수",
+        data: values,
+        backgroundColor: "rgba(5, 20, 160, 0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
   //눌렀던 게시글의 기본정보들 다 가져오기
   useEffect(() => {
     axios
@@ -39,6 +53,16 @@ const VoteDetail = () => {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    axios
+      .get(`${backServer}/vote/count/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   console.log(voteList);
 
@@ -112,6 +136,9 @@ const VoteDetail = () => {
           </div>
         </div>
       )}
+      <div>
+        <Bar data={data} />
+      </div>
     </div>
   );
 };

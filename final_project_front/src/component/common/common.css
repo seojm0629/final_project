@@ -123,25 +123,23 @@ body {
 }
 
 /* 메인페이지 */
-.main-content-wrap{
+.main-content-wrap {
   display: flex;
 }
 
-
-.list-box{
+.list-box {
   width: 1400px;
 }
-.diff-count-banner{
+.diff-count-banner {
   display: flex;
 }
 
-.diff-count-box>.admin-right{
+.diff-count-box > .admin-right {
   width: 920px;
   box-sizing: border-box;
-  
 }
 
-.diff-count-box{
+.diff-count-box {
   width: 890px;
   border: 1px solid #8f8f8f;
   border-radius: 5px;
@@ -150,16 +148,13 @@ body {
   box-sizing: border-box;
   padding-top: 13px;
 }
-.diff-count-box>.admin-right>.entireBox div{
-  
+.diff-count-box > .admin-right > .entireBox div {
   border: none;
 }
 
-.diff-count-box>.admin-right>.entireBox{
+.diff-count-box > .admin-right > .entireBox {
   width: 890px;
-  
 }
-
 
 .main-board-list {
   width: 900px;
@@ -237,7 +232,6 @@ body {
 
 /* 스포츠, 게임 게시판*/
 
-
 /* 로그인 */
 
 /* 로그인 박스*/
@@ -256,13 +250,13 @@ body {
   background-color: #f5f8fb;
 }
 
-.main-weather{
+.main-weather {
   width: 348px;
   height: 200px;
   background-color: #f5f8fb;
   border: 1px solid #8f8f8f;
   box-sizing: border-box;
-  margin-left : 20px;
+  margin-left: 20px;
   overflow: auto;
   scrollbar-width: none;
   border-radius: 5px;
@@ -407,9 +401,34 @@ body {
 }
 
 /* 메인 모달 */
-.member-close-button>button{
+.member-close-button > button {
   cursor: pointer;
 }
 
-
-
+/* 쪽지 버튼 css*/
+.login-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+.login-text span {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login-text span div {
+  width: 100%;
+}
+.login-text button {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}

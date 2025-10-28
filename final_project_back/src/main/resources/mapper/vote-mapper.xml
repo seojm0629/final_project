@@ -75,5 +75,14 @@
  	insert into vote_result_tbl values(#{voteNo},#{memberNo},#{voteOptionNo})
  	</insert>
  	
+	<select id="selectOptionCount" resultType="voteCount">
+	select * from 
+		(select vote_option_no,count(*)vote_option_count from vote_result_tbl
+			group by vote_option_no)
+				left join vote_option_tbl using(vote_option_no)
+					where vote_no = #{voteNo}
+				
+	</select>	
+		
 		
 </mapper>
