@@ -266,8 +266,8 @@ main {
   border: 1px solid #8f8f8f;
   box-sizing: border-box;
   margin-left : 20px;
-  overflow: auto;
-  scrollbar-width: none;
+  
+  
   border-radius: 5px;
 }
 .login-btn {
