@@ -78,3 +78,8 @@
 .vote-detail-check-button:hover {
   background-color: #136bd6;
 }
+.vote-result-graph {
+  width: 600px;
+  height: 500px;
+  margin: 10px;
+}
