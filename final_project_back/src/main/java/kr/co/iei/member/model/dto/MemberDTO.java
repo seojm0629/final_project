@@ -23,5 +23,6 @@ public class MemberDTO {
 	private String memberBirth;
 	private String memberDate;
 	private int memberType;
+	private String memberCheck;
 	
 }

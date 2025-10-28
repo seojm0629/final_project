@@ -1,10 +1,13 @@
+import axios from "axios";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import MemberJoin from "./MemberJoin";
 
 const MemberAgree = () => {
     const navigate = useNavigate();
-
+    const [checkPro, setCheckPro] = useState("N");
+    const [next, setNext] = useState(false);
 
     const [checks, setChecks] = useState({
         allCheck : false,
@@ -13,7 +16,7 @@ const MemberAgree = () => {
         personal: false,
     });
 
-    const [poCheck, setPoCheck] =useState({
+    const [poCheck, setPoCheck] = useState({
         promotion : false,
     })
 
@@ -32,11 +35,12 @@ const MemberAgree = () => {
     const promotion = (e) => {
         const name = e.target.name;
         const checked = e.target.checked;
-        const updated = {...checks, [name]:checked};
+        const updated = {...poCheck, [name]:checked};
 
         setPoCheck(updated);
+        
     } 
-
+    
     const allChecks = (e) => {
         const checked = e.target.checked;
         setChecks({
@@ -48,13 +52,21 @@ const MemberAgree = () => {
         });
         setPoCheck({
             promotion : checked,
-        })
+        })        
     }
+    
 
+    
     const nextPage = () => {
-        if(checks.allCheck && checks.service && checks.community && checks.personal){
-            navigate("/member/join");
+        if(checks.allCheck && checks.service && checks.community && checks.personal || poCheck.promotion){
+            if(poCheck.promotion){
+                setCheckPro("Y");
+                setNext(true);
+            } else {
+                setNext(true);
+            }
         } else {
+            
             Swal.fire({
                 title : "약관 동의 확인",
                 text : "전체 동의 확인 필요",
@@ -63,6 +75,27 @@ const MemberAgree = () => {
         }
     }
 
+    if(next){
+        return <MemberJoin checkPro={checkPro}></MemberJoin>
+    }
+    
+
+    /*
+    const promotionCheck = () => {
+        if(checkPro === "N"){
+            axios
+            .get(`${import.meta.env.VITE_BACK_SERVER}/member/promotion/${checkPro}` )
+            .then((res)=>{
+                console.log(res);
+                setCheckPro("Y");
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        }
+    }
+    */
+    
     return(
         <section className="section agree-wrap">
 
@@ -292,6 +325,7 @@ const MemberAgree = () => {
                         <input type="checkbox" id="promotion" name="promotion"
                         onChange={promotion}
                         checked={poCheck.promotion}
+                        
                         />
                         <label htmlFor="promotion">홍보 및 마케팅 활용에 대한 동의(선택)</label>
                     </div>

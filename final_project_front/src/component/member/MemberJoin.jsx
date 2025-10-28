@@ -4,9 +4,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const MemberJoin = () => {
+const MemberJoin = (props) => {
+    const memberCheck = props.checkPro;
     const backServer = import.meta.env.VITE_BACK_SERVER;
     const navigate = useNavigate();
+    console.log(memberCheck);
     const [member, setMember] = useState({
         memberName : "",
         memberId : "",
@@ -17,6 +19,7 @@ const MemberJoin = () => {
         memberAddr : "",
         memberPhone : "",
         memberEmail : "",
+        memberCheck : memberCheck,
     })
     
     // ---------- 이메일 -----------
@@ -514,7 +517,9 @@ const MemberJoin = () => {
                     
 
                     <div className="member-button-zone-join">
-                        <button type="submit" className="member-btn">회원가입</button>
+                        <button type="submit" className="member-btn"
+                        
+                        >회원가입</button>
                     </div>
                 </div>
             </form>
