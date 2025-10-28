@@ -10,7 +10,7 @@ const ContentStatistics = () => {
   // 'https://react-chartjs-2.js.org/docs/working-with-datasets'
   //메인 컴포넌트는 월간/주간/일간에 대한 정보를 가지고 있는다.
 
-  const searchCriteria = ["5년", "1년", "1개월", "1일"];
+  const searchCriteria = ["5년", "1년", "1개월", "기타"];
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
 
   /* **************************************************************** */
@@ -258,6 +258,18 @@ const ContentStatistics = () => {
                 </button>
               );
             })}
+            {selectCriteria === "기타" && (
+              <div>
+                <div>
+                  <span>시작 기간 : </span>
+                  <input type="date" />
+                </div>
+                <div>
+                  <span>종료 기간 : </span>
+                  <input type="date" />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="chartFlex">
@@ -382,7 +394,7 @@ const DiffCount = () => {
   const [bcDiff, setBcDiff] = useState(0);
   const [bccDiff, setBccDiff] = useState(0);
   const [wcDiff, setWcDiff] = useState(0);
-  const searchCriteria = ["5년", "1년", "1개월", "1일"];
+  const searchCriteria = ["5년", "1년", "1개월", "기타"];
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
   useEffect(() => {
     axios
@@ -413,38 +425,36 @@ const DiffCount = () => {
 
   return (
     <div className="admin-right">
-
-    
-    <div className="entireBox">
-      <div className="element">
-        <div className="entireBox-title">전체 가입자 수</div>
-        <div className="entireBox-content">{ru} 명</div>
-        <div className={ruDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-          전일 대비 {ruDiff >= 0 ? `+${ruDiff} ▲` : `${ruDiff} ▼`}
+      <div className="entireBox">
+        <div className="element">
+          <div className="entireBox-title">전체 가입자 수</div>
+          <div className="entireBox-content">{ru} 명</div>
+          <div className={ruDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+            전일 대비 {ruDiff >= 0 ? `+${ruDiff} ▲` : `${ruDiff} ▼`}
+          </div>
+        </div>
+        <div className="element">
+          <div className="entireBox-title">전체 게시글 수</div>
+          <div className="entireBox-content">{bc} 건</div>
+          <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+            전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
+          </div>
+        </div>
+        <div className="element">
+          <div className="entireBox-title">전체 댓글 수</div>
+          <div className="entireBox-content">{bcc} 건</div>
+          <div className={bccDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+            전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
+          </div>
+        </div>
+        <div className="element">
+          <div className="entireBox-title">전체 탈퇴 유저 수</div>
+          <div className="entireBox-content">{wc}명</div>
+          <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+            전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
+          </div>
         </div>
       </div>
-      <div className="element">
-        <div className="entireBox-title">전체 게시글 수</div>
-        <div className="entireBox-content">{bc} 건</div>
-        <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-          전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
-        </div>
-      </div>
-      <div className="element">
-        <div className="entireBox-title">전체 댓글 수</div>
-        <div className="entireBox-content">{bcc} 건</div>
-        <div className={bccDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-          전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
-        </div>
-      </div>
-      <div className="element">
-        <div className="entireBox-title">전체 탈퇴 유저 수</div>
-        <div className="entireBox-content">{wc}명</div>
-        <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-          전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
-        </div>
-      </div>
-    </div>
     </div>
   );
 };
