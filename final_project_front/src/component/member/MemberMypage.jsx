@@ -250,21 +250,25 @@ const MemberNotice = (props) => {
     
     console.log(poCheck);
     console.log(promotionCheck);
+    /*
     useEffect(()=>{
-        if(!promotionCheck){
-            axios
-                .get(`${import.meta.env.VITE_BACK_SERVER}/member/promotion/${poCheck}` )
-                .then((res)=>{
-                    console.log(res);
-
-                    
-                })
-                .catch((err)=>{
-                    console.log(err);
-                })
+        if(promotionCheck.promotion){
+            setPoCheck("Y");    
+        } else {
+            setPoCheck("N");
         }
-    },[])
-    
+        
+        axios
+        .get(`${import.meta.env.VITE_BACK_SERVER}/member/promotion/${poCheck}` )
+        .then((res)=>{
+            console.log(res);        
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+        
+    },[promotionCheck])
+    */
 
     return(
         <div className="mypage-notice-wrap tab-menu">
