@@ -100,4 +100,10 @@ public class VoteService {
 		
 		return voteOptionCount;
 	}
+	
+	@Transactional
+	public int deleteVote(int voteNo) {
+		int result = voteDao.deleteVote(voteNo);
+		return result;
+	}
 }

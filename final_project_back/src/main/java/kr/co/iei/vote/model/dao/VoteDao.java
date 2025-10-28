@@ -35,5 +35,7 @@ public interface VoteDao {
 
 	List<VoteOptionCount> selectOptionCount(int voteNo);
 
+	int deleteVote(int voteNo);
+
 	
 }

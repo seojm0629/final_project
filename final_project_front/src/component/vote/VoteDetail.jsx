@@ -55,7 +55,6 @@ const VoteDetail = () => {
       });
   }, []);
 
-  let label = "";
   useEffect(() => {
     axios
       .get(`${backServer}/vote/count/${voteNo}`)
@@ -119,16 +118,47 @@ const VoteDetail = () => {
         });
       });
   };
-  console.log(vote);
+  const voteDelete = () => {
+    axios
+      .delete(`${backServer}/vote/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "삭제완료!",
+            text: "삭제되었습니다.",
+            icon: "success",
+          });
+        }
+        navigate("/vote/list");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const voteEndDate = () => {
+    axios
+      .patch(`${backServer}/vote/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-      <div className="vote-detail-buttonBox">
-        <button>삭제하기</button>
-        <button>수정하기</button>
-      </div>
+
+      {vote && vote.memberNo === memberNo && (
+        <div className="vote-detail-buttonBox">
+          <button onClick={voteEndDate}>투표종료</button>
+          <button onClick={voteDelete}>삭제하기</button>
+        </div>
+      )}
+
       {vote &&
         vote.voteCheck === 0 && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
           <div className="vote-detail-list">
@@ -140,11 +170,17 @@ const VoteDetail = () => {
                     <input
                       type="radio"
                       name="voteOption"
+                      id={"voteOption" + list.voteOptionNo}
                       value={list.voteOptionNo}
                       className="vote-radio"
                       onChange={optionChange}
                     ></input>
-                    <label className="vote-label">{list.voteContent}</label>
+                    <label
+                      htmlFor={"voteOption" + list.voteOptionNo}
+                      className="vote-label"
+                    >
+                      {list.voteContent}
+                    </label>
                   </li>
                 );
               })}
