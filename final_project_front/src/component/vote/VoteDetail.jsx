@@ -53,29 +53,30 @@ const VoteDetail = () => {
         console.log(err);
       });
   }, []);
-
+  let label = "";
   useEffect(() => {
     axios
       .get(`${backServer}/vote/count/${voteNo}`)
       .then((res) => {
         console.log(res.data);
 
-        {
-          res.data.map((item, index) => {
-            setLabels(...labels, item.voteContent);
+        const a = res.data.map((item, index) => {
+          return item.voteContent;
+        });
+        const b = res.data.map((item, index) => {
+          return item.voteOptionCount;
+        });
 
-            return console.log(labels);
-          });
-        }
+        console.log(a);
+        console.log(b);
 
-        setValues(res.data.voteOptionCount);
+        setLabels(a);
+        setValues(b);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  console.log(labels);
-  console.log(values);
 
   const optionChange = (e) => {
     //라디오 버튼클릭시 선택한 옵션을 저장하기
@@ -147,8 +148,25 @@ const VoteDetail = () => {
           </div>
         </div>
       )}
-      <div>
-        <Bar data={data} />
+      <div className="vote-result-graph">
+        <Bar
+          data={data}
+          options={{
+            scales: {
+              y: {
+                beginAtZero: true, // Y축 0부터 시작
+                ticks: {
+                  // 옆 틱 값
+                  stepSize: 1, // 눈금 표시
+                  callback: function (value) {
+                    // 실행값
+                    return value;
+                  },
+                },
+              },
+            },
+          }}
+        />
       </div>
     </div>
   );
