@@ -88,6 +88,8 @@ const ContentStatistics = () => {
 
   const [tradeBoardLabels, setTradeBoardLabels] = useState([]);
   const [tradeBoardValues, setTradeBoardValues] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const data = {
     labels: labels,
     datasets: [
@@ -141,11 +143,14 @@ const ContentStatistics = () => {
 
   /* ********* [5년,1년,월간,일간 선택 값에 따라 객체 돌려받기] *********** */
   useEffect(() => {
+    if (selectCriteria === "기타" && (!startDate || !endDate)) {
+      return; // 기간 미입력시 호출하지 않음
+    }
     axios
       .get(
         `${
           import.meta.env.VITE_BACK_SERVER
-        }/admin/statistics?selectCriteria=${selectCriteria}`
+        }/admin/statistics?selectCriteria=${selectCriteria}&startDate=${startDate}&endDate=${endDate}`
       )
       .then((res) => {
         console.log("받아온 데이터");
@@ -216,7 +221,7 @@ const ContentStatistics = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [selectCriteria]);
+  }, [selectCriteria, startDate, endDate]);
   /* **************************************************************** */
 
   const pieData = {
@@ -262,11 +267,19 @@ const ContentStatistics = () => {
               <div>
                 <div>
                   <span>시작 기간 : </span>
-                  <input type="date" />
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
                 </div>
                 <div>
                   <span>종료 기간 : </span>
-                  <input type="date" />
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
                 </div>
               </div>
             )}

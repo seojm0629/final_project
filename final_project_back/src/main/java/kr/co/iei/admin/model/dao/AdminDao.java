@@ -97,5 +97,15 @@ public interface AdminDao {
 
 	int searchMainNo(String delCate);
 
+	List<AdminStatisticsDTO> statisticsCustomAccession(HashMap<String, Object> param);
+
+	List<AdminStatisticsDTO> statisticsCustomWithdraw(HashMap<String, Object> param);
+
+	List<AdminStatisticsDTO> statisticsCustomFreeBoard(HashMap<String, Object> param);
+
+	List<AdminStatisticsDTO> statisticsCustomTradeBoard(HashMap<String, Object> param);
+
+	int statisticsCustomAr(HashMap<String, Object> param);
+
 
 }

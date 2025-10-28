@@ -62,12 +62,12 @@ public class AdminService {
 		return result;
 	}
 
-	public HashMap<String, Object> statistics(String selectCriteria) {
+	public HashMap<String, Object> statistics(String selectCriteria, String startDate, String endDate) {
 		List<AdminStatisticsDTO> list = new ArrayList<>();
 		List<AdminStatisticsDTO> listWithdraw = new ArrayList<>();
 		List<AdminStatisticsDTO> listFreeBoard = new ArrayList<>();
 		List<AdminStatisticsDTO> listTradeBoard = new ArrayList<>();
-		
+
 		int acceessionRate = 0;
 		switch (selectCriteria) {
 		case "5년":
@@ -91,8 +91,19 @@ public class AdminService {
 			listFreeBoard = adminDao.statisticsFreeBoardMonth();
 			listTradeBoard = adminDao.statisticsTradeBoardMonth();
 			break;
-		case "1일":
-			acceessionRate = adminDao.statisticsArDay();
+		case "기타":
+			HashMap<String, Object> param = new HashMap<>();
+			param.put("startDate", startDate);
+			param.put("endDate", endDate);
+
+			// 가입자 / 탈퇴자 / 자유게시판 / 거래게시판 리스트
+			list = adminDao.statisticsCustomAccession(param);
+			acceessionRate = adminDao.statisticsCustomAr(param);
+			listWithdraw = adminDao.statisticsCustomWithdraw(param);
+			listFreeBoard = adminDao.statisticsCustomFreeBoard(param);
+			listTradeBoard = adminDao.statisticsCustomTradeBoard(param);
+			break;
+
 		}
 		int registeredUser = adminDao.statisticsRu();
 		int boardCount = adminDao.statisticsBc();
@@ -110,43 +121,41 @@ public class AdminService {
 		map.put("bcc", boardCommentCount);
 		map.put("wc", withdrawCount);
 		map.put("ar", acceessionRate);
-	    map.put("ruDiffDay", ruDiffDay);
-	    map.put("bcDiffDay", bcDiffDay);
-	    map.put("bccDiffDay", bccDiffDay);
-	    map.put("wcDiffDay", wcDiffDay);
-	    map.put("listWithdraw", listWithdraw);
-	    map.put("listFreeBoard", listFreeBoard);
-	    map.put("listTradeBoard", listTradeBoard);
+		map.put("ruDiffDay", ruDiffDay);
+		map.put("bcDiffDay", bcDiffDay);
+		map.put("bccDiffDay", bccDiffDay);
+		map.put("wcDiffDay", wcDiffDay);
+		map.put("listWithdraw", listWithdraw);
+		map.put("listFreeBoard", listFreeBoard);
+		map.put("listTradeBoard", listTradeBoard);
 		return map;
 	}
 
 	public int insertFreeCate(HashMap<String, Object> insertCateSet) {
 		System.out.println(insertCateSet.get("categoryAddText"));
 		int result = 0;
-		if(insertCateSet.get("categoryAddText")!="") {
-			
+		if (insertCateSet.get("categoryAddText") != "") {
+
 			int count = adminDao.searchFreeCate(insertCateSet.get("categoryAddText"));
 			int searchFreeCateNo = 0;
-			
-			if (count==1) {
+
+			if (count == 1) {
 				searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
 				insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
-				System.out.println("searchFreeCateNo : "+searchFreeCateNo);
+				System.out.println("searchFreeCateNo : " + searchFreeCateNo);
 			}
-			
-			
-			
-			if(count==1) {
-				result += adminDao.insertSubFreeCate(insertCateSet); 
-			}else {
-				
+
+			if (count == 1) {
+				result += adminDao.insertSubFreeCate(insertCateSet);
+			} else {
+
 				result += adminDao.insertFreeCate(insertCateSet);
 				searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
 				insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
-				result += adminDao.insertSubFreeCate(insertCateSet); 
+				result += adminDao.insertSubFreeCate(insertCateSet);
 			}
 			System.out.println(result);
-			
+
 		}
 		return result;
 	}
@@ -154,7 +163,7 @@ public class AdminService {
 	public List<AdminNoticeDTO> insertNotice(HashMap<String, Object> insertNoticeSet) {
 		int result = adminDao.insertNotice(insertNoticeSet);
 		List<AdminNoticeDTO> selectAllNotice = new ArrayList<>();
-		if(result==1) {
+		if (result == 1) {
 			selectAllNotice = adminDao.selectAllNotice();
 		}
 		System.out.println(selectAllNotice);
@@ -175,7 +184,7 @@ public class AdminService {
 	}
 
 	public int deleteFreeCate2(HashMap<String, Object> delCateSet) {
-		System.out.println("실제삭제 : "+delCateSet);
+		System.out.println("실제삭제 : " + delCateSet);
 		int result = adminDao.deleteFreeCate2(delCateSet);
 		System.out.println(result);
 		return result;
@@ -185,6 +194,5 @@ public class AdminService {
 		int cateMainNo = adminDao.searchMainNo(delCate);
 		return cateMainNo;
 	}
-	
-	
+
 }

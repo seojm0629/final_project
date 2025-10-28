@@ -82,9 +82,13 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="statistics")
-	public ResponseEntity<HashMap<String, Object>> statistics(@RequestParam String selectCriteria){
-		//System.out.println(selectCriteria);
-		HashMap<String, Object> map = adminService.statistics(selectCriteria);
+	public ResponseEntity<HashMap<String, Object>> statistics(@RequestParam String selectCriteria,@RequestParam(required = false) String startDate,@RequestParam(required = false) String endDate){
+		System.out.println(selectCriteria);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		HashMap<String, Object> map = adminService.statistics(selectCriteria,startDate, endDate);
+
+
 		//System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
