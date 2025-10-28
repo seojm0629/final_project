@@ -53,18 +53,29 @@ const VoteDetail = () => {
         console.log(err);
       });
   }, []);
+
   useEffect(() => {
     axios
       .get(`${backServer}/vote/count/${voteNo}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+
+        {
+          res.data.map((item, index) => {
+            setLabels(...labels, item.voteContent);
+
+            return console.log(labels);
+          });
+        }
+
+        setValues(res.data.voteOptionCount);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
-
-  console.log(voteList);
+  }, []);
+  console.log(labels);
+  console.log(values);
 
   const optionChange = (e) => {
     //라디오 버튼클릭시 선택한 옵션을 저장하기
