@@ -42,6 +42,7 @@ const VoteDetail = () => {
       });
   }, []);
   //리스트 항목 가져오는 엑시오스
+  const [refreshToggle, setRefreshToggle] = useState(false);
   useEffect(() => {
     axios
       .get(`${backServer}/vote/option/${voteNo}`)
@@ -53,6 +54,7 @@ const VoteDetail = () => {
         console.log(err);
       });
   }, []);
+
   let label = "";
   useEffect(() => {
     axios
@@ -76,7 +78,7 @@ const VoteDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refreshToggle]);
 
   const optionChange = (e) => {
     //라디오 버튼클릭시 선택한 옵션을 저장하기
@@ -107,6 +109,7 @@ const VoteDetail = () => {
           title: "투표 완료",
           icon: "success",
         });
+        setRefreshToggle(!refreshToggle);
       })
       .catch((err) => {
         Swal.fire({
@@ -116,38 +119,43 @@ const VoteDetail = () => {
         });
       });
   };
-
+  console.log(vote);
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-      {vote && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
-        <div className="vote-detail-list">
-          <div className="vote-detail-list-title">{vote.voteTitle}</div>
-          <ul className="vote-detail-ul">
-            {voteList.map((list, i) => {
-              return (
-                <li className="vote-detail-content" key={"list" + i}>
-                  <input
-                    type="radio"
-                    name="voteOption"
-                    value={list.voteOptionNo}
-                    className="vote-radio"
-                    onChange={optionChange}
-                  ></input>
-                  <label className="vote-label">{list.voteContent}</label>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="vote-detail-button-box">
-            <button className="vote-detail-check-button" onClick={voteResult}>
-              투표하기
-            </button>
+      <div className="vote-detail-buttonBox">
+        <button>삭제하기</button>
+        <button>수정하기</button>
+      </div>
+      {vote &&
+        vote.voteCheck === 0 && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
+          <div className="vote-detail-list">
+            <div className="vote-detail-list-title">{vote.voteTitle}</div>
+            <ul className="vote-detail-ul">
+              {voteList.map((list, i) => {
+                return (
+                  <li className="vote-detail-content" key={"list" + i}>
+                    <input
+                      type="radio"
+                      name="voteOption"
+                      value={list.voteOptionNo}
+                      className="vote-radio"
+                      onChange={optionChange}
+                    ></input>
+                    <label className="vote-label">{list.voteContent}</label>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="vote-detail-button-box">
+              <button className="vote-detail-check-button" onClick={voteResult}>
+                투표하기
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       <div className="vote-result-graph">
         <Bar
           data={data}
