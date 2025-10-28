@@ -17,8 +17,6 @@
 .weather-container{
     padding: 20px;
     width: 348px;
-    height: 200px;
-    
     background-color: #f5f8fb;
     border-radius: 4px;
     z-index: 2;

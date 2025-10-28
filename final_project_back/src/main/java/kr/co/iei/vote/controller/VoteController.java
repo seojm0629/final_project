@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.iei.note.model.service.NoteService;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
+import kr.co.iei.vote.model.dto.VoteOptionCount;
 import kr.co.iei.vote.model.dto.VoteResult;
 import kr.co.iei.vote.model.service.VoteService;
 
@@ -94,6 +95,16 @@ public class VoteController {
 		
 		return ResponseEntity.ok(voteResult);
 	}
-	
+	@GetMapping(value= "/count/{voteNo}")
+	public ResponseEntity<List<VoteOptionCount>> selectOptionCount(@PathVariable int voteNo ) {
+		
+		System.out.println("옵션카운트에서 거래글번호 받아오기값 "+ voteNo);
+		
+		List<VoteOptionCount> optionCount = voteService.selectOptionCount(voteNo);
+		
+		return ResponseEntity.ok(optionCount);
+
+		
+	}
 	
 }
