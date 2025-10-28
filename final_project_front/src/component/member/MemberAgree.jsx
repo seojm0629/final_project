@@ -1,10 +1,13 @@
+import axios from "axios";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import MemberJoin from "./MemberJoin";
 
 const MemberAgree = () => {
     const navigate = useNavigate();
-
+    const [checkPro, setCheckPro] = useState("N");
+    const [next, setNext] = useState(false);
 
     const [checks, setChecks] = useState({
         allCheck : false,
@@ -12,6 +15,10 @@ const MemberAgree = () => {
         community: false,
         personal: false,
     });
+
+    const [poCheck, setPoCheck] = useState({
+        promotion : false,
+    })
 
     const changeChecks = (e) => {
         const name = e.target.name;
@@ -24,7 +31,16 @@ const MemberAgree = () => {
 
         setChecks(updated);
     }
+    
+    const promotion = (e) => {
+        const name = e.target.name;
+        const checked = e.target.checked;
+        const updated = {...poCheck, [name]:checked};
 
+        setPoCheck(updated);
+        
+    } 
+    
     const allChecks = (e) => {
         const checked = e.target.checked;
         setChecks({
@@ -32,13 +48,25 @@ const MemberAgree = () => {
             service : checked,
             community : checked,
             personal : checked,
+            
         });
+        setPoCheck({
+            promotion : checked,
+        })        
     }
+    
 
+    
     const nextPage = () => {
-        if(checks.allCheck && checks.service && checks.community && checks.personal){
-            navigate("/member/join");
+        if(checks.allCheck && checks.service && checks.community && checks.personal || poCheck.promotion){
+            if(poCheck.promotion){
+                setCheckPro("Y");
+                setNext(true);
+            } else {
+                setNext(true);
+            }
         } else {
+            
             Swal.fire({
                 title : "약관 동의 확인",
                 text : "전체 동의 확인 필요",
@@ -47,6 +75,27 @@ const MemberAgree = () => {
         }
     }
 
+    if(next){
+        return <MemberJoin checkPro={checkPro}></MemberJoin>
+    }
+    
+
+    /*
+    const promotionCheck = () => {
+        if(checkPro === "N"){
+            axios
+            .get(`${import.meta.env.VITE_BACK_SERVER}/member/promotion/${checkPro}` )
+            .then((res)=>{
+                console.log(res);
+                setCheckPro("Y");
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        }
+    }
+    */
+    
     return(
         <section className="section agree-wrap">
 
@@ -230,69 +279,92 @@ const MemberAgree = () => {
                     </div>
                     <div className="service-div">
                         <p>제1조 (수집하는 개인정보 항목)
-
 회사는 서비스 제공을 위해 다음 정보를 수집합니다.
-
 필수: 아이디, 이메일, 비밀번호
-
 선택: 프로필 사진, 관심사, 직장 정보(직장인 게시판 이용 시)
-
 자동 수집: 접속 로그, 쿠키, IP 주소, 기기 정보
-
 <br />
 제2조 (개인정보 이용 목적)
-
 회원 가입 및 관리
-
 서비스 제공 및 맞춤형 콘텐츠 제공
-
 중고거래 및 커뮤니티 이용 기록 관리
-
 부정 이용 방지 및 보안 강화
-
 <br />
 제3조 (보관 및 이용 기간)
-
 회원 탈퇴 시 지체 없이 파기합니다.
-
 단, 법령상 보관 의무가 있는 경우 해당 기간 동안 보관합니다.
-
 <br />
 제4조 (개인정보 제3자 제공)
-
 회사는 원칙적으로 회원 동의 없이 개인정보를 제3자에게 제공하지 않습니다.
-
 다만, 법령상 요구가 있는 경우 예외로 합니다.
-
 <br />
 제5조 (개인정보 처리 위탁)
-
 서비스 운영을 위해 필요한 경우 개인정보 처리를 위탁할 수 있으며, 위탁 업체와 범위는 별도 공지합니다.
-
 <br />
 제6조 (이용자의 권리)
-
 회원은 언제든 자신의 개인정보에 대해 열람·정정·삭제·처리정지를 요구할 수 있습니다.
-
 <br />
 제7조 (보호 조치)
-
 회사는 개인정보 유출, 위조, 변조, 훼손을 방지하기 위해 암호화, 접근 통제 등 기술적·관리적 대책을 시행합니다.
-
 <br />
-
 제8조 (쿠키 사용)
-
 회사는 맞춤 서비스 제공을 위해 쿠키를 사용하며, 회원은 브라우저 설정을 통해 이를 거부할 수 있습니다.
-
 <br />
-
 제9조 (문의처)
-
 개인정보 관련 문의는 개인정보 보호 책임자에게 연락할 수 있습니다.</p>
 
+                    
+
                     </div>
+                    
+                    
+                </div>
+
+                <div className="service-agree">
                     <div className="service-btn">
+                        <input type="checkbox" id="promotion" name="promotion"
+                        onChange={promotion}
+                        checked={poCheck.promotion}
+                        
+                        />
+                        <label htmlFor="promotion">홍보 및 마케팅 활용에 대한 동의(선택)</label>
+                    </div>
+                    <div className="service-div">
+                        <p>
+                        회사는 이용자에게 보다 다양한 혜택 및 맞춤형 서비스를 제공하기 위하여, 아래의 목적으로 개인정보를 이용할 수 있습니다.
+
+이용 목적
+
+신규 서비스 및 상품 안내
+
+이벤트, 프로모션, 행사 관련 정보 제공
+
+할인 및 쿠폰, 혜택 정보 제공
+
+뉴스레터 및 광고성 정보 전송 (E-mail, 문자, 앱 알림 등)
+
+수집 항목
+
+성명, 이메일 주소, 휴대전화번호 등 (회원가입 시 제공한 정보 활용)
+
+보유 및 이용 기간
+
+동의 철회 또는 회원 탈퇴 시까지
+
+단, 관련 법령에 따라 보존이 필요한 경우 해당 기간까지 보관
+
+동의 거부 권리 및 불이익
+
+귀하는 본 동의를 거부할 수 있으며, 거부하더라도 서비스 이용에는 제한이 없습니다.
+
+단, 마케팅/이벤트 관련 혜택 제공이 제한될 수 있습니다.
+                        </p>
+                    </div>
+                    
+                    
+                </div>
+
+                    <div className="allcheck">
                         <input type="checkbox" id="allCheck" name="allCheck" 
                         onChange={allChecks}
                         checked = {checks.allCheck}/>
@@ -305,7 +377,7 @@ const MemberAgree = () => {
                         >다음</button>
                     </div>
                     
-                </div>
+                
 
 
             </div>

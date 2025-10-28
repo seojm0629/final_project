@@ -42,6 +42,7 @@ const VoteDetail = () => {
       });
   }, []);
   //리스트 항목 가져오는 엑시오스
+  const [refreshToggle, setRefreshToggle] = useState(false);
   useEffect(() => {
     axios
       .get(`${backServer}/vote/option/${voteNo}`)
@@ -60,22 +61,23 @@ const VoteDetail = () => {
       .then((res) => {
         console.log(res.data);
 
-        {
-          res.data.map((item, index) => {
-            setLabels(...labels, item.voteContent);
+        const a = res.data.map((item, index) => {
+          return item.voteContent;
+        });
+        const b = res.data.map((item, index) => {
+          return item.voteOptionCount;
+        });
 
-            return console.log(labels);
-          });
-        }
+        console.log(a);
+        console.log(b);
 
-        setValues(res.data.voteOptionCount);
+        setLabels(a);
+        setValues(b);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  console.log(labels);
-  console.log(values);
+  }, [refreshToggle]);
 
   const optionChange = (e) => {
     //라디오 버튼클릭시 선택한 옵션을 저장하기
@@ -106,6 +108,7 @@ const VoteDetail = () => {
           title: "투표 완료",
           icon: "success",
         });
+        setRefreshToggle(!refreshToggle);
       })
       .catch((err) => {
         Swal.fire({
@@ -115,40 +118,99 @@ const VoteDetail = () => {
         });
       });
   };
-
+  const voteDelete = () => {
+    axios
+      .delete(`${backServer}/vote/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "삭제완료!",
+            text: "삭제되었습니다.",
+            icon: "success",
+          });
+        }
+        navigate("/vote/list");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const voteEndDate = () => {
+    axios
+      .patch(`${backServer}/vote/${voteNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-      {vote && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
-        <div className="vote-detail-list">
-          <div className="vote-detail-list-title">{vote.voteTitle}</div>
-          <ul className="vote-detail-ul">
-            {voteList.map((list, i) => {
-              return (
-                <li className="vote-detail-content" key={"list" + i}>
-                  <input
-                    type="radio"
-                    name="voteOption"
-                    value={list.voteOptionNo}
-                    className="vote-radio"
-                    onChange={optionChange}
-                  ></input>
-                  <label className="vote-label">{list.voteContent}</label>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="vote-detail-button-box">
-            <button className="vote-detail-check-button" onClick={voteResult}>
-              투표하기
-            </button>
-          </div>
+
+      {vote && vote.memberNo === memberNo && (
+        <div className="vote-detail-buttonBox">
+          <button onClick={voteEndDate}>투표종료</button>
+          <button onClick={voteDelete}>삭제하기</button>
         </div>
       )}
-      <div>
-        <Bar data={data} />
+
+      {vote &&
+        vote.voteCheck === 0 && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
+          <div className="vote-detail-list">
+            <div className="vote-detail-list-title">{vote.voteTitle}</div>
+            <ul className="vote-detail-ul">
+              {voteList.map((list, i) => {
+                return (
+                  <li className="vote-detail-content" key={"list" + i}>
+                    <input
+                      type="radio"
+                      name="voteOption"
+                      id={"voteOption" + list.voteOptionNo}
+                      value={list.voteOptionNo}
+                      className="vote-radio"
+                      onChange={optionChange}
+                    ></input>
+                    <label
+                      htmlFor={"voteOption" + list.voteOptionNo}
+                      className="vote-label"
+                    >
+                      {list.voteContent}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="vote-detail-button-box">
+              <button className="vote-detail-check-button" onClick={voteResult}>
+                투표하기
+              </button>
+            </div>
+          </div>
+        )}
+      <div className="vote-result-graph">
+        <Bar
+          data={data}
+          options={{
+            scales: {
+              y: {
+                beginAtZero: true, // Y축 0부터 시작
+                ticks: {
+                  // 옆 틱 값
+                  stepSize: 1, // 눈금 표시
+                  callback: function (value) {
+                    // 실행값
+                    return value;
+                  },
+                },
+              },
+            },
+          }}
+        />
       </div>
     </div>
   );

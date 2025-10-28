@@ -232,7 +232,7 @@ input[type="radio"]:checked+label{
 }
 .agree{
     width: 700px;
-    height: 975px;
+    height: 1275px;
     margin: 10px auto;
     background-color: #F5F8FB;
     
@@ -263,6 +263,15 @@ input[type="radio"]:checked+label{
 }
 
 .service-btn>input{
+    margin-right: 6px;
+}
+.allcheck{
+    width: 500px;
+    margin: 0 auto;
+    
+}
+
+.allcheck>input{
     margin-right: 6px;
 }
 
@@ -404,6 +413,21 @@ input[type="radio"]:checked+label{
 }
 .login-bottom div:last-child{
     border: none;
+}
+
+.mypage-promotion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.mypage-notice div:last-child>div{
+    border: none;
+    text-align: right;
+    padding-right: 20px;
+}
+.mypage-notice div:last-child>div>label{
+    padding-left: 5px;
 }
 
 .tab-div{
@@ -901,9 +925,6 @@ input[type="radio"]:checked+label{
 .service-agree-toJoin{
     width: 1000px;
     margin: 0 auto;
-    
-    
-    
 }
 
 .mypage-rules{

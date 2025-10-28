@@ -169,8 +169,6 @@ public class MemberController {
 		
 		
 	}
-	
-	
 	@GetMapping(value="/chat")
 	public ResponseEntity<MemberDTO> chat(@RequestParam String memberId){
 		MemberDTO m = memberService.chat(memberId);
@@ -194,3 +192,14 @@ public class MemberController {
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
