@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.iei.freeboard.model.dao.FreeBoardDao;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.member.model.dao.MemberDao;
@@ -144,5 +145,19 @@ public class FreeBoardService {
 		}*/
 		return result;
 	}
-	
+
+	public FreeBoardDTO selectOneDetail(int freeBoardNo) {
+		FreeBoardDTO freeBoard = freeBoardDao.selectOneDetail(freeBoardNo);
+		return freeBoard;
+	}
+
+	public List<FreeBoardCommentDTO> selectOneComment(int freeBoardNo) {
+		List<FreeBoardCommentDTO> freeBoardComment = freeBoardDao.selectOneComment(freeBoardNo);
+		return freeBoardComment;
+	}
+	@Transactional
+	public int insertComment(FreeBoardCommentDTO comment) {
+		int result = freeBoardDao.insertComment(comment);
+		return result;
+	}
 }

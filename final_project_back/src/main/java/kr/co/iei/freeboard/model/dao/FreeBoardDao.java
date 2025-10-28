@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 
@@ -37,6 +38,12 @@ public interface FreeBoardDao {
 	int getFreeBoardNo();
 
 	int insertFreeBoard(FreeBoardDTO freeBoard);
+
+	FreeBoardDTO selectOneDetail(int freeBoardNo);
+
+	List<FreeBoardCommentDTO> selectOneComment(int freeBoardNo);
+
+	int insertComment(FreeBoardCommentDTO comment);
 
 	
 

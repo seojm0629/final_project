@@ -16,6 +16,8 @@ import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
 import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
+import FreeBoardDetail from "./FreeBoardDetail";
+import dayjs from "dayjs";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -25,6 +27,7 @@ const FreeBoardMain = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(-1);
   const [menus, setMenus] = useState([]);
+  const [freeBoardNo, setFreeBoardNo] = useState(); //detail에 넘길 freeBoardNo
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [refreshToggle, setRefreshToggle] = useState(true); // 관리자 페이지에서 하위 카테고리 추가 시
@@ -38,6 +41,7 @@ const FreeBoardMain = () => {
   const [totalListCount, setTotalListCount] = useState(0);
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [titleState, setTitleState] = useState(""); //url 넘길 state
+
   const searchTitle = () => {
     setReqPageInfo({ ...reqPageInfo, pageNo: 1 });
     setTitleState(freeBoardTitle);
@@ -160,6 +164,7 @@ const FreeBoardMain = () => {
                     setFreeBoardList={setFreeBoardList}
                     titleState={titleState}
                     freeBoardTitle={freeBoardTitle}
+                    setFreeBoardNo={setFreeBoardNo}
                   ></FreeBoardContent>
                 }
               ></Route>
@@ -193,7 +198,16 @@ const FreeBoardContent = (props) => {
   const navigate = useNavigate();
   const titleState = props.titleState;
   const [result, setResult] = useState(false); //리스트 조회 결과에 따라 출력
-  const [freeBoardNo, setFreeBoardNo] = useState(); //detail에 넘기 보드넘버
+  const nowDate = (dateString) => {
+    const now = dayjs(); //현재 날짜/시간 가져오는 함수
+    const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
+    const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
+    // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
+    if (diffDays >= 7) {
+      return target.format("YYYY-MM-DD"); // 7일 이상이면 날짜로 변형
+    }
+    return target.fromNow(); //한국어로 ?? 시간전 표시하기
+  };
   const listUrl =
     selected === -1
       ? `${backServer}/freeBoard/content?pageNo=${reqPageInfo.pageNo}
@@ -230,9 +244,6 @@ const FreeBoardContent = (props) => {
         setResult(true);
       });
   }, [reqPageInfo.order, reqPageInfo.pageNo, selected, titleState]);
-  const detailNavi = () => {
-    navigate("/freeBoard/detail");
-  };
   return (
     <section className="freeBoard-section">
       {result ? (
@@ -247,7 +258,9 @@ const FreeBoardContent = (props) => {
                 style={{
                   borderRight: "1px solid #ccc",
                 }}
-                onClick={detailNavi}
+                onClick={() => {
+                  navigate(`/freeBoard/detail/${list.freeBoardNo}`);
+                }}
               >
                 {/*상태넣을꺼*/}
                 <div className="board-status">{list.freeBoardNo}</div>
@@ -271,7 +284,8 @@ const FreeBoardContent = (props) => {
                     {list.likeCount}
                   </div>
                   <div className="hour">
-                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
+                    {nowDate(list.freeBoardDate)}
                   </div>
                 </div>
               </div>
@@ -279,7 +293,9 @@ const FreeBoardContent = (props) => {
               <div
                 key={"second" + i}
                 className="board-section"
-                onClick={detailNavi}
+                onClick={() => {
+                  navigate(`/freeBoard/detail/${list.freeBoardNo}`);
+                }}
               >
                 <div className="board-status">{list.freeBoardNo}</div>
                 <div className="board-title">{list.freeBoardTitle}</div>
@@ -301,7 +317,8 @@ const FreeBoardContent = (props) => {
                     {list.likeCount}
                   </div>
                   <div className="hour">
-                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>2
+                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
+                    {nowDate(list.freeBoardDate)}
                   </div>
                 </div>
               </div>

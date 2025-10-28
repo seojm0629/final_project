@@ -363,12 +363,11 @@
   background: #234f8c;
   color: white;
 }
-
+/*
 .comment-item {
-  border-bottom: 1px solid #f0f0f0;
   padding: 10px 0;
 }
-
+*/
 .comment-top {
   display: flex;
   justify-content: space-between;

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
@@ -111,8 +112,6 @@ public class FreeBoardController {
 	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto){
 		//root : freeBoard 폴더 -> thumbnail폴더 안쪽
 		
-		System.out.println(freeBoardThumbnail);
-		
 		if(freeBoardThumbnail != null) {
 			String savepath = root + "/freeBoard/thumbnail/";
 			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
@@ -135,6 +134,25 @@ public class FreeBoardController {
 			}
 		}*/
 		int result = freeBoardService.insertFreeBoard(freeBoard);
+		return ResponseEntity.ok(result);
+	}
+	@GetMapping(value = "/detail/{freeBoardNo}")
+	public ResponseEntity<FreeBoardDTO> selectOneDetail(@PathVariable int freeBoardNo){
+		FreeBoardDTO freeBoard = freeBoardService.selectOneDetail(freeBoardNo);
+		
+		return ResponseEntity.ok(freeBoard);
+	}
+	@GetMapping(value = "/detail/comment")
+	public ResponseEntity<List<FreeBoardCommentDTO>> selectOneComment(@RequestParam int freeBoardNo){
+		List<FreeBoardCommentDTO> freeBoardComment = freeBoardService.selectOneComment(freeBoardNo);
+		System.out.println(freeBoardComment);
+		return ResponseEntity.ok(freeBoardComment);
+	}
+
+	@PostMapping(value = "/detail/regist")
+	public ResponseEntity<Integer> insertComment(@RequestBody FreeBoardCommentDTO comment){
+		System.out.println(comment);
+		int result = freeBoardService.insertComment(comment);
 		return ResponseEntity.ok(result);
 	}
 }

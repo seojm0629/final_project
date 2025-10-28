@@ -12,7 +12,6 @@ import TradeBoardList from "./component/trade_board/TradeBoardList";
 import ServiceAgree from "./component/member/ServiceAgree";
 import TradeBoardView from "./component/trade_board/TradeBoardView";
 import VoteInsert from "./component/vote/VoteInsert";
-
 import VoteList from "./component/vote/VoteList";
 
 //import VoteMain from "./component/vote/VoteMain";
@@ -34,7 +33,7 @@ function App() {
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
           <Route
-            path="/freeBoard/detail"
+            path="/freeBoard/detail/:freeBoardNo"
             element={<FreeBoardDetail></FreeBoardDetail>}
           ></Route>
           <Route
@@ -51,8 +50,8 @@ function App() {
           <Route path="/vote/voteDetail/:voteNo" element={<VoteDetail />} />
           <Route path="/tradeBoard/write" element={<TradeBoardWrite />} />
         </Routes>
+        <Footer></Footer>
       </main>
-      <Footer></Footer>
     </div>
   );
 }
