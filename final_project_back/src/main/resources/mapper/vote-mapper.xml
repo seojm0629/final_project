@@ -83,6 +83,10 @@
 					where vote_no = #{voteNo}
 				
 	</select>	
+	
+	<delete id="deleteVote">
+		delete from vote_tbl where vote_no = #{voteNo}
+	</delete>
 		
 		
 </mapper>

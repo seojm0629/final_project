@@ -15,19 +15,19 @@
 
 .vote-detail-list {
   width: 800px;
+  height: 500px;
   display: flex;
   background-color: white;
   flex-direction: column;
   align-items: center;
   text-align: center;
   border-radius: 10px;
-  border: 2px solid black;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 .vote-detail-list-title {
   width: 100%;
-  height: 50px;
+  height: 100px;
   background-color: #2f4e70;
   font-weight: bold;
   color: white;
@@ -82,4 +82,21 @@
   width: 600px;
   height: 500px;
   margin: 10px;
+}
+.vote-detail-buttonBox {
+  width: 800px;
+  height: 30px;
+  display: flex;
+  gap: 50px;
+  flex-direction: row-reverse;
+  padding: 10px;
+}
+.vote-detail-buttonBox button {
+  width: 80px;
+  background-color: #2f4e70;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
