@@ -106,4 +106,10 @@ public class VoteService {
 		int result = voteDao.deleteVote(voteNo);
 		return result;
 	}
+
+	@Transactional
+	public int updateEndDate(int voteNo) {
+		int result = voteDao.updateEndDate(voteNo);
+		return result;
+	}
 }

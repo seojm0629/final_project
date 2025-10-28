@@ -37,5 +37,7 @@ public interface VoteDao {
 
 	int deleteVote(int voteNo);
 
+	int updateEndDate(int voteNo);
+
 	
 }

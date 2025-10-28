@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -116,5 +117,13 @@ public class VoteController {
 
 		
 		return ResponseEntity.ok(result);
+	}
+	@PatchMapping(value="/{voteNo}")
+	public ResponseEntity<Integer> updateEndDate(@PathVariable int voteNo) {
+		
+		int result = voteService.updateEndDate(voteNo);
+		
+		return ResponseEntity.ok(result);
+		
 	}
 }

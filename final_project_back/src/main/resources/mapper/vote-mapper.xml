@@ -88,5 +88,9 @@
 		delete from vote_tbl where vote_no = #{voteNo}
 	</delete>
 		
+	<update id="updateEndDate">
+		update vote_tbl set vote_check = 1 where vote_no = #{voteNo}
+	</update>
+	
 		
 </mapper>

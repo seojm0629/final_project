@@ -8,6 +8,7 @@ import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
 const VoteList = () => {
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
+  const [voteAlready, setVoteAlready] = useState(false);
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
 

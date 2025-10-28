@@ -141,6 +141,14 @@ const VoteDetail = () => {
       .patch(`${backServer}/vote/${voteNo}`)
       .then((res) => {
         console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "종료완료!",
+            text: "투표가 종료 되었습니다.",
+            icon: "success",
+          });
+        }
+        navigate("/vote/list");
       })
       .catch((err) => {
         console.log(err);
