@@ -234,6 +234,37 @@ const MemberCommunity = (props) => {
 
 const MemberNotice = (props) => {
     const agree = props.agree;
+    const [poCheck, setPoCheck] = useState("N");
+
+    const [promotionCheck, setPromotionCheck] = useState({
+        promotion : false,
+    })
+
+    const promotionAgree = (e) =>{
+        const name = e.target.name;
+        const checked = e.target.checked;
+        const updated = {...promotionCheck, [name] : checked};
+    
+        setPromotionCheck(updated);    
+    }
+    
+    console.log(poCheck);
+    console.log(promotionCheck);
+    useEffect(()=>{
+        if(!promotionCheck){
+            axios
+                .get(`${import.meta.env.VITE_BACK_SERVER}/member/promotion/${poCheck}` )
+                .then((res)=>{
+                    console.log(res);
+
+                    
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+        }
+    },[])
+    
 
     return(
         <div className="mypage-notice-wrap tab-menu">
@@ -249,6 +280,13 @@ const MemberNotice = (props) => {
                 </div>
                 <div className="mypage-terms tab-div">
                     <button type="submit" onClick={agree}>개인정보 처리방침</button>
+                </div>
+                <div className="mypage-promotion tab-div">
+                    <button type="submit" onClick={agree}>홍보 및 마케팅 활용에 대한 동의</button>
+                    <div className="promotion-check">
+                        <input type="checkbox" name="promotion" id="promotion" onChange={promotionAgree} checked={promotionCheck.promotion}/>
+                        <label htmlFor="promotion">동의</label>
+                    </div>
                 </div>
             </div>
         </div>
