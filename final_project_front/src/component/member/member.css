@@ -232,7 +232,7 @@ input[type="radio"]:checked+label{
 }
 .agree{
     width: 700px;
-    height: 975px;
+    height: 1275px;
     margin: 10px auto;
     background-color: #F5F8FB;
     
@@ -263,6 +263,15 @@ input[type="radio"]:checked+label{
 }
 
 .service-btn>input{
+    margin-right: 6px;
+}
+.allcheck{
+    width: 500px;
+    margin: 0 auto;
+    
+}
+
+.allcheck>input{
     margin-right: 6px;
 }
 
@@ -901,9 +910,6 @@ input[type="radio"]:checked+label{
 .service-agree-toJoin{
     width: 1000px;
     margin: 0 auto;
-    
-    
-    
 }
 
 .mypage-rules{
