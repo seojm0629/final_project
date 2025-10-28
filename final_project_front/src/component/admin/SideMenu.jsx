@@ -68,15 +68,7 @@ const SideMenu = ({ active, setActive }) => {
             <span className="material-icons">navigate_next</span>
           </button>
         </li>
-        <li>
-          <button
-            onClick={() => setActive("board")}
-            className={active === "board" ? "active" : ""}
-          >
-            게시물 관리
-            <span className="material-icons">navigate_next</span>
-          </button>
-        </li>
+
         <li>
           <button onClick={toggleCategory}>
             페이지 관리

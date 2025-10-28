@@ -24,7 +24,7 @@ const AdminMain = () => {
         <SideMenu active={active} setActive={setActive} />
         {active === "statistics" && <ContentStatistics />}
         {active === "member" && <ContentMember />}
-        {active === "board" && <ContentBoard />}
+
         {active === "free-board" && <ContentFreeBoard />}
         {active === "deal-board" && <ContentDealBoard />}
       </div>
