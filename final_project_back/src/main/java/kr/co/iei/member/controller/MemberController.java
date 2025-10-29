@@ -182,8 +182,11 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
-	
-	
+	@PatchMapping(value="/promotion")
+	public ResponseEntity<Integer> promotion(@RequestParam String memberId, @RequestParam String memberCheck){
+		int result = memberService.promotion(memberId, memberCheck);
+		return ResponseEntity.ok(result);
+	}
 	
 	
 	

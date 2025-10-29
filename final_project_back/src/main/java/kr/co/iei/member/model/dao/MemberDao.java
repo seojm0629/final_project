@@ -37,6 +37,8 @@ public interface MemberDao {
 
 	int phone(String memberPhone);
 
+	int promotion(String memberId, String memberCheck);
+
 	
 	
 	

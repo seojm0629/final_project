@@ -151,6 +151,12 @@ public class MemberService {
 		return result;
 	}
 
+	@Transactional
+	public int promotion(String memberId, String memberCheck) {
+		int result = memberDao.promotion(memberId, memberCheck);
+		return result;
+	}
+
 	
 
 	

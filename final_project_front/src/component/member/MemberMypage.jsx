@@ -43,7 +43,7 @@ const MemberMypage = () => {
         axios
             .get(`${import.meta.env.VITE_BACK_SERVER}/member/${memberId}`)
             .then((res)=>{
-                console.log(res);
+                
                 setMember(res.data);
             })
             .catch((err)=>{
@@ -104,10 +104,10 @@ const MemberMypage = () => {
                             <MemberAccount memberId={memberId} />
                         </section>
                         <section ref={communityRef} className="section site-path">
-                            <MemberCommunity agree={agree}/>
+                            <MemberCommunity agree={agree} />
                         </section>
                         <section ref={noticeRef} className="section site-path">
-                            <MemberNotice agree={agree}/>
+                            <MemberNotice agree={agree} memberId={memberId}/>
                         </section>
                         <section ref={etcRef} className="section site-path">
                             <MemberEtc memberId={memberId} memberType={memberType} setMemberId={setMemberId} setMemberType={setMemberType} />
@@ -234,30 +234,90 @@ const MemberCommunity = (props) => {
 
 const MemberNotice = (props) => {
     const agree = props.agree;
-    const [poCheck, setPoCheck] = useState("N");
+    const memberId = props.memberId;
+    const [memberCheck, setMemberCheck] = useState("N");
+    
 
     const [promotionCheck, setPromotionCheck] = useState({
         promotion : false,
     })
 
+    useEffect(()=>{
+        if(!memberId) return;
+
+        axios
+        .get(`${import.meta.env.VITE_BACK_SERVER}/member/${memberId}`)
+        .then((res)=>{
+            if(res.data){
+                const isAgreed = res.data.memberCheck === "Y";
+                setPromotionCheck({promotion: isAgreed});
+            }
+
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
+    }, [memberId])
+
     const promotionAgree = (e) =>{
         const name = e.target.name;
         const checked = e.target.checked;
         const updated = {...promotionCheck, [name] : checked};
-    
         setPromotionCheck(updated);    
+
+        const memberCheck = checked ? "Y" : "N";
+
+        axios
+        .patch(`${import.meta.env.VITE_BACK_SERVER}/member/promotion?memberId=${memberId}&&memberCheck=${memberCheck}`)
+        .then((res)=>{
+            if(res.data === 1){
+                alert("홍보 및 이벤트 이메일 수신 동의하셨습니다.");
+            } else {
+                alert("홍보 및 이벤트 이메일 수신 동의를 해제하셨습니다.");
+            }
+                    
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+
     }
     
-    console.log(poCheck);
-    console.log(promotionCheck);
+    
     /*
     useEffect(()=>{
         if(promotionCheck.promotion){
-            setPoCheck("Y");    
+            setMemberCheck("N");          
         } else {
-            setPoCheck("N");
+            setMemberCheck("Y");
         }
         
+        
+        axios
+        .get(`${import.meta.env.VITE_BACK_SERVER}/member/${memberId}`)
+        .then((res)=>{
+            if(res.data !== ""){
+                axios
+                .patch(`${import.meta.env.VITE_BACK_SERVER}/member/promotion?memberId=${memberId}&&memberCheck=${memberCheck}`)
+                .then((res)=>{
+                    if(res.data === 1){
+                        
+                    } else {
+                        
+                    }
+                    
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+            }
+
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+        /*
         axios
         .get(`${import.meta.env.VITE_BACK_SERVER}/member/promotion/${poCheck}` )
         .then((res)=>{
@@ -266,9 +326,11 @@ const MemberNotice = (props) => {
         .catch((err)=>{
             console.log(err);
         })
+            
         
     },[promotionCheck])
     */
+    
 
     return(
         <div className="mypage-notice-wrap tab-menu">

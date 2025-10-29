@@ -72,6 +72,10 @@
 		select count(*) from member_tbl where member_phone = #{memberPhone}
 	</select>
 	
+	<!-- 이벤트 메일 동의 여부 -->
+	<update id="promotion">
+		update member_tbl set member_check = #{memberCheck} where member_id = #{memberId}
+	</update>
 	
 	
 	
