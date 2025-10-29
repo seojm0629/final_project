@@ -35,8 +35,7 @@ const SendEventMail = () => {
         const sendTitle = eventMail.eventTitle;
         const sendContent = eventMail.eventContent;
 
-        if(eventMail.eventTitle.trim() && eventMail.eventContent.trim()
-            && memberId !== "" && memberType === 1){
+        if(eventMail.eventTitle.trim() && eventMail.eventContent.trim()){
             setIsLoader(true);
             axios
             .get(`${import.meta.env.VITE_BACK_SERVER}/member/sendEmail`,
@@ -74,7 +73,7 @@ const SendEventMail = () => {
             .catch((err)=>{
                 console.log(err);
             })
-        }
+        } 
     }
 
 
