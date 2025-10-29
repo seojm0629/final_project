@@ -48,16 +48,16 @@ public class VoteController {
 	// @RequestParam(required = false)  빈값 오류방지용
 	
 	@GetMapping
-	public ResponseEntity<HashMap<String, Object>> voteList(@RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount){
+	public ResponseEntity<HashMap<String, Object>> voteList(@RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount,  @RequestParam int order){
 		//pageNo: 한 페이지에 나타낼 수 있는 버튼 수
 		//listCnt : 한 페이지에 넣을 게시글 수
 		//sidebtnCount : 한 페이지에서 나타내는 버튼 수중에 가운데 버튼을 기준으로 양 옆에 나타내고싶은 버튼 수
-		
+		System.out.println("오더값확인"+order);
 		// 서버측 컨트롤러 혹은 서비스에서 startRow, endRow 계산 (계산식은 아래와 같음)
 		int startRow = (pageNo-1)*listCnt+1;
 		int endRow = pageNo * listCnt;
 		
-		HashMap<String, Object> map = voteService.voteList(startRow, endRow , sideBtnCount);
+		HashMap<String, Object> map = voteService.voteList(startRow, endRow , sideBtnCount,order);
 		
 	
 		return ResponseEntity.ok(map);

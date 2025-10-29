@@ -13,7 +13,7 @@ dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
 import FiberNewIcon from "@mui/icons-material/FiberNew";
 const VoteList = () => {
-  const [order, setOrder] = useState(""); // 정렬  0 -- 종료  1 -- 진행중
+  const [order, setOrder] = useState(3); // 정렬  0 -- 종료  1 -- 진행중
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [voteAlready, setVoteAlready] = useState(false);
   const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -42,7 +42,7 @@ const VoteList = () => {
   useEffect(() => {
     axios
       .get(
-        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}`
+        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}&order=${order}`
       )
       .then((res) => {
         console.log(res.data);
@@ -52,7 +52,7 @@ const VoteList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPageInfo]);
+  }, [reqPageInfo, order]);
 
   return (
     <div className="vote-main-wrap">
@@ -61,32 +61,32 @@ const VoteList = () => {
       </div>
       <div>
         <div className="vote-write-box">
-          <button
-            onClick={() => {
-              {
-                member === ""
-                  ? Swal.fire({
-                      title: "로그인",
-                      text: "로그인 후 이용해주세요",
-                      icon: "warning",
-                    }).then(() => {
-                      navigate("/member/login");
-                    })
-                  : navigate("/vote/voteInsert");
-              }
-            }}
-          >
-            글작성
-          </button>
+          {member === "" ? (
+            <button
+              onClick={() => {
+                navigate("/member/login");
+              }}
+            >
+              로그인
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                navigate("/vote/voteInsert");
+              }}
+            >
+              글작성
+            </button>
+          )}
+
           <input
             type="radio"
             name="order"
             id="end"
-            value="0"
-            checked={order === "0"}
+            value="1"
+            checked={order === "1"}
             onChange={(e) => {
               setOrder(e.target.value);
-              console.log(order);
             }}
           />
           <label htmlFor="end">종료</label>
@@ -94,11 +94,10 @@ const VoteList = () => {
             type="radio"
             name="order"
             id="progress"
-            value="1"
-            checked={order === "1"}
+            value="0"
+            checked={order === "0"}
             onChange={(e) => {
               setOrder(e.target.value);
-              console.log(order);
             }}
           />
           <label htmlFor="progress">진행중</label>
