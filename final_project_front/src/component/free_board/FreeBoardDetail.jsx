@@ -193,6 +193,7 @@ const FreeBoardDetail = () => {
                 setFbClaimSet({
                   freeBoardNo: freeBoard.freeBoardNo,
                   fbClaimReason: fbClaimReason,
+                  memberNo: memberNo,
                 });
               }}
             >

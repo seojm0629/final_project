@@ -160,4 +160,22 @@ public class FreeBoardService {
 		int result = freeBoardDao.insertComment(comment);
 		return result;
 	}
+
+	public int insertClaim(HashMap<String, Object> fbClaimSet) {
+		//System.out.println("서비스 : "+fbClaimSet.get("freeBoardNo"));
+		int freeBoardNo = (int) fbClaimSet.get("freeBoardNo");
+		System.out.println(freeBoardNo);
+		FreeBoardDTO freeBoard = freeBoardDao.selectCate(freeBoardNo);
+		int freeBoardCategoryNo = freeBoard.getFreeBoardCategoryNo();
+		int freeBoardSubcategoryNo = freeBoard.getFreeBoardSubcategoryNo();
+		//System.out.println("freeBoardCategoryNo : "+freeBoardCategoryNo);
+		//System.out.println("freeBoardSubcategoryNo : "+freeBoardSubcategoryNo);
+		
+		fbClaimSet.put("freeBoardCategoryNo", freeBoardCategoryNo);
+		fbClaimSet.put("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
+		
+		int result = freeBoardDao.insertClaim(fbClaimSet);
+		System.out.println(fbClaimSet);
+		return result;
+	}
 }

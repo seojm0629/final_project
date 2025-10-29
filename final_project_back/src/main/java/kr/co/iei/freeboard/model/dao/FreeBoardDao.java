@@ -45,7 +45,10 @@ public interface FreeBoardDao {
 
 	int insertComment(FreeBoardCommentDTO comment);
 
-	
+	FreeBoardDTO selectCate(int freeBoardNo);
+
+	int insertClaim(HashMap<String, Object> fbClaimSet);
+
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	

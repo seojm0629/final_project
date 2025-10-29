@@ -234,6 +234,13 @@
 			)
 	</insert> 
 	 
+	 <select id="selectCate" resultType="freeBoard">
+	 SELECT FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO FROM FREE_BOARD_TBL WHERE FREE_BOARD_NO=#{freeBoardNo}
+	 </select>
+	 
+	 <insert id="insertClaim">
+	 INSERT INTO FB_CLAIM_TBL VALUES(#{freeBoardNo},#{memberNo},#{freeBoardSubcategoryNo},#{freeBoardCategoryNo},SYSDATE,#{fbClaimReason})
+	 </insert>
 	 
 	 
 	 
