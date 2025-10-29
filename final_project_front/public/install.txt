@@ -40,3 +40,6 @@ npm install quill-image-resize-module-react
 
 2025-10-23 12:00 서정민
 npm install react-daum-postcode
+
+2025-10-29 09:55 이진원
+npm i xlsx --save

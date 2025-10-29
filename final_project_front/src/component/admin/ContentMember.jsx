@@ -23,6 +23,7 @@ const ContentMember = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
   const [memberList, setMemberList] = useState([]);
+  console.log(memberList);
 
   const [reqPageInfo, setReqPageInfo] = useState({
     order: 2, //어떤 정렬을 요청할건데??
