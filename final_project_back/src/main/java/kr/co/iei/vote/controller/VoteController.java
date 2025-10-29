@@ -45,8 +45,10 @@ public class VoteController {
 		return ResponseEntity.ok(result);
 	}
 	
+	// @RequestParam(required = false)  빈값 오류방지용
+	
 	@GetMapping
-	public ResponseEntity<HashMap<String, Object>> voteList(@RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount ) {
+	public ResponseEntity<HashMap<String, Object>> voteList(@RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount){
 		//pageNo: 한 페이지에 나타낼 수 있는 버튼 수
 		//listCnt : 한 페이지에 넣을 게시글 수
 		//sidebtnCount : 한 페이지에서 나타내는 버튼 수중에 가운데 버튼을 기준으로 양 옆에 나타내고싶은 버튼 수
