@@ -12,6 +12,7 @@ import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
 import FiberNewIcon from "@mui/icons-material/FiberNew";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const VoteList = () => {
   const [order, setOrder] = useState(3); // 정렬  0 -- 종료  1 -- 진행중
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
@@ -79,7 +80,6 @@ const VoteList = () => {
               글작성
             </button>
           )}
-
           <input
             type="radio"
             name="order"
@@ -111,12 +111,13 @@ const VoteList = () => {
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
-                  width: "45%",
+                  width: "37%",
                 }}
               >
                 제목
               </th>
               <th style={{ width: "5%" }}></th>
+              <th style={{ width: "7%" }}>투표여부</th>
               <th style={{ width: "10%" }}>투표상황</th>
               <th style={{ width: "15%" }}>시작날짜</th>
               <th style={{ width: "15%" }}>종료날짜</th>
@@ -163,6 +164,13 @@ const VoteList = () => {
                       dayjs(list.voteDate).$D ? (
                       <td className="new-icon">
                         <FiberNewIcon></FiberNewIcon>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
+                    {list.voteOk === 1 ? (
+                      <td className="check-icon">
+                        <CheckCircleIcon />
                       </td>
                     ) : (
                       <td></td>
