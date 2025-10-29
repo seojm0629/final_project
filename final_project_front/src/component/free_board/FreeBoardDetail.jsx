@@ -32,14 +32,17 @@ const FreeBoardDetail = () => {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACK_SERVER}/freeBoard/claim`, fbClaimSet)
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/claim`,
+        fbClaimSet
+      )
       .then((res) => {
         console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [fbClaimSet]);
 
   const comment = {
     freeBoardNo: freeBoardNo,

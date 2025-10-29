@@ -155,4 +155,11 @@ public class FreeBoardController {
 		int result = freeBoardService.insertComment(comment);
 		return ResponseEntity.ok(result);
 	}
+	
+	@PostMapping(value = "/detail/claim")
+	public ResponseEntity<Integer> insertClaim(@RequestBody HashMap<String, Object> fbClaimSet){
+		System.out.println(fbClaimSet);
+		int result = 0;
+		return ResponseEntity.ok(result);
+	}
 }
