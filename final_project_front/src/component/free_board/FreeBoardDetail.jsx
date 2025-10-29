@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberNoState } from "../utils/RecoilData";
+import BaseModal from "../utils/BaseModal";
 
 const FreeBoardDetail = () => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -23,6 +24,23 @@ const FreeBoardDetail = () => {
   const commentCount = freeBoardComment.length;
   const [toDate, setToDate] = useState(); //사용할 시간
   const navigate = useNavigate();
+
+  const [fbClaimReason, setFbClaimReason] = useState();
+
+  const [fbClaimSet, setFbClaimSet] = useState();
+  console.log(fbClaimSet);
+
+  useEffect(() => {
+    axios
+      .post(`${import.meta.env.VITE_BACK_SERVER}/freeBoard/claim`, fbClaimSet)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   const comment = {
     freeBoardNo: freeBoardNo,
     freeBoardSubcategoryNo: freeBoard.freeBoardSubcategoryNo,
@@ -140,10 +158,45 @@ const FreeBoardDetail = () => {
         </div>
       </div>
       <div className="detail-report">
-        <span>
-          <ReportGmailerrorredIcon className="report-icon" />
-          신고하기
-        </span>
+        <BaseModal
+          title="이용자 신고하기"
+          content={
+            <div>
+              <div>게시글을 신고하시겠습니까?</div>
+              <div>게시글 번호 : {freeBoard.freeBoardNo}</div>
+              <div>
+                신고 사유 :{" "}
+                <input
+                  type="text"
+                  value={fbClaimReason}
+                  onChange={(e) => {
+                    setFbClaimReason(e.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+          }
+          buttonLabel={
+            <span>
+              <ReportGmailerrorredIcon className="report-icon" />
+              신고하기
+            </span>
+          }
+          contentBoxStyle={{ width: "800px", height: "400px" }}
+          end={"취소"}
+          result={
+            <button
+              onClick={() => {
+                setFbClaimSet({
+                  freeBoardNo: freeBoard.freeBoardNo,
+                  fbClaimReason: fbClaimReason,
+                });
+              }}
+            >
+              확인
+            </button>
+          }
+        />
       </div>
       <div className="detail-buttons">
         <button className="list-btn">목록으로</button>
