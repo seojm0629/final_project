@@ -31,6 +31,9 @@ const FreeBoardDetail = () => {
   console.log(fbClaimSet);
 
   useEffect(() => {
+    if (fbClaimSet === undefined) {
+      return;
+    }
     axios
       .post(
         `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/claim`,
@@ -38,9 +41,23 @@ const FreeBoardDetail = () => {
       )
       .then((res) => {
         console.log(res.data);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "알림",
+            text: `게시글 신고가 완료되었습니다.`,
+
+            icon: "success",
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire({
+          title: "알림",
+          text: `이미 신고한 게시글입니다.`,
+
+          icon: "error",
+        });
       });
   }, [fbClaimSet]);
 
@@ -164,17 +181,17 @@ const FreeBoardDetail = () => {
         <BaseModal
           title="이용자 신고하기"
           content={
-            <div>
-              <div>게시글을 신고하시겠습니까?</div>
-              <div>게시글 번호 : {freeBoard.freeBoardNo}</div>
+            <div className="report_content">
+              <div>해당 게시글을 신고하시겠습니까?</div>
+
               <div>
-                신고 사유 :{" "}
                 <input
                   type="text"
                   value={fbClaimReason}
                   onChange={(e) => {
                     setFbClaimReason(e.target.value);
                   }}
+                  placeholder="신고 사유를 적어주세요"
                 ></input>
               </div>
             </div>
@@ -185,7 +202,7 @@ const FreeBoardDetail = () => {
               신고하기
             </span>
           }
-          contentBoxStyle={{ width: "800px", height: "400px" }}
+          contentBoxStyle={{ width: "400px", height: "400px" }}
           end={"취소"}
           result={
             <button
@@ -196,6 +213,7 @@ const FreeBoardDetail = () => {
                   memberNo: memberNo,
                 });
               }}
+              className="FbClaimConfirmBtn"
             >
               확인
             </button>
