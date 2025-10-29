@@ -29,12 +29,14 @@ const TextEditor = (props) => {
           })
           .then((res) => {
             const imageUrl = `${backServer}/freeBoard/editor/${res.data}`;
+            const originalImage = `/freeBoard/editor/${res.data}`;
             const editor = editorRef.current.getEditor();
             const range = editor.getSelection();
             editor.insertEmbed(range.index, "image", imageUrl);
             editor.setSelection(range.index + 1);
+            console.log(form);
             if (setFreeBoardThumbnail !== null) {
-              setFreeBoardThumbnail(imageUrl);
+              setFreeBoardThumbnail(originalImage);
             }
           })
           .catch((err) => {

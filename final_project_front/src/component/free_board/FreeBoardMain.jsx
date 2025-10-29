@@ -18,6 +18,7 @@ import { loginIdState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
 import FreeBoardDetail from "./FreeBoardDetail";
 import dayjs from "dayjs";
+import FreeBoardModify from "./FreeBoardModify";
 
 // * 메인페이지 최상위 컴포넌트 *
 
@@ -175,6 +176,15 @@ const FreeBoardMain = () => {
                     setFreeBoardTitle={setFreeBoardTitle}
                     menus={menus}
                   ></FreeBoardWrite>
+                }
+              ></Route>
+              <Route
+                path="modify/:freeBoardNo"
+                element={
+                  <FreeBoardModify
+                    setFreeBoardTitle={setFreeBoardTitle}
+                    menus={menus}
+                  />
                 }
               ></Route>
             </Routes>

@@ -119,40 +119,60 @@ const VoteDetail = () => {
       });
   };
   const voteDelete = () => {
-    axios
-      .delete(`${backServer}/vote/${voteNo}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data === 1) {
-          Swal.fire({
-            title: "삭제완료!",
-            text: "삭제되었습니다.",
-            icon: "success",
+    Swal.fire({
+      title: "투표삭제",
+      text: "게시글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCloseButton: true,
+      confirmButtonAriaLabel: "삭제하기",
+      cancelButtonText: "취소",
+    }).then((select) => {
+      if (select.isConfirmed) {
+        axios
+          .delete(`${backServer}/vote/${voteNo}`)
+          .then((res) => {
+            if (res.data === 1) {
+              Swal.fire({
+                title: "삭제완료!",
+                text: "삭제되었습니다.",
+                icon: "success",
+              });
+            }
+            navigate("/vote/list");
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        }
-        navigate("/vote/list");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    });
   };
   const voteEndDate = () => {
-    axios
-      .patch(`${backServer}/vote/${voteNo}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data === 1) {
-          Swal.fire({
-            title: "종료완료!",
-            text: "투표가 종료 되었습니다.",
-            icon: "success",
+    Swal.fire({
+      title: "투표종료",
+      text: "투표를 종료하시겠습니까?",
+      icon: "warning",
+      showCloseButton: true,
+      confirmButtonAriaLabel: "종료하기",
+      cancelButtonText: "취소",
+    }).then((select) => {
+      if (select.isConfirmed) {
+        axios
+          .patch(`${backServer}/vote/${voteNo}`)
+          .then((res) => {
+            if (res.data === 1) {
+              Swal.fire({
+                title: "종료완료!",
+                text: "투표가 종료 되었습니다.",
+                icon: "success",
+              });
+            }
+            navigate("/vote/list");
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        }
-        navigate("/vote/list");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    });
   };
   return (
     <div className="vote-detail-wrap">

@@ -22,19 +22,23 @@
 	</update>
 	
 	<select id="selectVoteList" resultType="vote">
-		select B.* from (
-		select rownum rnum,A.* from(
-		select vote_no,member_nickname , vote_title, 
-		to_char(vote_date,'yyyy-mm-dd HH24:MI') as vote_date,
-		to_char(vote_end_date,'yyyy-mm-dd HH24:MI') as vote_end_date
-		, vote_check 
-		from member_tbl
-		join vote_tbl using(member_no)
-		<if test="order != 3">
-		where vote_check = #{order}
-		</if>
-		order by vote_check asc, vote_date desc, vote_no desc
-		)A
+		select B.*,
+		(select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = #{memberNo})
+		from 
+		(
+		select rownum rnum,A.* from
+			(
+			select vote_no,member_nickname , vote_title, 
+			to_char(vote_date,'yyyy-mm-dd HH24:MI') as vote_date,
+			to_char(vote_end_date,'yyyy-mm-dd HH24:MI') as vote_end_date
+			, vote_check 
+			from member_tbl
+			join vote_tbl using(member_no)
+			<if test="order != 3">
+			where vote_check = #{order}
+			</if>
+			order by vote_check asc, vote_date desc, vote_no desc
+			)A
 		)B 
 		where rnum between #{startRow} and #{endRow} 
 		
@@ -86,7 +90,6 @@
 			group by vote_option_no)
 				left join vote_option_tbl using(vote_option_no)
 					where vote_no = #{voteNo}
-				
 	</select>	
 	
 	<delete id="deleteVote">

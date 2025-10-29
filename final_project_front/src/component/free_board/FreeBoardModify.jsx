@@ -14,11 +14,10 @@ import { useRecoilState } from "recoil";
 import TextEditor from "../utils/TextEditor";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const FreeBoardWrite = (props) => {
-  //const label = { inputProps: { "aria-label": "Checkbox demo" } };
+const FreeBoardModify = (props) => {
   const [memberId, setMemberId] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   const [memberNickname, setMemberNickname] = useState(""); //작성자 닉네임
@@ -31,20 +30,14 @@ const FreeBoardWrite = (props) => {
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardThumbnail, setFreeBoardThumbnail] = useState(null);
-  //const [freeBoardPhoto, setFreeBoardPhoto] = useState([]);
   const navigate = useNavigate();
   const menus = props.menus;
-  /*
-  const [freeBoard, setFreeBoard] = useState({
-    freeBoardCategoryNo: freeBoardCategoryNo,
-    freeBoardSubcategoryNo: freeBoardSubcategoryNo,
-    freeBoardTitle: freeBoardTitle,
-    memberNo: memberNo,
-    freeBoardContent: freeBoardContent,
-    freeBoardThumbnail: freeBoardThumbnail,
-  });
-  //게시글 작성 state
-  */
+  const param = useParams();
+  const freeBoardNo = param.freeBoardNo; //상세페이지에서 파라미터로 보냄
+
+  //수정할 데이터 저장 후 MenuItem에 넣을  default 값
+  const [freeBoardSubcategory, setFreeBoardSubcategory] = useState();
+  const [freeBoardCategory, setFreeBoardCategory] = useState();
   const writeFreeBoard = () => {
     if (
       freeBoardCategoryNo === undefined ||
@@ -109,6 +102,7 @@ const FreeBoardWrite = (props) => {
   }, [cate]);
   const handleChange = (e) => {
     setCate(e.target.value);
+    setFreeBoardCategory(e.target.value);
   };
   const subHandleChange = (e) => {
     const selected = subCate.find(
@@ -141,14 +135,38 @@ const FreeBoardWrite = (props) => {
         ) {
           setFreeBoardTitle("");
           setFreeBoardContent("");
-          setFreeBoardCategoryNo();
-          setFreeBoardSubcategoryNo();
+          setFreeBoardCategoryNo(undefined);
+          setFreeBoardSubcategoryNo(undefined);
           setFreeBoardThumbnail(null);
         }
         navigate("/freeBoard/content");
       }
     });
   };
+  useEffect(() => {
+    axios
+      .get(`${backServer}/freeBoard/modify?freeBoardNo=${freeBoardNo}`)
+      .then((res1) => {
+        setFreeBoardTitle(res1.data.freeBoardTitle);
+        setFreeBoardContent(res1.data.freeBoardContent);
+        axios
+          .get(
+            `${backServer}/freeBoard/modify/cate?freeBoardSubcategoryNo=${res1.data.freeBoardSubcategoryNo}&freeBoardCategoryNo=${res1.data.freeBoardCategoryNo}`
+          )
+          .then((res2) => {
+            setFreeBoardCategory(res2.data.freeBoardCategory);
+            setFreeBoardSubcategory(res2.data.freeBoardSubcategory);
+          })
+          .catch((err2) => {
+            console.log(err2);
+          });
+      })
+      .catch((err1) => {
+        console.log(err1);
+      });
+  }, [freeBoardNo]);
+  console.log("cate : " + freeBoardCategory);
+  console.log("subcate : " + freeBoardSubcategory);
   return (
     <div className="write-wrap">
       <div className="nickname section-area">
@@ -172,7 +190,7 @@ const FreeBoardWrite = (props) => {
           <div className="category-text">
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-helper-label">
-                Catogory
+                카테고리
               </InputLabel>
               <Select
                 sx={{ height: 40 }}
@@ -183,7 +201,7 @@ const FreeBoardWrite = (props) => {
                 onChange={handleChange}
               >
                 <MenuItem value="">
-                  <em>카테고리</em> {/*default = 카테고리*/}
+                  <em>카테</em> {/*default = 카테고리*/}
                 </MenuItem>
                 {menus.map((m, i) => {
                   return (
@@ -195,7 +213,9 @@ const FreeBoardWrite = (props) => {
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-helper-label">Sub</InputLabel>
+              <InputLabel id="demo-simple-select-helper-label">
+                서브카테고리
+              </InputLabel>
               <Select
                 sx={{ height: 40 }}
                 value={selectedSub}
@@ -203,6 +223,7 @@ const FreeBoardWrite = (props) => {
                 label="subCate"
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
+                disabled={!freeBoardCategory}
               >
                 {subCate.map((sub, i) => {
                   return (
@@ -274,4 +295,4 @@ const FreeBoardWrite = (props) => {
   );
 };
 
-export default FreeBoardWrite;
+export default FreeBoardModify;

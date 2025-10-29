@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -159,10 +160,26 @@ public class FreeBoardController {
 
 	@PostMapping(value = "/detail/regist")
 	public ResponseEntity<Integer> insertComment(@RequestBody FreeBoardCommentDTO comment){
-		System.out.println(comment);
+		//System.out.println(comment);
 		int result = freeBoardService.insertComment(comment);
 		return ResponseEntity.ok(result);
 	}
+	@GetMapping(value = "/modify")//수정할 게시글 정보 가져옴
+	public ResponseEntity<FreeBoardDTO> selectOneBoard(@RequestParam int freeBoardNo){
+		FreeBoardDTO freeBoard = freeBoardService.selectOneBoard(freeBoardNo);
+		return ResponseEntity.ok(freeBoard);
+	}
+	@GetMapping(value = "/modify/cate")
+	public ResponseEntity<FreeBoardCategoryDTO> selectCategory(@RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
+		FreeBoardCategoryDTO cate = freeBoardService.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
+		return ResponseEntity.ok(cate);
+	}
+	@DeleteMapping(value = "/detail/delete/{freeBoardNo}")
+	public ResponseEntity<Integer> deleteFreeBoard(@PathVariable int freeBoardNo) {
+		int result = freeBoardService.deleteFreeBoard(freeBoardNo);
+		return ResponseEntity.ok(result);
+	}
+	
 	
 	@Transactional
 	@PostMapping(value = "/detail/claim")
@@ -170,6 +187,16 @@ public class FreeBoardController {
 		System.out.println(fbClaimSet);
 		
 		int result = freeBoardService.insertClaim(fbClaimSet);
+		System.out.println("최종 결과값 확인 : "+result);
+		return ResponseEntity.ok(result);
+	}
+	
+	@Transactional
+	@PostMapping(value = "/detail/comment/claim")
+	public ResponseEntity<Integer> insertCommentClaim(@RequestBody HashMap<String, Object> fbcClaimSet){
+		System.out.println(fbcClaimSet);
+		
+		int result = freeBoardService.insertCommentClaim(fbcClaimSet);
 		System.out.println("최종 결과값 확인 : "+result);
 		return ResponseEntity.ok(result);
 	}
