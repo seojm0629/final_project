@@ -54,7 +54,7 @@ const VoteList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPageInfo, order]);
+  }, [reqPageInfo, order, memberNo]);
 
   return (
     <div className="vote-main-wrap">
@@ -168,7 +168,7 @@ const VoteList = () => {
                     ) : (
                       <td></td>
                     )}
-                    {list.voteOk === 1 ? (
+                    {list.voteOk === 1 && member !== "" ? (
                       <td className="check-icon">
                         <CheckCircleIcon />
                       </td>
