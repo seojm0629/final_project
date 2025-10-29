@@ -18,6 +18,10 @@ import VoteList from "./component/vote/VoteList";
 import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
 import VoteDetail from "./component/vote/VoteDetail";
 import FreeBoardDetail from "./component/free_board/FreeBoardDetail";
+import SendEventMail from "./component/member/SendEventMail.Jsx";
+
+
+
 
 function App() {
   return (
@@ -30,6 +34,7 @@ function App() {
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
+          <Route path="/member/event" element={<SendEventMail />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
           <Route

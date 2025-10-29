@@ -1025,6 +1025,47 @@ input[type="radio"]:checked+label{
   align-items: center;
   z-index: 9999;
 }
+
+/* 홍보성 메일 전송하기*/
+
+.event-mail-body{
+    width: 500px;
+    margin : 0 auto;
+    
+}
+
+.email-btn-box>button{
+    width: 60px;
+    height: 35px;
+    background-color: #2F4E70;
+    color: #fff;
+    font-family: ns-b;
+    border-radius: 5px;
+}
+
+.event-mail-input{
+    margin: 20px 0;
+}
+
+.event-mail-title{
+    margin-bottom: 10px;
+}
+
+
+.event-mail-input .event-mail-content>input{
+    width: 500px;
+    height: 30px;
+    padding-left: 10px;
+}
+.event-mail-input .event-mail-content>textarea{
+    width: 500px;
+    height: 300px;
+    padding-left: 10px;
+    resize: none;
+}
+
+
+
 /*
 
 .member-button-zone{

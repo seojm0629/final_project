@@ -70,6 +70,7 @@ public class ApiController {
 		//인증코드 생성
 		Random r= new Random();
 		StringBuffer sb = new StringBuffer();
+		
 		for(int i=0 ; i<6 ; i++) {
 			//대문자 : r.nextInt(26)+65
 			//소문자 : r.nextInt(26)+97
@@ -100,6 +101,8 @@ public class ApiController {
 		return sb.toString();
 	
 	}
+	
+	
 	
 	
 	

@@ -1,5 +1,8 @@
 package kr.co.iei.member.model.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -112,8 +115,25 @@ public class MemberService {
 
 	@Transactional
 	public int deleteMember(String memberId) {
-		int result = memberDao.deleteMember(memberId);
-		return result;
+		MemberDTO m = memberDao.selectMember(memberId);
+		
+		int deleteResult = 0;
+		
+		
+		System.out.println(m);
+		if(m != null) {
+			int result = memberDao.insertMember(m);
+			if(result > 0) {
+				deleteResult = memberDao.deleteMember(m);
+			} else {
+				System.out.println("회원 삭제 실패");
+			}
+		} else {
+			System.out.println("회원 입력 실패");
+		}
+		
+		
+		return deleteResult;
 	}
 
 	public int updateNickname(MemberDTO member) {
@@ -159,6 +179,26 @@ public class MemberService {
 	public LoginMemberDTO banInfo(int memberNo) {
 		LoginMemberDTO banInfo = memberDao.banInfo(memberNo);
 		return banInfo;
+		
+	}
+	
+	@Transactional
+	public int promotion(String memberId, String memberCheck) {
+		int result = memberDao.promotion(memberId, memberCheck);
+		return result;
+	}
+
+	public List<String> sendEmail(String memberCheck) {
+		List<MemberDTO> list = memberDao.sendEmail(memberCheck);
+		List<String> memberEmailList = new ArrayList<>();
+		
+		for(MemberDTO memberList : list) {
+			memberEmailList.add(memberList.getMemberEmail());
+		}
+		
+		
+		
+		return memberEmailList;
 	}
 
 	
