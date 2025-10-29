@@ -41,13 +41,15 @@ public class VoteService {
 	}
 
 	@Transactional
-	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount) {
+	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount, int order) {
+		System.out.println("서비스에서 오더값 확인" + order);
 		int voteCheck = voteDao.updateVoteCheck(); // 종료일 비교해서 0 에서 1로 바꾸기
 		
 		HashMap<String, Object> voteList = new HashMap<String,Object>();
 		voteList.put("startRow", startRow);
 		voteList.put("endRow", endRow);
 		voteList.put("sideBtnCount", sideBtnCount);
+		voteList.put("order", order);
 
 		
 		List<VoteDTO> selectVoteList = voteDao.selectVoteList(voteList);// 리스트 출력

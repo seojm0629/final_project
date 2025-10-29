@@ -123,10 +123,13 @@ const VoteInsert = () => {
             );
           })}
         </div>
-        <div className="vote-date-box">
+        <div className="vote-add-box">
           <div className="vote-addbutton">
             <button onClick={addList}>항목 추가</button>
           </div>
+        </div>
+        <div className="vote-date-box">
+          <div className="vote-date-box-title">종료일 설정</div>
           <input
             type="date"
             value={endDate}

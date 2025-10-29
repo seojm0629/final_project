@@ -25,7 +25,18 @@
   cursor: pointer;
   font-weight: bold;
 }
+.vote-write-box > input {
+  display: none;
+  cursor: pointer;
+}
 
+.vote-write-box label {
+  cursor: pointer;
+  border-radius: 5px;
+  line-height: 1.6;
+  border: 2px solid black;
+  background-color: white;
+}
 .vote-tbl-box {
   width: 1600px;
   display: flex;
