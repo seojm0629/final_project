@@ -273,8 +273,10 @@ const FreeBoardContent = (props) => {
                 }}
               >
                 {/*상태넣을꺼*/}
-                <div className="board-status">{list.freeBoardNo}</div>
-                <div className="board-title">{list.freeBoardTitle}</div>
+                <div className="board-list-title">
+                  <div className="board-status">{list.freeBoardNo}</div>
+                  <div className="board-title">{list.freeBoardTitle}</div>
+                </div>
                 <div
                   className="board-content"
                   dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
@@ -307,8 +309,10 @@ const FreeBoardContent = (props) => {
                   navigate(`/freeBoard/detail/${list.freeBoardNo}`);
                 }}
               >
-                <div className="board-status">{list.freeBoardNo}</div>
-                <div className="board-title">{list.freeBoardTitle}</div>
+                <div className="board-list-title">
+                  <div className="board-status">{list.freeBoardNo}</div>
+                  <div className="board-title">{list.freeBoardTitle}</div>
+                </div>
                 <div
                   className="board-content"
                   dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}

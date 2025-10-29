@@ -25,7 +25,7 @@ public interface MemberDao {
 
 	int changeEmail(MemberDTO member);
 
-	int deleteMember(String memberId);
+	int deleteMember(MemberDTO m);
 
 	int updateNickname(MemberDTO member);
 
@@ -42,6 +42,13 @@ public interface MemberDao {
 	int selectBenMember(int memberNo);
 
 	LoginMemberDTO banInfo(int memberNo);
+	int promotion(String memberId, String memberCheck);
+
+	List<MemberDTO> sendEmail(String memberCheck);
+
+	int insertMember(MemberDTO m);
+
+	MemberDTO selectMember(String memberId);
 
 	
 	
