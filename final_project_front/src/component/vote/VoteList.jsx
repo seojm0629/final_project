@@ -11,7 +11,9 @@ import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
 import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
+import FiberNewIcon from "@mui/icons-material/FiberNew";
 const VoteList = () => {
+  const [order, setOrder] = useState(""); // 정렬  0 -- 종료  1 -- 진행중
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [voteAlready, setVoteAlready] = useState(false);
   const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -34,11 +36,8 @@ const VoteList = () => {
     const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
     // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
   };
-  console.log("시간확인", dayjs().$y);
-  console.log("시간확인", dayjs().$M + 1);
-  console.log("시간확인", dayjs().$D);
-  const date = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D;
-  console.log(date);
+
+  const todayDate = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D;
 
   useEffect(() => {
     axios
@@ -54,8 +53,7 @@ const VoteList = () => {
         console.log(err);
       });
   }, [reqPageInfo]);
-  console.log(voteList);
-  console.log(totalListCount);
+
   return (
     <div className="vote-main-wrap">
       <div className="vote-name-box">
@@ -80,6 +78,30 @@ const VoteList = () => {
           >
             글작성
           </button>
+          <input
+            type="radio"
+            name="order"
+            id="end"
+            value="0"
+            checked={order === "0"}
+            onChange={(e) => {
+              setOrder(e.target.value);
+              console.log(order);
+            }}
+          />
+          <label htmlFor="end">종료</label>
+          <input
+            type="radio"
+            name="order"
+            id="progress"
+            value="1"
+            checked={order === "1"}
+            onChange={(e) => {
+              setOrder(e.target.value);
+              console.log(order);
+            }}
+          />
+          <label htmlFor="progress">진행중</label>
         </div>
       </div>
       <div className="vote-tbl-box">
@@ -113,6 +135,7 @@ const VoteList = () => {
                   <tr key={"list-" + i}>
                     <td>{list.memberNickname}</td>
                     <td
+                      className="td-title"
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         if (!member) {
@@ -132,10 +155,21 @@ const VoteList = () => {
                     >
                       {list.voteTitle}
                     </td>
-                    <td></td>
+                    {todayDate ===
+                    dayjs(list.voteDate).$y +
+                      "-" +
+                      (dayjs(list.voteDate).$M + 1) +
+                      "-" +
+                      dayjs(list.voteDate).$D ? (
+                      <td className="new-icon">
+                        <FiberNewIcon></FiberNewIcon>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
                     <td>{list.voteCheck === 0 ? "진행중" : "종료"}</td>
-                    <td>{list.voteDate}</td>
-                    <td>{list.voteEndDate}</td>
+                    <td className="td-votedate">{list.voteDate}</td>
+                    <td className="td-voteEnddate">{list.voteEndDate}</td>
                   </tr>
                 );
               })
