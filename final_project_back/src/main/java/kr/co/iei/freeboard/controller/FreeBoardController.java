@@ -170,13 +170,13 @@ public class FreeBoardController {
 		FreeBoardDTO freeBoard = freeBoardService.selectOneBoard(freeBoardNo);
 		return ResponseEntity.ok(freeBoard);
 	}
-	/*
+	
 	@GetMapping(value = "/modify/cate")
 	public ResponseEntity<FreeBoardCategoryDTO> selectCategory(@RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
 		FreeBoardCategoryDTO cate = freeBoardService.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
 		return ResponseEntity.ok(cate);
 	}
-	*/
+	
 	@DeleteMapping(value = "/detail/delete/{freeBoardNo}")
 	public ResponseEntity<Integer> deleteFreeBoard(@PathVariable int freeBoardNo) {
 		int result = freeBoardService.deleteFreeBoard(freeBoardNo);

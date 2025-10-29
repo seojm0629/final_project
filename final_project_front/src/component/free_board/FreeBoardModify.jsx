@@ -30,6 +30,7 @@ const FreeBoardModify = (props) => {
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardThumbnail, setFreeBoardThumbnail] = useState(null);
+
   const navigate = useNavigate();
   const menus = props.menus;
   const param = useParams();
@@ -39,10 +40,7 @@ const FreeBoardModify = (props) => {
   const [freeBoardSubcategory, setFreeBoardSubcategory] = useState();
   const [freeBoardCategory, setFreeBoardCategory] = useState();
   const modifyFreeBoard = () => {
-    if (
-      freeBoardCategoryNo === undefined ||
-      freeBoardSubcategoryNo === undefined
-    ) {
+    if (freeBoardCategory === undefined || freeBoardSubcategory === undefined) {
       alert("카테고리 선택해주세요.");
       return;
     } else if (freeBoardTitle === null) {
@@ -77,6 +75,24 @@ const FreeBoardModify = (props) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    {
+      freeBoardCategory &&
+        axios
+          .get(
+            `${backServer}/freeBoard/boardWrite?freeBoardCategory=${freeBoardCategory}`
+          )
+          .then((res) => {
+            setSubCate(res.data);
+            //freeBoard State에 들어갈 상위 카테고리 NO
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
+  }, [freeBoardCategory]);
   useEffect(() => {
     //회원 아이디 조회 후 회원 닉네임 get
     axios
@@ -89,17 +105,7 @@ const FreeBoardModify = (props) => {
         console.log(err);
       });
   }, [memberId]);
-  useEffect(() => {
-    axios
-      .get(`${backServer}/freeBoard/boardWrite?freeBoardCategory=${cate}`)
-      .then((res) => {
-        setSubCate(res.data);
-        //freeBoard State에 들어갈 상위 카테고리 NO
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [cate]);
+
   const handleChange = (e) => {
     setCate(e.target.value);
     setFreeBoardCategory(e.target.value);
@@ -149,6 +155,7 @@ const FreeBoardModify = (props) => {
       .then((res1) => {
         setFreeBoardTitle(res1.data.freeBoardTitle);
         setFreeBoardContent(res1.data.freeBoardContent);
+
         axios
           .get(
             `${backServer}/freeBoard/modify/cate?freeBoardSubcategoryNo=${res1.data.freeBoardSubcategoryNo}&freeBoardCategoryNo=${res1.data.freeBoardCategoryNo}`
@@ -156,6 +163,9 @@ const FreeBoardModify = (props) => {
           .then((res2) => {
             setFreeBoardCategory(res2.data.freeBoardCategory);
             setFreeBoardSubcategory(res2.data.freeBoardSubcategory);
+
+            console.log(res2.data.freeBoardCategory);
+            console.log(res2.data.freeBoardSubcategory);
           })
           .catch((err2) => {
             console.log(err2);
@@ -164,9 +174,10 @@ const FreeBoardModify = (props) => {
       .catch((err1) => {
         console.log(err1);
       });
-  }, [freeBoardNo]);
-  console.log("cate : " + freeBoardCategory);
-  console.log("subcate : " + freeBoardSubcategory);
+  }, [freeBoardCategory, freeBoardSubcategory]);
+  console.log("freeBoardCategory : " + freeBoardCategory);
+  console.log("freeBoardSubcategory : " + freeBoardSubcategory);
+  console.log("subCate : " + subCate);
   return (
     <div className="write-wrap">
       <div className="nickname section-area">
@@ -192,54 +203,58 @@ const FreeBoardModify = (props) => {
               <InputLabel id="demo-simple-select-helper-label">
                 카테고리
               </InputLabel>
-              <Select
-                sx={{ height: 40 }}
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                value={cate}
-                label="cate"
-                onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>카테</em> {/*default = 카테고리*/}
-                </MenuItem>
-                {menus.map((m, i) => {
-                  return (
-                    <MenuItem key={"m" + i} value={m.freeBoardCategory}>
-                      <em>{m.freeBoardCategory}</em>
-                    </MenuItem>
-                  );
-                })}
-              </Select>
+              {freeBoardCategory && (
+                <Select
+                  sx={{ height: 40 }}
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={freeBoardCategory}
+                  label="cate"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>카테</em> {/*default = 카테고리*/}
+                  </MenuItem>
+                  {menus.map((m, i) => {
+                    return (
+                      <MenuItem key={"m" + i} value={m.freeBoardCategory}>
+                        <em>{m.freeBoardCategory}</em>
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-helper-label">
                 서브카테고리
               </InputLabel>
-              <Select
-                sx={{ height: 40 }}
-                value={selectedSub}
-                onChange={subHandleChange}
-                label="subCate"
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-                disabled={!freeBoardCategory}
-              >
-                {subCate.map((sub, i) => {
-                  return (
-                    <MenuItem
-                      key={"sub" + i}
-                      value={sub.freeBoardSubcategory}
-                      onChange={() => {
-                        setFreeBoardCategoryNo(sub.freeBoardCategoryNo);
-                        setFreeBoardSubcategoryNo(sub.freeBoardSubcategoryNo);
-                      }}
-                    >
-                      <em>{sub.freeBoardSubcategory}</em>
-                    </MenuItem>
-                  );
-                })}
-              </Select>
+              {freeBoardCategory && freeBoardSubcategory && (
+                <Select
+                  sx={{ height: 40 }}
+                  value={freeBoardSubcategory}
+                  onChange={subHandleChange}
+                  label="subCate"
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  disabled={!freeBoardCategory}
+                >
+                  {subCate.map((sub, i) => {
+                    return (
+                      <MenuItem
+                        key={"sub" + i}
+                        value={sub.freeBoardSubcategory}
+                        onChange={() => {
+                          setFreeBoardCategoryNo(sub.freeBoardCategoryNo);
+                          setFreeBoardSubcategoryNo(sub.freeBoardSubcategoryNo);
+                        }}
+                      >
+                        <em>{sub.freeBoardSubcategory}</em>
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
             </FormControl>
           </div>
         </div>

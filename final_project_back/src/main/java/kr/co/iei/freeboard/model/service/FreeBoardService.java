@@ -200,6 +200,10 @@ public class FreeBoardService {
 		System.out.println(fbcClaimSet);
 		return result;
 	}
+	public FreeBoardCategoryDTO selectCategory(int freeBoardSubcategoryNo, int freeBoardCategoryNo) {
+		FreeBoardCategoryDTO cate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
+		return cate;
+	}
 
 	public FreeBoardDTO modifyFreeBoard(FreeBoardDTO freeBoard) {
 		FreeBoardDTO board = freeBoardDao.selectOneBoard(freeBoard.getFreeBoardNo());
@@ -207,4 +211,5 @@ public class FreeBoardService {
 		
 		return null;
 	}
+
 }

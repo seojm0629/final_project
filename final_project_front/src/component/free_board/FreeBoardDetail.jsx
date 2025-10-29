@@ -33,7 +33,7 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
   console.log(fbcClaimSet);
-
+  console.log(freeBoardNo);
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
@@ -213,7 +213,7 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
-  const commentModify = () => {};
+  //const commentModify = () => {};
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -459,9 +459,7 @@ const FreeBoardDetail = () => {
                 </div>
                 {freeBoardCommentMemberNo && (
                   <div className="comment-button">
-                    <button className="modify-btn" onClick={commentModify}>
-                      수정
-                    </button>
+                    <button className="modify-btn">수정</button>
                     <button className="delete-btn">삭제</button>
                   </div>
                 )}
