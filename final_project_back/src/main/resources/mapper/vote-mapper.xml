@@ -23,12 +23,12 @@
 	
 	<select id="selectVoteList" resultType="vote">
 		select B.*,
-		(select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = #{memberNo})
+		(select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = #{memberNo})vote_ok
 		from 
 		(
 		select rownum rnum,A.* from
 			(
-			select vote_no,member_nickname , vote_title, 
+			select vote_no,member_nickname , vote_title,
 			to_char(vote_date,'yyyy-mm-dd HH24:MI') as vote_date,
 			to_char(vote_end_date,'yyyy-mm-dd HH24:MI') as vote_end_date
 			, vote_check 
