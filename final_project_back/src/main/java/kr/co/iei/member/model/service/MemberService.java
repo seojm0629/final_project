@@ -1,5 +1,8 @@
 package kr.co.iei.member.model.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -155,6 +158,19 @@ public class MemberService {
 	public int promotion(String memberId, String memberCheck) {
 		int result = memberDao.promotion(memberId, memberCheck);
 		return result;
+	}
+
+	public List<String> sendEmail(String memberCheck) {
+		List<MemberDTO> list = memberDao.sendEmail(memberCheck);
+		List<String> memberEmailList = new ArrayList<>();
+		
+		for(MemberDTO memberList : list) {
+			memberEmailList.add(memberList.getMemberEmail());
+		}
+		
+		
+		
+		return memberEmailList;
 	}
 
 	

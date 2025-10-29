@@ -39,6 +39,8 @@ public interface MemberDao {
 
 	int promotion(String memberId, String memberCheck);
 
+	List<MemberDTO> sendEmail(String memberCheck);
+
 	
 	
 	
