@@ -25,7 +25,7 @@ public interface MemberDao {
 
 	int changeEmail(MemberDTO member);
 
-	int deleteMember(String memberId);
+	int deleteMember(MemberDTO m);
 
 	int updateNickname(MemberDTO member);
 
@@ -45,6 +45,10 @@ public interface MemberDao {
 	int promotion(String memberId, String memberCheck);
 
 	List<MemberDTO> sendEmail(String memberCheck);
+
+	int insertMember(MemberDTO m);
+
+	MemberDTO selectMember(String memberId);
 
 	
 	

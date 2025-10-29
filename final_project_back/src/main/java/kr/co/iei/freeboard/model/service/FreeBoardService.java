@@ -175,6 +175,9 @@ public class FreeBoardService {
 		FreeBoardCategoryDTO cate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
 		
 		return cate;
+		
+	}
+	
 	public int insertClaim(HashMap<String, Object> fbClaimSet) {
 		//System.out.println("서비스 : "+fbClaimSet.get("freeBoardNo"));
 		int freeBoardNo = (int) fbClaimSet.get("freeBoardNo");

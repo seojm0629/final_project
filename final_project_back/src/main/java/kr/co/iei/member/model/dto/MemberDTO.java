@@ -1,5 +1,7 @@
 package kr.co.iei.member.model.dto;
 
+import java.sql.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +23,7 @@ public class MemberDTO {
 	private String memberEmail;
 	private int memberGender;
 	private String memberBirth;
-	private String memberDate;
+	private Date memberDate;
 	private int memberType;
 	private String memberCheck;
 	private int banCnt;

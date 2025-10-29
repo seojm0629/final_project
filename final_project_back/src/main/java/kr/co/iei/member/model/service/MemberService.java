@@ -115,8 +115,25 @@ public class MemberService {
 
 	@Transactional
 	public int deleteMember(String memberId) {
-		int result = memberDao.deleteMember(memberId);
-		return result;
+		MemberDTO m = memberDao.selectMember(memberId);
+		
+		int deleteResult = 0;
+		
+		
+		System.out.println(m);
+		if(m != null) {
+			int result = memberDao.insertMember(m);
+			if(result > 0) {
+				deleteResult = memberDao.deleteMember(m);
+			} else {
+				System.out.println("회원 삭제 실패");
+			}
+		} else {
+			System.out.println("회원 입력 실패");
+		}
+		
+		
+		return deleteResult;
 	}
 
 	public int updateNickname(MemberDTO member) {

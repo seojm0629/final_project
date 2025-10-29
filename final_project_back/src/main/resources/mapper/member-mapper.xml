@@ -89,6 +89,15 @@
 		select * from member_tbl where member_check = #{memberCheck}
 	</select>
 	
+	<!-- 회원 탈퇴 시 멤버 탈퇴 테이블 입력 -->
+	<select id="selectMember" resultType="member">
+		select * from member_tbl where member_id = #{memberId}
+	</select>
+	
+	<insert id="insertMember">
+		insert into withdraw_membership_tbl values(#{memberNo}, sysdate, #{memberDate}) 
+	</insert>
+	
 	
 	
 	
