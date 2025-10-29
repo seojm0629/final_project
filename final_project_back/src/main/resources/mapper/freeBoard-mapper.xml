@@ -188,7 +188,7 @@
 			                        a.free_board_date,
 			                        b.fb_comment_date,
 			                        b.member_no,
-			                        count(*) as comment_count
+			                        count(fb_comment_no) as comment_count
 			                    from free_board_tbl a 
 			                    left join fb_comment_tbl b 
 			                        on (a.free_board_no = b.free_board_no)
@@ -234,8 +234,20 @@
 			)
 	</insert> 
 	 
+	 <select id="selectOneBoard" resultType = "freeBoard">
+	 	select * from free_board_tbl where free_board_no = #{freeBoardNo}
+	 </select>
 	 
+	 <delete id="deleteFreeBoard">
+	 	delete from free_board_tbl where free_board_no = #{freeBoardNo}
+	 </delete>
 	 
-	 
+	 <select id="selectCategory" resultType = "freeBoardCategory">
+	 	select free_board_subcategory, 
+	        free_board_category 
+	            from free_board_sub_category_tbl 
+	        left join free_board_category_tbl using (free_board_category_no)
+	    where free_board_subcategory_no = #{freeBoardSubcategoryNo} and free_board_category_no = #{freeBoardCategoryNo}
+	 </select>
 	 
 </mapper>

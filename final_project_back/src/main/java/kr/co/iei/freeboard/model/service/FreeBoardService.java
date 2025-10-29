@@ -160,4 +160,20 @@ public class FreeBoardService {
 		int result = freeBoardDao.insertComment(comment);
 		return result;
 	}
+
+	public FreeBoardDTO selectOneBoard(int freeBoardNo) {
+		FreeBoardDTO freeBoard = freeBoardDao.selectOneBoard(freeBoardNo);
+		return freeBoard;
+	}
+
+	public int deleteFreeBoard(int freeBoardNo) {
+		int result = freeBoardDao.deleteFreeBoard(freeBoardNo);
+		return result;
+	}
+
+	public FreeBoardCategoryDTO selectCategory(int freeBoardSubcategoryNo, int freeBoardCategoryNo) {
+		FreeBoardCategoryDTO cate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
+		
+		return cate;
+	}
 }

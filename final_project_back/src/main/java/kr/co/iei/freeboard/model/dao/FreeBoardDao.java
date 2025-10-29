@@ -45,6 +45,12 @@ public interface FreeBoardDao {
 
 	int insertComment(FreeBoardCommentDTO comment);
 
+	FreeBoardDTO selectOneBoard(int freeBoardNo);
+
+	int deleteFreeBoard(int freeBoardNo);
+
+	FreeBoardCategoryDTO selectCategory(int freeBoardSubcategoryNo, int freeBoardCategoryNo);
+
 	
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);

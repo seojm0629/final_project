@@ -15,6 +15,8 @@ const FreeBoardDetail = () => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const [member, setMember] = useRecoilState(loginIdState);
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
+  const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
+  const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
   const freeBoardNo = params.freeBoardNo;
   const [freeBoard, setFreeBoard] = useState({});
@@ -39,7 +41,7 @@ const FreeBoardDetail = () => {
     if (diffDays >= 7) {
       return target.format("YYYY-MM-DD"); // 7일 이상이면 날짜로 변형
     }
-    return target.fromNow(); //한국어로 ?? 시간전 표시하기
+    return target.fromNow("YYYY-MM-DD HH:mm:ss"); //한국어로 ?? 시간전 표시하기
   };
   {
     useEffect(() => {
@@ -48,6 +50,9 @@ const FreeBoardDetail = () => {
         .then((res) => {
           setFreeBoard(res.data);
           setToDate(res.data.freeBoardDate);
+          setFreeBoardMemberNo(
+            memberNo === res.data.memberNo && res.data.memberNo
+          );
         })
         .catch((err) => {
           console.log(err);
@@ -59,8 +64,13 @@ const FreeBoardDetail = () => {
       .get(`${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}`)
       .then((res) => {
         setFreeBoardComment(res.data);
-        console.log(res.data);
+        const commentMember = res.data.filter(
+          (com) => com.memberNo === memberNo
+        );
+        setFreeBoardCommentMemberNo(commentMember[0].memberNo);
+        console.log(commentMember[0].memberNo);
       })
+
       .catch((err) => {
         console.log(err);
       });
@@ -94,16 +104,61 @@ const FreeBoardDetail = () => {
         });
     }
   };
+  const freeBoardModify = () => {
+    navigate(`/freeBoard/modify/${freeBoardNo}`);
+  };
+  const freeBoardDelete = () => {
+    Swal.fire({
+      title: "게시글 삭제",
+      text: "게시글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    })
+      .then((confirm) => {
+        if (confirm.isConfirmed) {
+          axios
+            .delete(`${backServer}/freeBoard/detail/delete/${freeBoardNo}`)
+            .then((res) => {
+              if (res.data === 1) {
+                Swal.fire({
+                  title: "삭제 완료",
+                  icon: "success",
+                  confirmButtonText: "확인",
+                }).then((confirm) => {
+                  if (confirm.isConfirmed) {
+                    navigate("/freeBoard/content");
+                  }
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch(() => {
+        console.log(err);
+      });
+  };
+  const commentModify = () => {};
   return (
     /* 상세페이지  */
     <div className="detail-container">
       <div className="detail-path">홈 &gt; 취업게시판 &gt; 직장인</div>
       <div className="detail-title-section">
         <div className="detail-title">{freeBoard.freeBoardTitle}</div>
-        <div className="detail-buttonBox">
-          <button className="modify-btn">수정</button>
-          <button className="delete-btn">삭제</button>
-        </div>
+        {freeBoardMemberNo && (
+          <div className="detail-buttonBox">
+            <button className="modify-btn" onClick={freeBoardModify}>
+              수정
+            </button>
+            <button className="delete-btn" onClick={freeBoardDelete}>
+              삭제
+            </button>
+          </div>
+        )}
       </div>
       <div className="detail-view">
         <div className="view">
@@ -146,7 +201,14 @@ const FreeBoardDetail = () => {
         </span>
       </div>
       <div className="detail-buttons">
-        <button className="list-btn">목록으로</button>
+        <button
+          className="list-btn"
+          onClick={() => {
+            navigate("/freeBoard/content");
+          }}
+        >
+          목록으로
+        </button>
         <div>
           <button className="prev-btn">이전글</button>
           <button className="next-btn">다음글</button>
@@ -225,6 +287,11 @@ const FreeBoardDetail = () => {
                   <span>{comment.memberNickname}</span>
                   <span>{comment.memberId}</span>
                 </div>
+
+                <textarea
+                  type="text"
+                  placeholder="댓글을 남겨주세요."
+                ></textarea>
                 <div
                   className="comment-text"
                   dangerouslySetInnerHTML={{
@@ -241,10 +308,14 @@ const FreeBoardDetail = () => {
                     {nowDate(comment.fbCommentDate)}
                   </div>
                 </div>
-                <div className="comment-button">
-                  <button className="modify-btn">수정</button>
-                  <button className="delete-btn">삭제</button>
-                </div>
+                {freeBoardCommentMemberNo && (
+                  <div className="comment-button">
+                    <button className="modify-btn" onClick={commentModify}>
+                      수정
+                    </button>
+                    <button className="delete-btn">삭제</button>
+                  </div>
+                )}
               </div>
             );
           })}
