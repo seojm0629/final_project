@@ -1,5 +1,6 @@
 package kr.co.iei.member.controller;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.member.model.dto.LoginMemberDTO;
+
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.utils.EmailSender;
@@ -36,10 +38,23 @@ public class MemberController {
 	@PostMapping(value="/login")
 	public ResponseEntity<LoginMemberDTO> login(@RequestBody MemberDTO member){
 		LoginMemberDTO m = memberService.login(member);
-		
-		if(m != null) {
+		System.out.println(m);
+		if(m != null && m.getBanCnt()==0) {
 			return ResponseEntity.ok(m);			
-		} else {
+		} else if(m.getBanCnt()>=1){
+			LoginMemberDTO banInfo = memberService.banInfo(m.getMemberNo());
+			//System.out.println("banInfo : "+banInfo);
+			//System.out.println("m : "+m);
+			String memberBenStartDate = banInfo.getMemberBenStartDate();
+			String memberBenFinishDate = banInfo.getMemberBenFinishDate();
+			String memberBanContent = banInfo.getMemberBanContent();
+			m.setMemberBenStartDate(memberBenStartDate);
+			m.setMemberBenFinishDate(memberBenFinishDate);
+			m.setMemberBanContent(memberBanContent);
+			System.out.println(m);
+			return ResponseEntity.ok(m);
+		}
+		else {
 			return ResponseEntity.status(400).build();
 		}
 	}
