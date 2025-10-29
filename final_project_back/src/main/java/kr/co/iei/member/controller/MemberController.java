@@ -203,7 +203,7 @@ public class MemberController {
 		int result = memberService.promotion(memberId, memberCheck);
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@GetMapping(value="/sendEmail")
 	public ResponseEntity<List<String>> sendEmail(@RequestParam String eventTitle, @RequestParam String eventContent, @RequestParam String memberCheck){
 		System.out.println(eventTitle);
@@ -211,11 +211,11 @@ public class MemberController {
 		System.out.println(memberCheck);
 		
 		List<String> list = memberService.sendEmail(memberCheck);
-		
+		StringBuffer sb = new StringBuffer();
 		
 		for(String emailList : list) {
 			mailSender.sendMail(eventTitle, emailList, eventContent);
-			
+			sb.append(emailList).append(", ");
 		}
 		
 		
