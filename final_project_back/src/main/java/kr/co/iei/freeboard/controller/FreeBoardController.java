@@ -181,9 +181,9 @@ public class FreeBoardController {
 	}
 	
 	
-	@Transactional
-	@PostMapping(value = "/detail/claim")
-	public ResponseEntity<Integer> insertClaim(@RequestBody HashMap<String, Object> fbClaimSet){
+	
+	@PostMapping(value = "/{freeBoardNo}/claim")
+	public ResponseEntity<Integer> insertClaim(@PathVariable int freeBoardNo,@RequestBody HashMap<String, Object> fbClaimSet){
 		System.out.println(fbClaimSet);
 		
 		int result = freeBoardService.insertClaim(fbClaimSet);
@@ -191,9 +191,9 @@ public class FreeBoardController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@Transactional
-	@PostMapping(value = "/detail/comment/claim")
-	public ResponseEntity<Integer> insertCommentClaim(@RequestBody HashMap<String, Object> fbcClaimSet){
+	
+	@PostMapping(value = "/comment/{fbCommentNo}/claim")
+	public ResponseEntity<Integer> insertCommentClaim(@PathVariable int fbCommentNo,@RequestBody HashMap<String, Object> fbcClaimSet){
 		System.out.println(fbcClaimSet);
 		
 		int result = freeBoardService.insertCommentClaim(fbcClaimSet);

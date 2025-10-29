@@ -33,6 +33,8 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
   console.log(fbcClaimSet);
+  console.log(fbClaimSet);
+  console.log(localStorage);
 
   useEffect(() => {
     if (fbClaimSet === undefined) {
@@ -40,7 +42,9 @@ const FreeBoardDetail = () => {
     }
     axios
       .post(
-        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/claim`,
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/${
+          fbClaimSet.freeBoardNo
+        }/claim`,
         fbClaimSet
       )
       .then((res) => {
@@ -65,13 +69,16 @@ const FreeBoardDetail = () => {
       });
   }, [fbClaimSet]);
 
+  console.log(fbcClaimSet);
   useEffect(() => {
     if (fbcClaimSet === undefined) {
       return;
     }
     axios
       .post(
-        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/comment/claim`,
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/comment/${
+          fbcClaimSet.fbCommentNo
+        }/claim`,
         fbcClaimSet
       )
       .then((res) => {
