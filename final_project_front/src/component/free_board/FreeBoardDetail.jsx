@@ -26,9 +26,11 @@ const FreeBoardDetail = () => {
   const navigate = useNavigate();
 
   const [fbClaimReason, setFbClaimReason] = useState();
+  const [fbcClaimReason, setFbcClaimReason] = useState();
 
   const [fbClaimSet, setFbClaimSet] = useState();
-  console.log(fbClaimSet);
+  const [fbcClaimSet, setFbcClaimSet] = useState();
+  console.log(fbcClaimSet);
 
   useEffect(() => {
     if (fbClaimSet === undefined) {
@@ -303,9 +305,9 @@ const FreeBoardDetail = () => {
                         <div>
                           <input
                             type="text"
-                            value={fbClaimReason}
+                            value={fbcClaimReason}
                             onChange={(e) => {
-                              setFbClaimReason(e.target.value);
+                              setFbcClaimReason(e.target.value);
                             }}
                             placeholder="신고 사유를 적어주세요"
                           ></input>
@@ -323,9 +325,8 @@ const FreeBoardDetail = () => {
                     result={
                       <button
                         onClick={() => {
-                          setFbClaimSet({
-                            freeBoardNo: freeBoard.freeBoardNo,
-                            fbClaimReason: fbClaimReason,
+                          setFbcClaimSet({
+                            fbCommentNo: comment.fbCommentNo,
                             memberNo: memberNo,
                           });
                         }}
