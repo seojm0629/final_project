@@ -179,7 +179,7 @@ const FreeBoardDetail = () => {
       </div>
       <div className="detail-report">
         <BaseModal
-          title="이용자 신고하기"
+          title="게시글 신고하기"
           content={
             <div className="report_content">
               <div>해당 게시글을 신고하시겠습니까?</div>
@@ -281,10 +281,7 @@ const FreeBoardDetail = () => {
             등록
           </button>
         </div>
-        <div className="comment-report">
-          <ReportGmailerrorredIcon className="report-icon" />
-          <span>신고하기</span>
-        </div>
+
         <div className="comment-box">
           {freeBoardComment.map((comment, i) => {
             return (
@@ -296,6 +293,49 @@ const FreeBoardDetail = () => {
                 }
                 key={"item" + i}
               >
+                <div className="comment-report">
+                  <BaseModal
+                    title="댓글 신고하기"
+                    content={
+                      <div className="report_content">
+                        <div>해당 댓글을 신고하시겠습니까?</div>
+
+                        <div>
+                          <input
+                            type="text"
+                            value={fbClaimReason}
+                            onChange={(e) => {
+                              setFbClaimReason(e.target.value);
+                            }}
+                            placeholder="신고 사유를 적어주세요"
+                          ></input>
+                        </div>
+                      </div>
+                    }
+                    buttonLabel={
+                      <span>
+                        <ReportGmailerrorredIcon className="report-icon" />
+                        신고하기
+                      </span>
+                    }
+                    contentBoxStyle={{ width: "400px", height: "400px" }}
+                    end={"취소"}
+                    result={
+                      <button
+                        onClick={() => {
+                          setFbClaimSet({
+                            freeBoardNo: freeBoard.freeBoardNo,
+                            fbClaimReason: fbClaimReason,
+                            memberNo: memberNo,
+                          });
+                        }}
+                        className="FbClaimConfirmBtn"
+                      >
+                        확인
+                      </button>
+                    }
+                  />
+                </div>
                 <div className="comment-writer">
                   <span>{comment.memberNickname}</span>
                   <span>{comment.memberId}</span>
