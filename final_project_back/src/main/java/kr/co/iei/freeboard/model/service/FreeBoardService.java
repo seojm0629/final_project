@@ -165,16 +165,18 @@ public class FreeBoardService {
 		FreeBoardDTO freeBoard = freeBoardDao.selectOneBoard(freeBoardNo);
 		return freeBoard;
 	}
-
+	@Transactional
 	public int deleteFreeBoard(int freeBoardNo) {
 		int result = freeBoardDao.deleteFreeBoard(freeBoardNo);
 		return result;
 	}
-
+	/*
 	public FreeBoardCategoryDTO selectCategory(int freeBoardSubcategoryNo, int freeBoardCategoryNo) {
 		FreeBoardCategoryDTO cate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
 		
-		return cate;
+		return null;
+	}*/
+	@Transactional
 	public int insertClaim(HashMap<String, Object> fbClaimSet) {
 		//System.out.println("서비스 : "+fbClaimSet.get("freeBoardNo"));
 		int freeBoardNo = (int) fbClaimSet.get("freeBoardNo");
@@ -192,10 +194,17 @@ public class FreeBoardService {
 		System.out.println(fbClaimSet);
 		return result;
 	}
-
+	@Transactional
 	public int insertCommentClaim(HashMap<String, Object> fbcClaimSet) {
 		int result = freeBoardDao.insertCommentClaim(fbcClaimSet);
 		System.out.println(fbcClaimSet);
 		return result;
+	}
+
+	public FreeBoardDTO modifyFreeBoard(FreeBoardDTO freeBoard) {
+		FreeBoardDTO board = freeBoardDao.selectOneBoard(freeBoard.getFreeBoardNo());
+		int result = freeBoardDao.modifyFreeBoard(freeBoard);
+		
+		return null;
 	}
 }

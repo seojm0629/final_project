@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -169,18 +170,18 @@ public class FreeBoardController {
 		FreeBoardDTO freeBoard = freeBoardService.selectOneBoard(freeBoardNo);
 		return ResponseEntity.ok(freeBoard);
 	}
+	/*
 	@GetMapping(value = "/modify/cate")
 	public ResponseEntity<FreeBoardCategoryDTO> selectCategory(@RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
 		FreeBoardCategoryDTO cate = freeBoardService.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
 		return ResponseEntity.ok(cate);
 	}
+	*/
 	@DeleteMapping(value = "/detail/delete/{freeBoardNo}")
 	public ResponseEntity<Integer> deleteFreeBoard(@PathVariable int freeBoardNo) {
 		int result = freeBoardService.deleteFreeBoard(freeBoardNo);
 		return ResponseEntity.ok(result);
 	}
-	
-	
 	@Transactional
 	@PostMapping(value = "/detail/claim")
 	public ResponseEntity<Integer> insertClaim(@RequestBody HashMap<String, Object> fbClaimSet){
@@ -199,5 +200,31 @@ public class FreeBoardController {
 		int result = freeBoardService.insertCommentClaim(fbcClaimSet);
 		System.out.println("최종 결과값 확인 : "+result);
 		return ResponseEntity.ok(result);
+	}
+	@PatchMapping(value = "/modify/fix")
+	public ResponseEntity<Integer> modifyFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto) {
+		if(freeBoardThumbnail != null) {
+			String savepath = root + "/freeBoard/thumbnail/";
+			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
+			freeBoard.setFreeBoardThumbnail(filepath);
+		}
+		/*
+		List<FreeBoardPhotoDTO> freeBoardPhotoList = new ArrayList<FreeBoardPhotoDTO>();
+		if(freeBoardPhoto != null) {
+			String savepath = root+ "/freeBoard/image/";
+			for(MultipartFile file : freeBoardPhoto) {
+				String FBPhotopath = file.getOriginalFilename();
+				String FBPhotoname = fileUtil.fileUpload(savepath, file);
+				FreeBoardPhotoDTO fileDTO = new FreeBoardPhotoDTO();
+				fileDTO.setFBPhotoname(FBPhotoname);
+				fileDTO.setFBPhotopath(FBPhotopath);
+				
+				freeBoardPhotoList.add(fileDTO);
+				System.out.println(freeBoardPhotoList);
+			}
+		}*/
+		FreeBoardDTO board = freeBoardService.modifyFreeBoard(freeBoard);
+		//int result = freeBoardService.modifyFreeBoard(freeBoard);
+		return ResponseEntity.ok(1);
 	}
 }

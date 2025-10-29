@@ -432,14 +432,15 @@ const FreeBoardDetail = () => {
                   />
                 </div>
                 <div className="comment-writer">
-                  <span>{comment.memberNickname}</span>
+                  <span>{comment.memberNickname}</span>ㆍ
                   <span>{comment.memberId}</span>
                 </div>
-
-                <textarea
-                  type="text"
-                  placeholder="댓글을 남겨주세요."
-                ></textarea>
+                <div className="comment-modify">
+                  <textarea
+                    type="text"
+                    placeholder="댓글을 남겨주세요."
+                  ></textarea>
+                </div>
                 <div
                   className="comment-text"
                   dangerouslySetInnerHTML={{

@@ -280,7 +280,7 @@ const FreeBoardContent = (props) => {
                   dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
                 ></div>
                 <div className="nickname-id">
-                  <span>{list.memberNickname}</span>
+                  <span>{list.memberNickname}</span>ㆍ
                   <span>{list.memberId}</span>
                 </div>
                 <div className="view-heart">
@@ -314,7 +314,7 @@ const FreeBoardContent = (props) => {
                   dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
                 ></div>
                 <div className="nickname-id">
-                  <span>{list.memberNickname}</span>
+                  <span>{list.memberNickname}</span>ㆍ
                   <span>{list.memberId}</span>
                 </div>
                 <div className="view-heart">

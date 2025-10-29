@@ -38,7 +38,7 @@ const FreeBoardModify = (props) => {
   //수정할 데이터 저장 후 MenuItem에 넣을  default 값
   const [freeBoardSubcategory, setFreeBoardSubcategory] = useState();
   const [freeBoardCategory, setFreeBoardCategory] = useState();
-  const writeFreeBoard = () => {
+  const modifyFreeBoard = () => {
     if (
       freeBoardCategoryNo === undefined ||
       freeBoardSubcategoryNo === undefined
@@ -58,12 +58,12 @@ const FreeBoardModify = (props) => {
     formData.append("freeBoardTitle", freeBoardTitle);
     formData.append("memberNo", memberNo);
     formData.append("freeBoardContent", freeBoardContent);
-
+    console.log(formData);
     if (freeBoardThumbnail !== null) {
       formData.append("freeBoardThumbnail", freeBoardThumbnail);
     }
     axios
-      .post(`${backServer}/freeBoard/boardWrite`, formData, {
+      .patch(`${backServer}/freeBoard/modify/fix`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -281,13 +281,13 @@ const FreeBoardModify = (props) => {
       </div>
       <div className="submit-section">
         <div className="write-button">
-          <button className="submit-btn" onClick={writeFreeBoard}>
-            작성하기
+          <button className="submit-btn" onClick={modifyFreeBoard}>
+            수정하기
           </button>
         </div>
         <div className="cancel-button">
           <button className="cancel-btn" onClick={cancelWrite}>
-            취소하기
+            돌아가기
           </button>
         </div>
       </div>
