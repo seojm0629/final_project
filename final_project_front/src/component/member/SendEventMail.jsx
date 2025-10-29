@@ -63,17 +63,12 @@ const SendEventMail = () => {
                     
                 } else {
                     setIsLoader(false);
-                    etEventMail({
-                        ...eventMail,
-                        eventTitle : "",
-                        eventContent : "",
-                    })
                 }
             })
             .catch((err)=>{
                 console.log(err);
             })
-        } 
+        }
     }
 
 
