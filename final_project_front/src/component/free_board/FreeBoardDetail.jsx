@@ -40,6 +40,9 @@ const FreeBoardDetail = () => {
     if (fbClaimSet === undefined) {
       return;
     }
+    //URI 정리 (Restful하게 하기.)
+    // [POST] freeBoard/${freeBoardNo}/claim
+    //  -- 자유 게시판에 -> 몇번의 게시글을 -> 신고 (insert : POST)
     axios
       .post(
         `${import.meta.env.VITE_BACK_SERVER}/freeBoard/${
