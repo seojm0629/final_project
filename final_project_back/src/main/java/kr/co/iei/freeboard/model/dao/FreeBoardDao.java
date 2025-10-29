@@ -49,6 +49,8 @@ public interface FreeBoardDao {
 
 	int insertClaim(HashMap<String, Object> fbClaimSet);
 
+	int insertCommentClaim(HashMap<String, Object> fbcClaimSet);
+
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	

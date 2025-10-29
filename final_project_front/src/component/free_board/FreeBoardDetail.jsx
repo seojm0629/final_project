@@ -63,6 +63,37 @@ const FreeBoardDetail = () => {
       });
   }, [fbClaimSet]);
 
+  useEffect(() => {
+    if (fbcClaimSet === undefined) {
+      return;
+    }
+    axios
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/comment/claim`,
+        fbcClaimSet
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "알림",
+            text: `댓글 신고가 완료되었습니다.`,
+
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "알림",
+          text: `이미 신고한 댓글입니다.`,
+
+          icon: "error",
+        });
+      });
+  }, [fbcClaimSet]);
+
   const comment = {
     freeBoardNo: freeBoardNo,
     freeBoardSubcategoryNo: freeBoard.freeBoardSubcategoryNo,
@@ -328,6 +359,7 @@ const FreeBoardDetail = () => {
                           setFbcClaimSet({
                             fbCommentNo: comment.fbCommentNo,
                             memberNo: memberNo,
+                            fbcClaimReason: fbcClaimReason,
                           });
                         }}
                         className="FbClaimConfirmBtn"

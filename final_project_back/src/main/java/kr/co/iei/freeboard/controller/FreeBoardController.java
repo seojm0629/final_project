@@ -173,4 +173,14 @@ public class FreeBoardController {
 		System.out.println("최종 결과값 확인 : "+result);
 		return ResponseEntity.ok(result);
 	}
+	
+	@Transactional
+	@PostMapping(value = "/detail/comment/claim")
+	public ResponseEntity<Integer> insertCommentClaim(@RequestBody HashMap<String, Object> fbcClaimSet){
+		System.out.println(fbcClaimSet);
+		
+		int result = freeBoardService.insertCommentClaim(fbcClaimSet);
+		System.out.println("최종 결과값 확인 : "+result);
+		return ResponseEntity.ok(result);
+	}
 }

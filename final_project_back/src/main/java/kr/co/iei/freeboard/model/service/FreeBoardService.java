@@ -178,4 +178,10 @@ public class FreeBoardService {
 		System.out.println(fbClaimSet);
 		return result;
 	}
+
+	public int insertCommentClaim(HashMap<String, Object> fbcClaimSet) {
+		int result = freeBoardDao.insertCommentClaim(fbcClaimSet);
+		System.out.println(fbcClaimSet);
+		return result;
+	}
 }

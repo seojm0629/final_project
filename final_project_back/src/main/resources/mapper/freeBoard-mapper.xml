@@ -242,6 +242,10 @@
 	 INSERT INTO FB_CLAIM_TBL VALUES(#{freeBoardNo},#{memberNo},#{freeBoardSubcategoryNo},#{freeBoardCategoryNo},SYSDATE,#{fbClaimReason})
 	 </insert>
 	 
+	 <insert id="insertCommentClaim">
+	 INSERT INTO FBC_CLAIM_TBL VALUES(#{memberNo},#{fbCommentNo},#{fbcClaimReason},SYSDATE)
+	 </insert>
+	 
 	 
 	 
 	 
