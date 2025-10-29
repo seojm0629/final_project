@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginIdState, memberNoState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
@@ -15,7 +15,8 @@ import FiberNewIcon from "@mui/icons-material/FiberNew";
 const VoteList = () => {
   const [order, setOrder] = useState(3); // 정렬  0 -- 종료  1 -- 진행중
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
-  const [voteAlready, setVoteAlready] = useState(false);
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState); // 로그인된 memberNo
+  const [voteAlready, setVoteAlready] = useState(false); // 멤버가 투표한 게시글 확인값 0 / 1
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -37,12 +38,12 @@ const VoteList = () => {
     // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
   };
 
-  const todayDate = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D;
+  const todayDate = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D; //날짜 형변환
 
   useEffect(() => {
     axios
       .get(
-        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}&order=${order}`
+        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}&order=${order}&memberNo=${memberNo}`
       )
       .then((res) => {
         console.log(res.data);
