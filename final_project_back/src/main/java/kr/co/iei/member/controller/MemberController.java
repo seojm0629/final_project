@@ -211,11 +211,11 @@ public class MemberController {
 		System.out.println(memberCheck);
 		
 		List<String> list = memberService.sendEmail(memberCheck);
-		StringBuffer sb = new StringBuffer();
+		
 		
 		for(String emailList : list) {
 			mailSender.sendMail(eventTitle, emailList, eventContent);
-			sb.append(emailList).append(", ");
+			
 		}
 		
 		
