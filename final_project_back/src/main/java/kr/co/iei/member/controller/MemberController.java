@@ -1,6 +1,7 @@
 package kr.co.iei.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,10 +198,31 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PatchMapping(value="/promotion")
+	public ResponseEntity<Integer> promotion(@RequestParam String memberId, @RequestParam String memberCheck){
+		int result = memberService.promotion(memberId, memberCheck);
+		return ResponseEntity.ok(result);
+	}
 	
-	
-	
-	
+	@GetMapping(value="/sendEmail")
+	public ResponseEntity<List<String>> sendEmail(@RequestParam String eventTitle, @RequestParam String eventContent, @RequestParam String memberCheck){
+		System.out.println(eventTitle);
+		System.out.println(eventContent);
+		System.out.println(memberCheck);
+		
+		List<String> list = memberService.sendEmail(memberCheck);
+		
+		
+		for(String emailList : list) {
+			mailSender.sendMail(eventTitle, emailList, eventContent);
+			
+		}
+		
+		
+		
+		
+		return ResponseEntity.ok(list);
+	}
 	
 	
 	
