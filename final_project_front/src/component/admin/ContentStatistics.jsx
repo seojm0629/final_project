@@ -276,30 +276,26 @@ const ContentStatistics = () => {
               );
             })}
             {selectCriteria === "기타" && (
-              <div className="chartInfo">
+              <div>
                 <div>
-                  * 페이지 내에 머무르면 1분마다 최신 데이터를 불러옵니다.
+                  <span>시작 기간 : </span>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
                 </div>
                 <div>
-                  <div>
-                    <span>시작 기간 : </span>
-                    <input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => setStartDate(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <span>종료 기간 : </span>
-                    <input
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                    />
-                  </div>
+                  <span>종료 기간 : </span>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
                 </div>
               </div>
             )}
+            <div>* 페이지 내에 머무르면 1분마다 최신 데이터를 불러옵니다.</div>
           </div>
 
           <div className="chartFlex">
