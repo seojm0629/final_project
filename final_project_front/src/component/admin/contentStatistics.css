@@ -138,3 +138,7 @@
 .admin-right .chartFilter {
   text-align: right;
 }
+.admin-right .chartInfo {
+  display: flex;
+  justify-content: space-between;
+}

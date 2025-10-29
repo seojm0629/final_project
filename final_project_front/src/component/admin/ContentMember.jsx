@@ -18,13 +18,16 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import * as XLSX from "xlsx";
 
 const ContentMember = () => {
-  //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
   const [memberList, setMemberList] = useState([]);
-  console.log(memberList);
-
+  const handleDownload = () => {
+    const listToXlsx = XLSX.utils.json_to_sheet(memberList); //Json 을 엑셀의 시트로 변환해주는 친구
+    const wb = XLSX.utils.book_new(); //워크북 객체를 생성하고 그 워크북에 방금 생성한 워크 시트를 묶어주는 친구
+    XLSX.utils.book_append_sheet(wb, listToXlsx, "Sheet1"); //새로운 파일로 저장하는 부분
+    XLSX.writeFile(wb, "memberList.xlsx");
+  };
   const [reqPageInfo, setReqPageInfo] = useState({
     order: 2, //어떤 정렬을 요청할건데??
     // 1: 회원 번호 오름차순
@@ -536,6 +539,11 @@ const ContentMember = () => {
           />
         </div>
         <div className="content-body">
+          <div>
+            <button onClick={handleDownload} className="btn">
+              엑셀로 다운로드
+            </button>
+          </div>
           <table className="member-table">
             <thead>
               <tr>
