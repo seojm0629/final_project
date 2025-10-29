@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.member.model.dto.LoginMemberDTO;
+
 import kr.co.iei.member.model.dto.MemberDTO;
 
 @Mapper
@@ -36,6 +38,10 @@ public interface MemberDao {
 	MemberDTO chat(String memberId);
 
 	int phone(String memberPhone);
+
+	int selectBenMember(int memberNo);
+
+	LoginMemberDTO banInfo(int memberNo);
 
 	
 	

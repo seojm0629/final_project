@@ -237,6 +237,17 @@
 	 <select id="selectOneBoard" resultType = "freeBoard">
 	 	select * from free_board_tbl where free_board_no = #{freeBoardNo}
 	 </select>
+	 <select id="selectCate" resultType="freeBoard">
+	 SELECT FREE_BOARD_SUBCATEGORY_NO,FREE_BOARD_CATEGORY_NO FROM FREE_BOARD_TBL WHERE FREE_BOARD_NO=#{freeBoardNo}
+	 </select>
+	 
+	 <insert id="insertClaim">
+	 INSERT INTO FB_CLAIM_TBL VALUES(#{freeBoardNo},#{memberNo},#{freeBoardSubcategoryNo},#{freeBoardCategoryNo},SYSDATE,#{fbClaimReason})
+	 </insert>
+	 
+	 <insert id="insertCommentClaim">
+	 INSERT INTO FBC_CLAIM_TBL VALUES(#{memberNo},#{fbCommentNo},#{fbcClaimReason},SYSDATE)
+	 </insert>
 	 
 	 <delete id="deleteFreeBoard">
 	 	delete from free_board_tbl where free_board_no = #{freeBoardNo}

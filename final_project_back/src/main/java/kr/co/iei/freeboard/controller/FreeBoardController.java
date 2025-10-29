@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +26,15 @@ import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
+import kr.co.iei.note.model.service.NoteService;
 import kr.co.iei.utils.FileUtil;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/freeBoard")
 public class FreeBoardController {
+
+    private final NoteService noteService;
 	
 	@Autowired
 	private FreeBoardService freeBoardService;
@@ -40,6 +44,10 @@ public class FreeBoardController {
 	
 	@Value("${file.root}")
 	private String root;
+
+    FreeBoardController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 	
 	@GetMapping(value = "/mainPage")
 	public ResponseEntity<List<Map<String, Object>>> categoryList(){
@@ -172,4 +180,24 @@ public class FreeBoardController {
 		return ResponseEntity.ok(result);
 	}
 	
+	
+	@Transactional
+	@PostMapping(value = "/detail/claim")
+	public ResponseEntity<Integer> insertClaim(@RequestBody HashMap<String, Object> fbClaimSet){
+		System.out.println(fbClaimSet);
+		
+		int result = freeBoardService.insertClaim(fbClaimSet);
+		System.out.println("최종 결과값 확인 : "+result);
+		return ResponseEntity.ok(result);
+	}
+	
+	@Transactional
+	@PostMapping(value = "/detail/comment/claim")
+	public ResponseEntity<Integer> insertCommentClaim(@RequestBody HashMap<String, Object> fbcClaimSet){
+		System.out.println(fbcClaimSet);
+		
+		int result = freeBoardService.insertCommentClaim(fbcClaimSet);
+		System.out.println("최종 결과값 확인 : "+result);
+		return ResponseEntity.ok(result);
+	}
 }

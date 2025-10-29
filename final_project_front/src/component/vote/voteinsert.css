@@ -106,3 +106,7 @@
   border: none;
   cursor: pointer;
 }
+
+.vote-date-box-title {
+  font-weight: bold;
+}

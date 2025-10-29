@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberNoState } from "../utils/RecoilData";
+import BaseModal from "../utils/BaseModal";
 
 const FreeBoardDetail = () => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -25,6 +26,76 @@ const FreeBoardDetail = () => {
   const commentCount = freeBoardComment.length;
   const [toDate, setToDate] = useState(); //사용할 시간
   const navigate = useNavigate();
+
+  const [fbClaimReason, setFbClaimReason] = useState();
+  const [fbcClaimReason, setFbcClaimReason] = useState();
+
+  const [fbClaimSet, setFbClaimSet] = useState();
+  const [fbcClaimSet, setFbcClaimSet] = useState();
+  console.log(fbcClaimSet);
+
+  useEffect(() => {
+    if (fbClaimSet === undefined) {
+      return;
+    }
+    axios
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/claim`,
+        fbClaimSet
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "알림",
+            text: `게시글 신고가 완료되었습니다.`,
+
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "알림",
+          text: `이미 신고한 게시글입니다.`,
+
+          icon: "error",
+        });
+      });
+  }, [fbClaimSet]);
+
+  useEffect(() => {
+    if (fbcClaimSet === undefined) {
+      return;
+    }
+    axios
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/comment/claim`,
+        fbcClaimSet
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "알림",
+            text: `댓글 신고가 완료되었습니다.`,
+
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "알림",
+          text: `이미 신고한 댓글입니다.`,
+
+          icon: "error",
+        });
+      });
+  }, [fbcClaimSet]);
+
   const comment = {
     freeBoardNo: freeBoardNo,
     freeBoardSubcategoryNo: freeBoard.freeBoardSubcategoryNo,
@@ -195,10 +266,47 @@ const FreeBoardDetail = () => {
         </div>
       </div>
       <div className="detail-report">
-        <span>
-          <ReportGmailerrorredIcon className="report-icon" />
-          신고하기
-        </span>
+        <BaseModal
+          title="게시글 신고하기"
+          content={
+            <div className="report_content">
+              <div>해당 게시글을 신고하시겠습니까?</div>
+
+              <div>
+                <input
+                  type="text"
+                  value={fbClaimReason}
+                  onChange={(e) => {
+                    setFbClaimReason(e.target.value);
+                  }}
+                  placeholder="신고 사유를 적어주세요"
+                ></input>
+              </div>
+            </div>
+          }
+          buttonLabel={
+            <span>
+              <ReportGmailerrorredIcon className="report-icon" />
+              신고하기
+            </span>
+          }
+          contentBoxStyle={{ width: "400px", height: "400px" }}
+          end={"취소"}
+          result={
+            <button
+              onClick={() => {
+                setFbClaimSet({
+                  freeBoardNo: freeBoard.freeBoardNo,
+                  fbClaimReason: fbClaimReason,
+                  memberNo: memberNo,
+                });
+              }}
+              className="FbClaimConfirmBtn"
+            >
+              확인
+            </button>
+          }
+        />
       </div>
       <div className="detail-buttons">
         <button
@@ -268,10 +376,7 @@ const FreeBoardDetail = () => {
             등록
           </button>
         </div>
-        <div className="comment-report">
-          <ReportGmailerrorredIcon className="report-icon" />
-          <span>신고하기</span>
-        </div>
+
         <div className="comment-box">
           {freeBoardComment.map((comment, i) => {
             return (
@@ -283,6 +388,49 @@ const FreeBoardDetail = () => {
                 }
                 key={"item" + i}
               >
+                <div className="comment-report">
+                  <BaseModal
+                    title="댓글 신고하기"
+                    content={
+                      <div className="report_content">
+                        <div>해당 댓글을 신고하시겠습니까?</div>
+
+                        <div>
+                          <input
+                            type="text"
+                            value={fbcClaimReason}
+                            onChange={(e) => {
+                              setFbcClaimReason(e.target.value);
+                            }}
+                            placeholder="신고 사유를 적어주세요"
+                          ></input>
+                        </div>
+                      </div>
+                    }
+                    buttonLabel={
+                      <span>
+                        <ReportGmailerrorredIcon className="report-icon" />
+                        신고하기
+                      </span>
+                    }
+                    contentBoxStyle={{ width: "400px", height: "400px" }}
+                    end={"취소"}
+                    result={
+                      <button
+                        onClick={() => {
+                          setFbcClaimSet({
+                            fbCommentNo: comment.fbCommentNo,
+                            memberNo: memberNo,
+                            fbcClaimReason: fbcClaimReason,
+                          });
+                        }}
+                        className="FbClaimConfirmBtn"
+                      >
+                        확인
+                      </button>
+                    }
+                  />
+                </div>
                 <div className="comment-writer">
                   <span>{comment.memberNickname}</span>
                   <span>{comment.memberId}</span>

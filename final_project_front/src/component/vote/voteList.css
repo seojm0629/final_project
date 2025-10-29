@@ -14,6 +14,7 @@
   flex-direction: row-reverse;
   height: 30px;
   margin-bottom: 20px;
+  gap: 30px;
 }
 .vote-write-box > button {
   border: none;
@@ -24,7 +25,18 @@
   cursor: pointer;
   font-weight: bold;
 }
+.vote-write-box > input {
+  display: none;
+  cursor: pointer;
+}
 
+.vote-write-box label {
+  cursor: pointer;
+  border-radius: 5px;
+  line-height: 1.6;
+  border: 2px solid black;
+  background-color: white;
+}
 .vote-tbl-box {
   width: 1600px;
   display: flex;
@@ -64,4 +76,19 @@
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgb(221, 208, 208);
+}
+
+.new-icon {
+  color: red;
+}
+.td-title:hover {
+  color: blue;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.td-votedate {
+  font-size: 0.9rem;
+}
+.td-voteEnddate {
+  font-size: 0.9rem;
 }

@@ -4,16 +4,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PageNavigation from "../utils/PageNavigation";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginIdState, memberNoState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
 import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
+import FiberNewIcon from "@mui/icons-material/FiberNew";
 const VoteList = () => {
+  const [order, setOrder] = useState(3); // 정렬  0 -- 종료  1 -- 진행중
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
-  const [voteAlready, setVoteAlready] = useState(false);
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState); // 로그인된 memberNo
+  const [voteAlready, setVoteAlready] = useState(false); // 멤버가 투표한 게시글 확인값 0 / 1
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -34,16 +37,13 @@ const VoteList = () => {
     const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
     // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
   };
-  console.log("시간확인", dayjs().$y);
-  console.log("시간확인", dayjs().$M + 1);
-  console.log("시간확인", dayjs().$D);
-  const date = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D;
-  console.log(date);
+
+  const todayDate = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D; //날짜 형변환
 
   useEffect(() => {
     axios
       .get(
-        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}`
+        `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}&order=${order}&memberNo=${memberNo}`
       )
       .then((res) => {
         console.log(res.data);
@@ -53,9 +53,8 @@ const VoteList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPageInfo]);
-  console.log(voteList);
-  console.log(totalListCount);
+  }, [reqPageInfo, order]);
+
   return (
     <div className="vote-main-wrap">
       <div className="vote-name-box">
@@ -63,23 +62,46 @@ const VoteList = () => {
       </div>
       <div>
         <div className="vote-write-box">
-          <button
-            onClick={() => {
-              {
-                member === ""
-                  ? Swal.fire({
-                      title: "로그인",
-                      text: "로그인 후 이용해주세요",
-                      icon: "warning",
-                    }).then(() => {
-                      navigate("/member/login");
-                    })
-                  : navigate("/vote/voteInsert");
-              }
+          {member === "" ? (
+            <button
+              onClick={() => {
+                navigate("/member/login");
+              }}
+            >
+              로그인
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                navigate("/vote/voteInsert");
+              }}
+            >
+              글작성
+            </button>
+          )}
+
+          <input
+            type="radio"
+            name="order"
+            id="end"
+            value="1"
+            checked={order === "1"}
+            onChange={(e) => {
+              setOrder(e.target.value);
             }}
-          >
-            글작성
-          </button>
+          />
+          <label htmlFor="end">종료</label>
+          <input
+            type="radio"
+            name="order"
+            id="progress"
+            value="0"
+            checked={order === "0"}
+            onChange={(e) => {
+              setOrder(e.target.value);
+            }}
+          />
+          <label htmlFor="progress">진행중</label>
         </div>
       </div>
       <div className="vote-tbl-box">
@@ -113,6 +135,7 @@ const VoteList = () => {
                   <tr key={"list-" + i}>
                     <td>{list.memberNickname}</td>
                     <td
+                      className="td-title"
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         if (!member) {
@@ -132,10 +155,21 @@ const VoteList = () => {
                     >
                       {list.voteTitle}
                     </td>
-                    <td></td>
+                    {todayDate ===
+                    dayjs(list.voteDate).$y +
+                      "-" +
+                      (dayjs(list.voteDate).$M + 1) +
+                      "-" +
+                      dayjs(list.voteDate).$D ? (
+                      <td className="new-icon">
+                        <FiberNewIcon></FiberNewIcon>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
                     <td>{list.voteCheck === 0 ? "진행중" : "종료"}</td>
-                    <td>{list.voteDate}</td>
-                    <td>{list.voteEndDate}</td>
+                    <td className="td-votedate">{list.voteDate}</td>
+                    <td className="td-voteEnddate">{list.voteEndDate}</td>
                   </tr>
                 );
               })

@@ -138,9 +138,9 @@ const ContentStatistics = () => {
   };
   /* **************************************************************** */
 
-  console.log(selectCriteria);
-  console.log(labels);
-
+  //console.log(selectCriteria);
+  //console.log(labels);
+  const [refreshToggle, setRefreshToggle] = useState(false);
   /* ********* [5년,1년,월간,일간 선택 값에 따라 객체 돌려받기] *********** */
   useEffect(() => {
     if (selectCriteria === "기타" && (!startDate || !endDate)) {
@@ -153,10 +153,12 @@ const ContentStatistics = () => {
         }/admin/statistics?selectCriteria=${selectCriteria}&startDate=${startDate}&endDate=${endDate}`
       )
       .then((res) => {
-        console.log("받아온 데이터");
-        console.log(res.data);
-        console.log(res.data.accessionCounts);
+        //console.log("받아온 데이터");
+        //console.log(res.data);
+        //console.log(res.data.accessionCounts);
         const results = res.data.accessionCounts;
+
+        console.log(res.data);
         setRu(res.data.ru);
         setBc(res.data.bc);
         setBcc(res.data.bcc);
@@ -213,17 +215,27 @@ const ContentStatistics = () => {
         });
         setTradeBoardValues(tradeBoardValues);
 
-        console.log(labels);
+        //console.log(labels);
 
-        console.log(values);
+        //console.log(values);
       })
 
       .catch((err) => {
         console.log(err);
       });
-  }, [selectCriteria, startDate, endDate]);
+  }, [selectCriteria, startDate, endDate, refreshToggle]);
   /* **************************************************************** */
 
+  useEffect(() => {
+    setInterval(() => {
+      //console.log("인터벌", refreshToggle);
+      setRefreshToggle((prev) => {
+        return !prev;
+      });
+    }, 60000);
+  }, []);
+
+  //console.log(refreshToggle);
   const pieData = {
     labels: ["가입", "탈퇴"],
     datasets: [
@@ -283,6 +295,7 @@ const ContentStatistics = () => {
                 </div>
               </div>
             )}
+            <div>* 페이지 내에 머무르면 1분마다 최신 데이터를 불러옵니다.</div>
           </div>
 
           <div className="chartFlex">
@@ -381,9 +394,9 @@ const ChartTemplate = (props) => {
   const title = props.title;
   const subTitle = props.subTitle;
   const chartTag = props.chartTag;
-  console.log(title);
-  console.log(subTitle);
-  console.log(chartTag);
+  // console.log(title);
+  // console.log(subTitle);
+  // console.log(chartTag);
   return (
     <div className="chartBox">
       <div className="chartBox-head">
@@ -417,9 +430,9 @@ const DiffCount = () => {
         }/admin/statistics?selectCriteria=${selectCriteria}`
       )
       .then((res) => {
-        console.log("받아온 데이터");
-        console.log(res.data);
-        console.log(res.data.accessionCounts);
+        //console.log("받아온 데이터");
+        //console.log(res.data);
+        //console.log(res.data.accessionCounts);
         const results = res.data.accessionCounts;
         setRu(res.data.ru);
         setBc(res.data.bc);

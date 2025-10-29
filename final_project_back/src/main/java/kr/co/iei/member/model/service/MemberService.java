@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
+
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.utils.JwtUtils;
 
@@ -37,14 +38,15 @@ public class MemberService {
 	
 	public LoginMemberDTO login(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberId());		
-		
+		int banCnt = memberDao.selectBenMember(m.getMemberNo());
+		m.setBanCnt(banCnt);
 		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
 			String accessToken = jwtUtil.createAccessToken(m.getMemberId(), m.getMemberType(), m.getMemberNo());
 			String refreshToken = jwtUtil.createRefreshToken(m.getMemberId(), m.getMemberType(), m.getMemberNo());
 			
 			//실제 클라이언트에게 되돌려주는 정보 -> 회원아이디, 회원등급, 회원번호, accessToken, refreshToken
-			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberId(), m.getMemberType(), m.getMemberNo());
-			System.out.println(loginMember);
+			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberId(), m.getMemberType(), m.getMemberNo(),m.getBanCnt(),null,null,null);
+			System.out.println("로그인멤버"+loginMember);
 			return loginMember;
 		}
 		return null;
@@ -63,6 +65,9 @@ public class MemberService {
 	
 	public MemberDTO selectOneMember(String memberId) {
 		MemberDTO m = memberDao.selectOneMember(memberId);
+		
+		
+		
 		m.setMemberPw(null);
 		
 		return m;
@@ -149,6 +154,11 @@ public class MemberService {
 	public int phone(String memberPhone) {
 		int result = memberDao.phone(memberPhone);
 		return result;
+	}
+
+	public LoginMemberDTO banInfo(int memberNo) {
+		LoginMemberDTO banInfo = memberDao.banInfo(memberNo);
+		return banInfo;
 	}
 
 	

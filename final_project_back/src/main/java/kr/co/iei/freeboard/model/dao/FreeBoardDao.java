@@ -52,6 +52,12 @@ public interface FreeBoardDao {
 	FreeBoardCategoryDTO selectCategory(int freeBoardSubcategoryNo, int freeBoardCategoryNo);
 
 	
+	FreeBoardDTO selectCate(int freeBoardNo);
+
+	int insertClaim(HashMap<String, Object> fbClaimSet);
+
+	int insertCommentClaim(HashMap<String, Object> fbcClaimSet);
+
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	
