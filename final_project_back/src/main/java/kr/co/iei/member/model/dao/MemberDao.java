@@ -42,6 +42,9 @@ public interface MemberDao {
 	int selectBenMember(int memberNo);
 
 	LoginMemberDTO banInfo(int memberNo);
+	int promotion(String memberId, String memberCheck);
+
+	List<MemberDTO> sendEmail(String memberCheck);
 
 	
 	
