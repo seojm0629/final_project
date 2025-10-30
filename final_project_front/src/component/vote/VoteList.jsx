@@ -112,13 +112,13 @@ const VoteList = () => {
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
-                  width: "37%",
+                  width: "30%",
                 }}
               >
                 제목
               </th>
+              <th style={{ width: "7%" }}>투표현황</th>
               <th style={{ width: "9%" }}></th>
-
               <th style={{ width: "10%" }}>투표상황</th>
               <th style={{ width: "15%" }}>시작날짜</th>
               <th style={{ width: "15%" }}>종료날짜</th>
@@ -173,7 +173,7 @@ const VoteList = () => {
                     >
                       {list.voteTitle}
                     </td>
-
+                    <td>{list.voteTotal}표</td>
                     {list.voteOk === 1 && member !== "" ? (
                       <td className="check-icon">
                         투표 완료

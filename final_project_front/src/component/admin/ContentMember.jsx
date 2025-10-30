@@ -544,16 +544,6 @@ const ContentMember = () => {
               엑셀로 다운로드 (조회)
             </button>
           </div>
-          <div>
-            <button onClick={handleDownload} className="btn">
-              엑셀로 다운로드 (전체)
-            </button>
-          </div>
-          <div>
-            <button onClick={handleDownload} className="btn">
-              수정 파일 업로드 (엑셀)
-            </button>
-          </div>
 
           <table className="member-table">
             <thead>
