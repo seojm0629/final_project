@@ -112,6 +112,7 @@ const VoteDetail = () => {
       });
       return;
     }
+    /*
     if (!selectedOption) {
       Swal.fire({
         title: "투표 실패",
@@ -120,28 +121,46 @@ const VoteDetail = () => {
       });
       return;
     }
+      */
     const resultData = {
       voteNo: vote.voteNo,
       memberNo: memberNo,
       voteOptionNo: selectedOption,
     };
 
-    axios //결과 테이블에 인설트 완료
-      .post(`${backServer}/vote/result`, resultData)
-      .then((res) => {
-        Swal.fire({
-          title: "투표 완료",
-          icon: "success",
+    if (defaultCheck === undefined) {
+      axios //결과 테이블에 인설트 완료
+        .post(`${backServer}/vote/result`, resultData)
+        .then((res) => {
+          Swal.fire({
+            title: "투표 완료",
+            icon: "success",
+          });
+          setRefreshToggle(!refreshToggle);
+        })
+        .catch((err) => {
+          Swal.fire({
+            title: "투표 실패",
+            text: "이미 투표에 참여하셨습니다.",
+            icon: "error",
+          });
         });
-        setRefreshToggle(!refreshToggle);
-      })
-      .catch((err) => {
-        Swal.fire({
-          title: "투표 실패",
-          text: "이미 투표에 참여하셨습니다.",
-          icon: "error",
+    } else {
+      //재투표 엑시오스
+      axios
+        .patch(`${backServer}/vote/reVote`, resultData)
+        .then((res) => {
+          console.log(res.data);
+          Swal.fire({
+            title: "재투표 완료",
+            icon: "success",
+          });
+          setRefreshToggle(!refreshToggle);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      });
+    }
   };
   const voteDelete = () => {
     Swal.fire({

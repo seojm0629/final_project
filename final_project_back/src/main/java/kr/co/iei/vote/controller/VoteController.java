@@ -136,4 +136,13 @@ public class VoteController {
 		return ResponseEntity.ok(result);
 		
 	}
+	@PatchMapping(value = "/reVote")
+	public ResponseEntity<Integer> reVote(@RequestBody VoteResult result) {
+		System.out.println("리절트 값 확인dddddddddddddddddddd" +  result);
+	
+		int voteResult = voteService.reVote(result);
+		
+		
+		return ResponseEntity.ok(voteResult);
+	}
 }

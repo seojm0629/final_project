@@ -108,5 +108,8 @@
 		select vote_option_no from vote_result_tbl where vote_no = #{voteNo} and member_no = #{memberNo}
 	</select>
 	
+	<update id="reVote">
+		update vote_result_tbl set vote_option_no = #{voteOptionNo} where vote_no= #{voteNo} and member_no = #{memberNo}
+	</update>
 		
 </mapper>

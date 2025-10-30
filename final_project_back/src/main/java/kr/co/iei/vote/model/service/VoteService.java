@@ -125,4 +125,11 @@ public class VoteService {
 		
 		return result;
 	}
+
+	@Transactional
+	public int reVote(VoteResult result) {
+		int check = voteDao.reVote(result);
+		
+		return check;
+	}
 }

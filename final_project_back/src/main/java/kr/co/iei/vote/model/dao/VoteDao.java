@@ -41,5 +41,7 @@ public interface VoteDao {
 
 	int checkOption(HashMap<String, Object> voteSet);
 
+	int reVote(VoteResult result);
+
 	
 }
