@@ -216,6 +216,12 @@ public class MemberController {
 		for(String emailList : list) {
 			mailSender.sendMail(eventTitle, emailList, eventContent);
 			sb.append(emailList).append(", ");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // 1초 대기
 		}
 		
 		

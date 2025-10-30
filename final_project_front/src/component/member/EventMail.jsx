@@ -3,7 +3,7 @@ import { loginIdState, memberTypeState } from "../utils/RecoilData";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const SendEventMail = () => {
+const EventMail = () => {
 
     const [memberId, setMemberId] = useState(loginIdState);
     const [memberType, setMemberType] = useState(memberTypeState);
@@ -143,4 +143,4 @@ const SendEventMail = () => {
     )
 }
 
-export default SendEventMail;
+export default EventMail;

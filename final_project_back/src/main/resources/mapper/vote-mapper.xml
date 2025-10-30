@@ -22,25 +22,27 @@
 	</update>
 	
 	<select id="selectVoteList" resultType="vote">
-		select B.*,
-		(select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = #{memberNo})vote_ok
-		from 
-		(
-		select rownum rnum,A.* from
-			(
-			select vote_no,member_nickname , vote_title,
-			to_char(vote_date,'yyyy-mm-dd HH24:MI') as vote_date,
-			to_char(vote_end_date,'yyyy-mm-dd HH24:MI') as vote_end_date
-			, vote_check 
-			from member_tbl
-			join vote_tbl using(member_no)
-			<if test="order != 3">
-			where vote_check = #{order}
-			</if>
-			order by vote_check asc, vote_date desc, vote_no desc
-			)A
-		)B 
-		where rnum between #{startRow} and #{endRow} 
+	select * from
+	    (select rownum rnum,e.* from
+	        (select c.*,nvl(total , 0)vote_total from 
+	            (select B.*,
+	                    (select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = 5102)vote_ok
+	                    from 
+	                    (
+	                    select A.* from
+	                        (
+	                        select vote_no,member_nickname , vote_title,
+	                        to_char(vote_date,'yyyy-mm-dd HH24:MI') as vote_date,
+	                        to_char(vote_end_date,'yyyy-mm-dd HH24:MI') as vote_end_date
+	                        , vote_check 
+	                        from member_tbl
+	                        join vote_tbl using(member_no)
+	                        order by vote_check asc, vote_date desc, vote_no desc
+	                        )A
+	                    )B             
+	               )C left join (select count(*)total,vote_no from vote_result_tbl group by vote_no)D on (c.vote_no = d.vote_no))e)f 
+	where rnum between #{startRow} and #{endRow}
+           
 		
 		
 	</select>
