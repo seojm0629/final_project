@@ -717,8 +717,10 @@
   align-items: center;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 8px 12px;
-  height: 100px;
+  padding: 8px 5px;
+  width: 840px;
+  height: 70px;
+  align-self: center;
 }
 .comment-modify textarea {
   display: flex;
@@ -740,6 +742,15 @@
 }
 .comment-submit {
   background: #003366;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  margin: 0px 10px 0px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.comment-modify-btn {
+  background: #2f4e70;
   color: white;
   border: none;
   padding: 6px 16px;
@@ -770,7 +781,7 @@
   align-items: center;
   gap: 3px;
   margin-right: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .comment-text {
   margin: 10px 0;

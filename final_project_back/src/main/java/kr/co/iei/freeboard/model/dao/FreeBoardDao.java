@@ -60,6 +60,8 @@ public interface FreeBoardDao {
 
 	int modifyFreeBoard(FreeBoardDTO freeBoard);
 
+	int updateComment(FreeBoardCommentDTO freeBoardComment);
+
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	

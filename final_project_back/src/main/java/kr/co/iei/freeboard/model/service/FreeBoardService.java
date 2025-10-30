@@ -202,12 +202,20 @@ public class FreeBoardService {
 		FreeBoardCategoryDTO cate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
 		return cate;
 	}
-
-	public FreeBoardDTO modifyFreeBoard(FreeBoardDTO freeBoard) {
+	@Transactional
+	public int modifyFreeBoard(FreeBoardDTO freeBoard) {
 		FreeBoardDTO board = freeBoardDao.selectOneBoard(freeBoard.getFreeBoardNo());
 		int result = freeBoardDao.modifyFreeBoard(freeBoard);
 		
-		return null;
+		return result;
 	}
+	@Transactional
+	public int updateComment(FreeBoardCommentDTO freeBoardComment) {
+		int result = freeBoardDao.updateComment(freeBoardComment);
+		return result;
+	}
+
+	
+	
 
 }

@@ -217,6 +217,7 @@
 		        ) using (fb_comment_no)
 		    )
 		where free_board_no = #{freeBoardNo}
+		order by 1 desc
 	 </select>
 		
 	<insert id="insertComment">
@@ -269,6 +270,13 @@
 	 		free_board_content = #{freeBoardContent},
 	 		free_board_thumbnail = #{freeBoardThumbnail}
 	 	where free_board_no = #{freeBoardNo}
+	 </update>
+	 
+	 <!-- 댓글 수정 -->
+	 <update id="updateComment">
+	 	update fb_comment_tbl set
+	 		fb_comment_content = #{fbCommentContent}
+	 	where fb_comment_no = #{fbCommentNo}
 	 </update>
 	 
 </mapper>

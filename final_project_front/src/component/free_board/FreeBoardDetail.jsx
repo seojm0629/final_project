@@ -16,26 +16,23 @@ const FreeBoardDetail = () => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const [member, setMember] = useRecoilState(loginIdState);
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
-  const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
+  //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
   const freeBoardNo = params.freeBoardNo;
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([]); //해당 게시글에 대한 번호
   const [fbCommentContent, setFbCommentContent] = useState(""); //게시글에 대한 댓글
+  const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
+  const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호
   const commentCount = freeBoardComment.length;
   const [toDate, setToDate] = useState(); //사용할 시간
   const navigate = useNavigate();
-
   const [fbClaimReason, setFbClaimReason] = useState();
   const [fbcClaimReason, setFbcClaimReason] = useState();
 
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
-  console.log(fbcClaimSet);
-  console.log(freeBoardNo);
-  console.log(fbClaimSet);
-  console.log(localStorage);
 
   useEffect(() => {
     if (fbClaimSet === undefined) {
@@ -52,7 +49,6 @@ const FreeBoardDetail = () => {
         fbClaimSet
       )
       .then((res) => {
-        console.log(res.data);
         if (res.data === 1) {
           Swal.fire({
             title: "알림",
@@ -73,7 +69,6 @@ const FreeBoardDetail = () => {
       });
   }, [fbClaimSet]);
 
-  console.log(fbcClaimSet);
   useEffect(() => {
     if (fbcClaimSet === undefined) {
       return;
@@ -86,7 +81,6 @@ const FreeBoardDetail = () => {
         fbcClaimSet
       )
       .then((res) => {
-        console.log(res.data);
         if (res.data === 1) {
           Swal.fire({
             title: "알림",
@@ -123,40 +117,35 @@ const FreeBoardDetail = () => {
     if (diffDays >= 7) {
       return target.format("YYYY-MM-DD"); // 7일 이상이면 날짜로 변형
     }
-    return target.fromNow("YYYY-MM-DD HH:mm:ss"); //한국어로 ?? 시간전 표시하기
+    return target.fromNow(); //한국어로 ?? 시간전 표시하기
   };
-  {
-    useEffect(() => {
-      axios
-        .get(`${backServer}/freeBoard/detail/${freeBoardNo}`)
-        .then((res) => {
-          setFreeBoard(res.data);
-          setToDate(res.data.freeBoardDate);
-          setFreeBoardMemberNo(
-            memberNo === res.data.memberNo && res.data.memberNo
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [freeBoardNo]);
-  }
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/freeBoard/detail/${freeBoardNo}`)
+      .then((res) => {
+        setFreeBoard(res.data);
+        setToDate(res.data.freeBoardDate);
+        setFreeBoardMemberNo(
+          memberNo === res.data.memberNo && res.data.memberNo
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [freeBoardNo]);
+  const [toggle, setToggle] = useState(false); //댓글 등록 시 랜더링 state
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}`)
       .then((res) => {
         setFreeBoardComment(res.data);
-        const commentMember = res.data.filter(
-          (com) => com.memberNo === memberNo
-        );
-        setFreeBoardCommentMemberNo(commentMember[0].memberNo);
-        console.log(commentMember[0].memberNo);
       })
-
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardNo, fbCommentContent]);
+  }, [freeBoardNo, fbCommentContent, memberNo, toggle, modifyFbCommentContent]);
+
   const commentResist = () => {
     if (member === null || member === "") {
       Swal.fire({
@@ -176,9 +165,9 @@ const FreeBoardDetail = () => {
       axios
         .post(`${backServer}/freeBoard/detail/regist`, comment)
         .then((res) => {
-          console.log(res);
           if (res.data === 1) {
             setFbCommentContent("");
+            setToggle(!toggle);
           }
         })
         .catch((err) => {
@@ -224,7 +213,50 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
-  //const commentModify = () => {};
+  const [cmtModify, setCmtModify] = useState(null); // 댓글 수정버튼 클릭 시 해당 회원만 보이게
+  const [commentNo, setCommentNo] = useState(null); // 클릭한 댓글만 수정할 수 있는 창이 뜨도록 댓글번호 저장
+  const modifyComment = (fbc) => {
+    setCmtModify(fbc);
+  };
+
+  const patchComment = {
+    fbCommentNo: commentNo,
+    fbCommentContent: modifyFbCommentContent,
+  };
+  const updateComment = () => {
+    if (
+      modifyFbCommentContent === "" ||
+      modifyFbCommentContent === " " ||
+      modifyFbCommentContent === null
+    ) {
+      Swal.fire({
+        title: "댓글 입력",
+        text: "댓글을 입력해주세요.",
+        icon: "warning",
+      });
+      return;
+    } else {
+      axios
+        .patch(`${backServer}/freeBoard/detail/update`, patchComment)
+        .then((res) => {
+          if (res.data === 1) {
+            Swal.fire({
+              title: "수정 완료",
+              icon: "success",
+            }).then(() => {
+              setToggle(!toggle);
+              setModifyFbCommentContent("");
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  const deleteComment = () => {
+    //axios.delete(`${backServer}/freeBoard/detail/delcomment/${}`)
+  };
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -412,6 +444,7 @@ const FreeBoardDetail = () => {
                             value={fbcClaimReason}
                             onChange={(e) => {
                               setFbcClaimReason(e.target.value);
+                              console.log(comment);
                             }}
                             placeholder="신고 사유를 적어주세요"
                           ></input>
@@ -446,18 +479,77 @@ const FreeBoardDetail = () => {
                   <span>{comment.memberNickname}</span>ㆍ
                   <span>{comment.memberId}</span>
                 </div>
-                <div className="comment-modify">
-                  <textarea
-                    type="text"
-                    placeholder="댓글을 남겨주세요."
-                  ></textarea>
-                </div>
-                <div
-                  className="comment-text"
-                  dangerouslySetInnerHTML={{
-                    __html: comment.fbCommentContent,
-                  }}
-                ></div>
+                {comment.memberNo === memberNo &&
+                  cmtModify === comment.fbCommentNo && (
+                    <div className="comment-modify">
+                      <textarea
+                        type="text"
+                        placeholder="댓글을 남겨주세요."
+                        name={modifyFbCommentContent}
+                        value={modifyFbCommentContent}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            if (
+                              modifyFbCommentContent === "" ||
+                              modifyFbCommentContent === " " ||
+                              modifyFbCommentContent === null
+                            ) {
+                              Swal.fire({
+                                title: "댓글 입력",
+                                text: "댓글을 입력해주세요.",
+                                icon: "warning",
+                              });
+                              console.log("return 앞");
+                              return;
+                            } else {
+                              axios
+                                .patch(
+                                  `${backServer}/freeBoard/detail/update`,
+                                  patchComment
+                                )
+                                .then((res) => {
+                                  if (res.data === 1) {
+                                    Swal.fire({
+                                      title: "수정 완료",
+                                      icon: "success",
+                                    }).then(() => {
+                                      setCmtModify(null);
+                                      setModifyFbCommentContent("");
+                                    });
+                                  }
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                });
+                            }
+                          }
+                        }}
+                        onChange={(e) => {
+                          (e.key === "Enter") !==
+                            setModifyFbCommentContent(e.target.value);
+                        }}
+                      />
+                      <button
+                        className="comment-modify-btn"
+                        onClick={() => {
+                          setCmtModify(null);
+                          setCommentNo(null);
+                          updateComment();
+                        }}
+                      >
+                        댓글수정
+                      </button>
+                    </div>
+                  )}
+                {cmtModify !== comment.fbCommentNo && (
+                  <div
+                    className="comment-text"
+                    dangerouslySetInnerHTML={{
+                      __html: comment.fbCommentContent,
+                    }}
+                  ></div>
+                )}
+
                 <div className="comment-sub">
                   <div className="heart">
                     <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
@@ -468,12 +560,24 @@ const FreeBoardDetail = () => {
                     {nowDate(comment.fbCommentDate)}
                   </div>
                 </div>
-                {freeBoardCommentMemberNo && (
-                  <div className="comment-button">
-                    <button className="modify-btn">수정</button>
-                    <button className="delete-btn">삭제</button>
-                  </div>
-                )}
+                {comment.memberNo === memberNo &&
+                  cmtModify !== comment.fbCommentNo && (
+                    <div className="comment-button">
+                      <button
+                        className="modify-btn"
+                        onClick={() => {
+                          setCommentNo(comment.fbCommentNo);
+                          modifyComment(comment.fbCommentNo);
+                          setModifyCommentNo(comment.fbCommentNo);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button className="delete-btn" onClick={deleteComment}>
+                        삭제
+                      </button>
+                    </div>
+                  )}
               </div>
             );
           })}
