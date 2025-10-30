@@ -228,7 +228,9 @@ const VoteDetail = () => {
 
       {vote && vote.memberNo === memberNo && (
         <div className="vote-detail-buttonBox">
-          <button onClick={voteEndDate}>투표종료</button>
+          {vote.voteCheck === 0 && (
+            <button onClick={voteEndDate}>투표종료</button>
+          )}
           <button onClick={voteDelete}>삭제하기</button>
         </div>
       )}
@@ -239,23 +241,25 @@ const VoteDetail = () => {
             <div className="vote-detail-list-title">{vote.voteTitle}</div>
             <ul className="vote-detail-ul">
               {voteList.map((list, i) => {
-                <li className="vote-detail-content" key={"list" + i}>
-                  <input
-                    type="radio"
-                    name="voteOption"
-                    id={"voteOption" + list.voteOptionNo}
-                    defaultChecked={defaultCheck === list.voteOptionNo}
-                    value={list.voteOptionNo}
-                    className="vote-radio"
-                    onChange={optionChange}
-                  />
-                  <label
-                    htmlFor={"voteOption" + list.voteOptionNo}
-                    className="vote-label"
-                  >
-                    {list.voteContent}
-                  </label>
-                </li>;
+                return (
+                  <li className="vote-detail-content" key={"list" + i}>
+                    <input
+                      type="radio"
+                      name="voteOption"
+                      id={"voteOption" + list.voteOptionNo}
+                      defaultChecked={defaultCheck === list.voteOptionNo}
+                      value={list.voteOptionNo}
+                      className="vote-radio"
+                      onChange={optionChange}
+                    />
+                    <label
+                      htmlFor={"voteOption" + list.voteOptionNo}
+                      className="vote-label"
+                    >
+                      {list.voteContent}
+                    </label>
+                  </li>
+                );
               })}
             </ul>
             <div className="vote-detail-button-box">
@@ -269,6 +273,8 @@ const VoteDetail = () => {
             <div className="vote-detail-list-title">종료된 투표입니다.</div>
             <ul className="vote-detail-ul-end">
               {voteList.map((list, i) => {
+                console.log(voteList);
+
                 return (
                   <li className="vote-detail-content-end" key={"list" + i}>
                     <div className="vote-content-end-div1">
@@ -279,7 +285,7 @@ const VoteDetail = () => {
                         )}
                       </span>
                     </div>
-                    <div>{values} 표</div>
+                    <div>{values[i]} 표</div>
                   </li>
                 );
               })}
