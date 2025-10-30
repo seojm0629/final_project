@@ -21,7 +21,7 @@ const VoteList = () => {
   const [voteAlready, setVoteAlready] = useState(false); // 멤버가 투표한 게시글 확인값 0 / 1
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
-
+  console.log(memberNo);
   // 필수: 페이지 정보 (프론트에서 바로 세팅)
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 몇 개의 버튼을 보여줄지

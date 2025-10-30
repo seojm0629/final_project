@@ -18,6 +18,7 @@ const VoteDetail = () => {
   const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
+  console.log(voteList);
   //차트 안에 들어갈 data (찾아보면 더 있음)
   const data = {
     labels: voteList.map((item) => item.voteContent), // 투표안한 항목 다보이게 표시
@@ -78,7 +79,22 @@ const VoteDetail = () => {
       });
   }, [refreshToggle]);
 
+  const [defaultCheck, setDefaultCheck] = useState();
+  useEffect(() => {
+    axios
+      .get(`${backServer}/vote/checkOption/${voteNo}/${memberNo}`)
+      .then((res) => {
+        console.log(res);
+        setDefaultCheck(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log(defaultCheck);
+
   const optionChange = (e) => {
+    console.log(e.target.value);
     //라디오 버튼클릭시 선택한 옵션을 저장하기
     setSelectedOption(e.target.value);
   };
@@ -202,12 +218,15 @@ const VoteDetail = () => {
             <div className="vote-detail-list-title">{vote.voteTitle}</div>
             <ul className="vote-detail-ul">
               {voteList.map((list, i) => {
+                console.log(defaultCheck);
+                console.log(list.voteOptionNo);
                 return (
                   <li className="vote-detail-content" key={"list" + i}>
                     <input
                       type="radio"
                       name="voteOption"
                       id={"voteOption" + list.voteOptionNo}
+                      defaultChecked={defaultCheck === list.voteOptionNo}
                       value={list.voteOptionNo}
                       className="vote-radio"
                       onChange={optionChange}

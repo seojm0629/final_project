@@ -27,10 +27,9 @@ const Note = () => {
   const backServer = import.meta.env.VITE_BACK_SERVER; // 서버값 저장
   const [selectedContent, setSelectedContent] = useState(null); // 선택한 내용
   const [detailcontent, setDetailContent] = useState(false); // 내용의 상세보기
-
   const [selectNoteNos, setSelectNoteNos] = useState([]); // 삭제할 선택된 노트번호들 배열
   const [noteModal, setNoteModal] = useRecoilState(noteModalState);
-
+  const [radioCheck, setRadioCheck] = useState("");
   // 기존 모달 열기 부분 대신 아래로 수정
   useEffect(() => {
     if (noteModal.isOpen) {
