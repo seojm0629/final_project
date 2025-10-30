@@ -71,7 +71,7 @@ const SideMenu = ({ active, setActive }) => {
 
         <li>
           <button onClick={toggleCategory}>
-            페이지 관리
+            기타 관리
             <span className="material-icons">
               {openCategory ? "remove" : "add"}
             </span>
@@ -87,10 +87,10 @@ const SideMenu = ({ active, setActive }) => {
             </li>
             <li>
               <button
-                onClick={() => setActive("deal-board")}
-                className={active === "deal-board" ? "active" : ""}
+                onClick={() => setActive("eventEmail")}
+                className={active === "eventEmail" ? "active" : ""}
               >
-                중고 거래 게시판
+                이메일 전송
               </button>
             </li>
           </ul>

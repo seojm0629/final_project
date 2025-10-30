@@ -5,10 +5,11 @@ import ContentMember from "./ContentMember";
 import ContentBoard from "./ContentBoard";
 import ContentFreeBoard from "./ContentFreeBoard";
 import ContentDealBoard from "./ContentDealBoard";
-
+import "./adminEmail.css";
 import { ContentStatistics } from "./ContentStatistics";
 import "chart.js/auto";
 import { Route, Routes } from "react-router-dom";
+import EventMail from "../member/EventMail";
 
 const AdminMain = () => {
   //관리자 페이지 최상위 컴포넌트로 정의하고, 하위 컴포넌트에 필요한 props 를 모두 넘겨주고, 화면에 표현하는 역할을 한다.
@@ -26,7 +27,7 @@ const AdminMain = () => {
         {active === "member" && <ContentMember />}
 
         {active === "free-board" && <ContentFreeBoard />}
-        {active === "deal-board" && <ContentDealBoard />}
+        {active === "eventEmail" && <EventMail />}
       </div>
     </div>
   );
