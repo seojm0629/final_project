@@ -171,10 +171,7 @@ public class FreeBoardService {
 		return result;
 	}
 	
-	public FreeBoardCategoryDTO selectCategory(int freeBoardSubcategoryNo, int freeBoardCategoryNo) {
-		FreeBoardCategoryDTO cate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
-		
-		return null;}
+	
 	
 	@Transactional
 	public int insertClaim(HashMap<String, Object> fbClaimSet) {
