@@ -101,3 +101,33 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.vote-detail-ul-end {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  font-weight: bold;
+  flex-direction: column;
+  align-items: center;
+}
+.vote-detail-content-end {
+  display: flex;
+  width: 70%;
+  height: 100%;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.vote-content-end-div1 {
+  display: flex;
+  gap: 10px;
+}
+
+.detail-checkicon {
+  color: blue;
+  display: flex;
+}
