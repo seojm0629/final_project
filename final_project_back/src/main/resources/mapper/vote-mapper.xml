@@ -27,7 +27,7 @@
 	        (select * from 
             (select c.*,nvl(total , 0)vote_total from 
 	            (select B.*,
-	                    (select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = 5102)vote_ok
+	                    (select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = #{memberNo})vote_ok
 	                    from 
 	                    (
 	                    select A.* from
@@ -104,5 +104,12 @@
 		update vote_tbl set vote_check = 1 where vote_no = #{voteNo}
 	</update>
 	
+	<select id="checkOption" resultType="int">
+		select vote_option_no from vote_result_tbl where vote_no = #{voteNo} and member_no = #{memberNo}
+	</select>
+	
+	<update id="reVote">
+		update vote_result_tbl set vote_option_no = #{voteOptionNo} where vote_no= #{voteNo} and member_no = #{memberNo}
+	</update>
 		
 </mapper>

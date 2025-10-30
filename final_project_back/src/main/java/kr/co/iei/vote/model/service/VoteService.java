@@ -115,4 +115,21 @@ public class VoteService {
 		int result = voteDao.updateEndDate(voteNo);
 		return result;
 	}
+
+	public int checkOption(int voteNo, int memberNo) {
+		HashMap<String, Object> voteSet = new HashMap<>();
+		voteSet.put("voteNo", voteNo);
+		voteSet.put("memberNo", memberNo);
+		
+		int result = voteDao.checkOption(voteSet);
+		
+		return result;
+	}
+
+	@Transactional
+	public int reVote(VoteResult result) {
+		int check = voteDao.reVote(result);
+		
+		return check;
+	}
 }

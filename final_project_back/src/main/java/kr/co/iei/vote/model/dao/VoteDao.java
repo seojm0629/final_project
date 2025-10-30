@@ -39,5 +39,9 @@ public interface VoteDao {
 
 	int updateEndDate(int voteNo);
 
+	int checkOption(HashMap<String, Object> voteSet);
+
+	int reVote(VoteResult result);
+
 	
 }

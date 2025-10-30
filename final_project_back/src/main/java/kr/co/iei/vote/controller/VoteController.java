@@ -126,7 +126,23 @@ public class VoteController {
 		
 		int result = voteService.updateEndDate(voteNo);
 		
+		return ResponseEntity.ok(result);	
+	}
+	@GetMapping(value="/checkOption/{voteNo}/{memberNo}")
+	public ResponseEntity<Integer> checkOption(@PathVariable int voteNo, @PathVariable int memberNo){
+		System.out.println("옵션체크" + voteNo + memberNo);
+		int result = voteService.checkOption(voteNo,memberNo);
+		
 		return ResponseEntity.ok(result);
 		
+	}
+	@PatchMapping(value = "/reVote")
+	public ResponseEntity<Integer> reVote(@RequestBody VoteResult result) {
+		System.out.println("리절트 값 확인dddddddddddddddddddd" +  result);
+	
+		int voteResult = voteService.reVote(result);
+		
+		
+		return ResponseEntity.ok(voteResult);
 	}
 }
