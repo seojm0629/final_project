@@ -31,6 +31,7 @@ const VoteDetail = () => {
       },
     ],
   };
+  const [refreshToggle, setRefreshToggle] = useState(false);
   //눌렀던 게시글의 기본정보들 다 가져오기
   useEffect(() => {
     axios
@@ -42,9 +43,9 @@ const VoteDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refreshToggle]);
   //리스트 항목 가져오는 엑시오스
-  const [refreshToggle, setRefreshToggle] = useState(false);
+
   useEffect(() => {
     axios
       .get(`${backServer}/vote/option/${voteNo}`)
