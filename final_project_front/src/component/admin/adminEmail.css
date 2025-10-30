@@ -1,20 +1,17 @@
 .admin .admin-right.email .admin-content-wrap.email {
   display: flex;
   justify-content: center;
-
+  flex-direction: column;
   text-align: center;
+  align-items: center;
 }
 
 .admin .email-input-form {
-  display: flex;
-  flex-direction: column;
-
-  gap: 24px;
   background-color: white;
   border: 1px solid #d6dae2;
   border-radius: 8px;
   box-shadow: 0 2px 6px #e5e7eb;
-  width: 50%;
+  width: 100%;
 }
 
 .admin .event-mail-input {
@@ -50,14 +47,18 @@
   background-color: #4d7299;
 }
 
-.email-target-table th,
-.email-target-table td {
+.admin .email-target-table th,
+.admin .email-target-table td {
   border: 1px solid #e6e8ee;
   padding: 10px 12px;
   text-align: center;
 }
-.email-target-table thead th {
+.admin .email-target-table thead th {
   background: #ffffff;
   font-size: 16px;
   color: #1f3956;
+}
+
+.admin .admin-right.email .title.m {
+  margin: 30px 0;
 }

@@ -85,57 +85,60 @@ const EventMail = () => {
 
   return (
     <section className="admin-right email">
-      <div className="admin-content-wrap email">
-        <div className="email-input-form">
-          {isLoader && (
-            <div className="loader-wrap">
-              <span className={isLoading ? "loader" : ""}></span>
-            </div>
-          )}
+      <div className="admin-content-wrap email content-head">
+        <div className="title m">광고성 메일 전송</div>
+        <div>
+          <div className="email-input-form">
+            {isLoader && (
+              <div className="loader-wrap">
+                <span className={isLoading ? "loader" : ""}></span>
+              </div>
+            )}
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              sendMail();
-            }}
-          >
-            <div className="event-mail-input">
-              <div className="event-mail-title">
-                <label htmlFor="eventTitle">제목</label>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMail();
+              }}
+            >
+              <div className="event-mail-input">
+                <div className="event-mail-title">
+                  <label htmlFor="eventTitle">제목</label>
+                </div>
+                <div className="event-mail-content">
+                  <input
+                    type="text"
+                    name="eventTitle"
+                    id="eventTitle"
+                    placeholder="제목을 입력해주세요."
+                    value={eventMail.eventTitle}
+                    onChange={inputMailData}
+                  />
+                </div>
               </div>
-              <div className="event-mail-content">
-                <input
-                  type="text"
-                  name="eventTitle"
-                  id="eventTitle"
-                  placeholder="제목을 입력해주세요."
-                  value={eventMail.eventTitle}
-                  onChange={inputMailData}
-                />
-              </div>
-            </div>
 
-            <div className="event-mail-input">
-              <div className="event-mail-title">
-                <label htmlFor="eventContent">내용</label>
+              <div className="event-mail-input">
+                <div className="event-mail-title">
+                  <label htmlFor="eventContent">내용</label>
+                </div>
+                <div className="event-mail-content">
+                  <textarea
+                    type="text"
+                    name="eventContent"
+                    id="eventContent"
+                    value={eventMail.eventContent}
+                    onChange={inputMailData}
+                    placeholder={`※ 주의하세요!!!!!!!!!!! ※ \n본 메일은 광고성 메일 수신 동의한 전체 유저에게 발송됩니다.`}
+                  />
+                </div>
               </div>
-              <div className="event-mail-content">
-                <textarea
-                  type="text"
-                  name="eventContent"
-                  id="eventContent"
-                  value={eventMail.eventContent}
-                  onChange={inputMailData}
-                  placeholder={`※ 주의하세요!!!!!!!!!!! ※ \n본 메일은 광고성 메일 수신 동의한 전체 유저에게 발송됩니다.`}
-                />
+              <div className="email-btn-box">
+                <button type="submit" className="email-button">
+                  전송하기
+                </button>
               </div>
-            </div>
-            <div className="email-btn-box">
-              <button type="submit" className="email-button">
-                전송하기
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
 
