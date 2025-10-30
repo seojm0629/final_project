@@ -1,5 +1,6 @@
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
@@ -36,7 +37,10 @@ const FreeBoardDetail = () => {
 
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
-  console.log(commentCount);
+  
+
+  
+
   useEffect(() => {
     console.log(commentCount);
     if (fbClaimSet === undefined) {
@@ -257,6 +261,23 @@ const FreeBoardDetail = () => {
         });
     }
   };
+
+  /* 좋아요 */
+  const [like, setLike]  = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const ClickLike = () => {
+    if(!member){
+    Swal.fire({
+      title: "로그인",
+      text: "로그인 후 이용해주세요.",
+      icon: "warning",
+    });
+      navigate("/member/login");
+    }else{
+      setLike(!like);
+    }
+    
+  }
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -279,8 +300,12 @@ const FreeBoardDetail = () => {
           <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
           111
         </div>
-        <div className="heart">
-          <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+        <div className="heart" style={{cursor: "pointer"}} onClick={ClickLike}>
+          {like ? (
+              <FavoriteOutlinedIcon style={{ color: "red" }} />
+            ) : (
+              <FavoriteBorderOutlinedIcon/>
+            )}
           {freeBoard.likeCount}
         </div>
         <div className="hour">
@@ -501,7 +526,6 @@ const FreeBoardDetail = () => {
                                 text: "댓글을 입력해주세요.",
                                 icon: "warning",
                               });
-                              console.log("return 앞");
                               return;
                             } else {
                               axios
