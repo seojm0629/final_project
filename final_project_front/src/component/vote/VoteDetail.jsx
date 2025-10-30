@@ -6,6 +6,7 @@ import axios from "axios";
 import "./voteDetail.css";
 import Swal from "sweetalert2";
 import { Bar } from "react-chartjs-2";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const VoteDetail = () => {
   const params = useParams(); //주소값에서 불러오는 파람값
   const voteNo = params.voteNo;
@@ -232,32 +233,28 @@ const VoteDetail = () => {
       )}
 
       {vote &&
-        vote.voteCheck === 0 && ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
+        (vote.voteCheck === 0 ? ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
           <div className="vote-detail-list">
             <div className="vote-detail-list-title">{vote.voteTitle}</div>
             <ul className="vote-detail-ul">
               {voteList.map((list, i) => {
-                console.log(defaultCheck);
-                console.log(list.voteOptionNo);
-                return (
-                  <li className="vote-detail-content" key={"list" + i}>
-                    <input
-                      type="radio"
-                      name="voteOption"
-                      id={"voteOption" + list.voteOptionNo}
-                      defaultChecked={defaultCheck === list.voteOptionNo}
-                      value={list.voteOptionNo}
-                      className="vote-radio"
-                      onChange={optionChange}
-                    ></input>
-                    <label
-                      htmlFor={"voteOption" + list.voteOptionNo}
-                      className="vote-label"
-                    >
-                      {list.voteContent}
-                    </label>
-                  </li>
-                );
+                <li className="vote-detail-content" key={"list" + i}>
+                  <input
+                    type="radio"
+                    name="voteOption"
+                    id={"voteOption" + list.voteOptionNo}
+                    defaultChecked={defaultCheck === list.voteOptionNo}
+                    value={list.voteOptionNo}
+                    className="vote-radio"
+                    onChange={optionChange}
+                  />
+                  <label
+                    htmlFor={"voteOption" + list.voteOptionNo}
+                    className="vote-label"
+                  >
+                    {list.voteContent}
+                  </label>
+                </li>;
               })}
             </ul>
             <div className="vote-detail-button-box">
@@ -266,7 +263,28 @@ const VoteDetail = () => {
               </button>
             </div>
           </div>
-        )}
+        ) : (
+          <div className="vote-detail-list">
+            <div className="vote-detail-list-title">종료된 투표입니다.</div>
+            <ul className="vote-detail-ul-end">
+              {voteList.map((list, i) => {
+                return (
+                  <li className="vote-detail-content-end" key={"list" + i}>
+                    <div className="vote-content-end-div1">
+                      {list.voteContent}
+                      <span className="detail-checkicon">
+                        {defaultCheck === list.voteOptionNo && (
+                          <CheckCircleIcon />
+                        )}
+                      </span>
+                    </div>
+                    <div>{values} 표</div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
       <div className="vote-result-graph">
         <Bar
           data={data}
