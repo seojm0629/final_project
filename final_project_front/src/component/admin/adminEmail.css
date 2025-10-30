@@ -1,0 +1,63 @@
+.admin .admin-right.email .admin-content-wrap.email {
+  display: flex;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.admin .email-input-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+  background-color: white;
+  border: 1px solid #d6dae2;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px #e5e7eb;
+  width: 50%;
+}
+
+.admin .event-mail-input {
+  margin: 40px;
+}
+.admin .event-mail-title {
+  justify-content: center;
+  font-weight: 700;
+  color: #2f4e70;
+  font-size: 22px;
+  text-align: center;
+}
+.admin .event-mail-content {
+  text-align: center;
+}
+
+.admin .event-mail-content input,
+.admin .event-mail-content textarea {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background-color: #f7f9fc;
+}
+
+.admin .email-button {
+  margin-bottom: 40px;
+  width: 300px;
+  cursor: pointer;
+}
+
+.admin .email-button:hover {
+  background-color: #4d7299;
+}
+
+.email-target-table th,
+.email-target-table td {
+  border: 1px solid #e6e8ee;
+  padding: 10px 12px;
+  text-align: center;
+}
+.email-target-table thead th {
+  background: #ffffff;
+  font-size: 16px;
+  color: #1f3956;
+}
