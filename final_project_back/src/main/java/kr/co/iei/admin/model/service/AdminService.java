@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.admin.model.dao.AdminDao;
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
@@ -131,6 +132,7 @@ public class AdminService {
 		return map;
 	}
 
+	@Transactional
 	public int insertFreeCate(HashMap<String, Object> insertCateSet) {
 		System.out.println(insertCateSet.get("categoryAddText"));
 		int result = 0;
@@ -160,6 +162,7 @@ public class AdminService {
 		return result;
 	}
 
+	@Transactional
 	public List<AdminNoticeDTO> insertNotice(HashMap<String, Object> insertNoticeSet) {
 		int result = adminDao.insertNotice(insertNoticeSet);
 		List<AdminNoticeDTO> selectAllNotice = new ArrayList<>();
@@ -177,12 +180,14 @@ public class AdminService {
 		return selectAllNotice;
 	}
 
+	@Transactional
 	public int deleteFreeCate(String delCate) {
 		System.out.println(delCate);
 		int result = adminDao.deleteFreeCate(delCate);
 		return result;
 	}
 
+	@Transactional
 	public int deleteFreeCate2(HashMap<String, Object> delCateSet) {
 		System.out.println("실제삭제 : " + delCateSet);
 		int result = adminDao.deleteFreeCate2(delCateSet);
