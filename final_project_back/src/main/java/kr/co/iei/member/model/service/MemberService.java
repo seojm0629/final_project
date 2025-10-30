@@ -194,6 +194,7 @@ public class MemberService {
 		
 		for(MemberDTO memberList : list) {
 			memberEmailList.add(memberList.getMemberEmail());
+			
 		}
 		
 		

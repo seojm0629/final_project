@@ -271,11 +271,14 @@ const MemberNotice = (props) => {
         axios
         .patch(`${import.meta.env.VITE_BACK_SERVER}/member/promotion?memberId=${memberId}&&memberCheck=${memberCheck}`)
         .then((res)=>{
+            console.log(res);
             if(res.data === 1){
-                alert("홍보 및 이벤트 이메일 수신 동의하셨습니다.");
-            } else {
-                alert("홍보 및 이벤트 이메일 수신 동의를 해제하셨습니다.");
-            }
+                if(memberCheck === "Y"){
+                    alert("홍보 및 이벤트 이메일 수신 동의하셨습니다.");
+                } else {
+                    alert("홍보 및 이벤트 이메일 수신 동의를 해제하셨습니다.");
+                }
+            } 
                     
         })
         .catch((err)=>{
