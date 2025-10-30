@@ -22,4 +22,5 @@ public class VoteDTO {
 	private List<String> voteContent;
 	private String memberNickname;
 	private int voteOk;
+	private int voteTotal;
 }
