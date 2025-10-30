@@ -212,30 +212,30 @@ const Main = () => {
                 {/* 중고거래 게시판, 자유게시판 */}
                 <div className="transaction-board first">
                   <div className="main-board-header">
-                    <h4>중고거래 게시판</h4>
+                    <h4>투표 게시판</h4>
                   </div>
 
                   <ul className="main-board-content">
                     <div className="main-board-title">
-                      {tradeBoardList.map((list, i) => {
-                        return (
-                          <li key={"main-" + i}>
-                            <span>{list.tradeBoardTitle}</span>
-                          </li>
-                        );
-                      })}
-                    </div>
-                    <div className="main-board-like">
-                      {tradeBoardList.map((list, i) => {
-                        return (
-                          <li key={"key-" + i} className="main-board-info">
-                            <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
-                            <span>좋아요</span>
-                          </li>
-                        );
-                      })}
-                    </div>
+                          {voteBoardList.map((list, i)=>{
+                            return(
+                                                            <li key={"vote-" + i}>
+                                                                <span>{list.voteTitle}</span>
+                                                            </li>
+                                                        )
+                                                    })}
+                                                </div>
+                                                <div className="main-board-like">
+                                                    {voteBoardList.map((list, i)=>{
+                                                        return(
+                                                            <li key={"nick-" + i} className="main-board-info">
+                                                                <span>{list.memberNickname}</span>
+                                                                <span>1시간전</span>
+                                                                <span>좋아요</span>
+                                                            </li>
+                                                        )
+                                                    })}
+                                                </div>
                   </ul>
                 </div>
 
