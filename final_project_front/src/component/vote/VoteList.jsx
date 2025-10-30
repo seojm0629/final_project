@@ -108,6 +108,7 @@ const VoteList = () => {
         <table className="vote-tbl">
           <thead>
             <tr className="vote-tr">
+              <th style={{ width: "3%" }}></th>
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
@@ -116,8 +117,8 @@ const VoteList = () => {
               >
                 제목
               </th>
-              <th style={{ width: "5%" }}></th>
-              <th style={{ width: "7%" }}>투표여부</th>
+              <th style={{ width: "9%" }}></th>
+
               <th style={{ width: "10%" }}>투표상황</th>
               <th style={{ width: "15%" }}>시작날짜</th>
               <th style={{ width: "15%" }}>종료날짜</th>
@@ -134,10 +135,26 @@ const VoteList = () => {
               voteList.map((list, i) => {
                 return (
                   <tr key={"list-" + i}>
+                    {todayDate ===
+                    dayjs(list.voteDate).$y +
+                      "-" +
+                      (dayjs(list.voteDate).$M + 1) +
+                      "-" +
+                      dayjs(list.voteDate).$D ? (
+                      <td className="new-icon">
+                        <FiberNewIcon></FiberNewIcon>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
                     <td>{list.memberNickname}</td>
                     <td
                       className="td-title"
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        textAlign: "left",
+                        paddingLeft: "50px",
+                      }}
                       onClick={() => {
                         if (!member) {
                           // 로그인되지 않은 경우, 투표 상세 페이지로 가지 않음
@@ -156,20 +173,10 @@ const VoteList = () => {
                     >
                       {list.voteTitle}
                     </td>
-                    {todayDate ===
-                    dayjs(list.voteDate).$y +
-                      "-" +
-                      (dayjs(list.voteDate).$M + 1) +
-                      "-" +
-                      dayjs(list.voteDate).$D ? (
-                      <td className="new-icon">
-                        <FiberNewIcon></FiberNewIcon>
-                      </td>
-                    ) : (
-                      <td></td>
-                    )}
+
                     {list.voteOk === 1 && member !== "" ? (
                       <td className="check-icon">
+                        투표 완료
                         <CheckCircleIcon />
                       </td>
                     ) : (
