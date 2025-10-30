@@ -34,13 +34,21 @@ const FreeBoardDetail = () => {
   const [fbcClaimSet, setFbcClaimSet] = useState();
   console.log(fbcClaimSet);
   console.log(freeBoardNo);
+  console.log(fbClaimSet);
+  console.log(localStorage);
+
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
     }
+    //URI 정리 (Restful하게 하기.)
+    // [POST] freeBoard/${freeBoardNo}/claim
+    //  -- 자유 게시판에 -> 몇번의 게시글을 -> 신고 (insert : POST)
     axios
       .post(
-        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/claim`,
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/${
+          fbClaimSet.freeBoardNo
+        }/claim`,
         fbClaimSet
       )
       .then((res) => {
@@ -65,13 +73,16 @@ const FreeBoardDetail = () => {
       });
   }, [fbClaimSet]);
 
+  console.log(fbcClaimSet);
   useEffect(() => {
     if (fbcClaimSet === undefined) {
       return;
     }
     axios
       .post(
-        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/comment/claim`,
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/comment/${
+          fbcClaimSet.fbCommentNo
+        }/claim`,
         fbcClaimSet
       )
       .then((res) => {
