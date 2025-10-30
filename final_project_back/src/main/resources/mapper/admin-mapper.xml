@@ -460,7 +460,7 @@
 	<select id="statisticsBc" resultType="int">
 		SELECT (SELECT COUNT(*)
 		FROM FREE_BOARD_TBL) + (SELECT COUNT(*) FROM
-		TRADE_BOARD_TBL)
+		VOTE_TBL)
 		BOARD_COUNT FROM DUAL
 	</select>
 	<select id="statisticsBcc" resultType="int">

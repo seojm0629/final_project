@@ -358,12 +358,12 @@ const ContentStatistics = () => {
             <ChartTemplate
               title={
                 selectCriteria === "5년"
-                  ? "연간 거래 게시물 수"
+                  ? "연간 투표 게시물 수"
                   : selectCriteria === "1년"
-                  ? "월간 거래 게시물 수"
+                  ? "월간 투표 게시물 수"
                   : selectCriteria === "1개월"
-                  ? "일간 거래 게시물 수"
-                  : "시간대별 거래 게시물 등록 수"
+                  ? "일간 투표 게시물 수"
+                  : "시간대별 투표 게시물 등록 수"
               }
               subTitle={"기준 : " + selectCriteria}
               chartTag={<Line data={dataTradeBoard} />}
@@ -460,7 +460,9 @@ const DiffCount = () => {
           </div>
         </div>
         <div className="element">
-          <div className="entireBox-title">전체 게시글 수</div>
+          <div className="entireBox-title">
+            전체 게시글 수 (투표 교체 작업 완료)
+          </div>
           <div className="entireBox-content">{bc} 건</div>
           <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
             전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}
