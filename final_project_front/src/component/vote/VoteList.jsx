@@ -13,6 +13,7 @@ dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
 import FiberNewIcon from "@mui/icons-material/FiberNew";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 const VoteList = () => {
   const [order, setOrder] = useState(3); // 정렬  0 -- 종료  1 -- 진행중
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
@@ -112,12 +113,12 @@ const VoteList = () => {
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
-                  width: "30%",
+                  width: "34%",
                 }}
               >
                 제목
               </th>
-              <th style={{ width: "7%" }}>투표현황</th>
+              <th style={{ width: "3%" }}>투표</th>
               <th style={{ width: "9%" }}></th>
               <th style={{ width: "10%" }}>투표상황</th>
               <th style={{ width: "15%" }}>시작날짜</th>
@@ -156,19 +157,7 @@ const VoteList = () => {
                         paddingLeft: "50px",
                       }}
                       onClick={() => {
-                        if (!member) {
-                          // 로그인되지 않은 경우, 투표 상세 페이지로 가지 않음
-                          Swal.fire({
-                            title: "로그인",
-                            text: "로그인 후 투표를 확인할 수 있습니다.",
-                            icon: "warning",
-                          }).then(() => {
-                            navigate("/member/login"); // 로그인 페이지로 이동
-                          });
-                        } else {
-                          // 로그인된 경우 투표 상세 페이지로 이동
-                          navigate(`/vote/VoteDetail/${list.voteNo}`);
-                        }
+                        navigate(`/vote/VoteDetail/${list.voteNo}`);
                       }}
                     >
                       {list.voteTitle}
@@ -180,7 +169,9 @@ const VoteList = () => {
                         <CheckCircleIcon />
                       </td>
                     ) : (
-                      <td></td>
+                      <td>
+                        <CheckCircleOutlineIcon />
+                      </td>
                     )}
                     <td>{list.voteCheck === 0 ? "진행중" : "종료"}</td>
                     <td className="td-votedate">{list.voteDate}</td>

@@ -10,6 +10,7 @@ const VoteDetail = () => {
   const params = useParams(); //주소값에서 불러오는 파람값
   const voteNo = params.voteNo;
   const [memberNo, setMemberNo] = useRecoilState(memberNoState); // 로그인된 memberNo
+  const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId,
   const navigate = useNavigate();
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const [selectedOption, setSelectedOption] = useState(null); // 레디오 선택한값 담기
@@ -19,7 +20,7 @@ const VoteDetail = () => {
   const [values, setValues] = useState([]);
   //차트 안에 들어갈 data (찾아보면 더 있음)
   const data = {
-    labels: labels,
+    labels: voteList.map((item) => item.voteContent), // 투표안한 항목 다보이게 표시
     datasets: [
       {
         label: "투표수",
@@ -59,8 +60,6 @@ const VoteDetail = () => {
     axios
       .get(`${backServer}/vote/count/${voteNo}`)
       .then((res) => {
-        console.log(res.data);
-
         const a = res.data.map((item, index) => {
           return item.voteContent;
         });
@@ -87,6 +86,16 @@ const VoteDetail = () => {
 
   //투표하기 버튼 눌렀을때
   const voteResult = () => {
+    if (!member) {
+      Swal.fire({
+        title: "로그인",
+        text: "로그인 후 투표를 확인할 수 있습니다.",
+        icon: "warning",
+      }).then(() => {
+        navigate("/member/login");
+      });
+      return;
+    }
     if (!selectedOption) {
       Swal.fire({
         title: "투표 실패",
@@ -230,6 +239,9 @@ const VoteDetail = () => {
                 ticks: {
                   // 옆 틱 값
                   stepSize: 1, // 눈금 표시
+                  autoSkip: false,
+                  maxRotation: 0,
+                  minRotation: 0,
                   callback: function (value) {
                     // 실행값
                     return value;

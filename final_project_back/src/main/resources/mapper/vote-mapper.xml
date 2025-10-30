@@ -24,7 +24,8 @@
 	<select id="selectVoteList" resultType="vote">
 	select * from
 	    (select rownum rnum,e.* from
-	        (select c.*,nvl(total , 0)vote_total from 
+	        (select * from 
+            (select c.*,nvl(total , 0)vote_total from 
 	            (select B.*,
 	                    (select count(*) from vote_result_tbl where vote_no = b.vote_no and member_no = 5102)vote_ok
 	                    from 
@@ -37,14 +38,15 @@
 	                        , vote_check 
 	                        from member_tbl
 	                        join vote_tbl using(member_no)
-	                        order by vote_check asc, vote_date desc, vote_no desc
+                            <if test="order != 3">
+							where vote_check = #{order}
+							</if>
 	                        )A
-	                    )B             
-	               )C left join (select count(*)total,vote_no from vote_result_tbl group by vote_no)D on (c.vote_no = d.vote_no))e)f 
+	                    )B     
+	               )C left join (select count(*)total,vote_no from vote_result_tbl group by vote_no)    
+                   D on (c.vote_no = d.vote_no))
+                 order by vote_check asc, vote_date desc, vote_no desc)e)f 
 	where rnum between #{startRow} and #{endRow}
-           
-		
-		
 	</select>
 	
  	<select id="totalListCount" resultType="int">
