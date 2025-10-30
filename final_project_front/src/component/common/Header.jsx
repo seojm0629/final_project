@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { useRecoilState } from "recoil";
-import { loginIdState, memberTypeState } from "../utils/RecoilData";
+import { loginIdState, memberNoState, memberTypeState } from "../utils/RecoilData";
 import Note from "../note/note";
 
 const Header = () => {
@@ -120,15 +120,21 @@ const MainNavi = () => {
 const HeaderLink = () => {
   const [memberId, setMemberId] = useRecoilState(loginIdState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState);
 
   const navigate = useNavigate();
   const logout = () => {
     setMemberId("");
     setMemberType(0);
+    setMemberNo(0);
     delete axios.defaults.headers.common["Authorization"];
+    window.localStorage.removeItem("accessToken");
     window.localStorage.removeItem("refreshToken");
+    window.localStorage.removeItem("recoil-persist");
+    
     navigate("/");
   };
+  console.log(localStorage);
 
   return (
     <ul className="header-user">

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginIdState, memberTypeState } from "../utils/RecoilData";
+import { loginIdState, memberNoState, memberTypeState } from "../utils/RecoilData";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ const Main = () => {
   // 로그인 정보
   const [memberId, setMemberId] = useRecoilState(loginIdState);
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState);
 
   const [member, setMember] = useState({
     memberId: memberId,
@@ -44,8 +45,11 @@ const Main = () => {
   const logout = () => {
     setMemberId("");
     setMemberType(0);
+    setMemberNo(0);
     delete axios.defaults.headers.common["Authorization"];
+    window.localStorage.removeItem("accessToken");
     window.localStorage.removeItem("refreshToken");
+    window.localStorage.removeItem("recoil-persist");
     navigate("/");
   };
 
