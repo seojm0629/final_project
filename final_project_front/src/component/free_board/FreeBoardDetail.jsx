@@ -33,14 +33,22 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
   console.log(fbcClaimSet);
+  console.log(freeBoardNo);
+  console.log(fbClaimSet);
+  console.log(localStorage);
 
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
     }
+    //URI 정리 (Restful하게 하기.)
+    // [POST] freeBoard/${freeBoardNo}/claim
+    //  -- 자유 게시판에 -> 몇번의 게시글을 -> 신고 (insert : POST)
     axios
       .post(
-        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/claim`,
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/${
+          fbClaimSet.freeBoardNo
+        }/claim`,
         fbClaimSet
       )
       .then((res) => {
@@ -65,13 +73,16 @@ const FreeBoardDetail = () => {
       });
   }, [fbClaimSet]);
 
+  console.log(fbcClaimSet);
   useEffect(() => {
     if (fbcClaimSet === undefined) {
       return;
     }
     axios
       .post(
-        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/detail/comment/claim`,
+        `${import.meta.env.VITE_BACK_SERVER}/freeBoard/comment/${
+          fbcClaimSet.fbCommentNo
+        }/claim`,
         fbcClaimSet
       )
       .then((res) => {
@@ -213,7 +224,7 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
-  const commentModify = () => {};
+  //const commentModify = () => {};
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -432,14 +443,15 @@ const FreeBoardDetail = () => {
                   />
                 </div>
                 <div className="comment-writer">
-                  <span>{comment.memberNickname}</span>
+                  <span>{comment.memberNickname}</span>ㆍ
                   <span>{comment.memberId}</span>
                 </div>
-
-                <textarea
-                  type="text"
-                  placeholder="댓글을 남겨주세요."
-                ></textarea>
+                <div className="comment-modify">
+                  <textarea
+                    type="text"
+                    placeholder="댓글을 남겨주세요."
+                  ></textarea>
+                </div>
                 <div
                   className="comment-text"
                   dangerouslySetInnerHTML={{
@@ -458,9 +470,7 @@ const FreeBoardDetail = () => {
                 </div>
                 {freeBoardCommentMemberNo && (
                   <div className="comment-button">
-                    <button className="modify-btn" onClick={commentModify}>
-                      수정
-                    </button>
+                    <button className="modify-btn">수정</button>
                     <button className="delete-btn">삭제</button>
                   </div>
                 )}

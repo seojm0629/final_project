@@ -708,7 +708,30 @@
   padding-right: 10px;
   width: 100px;
   height: 80px;
-
+  resize: none;
+  scrollbar-width: none;
+}
+.comment-modify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 12px;
+  height: 100px;
+}
+.comment-modify textarea {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border: none;
+  font-size: 14px;
+  padding-left: 10px;
+  background-color: #f0f2f5; /* 바탕 배경색과 동일 */
+  margin-right: 10px;
+  padding-right: 10px;
+  width: 100px;
+  height: 80px;
   resize: none;
   scrollbar-width: none;
 }
