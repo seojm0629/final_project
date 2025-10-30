@@ -165,7 +165,6 @@ const VoteList = () => {
                     <td>{list.voteTotal}표</td>
                     {list.voteOk === 1 && member !== "" ? (
                       <td className="check-icon">
-                        투표 완료
                         <CheckCircleIcon />
                       </td>
                     ) : (
