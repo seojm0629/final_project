@@ -204,7 +204,7 @@ public class FreeBoardService {
 	}
 	@Transactional
 	public int modifyFreeBoard(FreeBoardDTO freeBoard) {
-		FreeBoardDTO board = freeBoardDao.selectOneBoard(freeBoard.getFreeBoardNo());
+		//FreeBoardDTO board = freeBoardDao.selectOneBoard(freeBoard.getFreeBoardNo());
 		int result = freeBoardDao.modifyFreeBoard(freeBoard);
 		
 		return result;
@@ -212,6 +212,17 @@ public class FreeBoardService {
 	@Transactional
 	public int updateComment(FreeBoardCommentDTO freeBoardComment) {
 		int result = freeBoardDao.updateComment(freeBoardComment);
+		return result;
+	}
+
+	public FreeBoardCategoryDTO selectCateNo(String freeBoardCategory, String freeBoardSubcategory) {
+		FreeBoardCategoryDTO freeBoardCate = freeBoardDao.selectCateNo(freeBoardCategory, freeBoardSubcategory);
+		
+		return freeBoardCate;
+	}
+
+	public int deleteComment(int fbCommentNo) {
+		int result = freeBoardDao.deleteComment(fbCommentNo);
 		return result;
 	}
 

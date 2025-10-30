@@ -150,7 +150,7 @@ public class FreeBoardController {
 	@GetMapping(value = "/detail/comment")
 	public ResponseEntity<List<FreeBoardCommentDTO>> selectOneComment(@RequestParam int freeBoardNo){
 		List<FreeBoardCommentDTO> freeBoardComment = freeBoardService.selectOneComment(freeBoardNo);
-		System.out.println(freeBoardComment);
+		//System.out.println(freeBoardComment);
 		return ResponseEntity.ok(freeBoardComment);
 	}
 
@@ -195,6 +195,11 @@ public class FreeBoardController {
 		System.out.println("최종 결과값 확인 : "+result);
 		return ResponseEntity.ok(result);
 	}
+	@GetMapping(value = "/modify/select")
+	public ResponseEntity<FreeBoardCategoryDTO> selectCateNo(@RequestParam String freeBoardCategory, @RequestParam String freeBoardSubcategory){
+		FreeBoardCategoryDTO freeBoardCate = freeBoardService.selectCateNo(freeBoardCategory, freeBoardSubcategory); 
+		return ResponseEntity.ok(freeBoardCate);
+	}
 	@PatchMapping(value = "/modify/fix")
 	public ResponseEntity<Integer> modifyFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto) {
 		if(freeBoardThumbnail != null) {
@@ -220,11 +225,16 @@ public class FreeBoardController {
 		}*/
 		//FreeBoardDTO board = freeBoardService.modifyFreeBoard(freeBoard);
 		//int result = freeBoardService.modifyFreeBoard(freeBoard);
-		return ResponseEntity.ok(1);
+		return ResponseEntity.ok(result);
 	}
 	@PatchMapping(value = "/detail/update")
 	public ResponseEntity<Integer> updateComment(@RequestBody FreeBoardCommentDTO freeBoardComment){
 		int result = freeBoardService.updateComment(freeBoardComment);
+		return ResponseEntity.ok(result);
+	}
+	@DeleteMapping(value = "/detail/deleteComment/{fbCommentNo}")
+	public ResponseEntity<Integer> deleteComment(@PathVariable int fbCommentNo){
+		int result = freeBoardService.deleteComment(fbCommentNo);
 		return ResponseEntity.ok(result);
 	}
 }

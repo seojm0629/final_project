@@ -68,9 +68,12 @@ const FreeBoardModify = (props) => {
     const formData = new FormData();
     formData.append("freeBoardCategoryNo", freeBoardCategoryNo);
     formData.append("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
+    console.log(freeBoardCategoryNo);
+    console.log(freeBoardSubcategoryNo);
     formData.append("freeBoardTitle", freeBoardTitle);
     formData.append("memberNo", memberNo);
     formData.append("freeBoardContent", freeBoardContent);
+    formData.append("freeBoardNo", freeBoardNo);
     console.log(formData);
     if (freeBoardThumbnail !== null) {
       formData.append("freeBoardThumbnail", freeBoardThumbnail);
@@ -170,7 +173,8 @@ const FreeBoardModify = (props) => {
       .then((res1) => {
         setFreeBoardTitle(res1.data.freeBoardTitle);
         setFreeBoardContent(res1.data.freeBoardContent);
-
+        setFreeBoardCategoryNo(res1.data.freeBoardCategoryNo);
+        setFreeBoardSubcategoryNo(res1.data.freeBoardSubcategoryNo);
         axios
           .get(
             `${backServer}/freeBoard/modify/cate?freeBoardSubcategoryNo=${res1.data.freeBoardSubcategoryNo}&freeBoardCategoryNo=${res1.data.freeBoardCategoryNo}`
@@ -178,9 +182,8 @@ const FreeBoardModify = (props) => {
           .then((res2) => {
             setFreeBoardCategory(res2.data.freeBoardCategory);
             setFreeBoardSubcategory(res2.data.freeBoardSubcategory);
-
             console.log(res2.data.freeBoardCategory);
-            console.log(res2.data.freeBoardSubcategory);
+            console.log(res2.data);
           })
           .catch((err2) => {
             console.log(err2);

@@ -279,4 +279,17 @@
 	 	where fb_comment_no = #{fbCommentNo}
 	 </update>
 	 
+	 <select id="selectCateNo" resultType = "freeBoardCategory">
+	 	select 
+	 		free_board_category_no, 
+	 		free_board_subcategory_no 
+	 		from 
+	 			free_board_category_tbl left join free_board_sub_category_tbl using (free_board_category_no)
+	 		where free_board_subcategory = #{freeBoardSubcategory}
+	 </select>
+	 
+	 <delete id="deleteComment">
+	 	delete from fb_comment_tbl where fb_comment_no = #{fbCommentNo}
+	 </delete>
+	 
 </mapper>

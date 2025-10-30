@@ -62,6 +62,10 @@ public interface FreeBoardDao {
 
 	int updateComment(FreeBoardCommentDTO freeBoardComment);
 
+	FreeBoardCategoryDTO selectCateNo(String freeBoardCategory, String freeBoardSubcategory);
+
+	int deleteComment(int fbCommentNo);
+
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);
 	

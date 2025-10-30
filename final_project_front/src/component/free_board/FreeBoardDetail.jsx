@@ -21,8 +21,11 @@ const FreeBoardDetail = () => {
   const params = useParams();
   const freeBoardNo = params.freeBoardNo;
   const [freeBoard, setFreeBoard] = useState({});
-  const [freeBoardComment, setFreeBoardComment] = useState([]); //해당 게시글에 대한 번호
+  const [freeBoardComment, setFreeBoardComment] = useState([
+    { freeBoardCommentNo: 0 },
+  ]); //해당 게시글에 대한 번호
   const [fbCommentContent, setFbCommentContent] = useState(""); //게시글에 대한 댓글
+  const [fbCommentNo, setFbCommentNo] = useState();
   const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호
   const commentCount = freeBoardComment.length;
@@ -33,8 +36,9 @@ const FreeBoardDetail = () => {
 
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
-
+  console.log(commentCount);
   useEffect(() => {
+    console.log(commentCount);
     if (fbClaimSet === undefined) {
       return;
     }
@@ -135,6 +139,7 @@ const FreeBoardDetail = () => {
       });
   }, [freeBoardNo]);
   const [toggle, setToggle] = useState(false); //댓글 등록 시 랜더링 state
+
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}`)
@@ -144,8 +149,7 @@ const FreeBoardDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardNo, fbCommentContent, memberNo, toggle, modifyFbCommentContent]);
-
+  }, [freeBoardNo, fbCommentContent, toggle, modifyFbCommentContent]);
   const commentResist = () => {
     if (member === null || member === "") {
       Swal.fire({
@@ -167,7 +171,6 @@ const FreeBoardDetail = () => {
         .then((res) => {
           if (res.data === 1) {
             setFbCommentContent("");
-            setToggle(!toggle);
           }
         })
         .catch((err) => {
@@ -253,9 +256,6 @@ const FreeBoardDetail = () => {
           console.log(err);
         });
     }
-  };
-  const deleteComment = () => {
-    //axios.delete(`${backServer}/freeBoard/detail/delcomment/${}`)
   };
   return (
     /* 상세페이지  */
@@ -367,7 +367,9 @@ const FreeBoardDetail = () => {
       </div>
       <div className="comment-section">
         <div className="comment-header">
-          <span>댓글 {commentCount}</span>
+          <span>
+            댓글 {freeBoardComment[0].fbCommentNo !== 0 ? commentCount : 0}
+          </span>
           <span className="comment-order">
             최신순 <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
           </span>
@@ -444,7 +446,6 @@ const FreeBoardDetail = () => {
                             value={fbcClaimReason}
                             onChange={(e) => {
                               setFbcClaimReason(e.target.value);
-                              console.log(comment);
                             }}
                             placeholder="신고 사유를 적어주세요"
                           ></input>
@@ -476,7 +477,7 @@ const FreeBoardDetail = () => {
                   />
                 </div>
                 <div className="comment-writer">
-                  <span>{comment.memberNickname}</span>ㆍ
+                  <span>{comment.memberNickname}</span>
                   <span>{comment.memberId}</span>
                 </div>
                 {comment.memberNo === memberNo &&
@@ -489,6 +490,7 @@ const FreeBoardDetail = () => {
                         value={modifyFbCommentContent}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
+                            e.preventDefault();
                             if (
                               modifyFbCommentContent === "" ||
                               modifyFbCommentContent === " " ||
@@ -573,7 +575,41 @@ const FreeBoardDetail = () => {
                       >
                         수정
                       </button>
-                      <button className="delete-btn" onClick={deleteComment}>
+                      <button
+                        className="delete-btn"
+                        onClick={() => {
+                          Swal.fire({
+                            title: "삭제",
+                            text: "댓글을 삭제하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                          }).then((confirm) => {
+                            if (confirm.isConfirmed) {
+                              axios
+                                .delete(
+                                  `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
+                                )
+                                .then((res) => {
+                                  console.log(res);
+                                  if (res.data === 1) {
+                                    Swal.fire({
+                                      title: "댓글 삭제 완료",
+                                      text: "댓글 삭제가 완료되었습니다.",
+                                      icon: "success",
+                                    }).then(() => {
+                                      setToggle(!toggle);
+                                    });
+                                  }
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                });
+                            }
+                          });
+                        }}
+                      >
                         삭제
                       </button>
                     </div>
