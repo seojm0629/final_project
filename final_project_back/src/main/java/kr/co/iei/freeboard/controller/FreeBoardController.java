@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,15 +27,13 @@ import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
-import kr.co.iei.note.model.service.NoteService;
 import kr.co.iei.utils.FileUtil;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/freeBoard")
 public class FreeBoardController {
-
-    private final NoteService noteService;
+	
 	
 	@Autowired
 	private FreeBoardService freeBoardService;
@@ -46,9 +44,6 @@ public class FreeBoardController {
 	@Value("${file.root}")
 	private String root;
 
-    FreeBoardController(NoteService noteService) {
-        this.noteService = noteService;
-    }
 	
 	@GetMapping(value = "/mainPage")
 	public ResponseEntity<List<Map<String, Object>>> categoryList(){
@@ -183,8 +178,6 @@ public class FreeBoardController {
 		return ResponseEntity.ok(result);
 	}
 	
-	
-	
 	@PostMapping(value = "/{freeBoardNo}/claim")
 	public ResponseEntity<Integer> insertClaim(@PathVariable int freeBoardNo,@RequestBody HashMap<String, Object> fbClaimSet){
 		System.out.println(fbClaimSet);
@@ -193,7 +186,6 @@ public class FreeBoardController {
 		System.out.println("최종 결과값 확인 : "+result);
 		return ResponseEntity.ok(result);
 	}
-	
 	
 	@PostMapping(value = "/comment/{fbCommentNo}/claim")
 	public ResponseEntity<Integer> insertCommentClaim(@PathVariable int fbCommentNo,@RequestBody HashMap<String, Object> fbcClaimSet){
@@ -210,6 +202,7 @@ public class FreeBoardController {
 			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
 			freeBoard.setFreeBoardThumbnail(filepath);
 		}
+		int result = freeBoardService.modifyFreeBoard(freeBoard);
 		/*
 		List<FreeBoardPhotoDTO> freeBoardPhotoList = new ArrayList<FreeBoardPhotoDTO>();
 		if(freeBoardPhoto != null) {
@@ -225,8 +218,13 @@ public class FreeBoardController {
 				System.out.println(freeBoardPhotoList);
 			}
 		}*/
-		FreeBoardDTO board = freeBoardService.modifyFreeBoard(freeBoard);
+		//FreeBoardDTO board = freeBoardService.modifyFreeBoard(freeBoard);
 		//int result = freeBoardService.modifyFreeBoard(freeBoard);
 		return ResponseEntity.ok(1);
+	}
+	@PatchMapping(value = "/detail/update")
+	public ResponseEntity<Integer> updateComment(@RequestBody FreeBoardCommentDTO freeBoardComment){
+		int result = freeBoardService.updateComment(freeBoardComment);
+		return ResponseEntity.ok(result);
 	}
 }

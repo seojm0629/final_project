@@ -50,13 +50,25 @@ const FreeBoardWrite = (props) => {
       freeBoardCategoryNo === undefined ||
       freeBoardSubcategoryNo === undefined
     ) {
-      alert("카테고리 선택해주세요.");
+      Swal.fire({
+        title: "카테고리",
+        text: "카테고리 선택해주세요.",
+        icon: "warning",
+      });
       return;
-    } else if (freeBoardTitle === null) {
-      alert("제목을 입력해주세요.");
+    } else if (freeBoardTitle === "" || freeBoardTitle === " ") {
+      Swal.fire({
+        title: "제목 입력",
+        text: "제목을 입력해주세요.",
+        icon: "warning",
+      });
       return;
-    } else if (freeBoardContent === null) {
-      alert("내용을 입력해주세요.");
+    } else if (freeBoardContent === "" || freeBoardContent === " ") {
+      Swal.fire({
+        title: "내용 입력",
+        text: "내용을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     const formData = new FormData();
