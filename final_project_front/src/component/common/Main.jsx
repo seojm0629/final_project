@@ -264,6 +264,7 @@ dayjs.locale("ko");
                 <div className="transaction-board first">
                   <div className="main-board-header">
                     <h4>투표 게시판</h4>
+                    <h5>종료날짜</h5>
                   </div>
 
                   <ul className="main-board-content">
@@ -281,8 +282,8 @@ dayjs.locale("ko");
                                                         return(
                                                             <li key={"nick-" + i} className="main-board-info">
                                                                 <span>{list.memberNickname}</span>
-                                                                <span>1시간전</span>
-                                                                <span>좋아요</span>
+                                                                <span>{list.voteEndDate}</span>
+                                                                
                                                             </li>
                                                         )
                                                     })}
