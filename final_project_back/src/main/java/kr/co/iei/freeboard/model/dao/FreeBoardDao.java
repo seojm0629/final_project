@@ -70,7 +70,9 @@ public interface FreeBoardDao {
 	FreeBoardLikeDTO selectLike(int memberNo, int freeBoardNo); 
 	int insertLike(int memberNo, int freeBoardNo, int freeBoardSubcategoryNo, int freeBoardCategoryNo);
 	int deleteLike(int memberNo, int freeBoardNo); 
-	FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo); 
+	FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo);
+
+
 
 
 

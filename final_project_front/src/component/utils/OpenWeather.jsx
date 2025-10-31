@@ -25,7 +25,6 @@ const OpenWeather = () => {
                 axios
                 .get(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr&cnt=5`)
                 .then((res)=>{
-                    console.log(res)
                     setWeather(res.data);
 
                     
@@ -49,7 +48,7 @@ const OpenWeather = () => {
         axios
         .get(url)
         .then((res) => {
-            console.log(res.data);
+            
             setWeather(res.data);
 
             let dt = res.data.dt;
