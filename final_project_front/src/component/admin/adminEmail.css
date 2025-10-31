@@ -47,6 +47,10 @@
   background-color: #4d7299;
 }
 
+.admin .email-target-table {
+  width: 100%;
+}
+
 .admin .email-target-table th,
 .admin .email-target-table td {
   border: 1px solid #e6e8ee;
@@ -61,4 +65,9 @@
 
 .admin .admin-right.email .title.m {
   margin: 30px 0;
+}
+
+.admin .table-box {
+  width: 100%;
+  background-color: #f7f9fc;
 }
