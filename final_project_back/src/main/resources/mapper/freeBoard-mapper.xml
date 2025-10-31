@@ -292,4 +292,35 @@
 	 	delete from fb_comment_tbl where fb_comment_no = #{fbCommentNo}
 	 </delete>
 	 
+	 <select id="selectLike" resultType = "freeBoardLike">
+	 	select * from fb_like_tbl where member_no = #{memberNo} and free_board_no = #{freeBoardNo}
+	 </select>
+	 
+	 <insert id="insertLike"> 
+	 	insert into fb_like_tbl values
+	 	(
+	 		#{memberNo},
+	 		#{freeBoardNo},
+	 		#{freeBoardSubcategoryNo},
+	 		#{freeBoardCategoryNo},
+	 		sysdate
+	 	)
+	 </insert>
+	 
+	 <delete id="deleteLike">
+	 	delete from fb_like_tbl where member_no = #{memberNo} free_board_no = #{freeBoardNo}
+	 </delete>
+	 
+	 <select id="countLike" resultType = "freeBoardLike">
+	 	select like_count
+	 		from 
+			 	(select member_no, 
+			 		   free_board_no, 
+			 		   fb_like_date, 
+			 		   count(*) as like_count 
+			 		   		from fb_like_tbl 
+			 		   where member_no = #{memberNo} and free_board_no = #{freeBoardNo}
+	    		group by member_no, free_board_no, fb_like_date)
+	 </select>
+	 
 </mapper>

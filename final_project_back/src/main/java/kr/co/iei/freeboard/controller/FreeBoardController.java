@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
 import kr.co.iei.utils.FileUtil;
 
@@ -235,4 +236,11 @@ public class FreeBoardController {
 		int result = freeBoardService.deleteComment(fbCommentNo);
 		return ResponseEntity.ok(result);
 	}
+	/* 좋아요 */
+	@GetMapping(value = "/detail/selectLike")
+	public ResponseEntity<FreeBoardLikeDTO> countLike(@RequestParam int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
+		FreeBoardLikeDTO freeBoardLike = freeBoardService.countLike(memberNo, freeBoardNo, freeBoardSubcategoryNo, freeBoardCategoryNo);
+		return ResponseEntity.ok(freeBoardLike);
+	}
+	
 }
