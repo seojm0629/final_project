@@ -10,11 +10,10 @@ import FindPwModal from "../member/FindPwModal";
 import AllMemberChat from "../utils/AllMemberChat";
 import { DiffCount } from "../admin/ContentStatistics";
 import "../admin/contentStatistics.css";
-import WeatherApi from "../utils/WeatherApi";
-import ForecastWeather from "../utils/ForecastWeather";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import OpenWeather from "../utils/OpenWeather";
-import Note from "../note/note";
 import NoteId from "../note/NoteId";
+import dayjs from "dayjs";
 
 const Main = () => {
   //login 정보 가져와야함
@@ -38,6 +37,8 @@ const Main = () => {
       });
   }, []);
 
+  
+
   const navigate = useNavigate();
   const toLogin = () => {
     navigate("/member/login");
@@ -55,11 +56,11 @@ const Main = () => {
 
   //--------- 자유게시판 리스트
   const backServer = import.meta.env.VITE_BACK_SERVER;
+  // 중고거래 게시판 리스트
+  const [tradeBoardList, setTradeBoardList] = useState([]);
 
   // 자유게시판 리스트
   const [freeBoardList, setFreeBoardList] = useState([]);
-  // 중고거래 게시판 리스트
-  const [tradeBoardList, setTradeBoardList] = useState([]);
   // 자유게시판 카테고리 리스트
   const [freeBoardWorkList, setFreeBoardWorkList] = useState([]);
   const [freeBoardGameList, setFreeBoardGameList] = useState([]);
@@ -70,7 +71,21 @@ const Main = () => {
   const [voteBoardList, setVoteBoardList] = useState([]);
 
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState(1);
+  
+  /* 자유 게시판 리스트 시간 출력 */
+  const nowDate = (dateString) => {
+      const now = dayjs(); //현재 날짜/시간 가져오는 함수
+      const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
+      const diffDays = now.diff(target, "day"); // 현재날짜와 지난날짜와 비교
+      // 보낸날짜가 17일이면 오늘이 19일 그럼 2일전 표시이렇게 자동으로 계산
+      if (diffDays >= 10000) {
+        return target.format("YYYY-MM-DD"); // 7일 이상이면 날짜로 변형
+      }
+      return target.fromNow(); //한국어로 ?? 시간전 표시하기
+    };
 
+    
+    
   useEffect(() => {
     axios
       .get(`${backServer}/vote/mainTitle`)
@@ -80,13 +95,16 @@ const Main = () => {
       .catch((err) => {
         console.log(err);
       });
-  });
+  },[]);
 
   useEffect(() => {
+    
+
     axios
       .get(`${backServer}/freeBoard/mainTitle`)
       .then((res) => {
         setFreeBoardList(res.data);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -147,7 +165,7 @@ const Main = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardCategoryNo]);
+  }, []);
 
   useEffect(() => {
     axios
@@ -262,7 +280,9 @@ const Main = () => {
                         return (
                           <li key={"member-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
@@ -293,7 +313,9 @@ const Main = () => {
                         return (
                           <li key={"category-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
@@ -321,7 +343,9 @@ const Main = () => {
                         return (
                           <li key={"category-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
@@ -352,7 +376,9 @@ const Main = () => {
                         return (
                           <li key={"category-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
@@ -380,7 +406,9 @@ const Main = () => {
                         return (
                           <li key={"category-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
@@ -411,7 +439,9 @@ const Main = () => {
                         return (
                           <li key={"category-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
@@ -439,7 +469,9 @@ const Main = () => {
                         return (
                           <li key={"category-" + i} className="main-board-info">
                             <span>{list.memberNickname}</span>
-                            <span>1시간전</span>
+                            <span>
+                              {nowDate(list.freeBoardDate)}
+                            </span>
                             <span>좋아요</span>
                           </li>
                         );
