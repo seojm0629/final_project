@@ -14,6 +14,7 @@ import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
 import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 @Service
 public class AdminService {
@@ -198,6 +199,11 @@ public class AdminService {
 	public int searchMainNo(String delCate) {
 		int cateMainNo = adminDao.searchMainNo(delCate);
 		return cateMainNo;
+	}
+
+	public List<MemberDTO> mailTargetSearch() {
+		List<MemberDTO> memberList = adminDao.mailTargetSearch();
+		return memberList;
 	}
 
 }

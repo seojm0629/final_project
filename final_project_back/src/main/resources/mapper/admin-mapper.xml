@@ -856,5 +856,9 @@
 		* 100, 2)
 		FROM DUAL
 	</select>
+	
+	<select id="mailTargetSearch" resultType="member">
+	SELECT MEMBER_NO,MEMBER_NAME,MEMBER_EMAIL,MEMBER_PHONE FROM MEMBER_TBL WHERE MEMBER_CHECK='Y'
+	</select>
 
 </mapper>

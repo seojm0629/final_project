@@ -10,6 +10,7 @@ import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
 import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 
 @Mapper
@@ -106,6 +107,8 @@ public interface AdminDao {
 	List<AdminStatisticsDTO> statisticsCustomVoteBoard(HashMap<String, Object> param);
 
 	int statisticsCustomAr(HashMap<String, Object> param);
+
+	List<MemberDTO> mailTargetSearch();
 
 
 }

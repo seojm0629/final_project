@@ -11,7 +11,7 @@ const EventMail = () => {
     memberType: memberType,
     memberCheck: "Y",
   });
-
+  console.log(member);
   const [isLoader, setIsLoader] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,6 +82,20 @@ const EventMail = () => {
         })
     }
     */
+
+  const [memberList, setMemberList] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACK_SERVER}/admin/mailTargetSearch`)
+      .then((res) => {
+        console.log(res.data);
+        setMemberList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <section className="admin-right email">
@@ -157,12 +171,17 @@ const EventMail = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>홍길동</td>
-            <td>a@a.com</td>
-            <td>010-0000-0000</td>
-          </tr>
+          {memberList &&
+            memberList.map((m, i) => {
+              return (
+                <tr key={"member-" + i}>
+                  <td>{m.memberNo}</td>
+                  <td>{m.memberName}</td>
+                  <td>{m.memberEmail}</td>
+                  <td>{m.memberPhone}</td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </section>

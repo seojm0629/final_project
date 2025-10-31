@@ -22,6 +22,7 @@ import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
 
 import kr.co.iei.admin.model.service.AdminService;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 @CrossOrigin("*")
 @RestController
@@ -136,6 +137,13 @@ public class AdminController {
 		int result = adminService.deleteFreeCate2(delCateSet);
 		
 		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping(value="mailTargetSearch")
+	public ResponseEntity<List<MemberDTO>> mailTargetSearch(){
+		System.out.println("호출 확인");
+		List<MemberDTO> memberList = adminService.mailTargetSearch();
+		return ResponseEntity.ok(memberList);
 	}
 	
 }
