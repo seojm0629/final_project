@@ -154,4 +154,13 @@ public class AdminController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PatchMapping(value="freeboard/notice/{noticeNo}/update")
+	public ResponseEntity<Integer> updateNotice(@PathVariable int noticeNo,@RequestBody HashMap<String, Object> updateNoticeSet){
+		System.out.println(noticeNo);
+		System.out.println(updateNoticeSet);
+		int result = adminService.updateNotice(updateNoticeSet);
+		System.out.println(result);
+		return ResponseEntity.ok(result);
+	}
+	
 }

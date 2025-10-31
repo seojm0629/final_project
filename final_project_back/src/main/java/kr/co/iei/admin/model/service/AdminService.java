@@ -206,8 +206,15 @@ public class AdminService {
 		return memberList;
 	}
 
+	@Transactional
 	public int delFreeNotice(int delNoticeNo) {
 		int result = adminDao.delFreeNotice(delNoticeNo);
+		return result;
+	}
+
+	@Transactional
+	public int updateNotice(HashMap<String, Object> updateNoticeSet) {
+		int result = adminDao.updateNotice(updateNoticeSet);
 		return result;
 	}
 

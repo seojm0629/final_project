@@ -864,4 +864,8 @@
 <delete id="delFreeNotice">
 	DELETE NOTICE_ALERT_TBL WHERE NOTICE_NO=#{delNoticeNo}
 </delete>
+
+<update id="updateNotice">
+	UPDATE NOTICE_ALERT_TBL SET NOTICE_ISACTIVE=#{isActive},MEMBER_NO=#{memberNo} WHERE NOTICE_NO=#{noticeNo}
+</update>
 </mapper>
