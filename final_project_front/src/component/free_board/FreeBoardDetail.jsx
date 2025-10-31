@@ -1,5 +1,6 @@
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
@@ -7,6 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko.js";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberNoState } from "../utils/RecoilData";
@@ -36,7 +39,7 @@ const FreeBoardDetail = () => {
 
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
-  console.log(commentCount);
+
   useEffect(() => {
     console.log(commentCount);
     if (fbClaimSet === undefined) {
@@ -112,6 +115,34 @@ const FreeBoardDetail = () => {
     memberNo: memberNo,
     fbCommentContent: fbCommentContent,
   };
+
+  dayjs.extend(relativeTime);
+
+  // 기존 한국어 locale 불러오기
+  const locale = {
+    ...dayjs.Ls["ko"],
+    // 숫자를 한글이 아닌 아라비아 숫자로 표시하도록 커스터마이징
+    relativeTime: {
+      future: "%s 후",
+      past: "%s 전",
+      s: "몇 초",
+      m: "1분",
+      mm: "%d분",
+      h: "1시간",
+      hh: "%d시간",
+      d: "1일",
+      dd: "%d일",
+      M: "1달",
+      MM: "%d달",
+      y: "1년",
+      yy: "%d년",
+    },
+  };
+
+  // 커스터마이징한 locale 적용
+  dayjs.locale(locale, null, true);
+  dayjs.locale("ko");
+
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -257,6 +288,38 @@ const FreeBoardDetail = () => {
         });
     }
   };
+
+  /* 좋아요 */
+  const [like, setLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  console.log(comment.freeBoardSubcategoryNo);
+  console.log(comment.freeBoardCategoryNo);
+  const ClickLike = () => {
+    if (!member) {
+      Swal.fire({
+        title: "로그인",
+        text: "로그인 후 이용해주세요.",
+        icon: "warning",
+      });
+      navigate("/member/login");
+    } else {
+      setLike(!like);
+      axios //조회 후 null이면 insert / !null delete
+        .get(
+          `${backServer}/freeBoard/detail/selectLike
+          ?memberNo=${memberNo}
+          &freeBoardNo=${freeBoardNo}
+          &freeBoardSubcategoryNo=${comment.freeBoardSubcategoryNo}
+          &freeBoardCategoryNo=${comment.freeBoardCategoryNo}`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -279,8 +342,18 @@ const FreeBoardDetail = () => {
           <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
           111
         </div>
-        <div className="heart">
-          <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+        <div
+          className="heart"
+          style={{ cursor: "pointer" }}
+          onClick={ClickLike}
+        >
+          {like ? (
+            <FavoriteOutlinedIcon
+              style={{ color: "red", userSelect: "none" }}
+            />
+          ) : (
+            <FavoriteBorderOutlinedIcon style={{ userSelect: "none" }} />
+          )}
           {freeBoard.likeCount}
         </div>
         <div className="hour">
@@ -501,7 +574,6 @@ const FreeBoardDetail = () => {
                                 text: "댓글을 입력해주세요.",
                                 icon: "warning",
                               });
-                              console.log("return 앞");
                               return;
                             } else {
                               axios

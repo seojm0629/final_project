@@ -866,7 +866,9 @@
   width: auto;
   height: 100%;
 }
-
+.board-content p {
+  color: transparent;
+}
 .board-list-title {
   display: flex;
   flex-direction: row-reverse;

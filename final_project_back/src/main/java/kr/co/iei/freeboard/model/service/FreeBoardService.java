@@ -15,6 +15,7 @@ import kr.co.iei.freeboard.model.dao.FreeBoardDao;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -219,10 +220,29 @@ public class FreeBoardService {
 		
 		return freeBoardCate;
 	}
-
+	@Transactional
 	public int deleteComment(int fbCommentNo) {
 		int result = freeBoardDao.deleteComment(fbCommentNo);
 		return result;
+	}
+	@Transactional
+	public FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo, int freeBoardSubcategoryNo, int freeBoardCategoryNo) {
+		//좋아요 눌렀는지 확인
+		FreeBoardLikeDTO selectLike = freeBoardDao.selectLike(memberNo, freeBoardNo);
+		System.out.println("selectResult : "+ selectLike);
+		
+		if(selectLike == null) {
+			//좋아요가 없으면 insert
+			int insertResult = freeBoardDao.insertLike(memberNo, freeBoardNo, freeBoardSubcategoryNo, freeBoardCategoryNo);			
+			System.out.println("insertResult : "+ insertResult);	
+		}else {
+			//좋아요를 눌렀으면 delete
+			int deleteResult = freeBoardDao.deleteLike(memberNo, freeBoardNo); 
+			System.out.println("deleteResult : "+ deleteResult);
+		}
+		FreeBoardLikeDTO freeBoardLike = freeBoardDao.countLike(memberNo, freeBoardNo);
+		
+		return freeBoardLike;
 	}
 
 	
