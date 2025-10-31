@@ -146,4 +146,12 @@ public class AdminController {
 		return ResponseEntity.ok(memberList);
 	}
 	
+	@DeleteMapping(value="freeboard/notice/{delNoticeNo}/delete")
+	public ResponseEntity<Integer> delFreeNotice(@PathVariable int delNoticeNo){
+		System.out.println(delNoticeNo);
+		int result = adminService.delFreeNotice(delNoticeNo);
+		System.out.println("공지 삭제 결과 확인 : "+result);
+		return ResponseEntity.ok(result);
+	}
+	
 }

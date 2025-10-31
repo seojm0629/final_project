@@ -206,4 +206,9 @@ public class AdminService {
 		return memberList;
 	}
 
+	public int delFreeNotice(int delNoticeNo) {
+		int result = adminDao.delFreeNotice(delNoticeNo);
+		return result;
+	}
+
 }
