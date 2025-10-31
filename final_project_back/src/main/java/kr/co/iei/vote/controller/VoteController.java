@@ -142,7 +142,9 @@ public class VoteController {
 	
 		int voteResult = voteService.reVote(result);
 		
-		
 		return ResponseEntity.ok(voteResult);
 	}
+	
+	 
+	
 }
