@@ -193,6 +193,7 @@ body {
 .main-board-like {
   width: 240px;
   height: 380px;
+  
 }
 
 .main-board-content {
@@ -222,7 +223,7 @@ body {
   justify-content: flex-end;
   gap: 18px;
   margin-right: 10px;
-  padding-bottom: 2.5px;
+  padding-bottom: 4.5px;
 }
 
 .transaction-list-right {
