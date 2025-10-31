@@ -22,7 +22,8 @@ const FreeBoardDetail = () => {
   //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
-  const freeBoardNo = params.freeBoardNo;
+  const freeBoardNo = Number(params.freeBoardNo);
+
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([
     { freeBoardCommentNo: 0 },
@@ -33,6 +34,7 @@ const FreeBoardDetail = () => {
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호
   const commentCount = freeBoardComment.length;
   const [toDate, setToDate] = useState(); //사용할 시간
+
   const navigate = useNavigate();
   const [fbClaimReason, setFbClaimReason] = useState();
   const [fbcClaimReason, setFbcClaimReason] = useState();
@@ -40,8 +42,16 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
 
+  const [like, setLike] = useState(() => {
+    const saved = localStorage.getItem("like");
+    return saved === "true";
+  });
+
   useEffect(() => {
-    console.log(commentCount);
+    localStorage.setItem("like", like);
+  }, [like]);
+
+  useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
     }
@@ -155,7 +165,9 @@ const FreeBoardDetail = () => {
     return target.fromNow(); //한국어로 ?? 시간전 표시하기
   };
 
+  const [toggle, setToggle] = useState(false); //댓글 등록 시 랜더링 state
   useEffect(() => {
+    console.log();
     axios
       .get(`${backServer}/freeBoard/detail/${freeBoardNo}`)
       .then((res) => {
@@ -168,8 +180,7 @@ const FreeBoardDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardNo]);
-  const [toggle, setToggle] = useState(false); //댓글 등록 시 랜더링 state
+  }, [freeBoardNo, toggle]);
 
   useEffect(() => {
     axios
@@ -290,11 +301,8 @@ const FreeBoardDetail = () => {
   };
 
   /* 좋아요 */
-  const [like, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-  console.log(comment.freeBoardSubcategoryNo);
-  console.log(comment.freeBoardCategoryNo);
-  const ClickLike = () => {
+
+  const clickLike = () => {
     if (!member) {
       Swal.fire({
         title: "로그인",
@@ -303,23 +311,22 @@ const FreeBoardDetail = () => {
       });
       navigate("/member/login");
     } else {
-      setLike(!like);
       axios //조회 후 null이면 insert / !null delete
         .get(
-          `${backServer}/freeBoard/detail/selectLike
-          ?memberNo=${memberNo}
-          &freeBoardNo=${freeBoardNo}
-          &freeBoardSubcategoryNo=${comment.freeBoardSubcategoryNo}
-          &freeBoardCategoryNo=${comment.freeBoardCategoryNo}`
+          `${backServer}/freeBoard/detail/selectLike?memberNo=${memberNo}&freeBoardNo=${freeBoardNo}&freeBoardSubcategoryNo=${comment.freeBoardSubcategoryNo}&freeBoardCategoryNo=${comment.freeBoardCategoryNo}`
         )
         .then((res) => {
-          console.log(res);
+          if (res.data !== "" || res.data !== undefined) {
+            setToggle(!toggle);
+            setLike(!like);
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
+
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -345,7 +352,11 @@ const FreeBoardDetail = () => {
         <div
           className="heart"
           style={{ cursor: "pointer" }}
-          onClick={ClickLike}
+          onClick={() => {
+            clickLike();
+            setLike(!like);
+          }}
+          key={"dd-" + toggle}
         >
           {like ? (
             <FavoriteOutlinedIcon
