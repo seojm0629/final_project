@@ -237,7 +237,7 @@ const VoteDetail = () => {
 
   const insertComment = () => {
     axios
-      .post(`${backServer}/comment/insert`, commentData)
+      .post(`${backServer}/comment/insert/`, commentData)
       .then((res) => {
         console.log(res);
       })
@@ -250,7 +250,6 @@ const VoteDetail = () => {
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-
       {vote && vote.memberNo === memberNo && (
         <div className="vote-detail-buttonBox">
           {vote.voteCheck === 0 && (

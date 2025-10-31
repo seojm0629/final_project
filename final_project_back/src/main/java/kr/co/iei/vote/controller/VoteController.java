@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import kr.co.iei.note.model.service.NoteService;
+import kr.co.iei.vote.model.dto.VoteCommentDTO;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
 import kr.co.iei.vote.model.dto.VoteOptionCount;
@@ -145,6 +146,14 @@ public class VoteController {
 		return ResponseEntity.ok(voteResult);
 	}
 	
-	 
-	
+	@PostMapping(value = "/comment/insert")
+	public ResponseEntity<Integer> commentInsert(@RequestBody VoteCommentDTO voteComment) {
+		System.out.println(voteComment);
+		
+		int result = voteService.commentInsert(voteComment);
+		
+		return ResponseEntity.ok(0);
+		
+	}
+
 }

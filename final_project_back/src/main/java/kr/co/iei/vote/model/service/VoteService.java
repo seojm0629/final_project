@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.note.controller.NoteController;
 import kr.co.iei.vote.model.dao.VoteDao;
+import kr.co.iei.vote.model.dto.VoteCommentDTO;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
 import kr.co.iei.vote.model.dto.VoteOptionCount;
@@ -131,5 +132,10 @@ public class VoteService {
 		int check = voteDao.reVote(result);
 		
 		return check;
+	}
+
+	public int commentInsert(VoteCommentDTO voteComment) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
