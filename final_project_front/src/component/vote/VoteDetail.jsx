@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./voteDetail.css";
 import Swal from "sweetalert2";
-import { Bar } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const VoteDetail = () => {
   const params = useParams(); //주소값에서 불러오는 파람값
@@ -21,14 +21,14 @@ const VoteDetail = () => {
   const [values, setValues] = useState([]);
   console.log(voteList);
   //차트 안에 들어갈 data (찾아보면 더 있음)
+  console.log(values);
   const data = {
     labels: voteList.map((item) => item.voteContent), // 투표안한 항목 다보이게 표시
     datasets: [
       {
-        label: "투표수",
-        data: values,
-        backgroundColor: "rgba(5, 20, 160, 0.5)",
-        borderWidth: 1,
+        label: "비율(%)",
+        data: values.map((value) => value), //배열의 길이만큼 돌아라 맵을 써서
+        backgroundColor: ["red", "yellow", "blue", "green", "orange"],
       },
     ],
   };
@@ -293,7 +293,7 @@ const VoteDetail = () => {
           </div>
         ))}
       <div className="vote-result-graph">
-        <Bar
+        <Pie
           data={data}
           options={{
             scales: {
