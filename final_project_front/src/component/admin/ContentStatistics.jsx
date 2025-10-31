@@ -86,8 +86,8 @@ const ContentStatistics = () => {
   const [freeBoardLabels, setFreeBoardLabels] = useState([]);
   const [freeBoardValues, setFreeBoardValues] = useState([]);
 
-  const [tradeBoardLabels, setTradeBoardLabels] = useState([]);
-  const [tradeBoardValues, setTradeBoardValues] = useState([]);
+  const [voteBoardLabels, setVoteBoardLabels] = useState([]);
+  const [voteBoardValues, setVoteBoardValues] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const data = {
@@ -125,12 +125,12 @@ const ContentStatistics = () => {
       },
     ],
   };
-  const dataTradeBoard = {
-    labels: tradeBoardLabels,
+  const dataVoteBoard = {
+    labels: voteBoardLabels,
     datasets: [
       {
-        label: "거래 게시판 게시글 등록 수",
-        data: tradeBoardValues,
+        label: "투표 게시판 게시글 등록 수",
+        data: voteBoardValues,
         backgroundColor: "rgba(5, 20, 160, 0.5)",
         borderWidth: 1,
       },
@@ -203,17 +203,17 @@ const ContentStatistics = () => {
         });
         setFreeBoardValues(freeBoardValues);
 
-        const listTradeBoard = res.data.listTradeBoard;
+        const listVoteBoard = res.data.listVoteBoard;
 
-        const tradeBoardLabels = listTradeBoard.map((r) => {
+        const voteBoardLabels = listVoteBoard.map((r) => {
           return r.label;
         });
-        setTradeBoardLabels(tradeBoardLabels);
+        setVoteBoardLabels(voteBoardLabels);
 
-        const tradeBoardValues = listTradeBoard.map((r) => {
+        const voteBoardValues = listVoteBoard.map((r) => {
           return r.value;
         });
-        setTradeBoardValues(tradeBoardValues);
+        setVoteBoardValues(voteBoardValues);
 
         //console.log(labels);
 
@@ -366,7 +366,7 @@ const ContentStatistics = () => {
                   : "시간대별 투표 게시물 등록 수"
               }
               subTitle={"기준 : " + selectCriteria}
-              chartTag={<Line data={dataTradeBoard} />}
+              chartTag={<Line data={dataVoteBoard} />}
             />
           </div>
         </div>

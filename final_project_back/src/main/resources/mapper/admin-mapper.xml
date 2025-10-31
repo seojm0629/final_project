@@ -690,36 +690,36 @@
 		A.LABEL ORDER BY A.LABEL
 	</select>
 
-	<select id="statisticsTradeBoardYears"
+	<select id="statisticsVoteBoardYears"
 		resultType="adminStatistics">
 		SELECT A.LABEL,COUNT(*)
 		VALUE FROM (
 		SELECT
-		TO_CHAR(TRADE_BOARD_DATE,'YYYY') LABEL FROM TRADE_BOARD_TBL
+		TO_CHAR(VOTE_DATE,'YYYY') LABEL FROM VOTE_TBL
 		WHERE
-		TO_NUMBER(TO_CHAR(TRADE_BOARD_DATE,'YYYY')) BETWEEN
+		TO_NUMBER(TO_CHAR(VOTE_DATE,'YYYY')) BETWEEN
 		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-4 AND
 		TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))) A GROUP BY A.LABEL ORDER BY
 		A.LABEL
 	</select>
 
-	<select id="statisticsTradeBoardYear"
+	<select id="statisticsVoteBoardYear"
 		resultType="adminStatistics">
 		SELECT A.LABEL||'월' AS
 		LABEL,COUNT(*) VALUE FROM (
 		SELECT
-		TO_CHAR(TRADE_BOARD_DATE,'MM') LABEL FROM TRADE_BOARD_TBL WHERE
-		TO_CHAR(SYSDATE,'YYYY')=TO_CHAR(TRADE_BOARD_DATE,'YYYY')) A GROUP BY
+		TO_CHAR(VOTE_DATE,'MM') LABEL FROM VOTE_TBL WHERE
+		TO_CHAR(SYSDATE,'YYYY')=TO_CHAR(VOTE_DATE,'YYYY')) A GROUP BY
 		A.LABEL ORDER BY A.LABEL
 	</select>
 
-	<select id="statisticsTradeBoardMonth"
+	<select id="statisticsVoteBoardMonth"
 		resultType="adminStatistics">
-		SELECT A.LABEL||'일' AS
+		        SELECT A.LABEL||'일' AS
 		LABEL,COUNT(*) VALUE FROM (
 		SELECT
-		TO_CHAR(TRADE_BOARD_DATE,'DD') LABEL FROM TRADE_BOARD_TBL WHERE
-		TO_CHAR(SYSDATE,'YYYY-MM')=TO_CHAR(TRADE_BOARD_DATE,'YYYY-MM')) A
+		TO_CHAR(VOTE_DATE,'DD') LABEL FROM VOTE_TBL WHERE
+		TO_CHAR(SYSDATE,'YYYY-MM')=TO_CHAR(VOTE_DATE,'YYYY-MM')) A
 		GROUP BY
 		A.LABEL ORDER BY A.LABEL
 	</select>
@@ -820,18 +820,19 @@
 	</select>
 
 	<!-- 기간 내 거래 게시물 등록 수 (월별) -->
-	<select id="statisticsCustomTradeBoard"
+	<select id="statisticsCustomVoteBoard"
 		resultType="adminStatistics">
-		SELECT A.TRADE_BOARD_DATE AS label, COUNT(*) AS value
+		        SELECT A.VOTE_DATE AS label, COUNT(*) AS value
 		FROM (
-		SELECT TO_CHAR(TRADE_BOARD_DATE,'YYYY-MM') AS TRADE_BOARD_DATE
+		SELECT TO_CHAR(VOTE_DATE,'YYYY-MM') AS VOTE_DATE
 		FROM
-		TRADE_BOARD_TBL
-		WHERE TRADE_BOARD_DATE BETWEEN #{startDate} AND
+		VOTE_TBL
+		WHERE VOTE_DATE BETWEEN #{startDate} AND
 		#{endDate}
 		) A
-		GROUP BY A.TRADE_BOARD_DATE
-		ORDER BY A.TRADE_BOARD_DATE
+		GROUP BY A.VOTE_DATE
+		ORDER BY A.VOTE_DATE
+		
 	</select>
 
 	<!-- 기간 내 가입률 (가입자 / (가입자+탈퇴자)) * 100 -->
