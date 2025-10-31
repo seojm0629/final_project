@@ -126,7 +126,6 @@ public class FreeBoardService {
 	}
 	public List<FreeBoardDTO> mainCategory(int freeBoardCategoryNo) {
 		List<FreeBoardDTO> list = freeBoardDao.mainCategory(freeBoardCategoryNo);
-		
 		return list;
 	}
 	@Transactional

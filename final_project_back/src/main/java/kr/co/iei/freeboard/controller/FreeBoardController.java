@@ -110,6 +110,7 @@ public class FreeBoardController {
 	@GetMapping(value="/mainCategory")
 	public ResponseEntity<List<FreeBoardDTO>> mainCategory(@RequestParam int freeBoardCategoryNo){
 		List<FreeBoardDTO> list = freeBoardService.mainCategory(freeBoardCategoryNo);
+		System.out.println("컨트롤러 : " + list);
 		return ResponseEntity.ok(list);
 	}
 	@PostMapping(value = "/image")
