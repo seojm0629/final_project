@@ -548,7 +548,7 @@ dayjs.locale("ko");
                       </span>
                     </div>
                     <div className="trans-board">
-                      <span>중고거래</span>
+                      <span>투표</span>
                     </div>
                     <div className="fr-board">
                       <span>자유</span>
