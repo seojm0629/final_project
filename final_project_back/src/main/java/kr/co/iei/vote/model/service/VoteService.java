@@ -100,9 +100,7 @@ public class VoteService {
 	public List<VoteOptionCount> selectOptionCount(int voteNo) {
 		
 		List<VoteOptionCount> voteOptionCount = voteDao.selectOptionCount(voteNo);
-		System.out.println("아아아아ㅏ");
-		System.out.println(voteOptionCount);
-		System.out.println("아아아아ㅏ");
+		System.out.println("투표옵션카운트확인"+ voteOptionCount + voteNo);
 		return voteOptionCount;
 	}
 	

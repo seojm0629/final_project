@@ -14,6 +14,7 @@ import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
 import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 @Service
 public class AdminService {
@@ -67,7 +68,7 @@ public class AdminService {
 		List<AdminStatisticsDTO> list = new ArrayList<>();
 		List<AdminStatisticsDTO> listWithdraw = new ArrayList<>();
 		List<AdminStatisticsDTO> listFreeBoard = new ArrayList<>();
-		List<AdminStatisticsDTO> listTradeBoard = new ArrayList<>();
+		List<AdminStatisticsDTO> listVoteBoard = new ArrayList<>();
 
 		int acceessionRate = 0;
 		switch (selectCriteria) {
@@ -76,21 +77,21 @@ public class AdminService {
 			acceessionRate = adminDao.statisticsAr();
 			listWithdraw = adminDao.statisticsWithdrawYears();
 			listFreeBoard = adminDao.statisticsFreeBoardYears();
-			listTradeBoard = adminDao.statisticsTradeBoardYears();
+			listVoteBoard = adminDao.statisticsVoteBoardYears();
 			break;
 		case "1년":
 			list = adminDao.statisticsYear();
 			acceessionRate = adminDao.statisticsArYear();
 			listWithdraw = adminDao.statisticsWithdrawYear();
 			listFreeBoard = adminDao.statisticsFreeBoardYear();
-			listTradeBoard = adminDao.statisticsTradeBoardYear();
+			listVoteBoard = adminDao.statisticsVoteBoardYear();
 			break;
 		case "1개월":
 			list = adminDao.statisticsMonth();
 			acceessionRate = adminDao.statisticsArMonth();
 			listWithdraw = adminDao.statisticsWithdrawMonth();
 			listFreeBoard = adminDao.statisticsFreeBoardMonth();
-			listTradeBoard = adminDao.statisticsTradeBoardMonth();
+			listVoteBoard = adminDao.statisticsVoteBoardMonth();
 			break;
 		case "기타":
 			HashMap<String, Object> param = new HashMap<>();
@@ -102,7 +103,7 @@ public class AdminService {
 			acceessionRate = adminDao.statisticsCustomAr(param);
 			listWithdraw = adminDao.statisticsCustomWithdraw(param);
 			listFreeBoard = adminDao.statisticsCustomFreeBoard(param);
-			listTradeBoard = adminDao.statisticsCustomTradeBoard(param);
+			listVoteBoard = adminDao.statisticsCustomVoteBoard(param);
 			break;
 
 		}
@@ -128,7 +129,7 @@ public class AdminService {
 		map.put("wcDiffDay", wcDiffDay);
 		map.put("listWithdraw", listWithdraw);
 		map.put("listFreeBoard", listFreeBoard);
-		map.put("listTradeBoard", listTradeBoard);
+		map.put("listVoteBoard", listVoteBoard);
 		return map;
 	}
 
@@ -198,6 +199,11 @@ public class AdminService {
 	public int searchMainNo(String delCate) {
 		int cateMainNo = adminDao.searchMainNo(delCate);
 		return cateMainNo;
+	}
+
+	public List<MemberDTO> mailTargetSearch() {
+		List<MemberDTO> memberList = adminDao.mailTargetSearch();
+		return memberList;
 	}
 
 }

@@ -90,12 +90,13 @@
  	
 	<select id="selectOptionCount" resultType="voteCount">
 	SELECT * FROM (
-SELECT * FROM VOTE_OPTION_TBL WHERE VOTE_NO=#{voteNo}) B LEFT JOIN (SELECT * FROM (
-select vote_option_no,vote_option_count from 
-		(select vote_option_no,count(*)vote_option_count from vote_result_tbl
-			group by vote_option_no)
-				left join vote_option_tbl using(vote_option_no)
-					where vote_no = #{voteNo}) A) USING (VOTE_OPTION_NO)
+		SELECT * FROM VOTE_OPTION_TBL WHERE VOTE_NO=#{voteNo}) B LEFT JOIN (SELECT * FROM (
+			select vote_option_no,vote_option_count from 
+			(select vote_option_no,count(*)vote_option_count from vote_result_tbl
+				group by vote_option_no)
+					left join vote_option_tbl using(vote_option_no)
+						where vote_no = #{voteNo}) A) USING (VOTE_OPTION_NO)
+							order by vote_option_no asc
 	
 	</select>	
 	

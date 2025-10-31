@@ -10,6 +10,7 @@ import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminMemberDetailDTO;
 import kr.co.iei.admin.model.dto.AdminNoticeDTO;
 import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
 
 
 @Mapper
@@ -71,11 +72,11 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsFreeBoardMonth();
 
-	List<AdminStatisticsDTO> statisticsTradeBoardYears();
+	List<AdminStatisticsDTO> statisticsVoteBoardYears();
 
-	List<AdminStatisticsDTO> statisticsTradeBoardYear();
+	List<AdminStatisticsDTO> statisticsVoteBoardYear();
 
-	List<AdminStatisticsDTO> statisticsTradeBoardMonth();
+	List<AdminStatisticsDTO> statisticsVoteBoardMonth();
 
 	int insertFreeCate(HashMap<String, Object> insertCateSet);
 
@@ -103,9 +104,11 @@ public interface AdminDao {
 
 	List<AdminStatisticsDTO> statisticsCustomFreeBoard(HashMap<String, Object> param);
 
-	List<AdminStatisticsDTO> statisticsCustomTradeBoard(HashMap<String, Object> param);
+	List<AdminStatisticsDTO> statisticsCustomVoteBoard(HashMap<String, Object> param);
 
 	int statisticsCustomAr(HashMap<String, Object> param);
+
+	List<MemberDTO> mailTargetSearch();
 
 
 }
