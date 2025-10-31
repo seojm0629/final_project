@@ -70,11 +70,11 @@ const VoteDetail = () => {
           return item.voteOptionCount;
         });
 
-        console.log(a);
-        console.log(b);
-
         setLabels(a);
         setValues(b);
+
+        console.log(a);
+        console.log(b);
       })
       .catch((err) => {
         console.log(err);
