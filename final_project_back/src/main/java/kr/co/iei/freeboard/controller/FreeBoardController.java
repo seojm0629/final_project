@@ -241,6 +241,7 @@ public class FreeBoardController {
 	@GetMapping(value = "/detail/selectLike")
 	public ResponseEntity<FreeBoardLikeDTO> countLike(@RequestParam int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
 		FreeBoardLikeDTO freeBoardLike = freeBoardService.countLike(memberNo, freeBoardNo, freeBoardSubcategoryNo, freeBoardCategoryNo);
+		//System.out.println(freeBoardLike);
 		return ResponseEntity.ok(freeBoardLike);
 	}
 	

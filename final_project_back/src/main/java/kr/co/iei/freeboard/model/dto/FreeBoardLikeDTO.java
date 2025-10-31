@@ -16,4 +16,5 @@ public class FreeBoardLikeDTO {
 	private int freeBoardSubcategoryNo;
 	private int freeBoardCategoryNo;
 	private String fbLikeDate;
+	private int likeCount;
 }

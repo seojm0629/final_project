@@ -28,7 +28,18 @@ const VoteDetail = () => {
       {
         label: "비율(%)",
         data: values.map((value) => value), //배열의 길이만큼 돌아라 맵을 써서
-        backgroundColor: ["red", "yellow", "blue", "green", "orange"],
+        backgroundColor: [
+          "#e66262ff",
+          "#e9a577ff",
+          "#fff493ff",
+          "#cdff93ff",
+          "#5cc584ff",
+          "#5d8ed8ff",
+          "#4d77b6ff",
+          "#bd9abaff",
+          "#86718fff",
+          "#796273ff",
+        ],
       },
     ],
   };
@@ -296,22 +307,7 @@ const VoteDetail = () => {
         <Pie
           data={data}
           options={{
-            scales: {
-              y: {
-                beginAtZero: true, // Y축 0부터 시작
-                ticks: {
-                  // 옆 틱 값
-                  stepSize: 1, // 눈금 표시
-                  autoSkip: false,
-                  maxRotation: 0,
-                  minRotation: 0,
-                  callback: function (value) {
-                    // 실행값
-                    return value;
-                  },
-                },
-              },
-            },
+            scales: {},
           }}
         />
       </div>
