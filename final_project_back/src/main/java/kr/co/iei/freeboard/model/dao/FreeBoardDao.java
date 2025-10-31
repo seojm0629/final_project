@@ -11,6 +11,7 @@ import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardViewDTO;
 
 @Mapper
 public interface FreeBoardDao {
@@ -70,7 +71,12 @@ public interface FreeBoardDao {
 	FreeBoardLikeDTO selectLike(int memberNo, int freeBoardNo); 
 	int insertLike(int memberNo, int freeBoardNo, int freeBoardSubcategoryNo, int freeBoardCategoryNo);
 	int deleteLike(int memberNo, int freeBoardNo); 
-	FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo); 
+	FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo);
+
+	
+	FreeBoardViewDTO selectView(int memberNo, int freeBoardNo);
+	int insertView(int memberNo, int freeBoardNo, int freeBoardCategoryNo, int freeBoardSubcategoryNo);
+	FreeBoardViewDTO countView(int memberNo, int freeBoardNo); 
 
 
 

@@ -14,7 +14,7 @@ import PageNavigation from "../utils/PageNavigation";
 import FreeBoardWrite from "./FreeBoardWrite";
 import FreeBoardSideMenu from "../utils/FreeBoardSideMenu";
 import { useRecoilState } from "recoil";
-import { loginIdState } from "../utils/RecoilData";
+import { loginIdState, memberNoState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
 import FreeBoardDetail from "./FreeBoardDetail";
 import dayjs from "dayjs";
@@ -208,6 +208,10 @@ const FreeBoardContent = (props) => {
   const navigate = useNavigate();
   const titleState = props.titleState;
   const [result, setResult] = useState(false); //리스트 조회 결과에 따라 출력
+  const memberNo = useRecoilState(memberNoState);
+  const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
+  const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
+  const [freeBoardNo, setFreeBoardNo] = useState();
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -253,7 +257,33 @@ const FreeBoardContent = (props) => {
         console.log(err);
         setResult(true);
       });
-  }, [reqPageInfo.order, reqPageInfo.pageNo, selected, titleState]);
+  }, [
+    reqPageInfo.order,
+    reqPageInfo.pageNo,
+    selected,
+    titleState,
+    freeBoardNo,
+    freeBoardCategoryNo,
+    freeBoardSubcategoryNo,
+  ]);
+  /* 상세페이지 view */
+  const [viewCount, setViewCount] = useState();
+  const view = () => {
+    console.log(freeBoardNo);
+    console.log(freeBoardCategoryNo);
+    console.log(freeBoardSubcategoryNo);
+    axios
+      .get(
+        `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${freeBoardNo}&freeBoardCategoryNo=${freeBoardCategoryNo}%freeBoardSubcategoryNo=${freeBoardSubcategoryNo}`
+      )
+      .then((res) => {
+        console.log(res);
+        setViewCount(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <section className="freeBoard-section">
       {result ? (
@@ -261,7 +291,6 @@ const FreeBoardContent = (props) => {
       ) : (
         <div className="board-div">
           {freeBoardList.map((list, i) => {
-            console.log(list);
             return i % 2 === 0 ? (
               <div
                 key={"first" + i}
@@ -270,10 +299,13 @@ const FreeBoardContent = (props) => {
                   borderRight: "1px solid #ccc",
                 }}
                 onClick={() => {
+                  setFreeBoardCategoryNo(list.freeBoardCategoryNo);
+                  setFreeBoardSubcategoryNo(list.freeBoardSubcategoryNo);
+                  setFreeBoardNo(list.freeBoardNo);
+                  view();
                   navigate(`/freeBoard/detail/${list.freeBoardNo}`);
                 }}
               >
-                {/*상태넣을꺼*/}
                 <div className="board-list-title">
                   <div className="board-status">{list.freeBoardNo}</div>
                   <div className="board-title">{list.freeBoardTitle}</div>

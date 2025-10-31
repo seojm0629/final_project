@@ -4,6 +4,7 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -22,7 +23,7 @@ const FreeBoardDetail = () => {
   //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
-  const freeBoardNo = Number(params.freeBoardNo);
+  const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
 
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([
@@ -42,6 +43,7 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
 
+  //새로고침 시 좋아요 유지
   const [like, setLike] = useState(() => {
     const saved = localStorage.getItem("like");
     return saved === "true";
@@ -301,7 +303,6 @@ const FreeBoardDetail = () => {
   };
 
   /* 좋아요 */
-
   const clickLike = () => {
     if (!member) {
       Swal.fire({
@@ -356,7 +357,6 @@ const FreeBoardDetail = () => {
             clickLike();
             setLike(!like);
           }}
-          key={"dd-" + toggle}
         >
           {like ? (
             <FavoriteOutlinedIcon
@@ -505,202 +505,203 @@ const FreeBoardDetail = () => {
             등록
           </button>
         </div>
+        {freeBoardComment[0].fbCommentNo !== 0 && (
+          <div className="comment-box">
+            {freeBoardComment.map((comment, i) => {
+              return (
+                <div
+                  className={
+                    i + 1 === freeBoardComment.length
+                      ? "comment-item end"
+                      : "comment-item"
+                  }
+                  key={"item" + i}
+                >
+                  <div className="comment-report">
+                    <BaseModal
+                      title="댓글 신고하기"
+                      content={
+                        <div className="report_content">
+                          <div>해당 댓글을 신고하시겠습니까?</div>
 
-        <div className="comment-box">
-          {freeBoardComment.map((comment, i) => {
-            return (
-              <div
-                className={
-                  i + 1 === freeBoardComment.length
-                    ? "comment-item end"
-                    : "comment-item"
-                }
-                key={"item" + i}
-              >
-                <div className="comment-report">
-                  <BaseModal
-                    title="댓글 신고하기"
-                    content={
-                      <div className="report_content">
-                        <div>해당 댓글을 신고하시겠습니까?</div>
-
-                        <div>
-                          <input
-                            type="text"
-                            value={fbcClaimReason}
-                            onChange={(e) => {
-                              setFbcClaimReason(e.target.value);
-                            }}
-                            placeholder="신고 사유를 적어주세요"
-                          ></input>
+                          <div>
+                            <input
+                              type="text"
+                              value={fbcClaimReason}
+                              onChange={(e) => {
+                                setFbcClaimReason(e.target.value);
+                              }}
+                              placeholder="신고 사유를 적어주세요"
+                            ></input>
+                          </div>
                         </div>
+                      }
+                      buttonLabel={
+                        <span>
+                          <ReportGmailerrorredIcon className="report-icon" />
+                          신고하기
+                        </span>
+                      }
+                      contentBoxStyle={{ width: "400px", height: "400px" }}
+                      end={"취소"}
+                      result={
+                        <button
+                          onClick={() => {
+                            setFbcClaimSet({
+                              fbCommentNo: comment.fbCommentNo,
+                              memberNo: memberNo,
+                              fbcClaimReason: fbcClaimReason,
+                            });
+                          }}
+                          className="FbClaimConfirmBtn"
+                        >
+                          확인
+                        </button>
+                      }
+                    />
+                  </div>
+                  <div className="comment-writer">
+                    <span>{comment.memberNickname}</span>
+                    <span>{comment.memberId}</span>
+                  </div>
+                  {comment.memberNo === memberNo &&
+                    cmtModify === comment.fbCommentNo && (
+                      <div className="comment-modify">
+                        <textarea
+                          type="text"
+                          placeholder="댓글을 남겨주세요."
+                          name={modifyFbCommentContent}
+                          value={modifyFbCommentContent}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              if (
+                                modifyFbCommentContent === "" ||
+                                modifyFbCommentContent === " " ||
+                                modifyFbCommentContent === null
+                              ) {
+                                Swal.fire({
+                                  title: "댓글 입력",
+                                  text: "댓글을 입력해주세요.",
+                                  icon: "warning",
+                                });
+                                return;
+                              } else {
+                                axios
+                                  .patch(
+                                    `${backServer}/freeBoard/detail/update`,
+                                    patchComment
+                                  )
+                                  .then((res) => {
+                                    if (res.data === 1) {
+                                      Swal.fire({
+                                        title: "수정 완료",
+                                        icon: "success",
+                                      }).then(() => {
+                                        setCmtModify(null);
+                                        setModifyFbCommentContent("");
+                                      });
+                                    }
+                                  })
+                                  .catch((err) => {
+                                    console.log(err);
+                                  });
+                              }
+                            }
+                          }}
+                          onChange={(e) => {
+                            (e.key === "Enter") !==
+                              setModifyFbCommentContent(e.target.value);
+                          }}
+                        />
+                        <button
+                          className="comment-modify-btn"
+                          onClick={() => {
+                            setCmtModify(null);
+                            setCommentNo(null);
+                            updateComment();
+                          }}
+                        >
+                          댓글수정
+                        </button>
                       </div>
-                    }
-                    buttonLabel={
-                      <span>
-                        <ReportGmailerrorredIcon className="report-icon" />
-                        신고하기
-                      </span>
-                    }
-                    contentBoxStyle={{ width: "400px", height: "400px" }}
-                    end={"취소"}
-                    result={
-                      <button
-                        onClick={() => {
-                          setFbcClaimSet({
-                            fbCommentNo: comment.fbCommentNo,
-                            memberNo: memberNo,
-                            fbcClaimReason: fbcClaimReason,
-                          });
-                        }}
-                        className="FbClaimConfirmBtn"
-                      >
-                        확인
-                      </button>
-                    }
-                  />
-                </div>
-                <div className="comment-writer">
-                  <span>{comment.memberNickname}</span>
-                  <span>{comment.memberId}</span>
-                </div>
-                {comment.memberNo === memberNo &&
-                  cmtModify === comment.fbCommentNo && (
-                    <div className="comment-modify">
-                      <textarea
-                        type="text"
-                        placeholder="댓글을 남겨주세요."
-                        name={modifyFbCommentContent}
-                        value={modifyFbCommentContent}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            if (
-                              modifyFbCommentContent === "" ||
-                              modifyFbCommentContent === " " ||
-                              modifyFbCommentContent === null
-                            ) {
-                              Swal.fire({
-                                title: "댓글 입력",
-                                text: "댓글을 입력해주세요.",
-                                icon: "warning",
-                              });
-                              return;
-                            } else {
-                              axios
-                                .patch(
-                                  `${backServer}/freeBoard/detail/update`,
-                                  patchComment
-                                )
-                                .then((res) => {
-                                  if (res.data === 1) {
-                                    Swal.fire({
-                                      title: "수정 완료",
-                                      icon: "success",
-                                    }).then(() => {
-                                      setCmtModify(null);
-                                      setModifyFbCommentContent("");
-                                    });
-                                  }
-                                })
-                                .catch((err) => {
-                                  console.log(err);
-                                });
-                            }
-                          }
-                        }}
-                        onChange={(e) => {
-                          (e.key === "Enter") !==
-                            setModifyFbCommentContent(e.target.value);
-                        }}
-                      />
-                      <button
-                        className="comment-modify-btn"
-                        onClick={() => {
-                          setCmtModify(null);
-                          setCommentNo(null);
-                          updateComment();
-                        }}
-                      >
-                        댓글수정
-                      </button>
-                    </div>
+                    )}
+                  {cmtModify !== comment.fbCommentNo && (
+                    <div
+                      className="comment-text"
+                      dangerouslySetInnerHTML={{
+                        __html: comment.fbCommentContent,
+                      }}
+                    ></div>
                   )}
-                {cmtModify !== comment.fbCommentNo && (
-                  <div
-                    className="comment-text"
-                    dangerouslySetInnerHTML={{
-                      __html: comment.fbCommentContent,
-                    }}
-                  ></div>
-                )}
 
-                <div className="comment-sub">
-                  <div className="heart">
-                    <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                    {comment.cnt}
-                  </div>
-                  <div className="hour">
-                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
-                    {nowDate(comment.fbCommentDate)}
-                  </div>
-                </div>
-                {comment.memberNo === memberNo &&
-                  cmtModify !== comment.fbCommentNo && (
-                    <div className="comment-button">
-                      <button
-                        className="modify-btn"
-                        onClick={() => {
-                          setCommentNo(comment.fbCommentNo);
-                          modifyComment(comment.fbCommentNo);
-                          setModifyCommentNo(comment.fbCommentNo);
-                        }}
-                      >
-                        수정
-                      </button>
-                      <button
-                        className="delete-btn"
-                        onClick={() => {
-                          Swal.fire({
-                            title: "삭제",
-                            text: "댓글을 삭제하시겠습니까?",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonText: "확인",
-                            cancelButtonText: "취소",
-                          }).then((confirm) => {
-                            if (confirm.isConfirmed) {
-                              axios
-                                .delete(
-                                  `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
-                                )
-                                .then((res) => {
-                                  console.log(res);
-                                  if (res.data === 1) {
-                                    Swal.fire({
-                                      title: "댓글 삭제 완료",
-                                      text: "댓글 삭제가 완료되었습니다.",
-                                      icon: "success",
-                                    }).then(() => {
-                                      setToggle(!toggle);
-                                    });
-                                  }
-                                })
-                                .catch((err) => {
-                                  console.log(err);
-                                });
-                            }
-                          });
-                        }}
-                      >
-                        삭제
-                      </button>
+                  <div className="comment-sub">
+                    <div className="heart">
+                      <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
+                      {comment.cnt}
                     </div>
-                  )}
-              </div>
-            );
-          })}
-        </div>
+                    <div className="hour">
+                      <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
+                      {nowDate(comment.fbCommentDate)}
+                    </div>
+                  </div>
+                  {comment.memberNo === memberNo &&
+                    cmtModify !== comment.fbCommentNo && (
+                      <div className="comment-button">
+                        <button
+                          className="modify-btn"
+                          onClick={() => {
+                            setCommentNo(comment.fbCommentNo);
+                            modifyComment(comment.fbCommentNo);
+                            setModifyCommentNo(comment.fbCommentNo);
+                          }}
+                        >
+                          수정
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => {
+                            Swal.fire({
+                              title: "삭제",
+                              text: "댓글을 삭제하시겠습니까?",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonText: "확인",
+                              cancelButtonText: "취소",
+                            }).then((confirm) => {
+                              if (confirm.isConfirmed) {
+                                axios
+                                  .delete(
+                                    `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
+                                  )
+                                  .then((res) => {
+                                    console.log(res);
+                                    if (res.data === 1) {
+                                      Swal.fire({
+                                        title: "댓글 삭제 완료",
+                                        text: "댓글 삭제가 완료되었습니다.",
+                                        icon: "success",
+                                      }).then(() => {
+                                        setToggle(!toggle);
+                                      });
+                                    }
+                                  })
+                                  .catch((err) => {
+                                    console.log(err);
+                                  });
+                              }
+                            });
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

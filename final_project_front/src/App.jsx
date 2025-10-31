@@ -20,10 +20,6 @@ import VoteDetail from "./component/vote/VoteDetail";
 import FreeBoardDetail from "./component/free_board/FreeBoardDetail";
 import EventMail from "./component/member/EventMail";
 
-
-
-
-
 function App() {
   return (
     <div className="wrap">
@@ -35,7 +31,7 @@ function App() {
           <Route path="/member/join" element={<MemberJoin />} />
           <Route path="/member/agree" element={<MemberAgree />} />
           <Route path="/member/*" element={<MemberMypage />} />
-          
+
           <Route path="/member/event" element={<EventMail />} />
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />

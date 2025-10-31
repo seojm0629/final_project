@@ -17,6 +17,7 @@ import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardViewDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 
@@ -242,6 +243,19 @@ public class FreeBoardService {
 		}
 		FreeBoardLikeDTO freeBoardLike = freeBoardDao.countLike(memberNo, freeBoardNo);
 		return freeBoardLike;
+	}
+
+	public FreeBoardViewDTO countView(int memberNo, int freeBoardNo, int freeBoardCategoryNo,
+			int freeBoardSubcategoryNo) {
+		//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지)
+		FreeBoardViewDTO selectView = freeBoardDao.selectView(memberNo, freeBoardNo);
+		
+		//조회 후 게시글을 조회한 회원이 없다면 insert만 하도록
+		if(selectView == null) {
+			int result = freeBoardDao.insertView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
+		}
+		FreeBoardViewDTO countView = freeBoardDao.countView(memberNo, freeBoardNo);
+		return countView;
 	}
 
 }

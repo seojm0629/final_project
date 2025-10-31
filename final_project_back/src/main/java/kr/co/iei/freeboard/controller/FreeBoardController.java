@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardViewDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
 import kr.co.iei.utils.FileUtil;
 
@@ -243,6 +245,13 @@ public class FreeBoardController {
 		FreeBoardLikeDTO freeBoardLike = freeBoardService.countLike(memberNo, freeBoardNo, freeBoardSubcategoryNo, freeBoardCategoryNo);
 		//System.out.println(freeBoardLike);
 		return ResponseEntity.ok(freeBoardLike);
+	}
+	/* 뷰(view) */
+	@GetMapping(value = "/content/content")
+	public ResponseEntity<FreeBoardViewDTO> countView(@RequestParam int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardCategoryNo, @RequestParam int freeBoardSubcategoryNo){
+		FreeBoardViewDTO freeBoardView = freeBoardService.countView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
+				
+		return ResponseEntity.ok(freeBoardView);		
 	}
 	
 }
