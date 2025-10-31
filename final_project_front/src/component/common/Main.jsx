@@ -56,6 +56,8 @@ const Main = () => {
     navigate("/");
   };
 
+  
+
   //--------- 자유게시판 리스트
   const backServer = import.meta.env.VITE_BACK_SERVER;
   // 중고거래 게시판 리스트
@@ -75,6 +77,7 @@ const Main = () => {
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState(1);
 
   dayjs.extend(relativeTime);
+
 
 // 기존 한국어 locale 불러오기
 const locale = {
@@ -113,8 +116,11 @@ dayjs.locale("ko");
       return target.fromNow(); //한국어로 ?? 시간전 표시하기
     };
 
-    
-    
+  
+  
+  
+  
+  
   useEffect(() => {
     axios
       .get(`${backServer}/vote/mainTitle`)
@@ -126,13 +132,17 @@ dayjs.locale("ko");
       });
   },[]);
 
-  useEffect(() => {
-    
+  
 
+  /* 자유게시판 전체 리스트 출력 */
+  useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainTitle`)
       .then((res) => {
-        setFreeBoardList(res.data);
+        if(res.data){
+          setFreeBoardList(res.data);
+          
+        }
         
       })
       .catch((err) => {
@@ -140,6 +150,7 @@ dayjs.locale("ko");
       });
   }, []);
 
+  /* 자유게시판 카테고리별 리스트 출력*/
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=1`)

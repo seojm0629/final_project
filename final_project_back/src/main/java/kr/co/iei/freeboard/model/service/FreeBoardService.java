@@ -244,4 +244,7 @@ public class FreeBoardService {
 		return freeBoardLike;
 	}
 
+	
+
+
 }

@@ -69,7 +69,7 @@ const AllMemberChat = () => {
 
     //웹 소켓 연결(채팅 시작 시)
     const startChat = () => {
-        console.log("웹 소켓 연결 시 실행되는 함수");
+        
 
         //웹소켓으로 데이터를 전송 시 문자열로 전송
         //우리가 보내고 싶은 데이터는 객체 -> 문자열로 변환해서 전송
@@ -93,7 +93,7 @@ const AllMemberChat = () => {
     };
 
     const endChat = () => {
-        console.log("웹소켓 연결이 끊어지면 실행되는 함수");
+        
     }
 
     //소켓 연결
