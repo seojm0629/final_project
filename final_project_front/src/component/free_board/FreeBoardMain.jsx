@@ -261,6 +261,7 @@ const FreeBoardContent = (props) => {
       ) : (
         <div className="board-div">
           {freeBoardList.map((list, i) => {
+            console.log(list);
             return i % 2 === 0 ? (
               <div
                 key={"first" + i}
@@ -277,10 +278,9 @@ const FreeBoardContent = (props) => {
                   <div className="board-status">{list.freeBoardNo}</div>
                   <div className="board-title">{list.freeBoardTitle}</div>
                 </div>
-                <div
-                  className="board-content"
-                  dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
-                ></div>
+                <div className="board-content">
+                  <img src={list.freeBoardThumbnail}></img>
+                </div>
                 <div className="nickname-id">
                   <span>{list.memberNickname}</span>ㆍ
                   <span>{list.memberId}</span>
@@ -313,10 +313,9 @@ const FreeBoardContent = (props) => {
                   <div className="board-status">{list.freeBoardNo}</div>
                   <div className="board-title">{list.freeBoardTitle}</div>
                 </div>
-                <div
-                  className="board-content"
-                  dangerouslySetInnerHTML={{ __html: list.freeBoardContent }}
-                ></div>
+                <div className="board-content">
+                  <img src={list.freeBoardThumbnail}></img>
+                </div>
                 <div className="nickname-id">
                   <span>{list.memberNickname}</span>ㆍ
                   <span>{list.memberId}</span>
