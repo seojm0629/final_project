@@ -245,4 +245,6 @@ public class FreeBoardController {
 		return ResponseEntity.ok(freeBoardLike);
 	}
 	
+	
+	
 }
