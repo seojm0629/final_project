@@ -14,6 +14,8 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import OpenWeather from "../utils/OpenWeather";
 import NoteId from "../note/NoteId";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko.js";
 
 const Main = () => {
   //login 정보 가져와야함
@@ -71,6 +73,33 @@ const Main = () => {
   const [voteBoardList, setVoteBoardList] = useState([]);
 
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState(1);
+
+  dayjs.extend(relativeTime);
+
+// 기존 한국어 locale 불러오기
+const locale = {
+  ...dayjs.Ls["ko"],
+  // 숫자를 한글이 아닌 아라비아 숫자로 표시하도록 커스터마이징
+  relativeTime: {
+    future: "%s 후",
+    past: "%s 전",
+    s: "몇 초",
+    m: "1분",
+    mm: "%d분",
+    h: "1시간",
+    hh: "%d시간",
+    d: "1일",
+    dd: "%d일",
+    M: "1달",
+    MM: "%d달",
+    y: "1년",
+    yy: "%d년",
+  },
+};
+
+// 커스터마이징한 locale 적용
+dayjs.locale(locale, null, true);
+dayjs.locale("ko");
   
   /* 자유 게시판 리스트 시간 출력 */
   const nowDate = (dateString) => {
@@ -519,7 +548,7 @@ const Main = () => {
                       </span>
                     </div>
                     <div className="trans-board">
-                      <span>중고거래</span>
+                      <span>투표</span>
                     </div>
                     <div className="fr-board">
                       <span>자유</span>
