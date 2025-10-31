@@ -96,7 +96,7 @@ const ContentFreeBoard = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refreshToggle]);
   useEffect(() => {
     axios
       .post(`${import.meta.env.VITE_BACK_SERVER}/admin/insertNotice`, noticeSet)
@@ -188,6 +188,31 @@ const ContentFreeBoard = () => {
       });
     }
   }, [deleteCate]);
+
+  const [delNoticeNo, setDelNoticeNo] = useState();
+
+  useEffect(() => {
+    axios
+      .delete(
+        `${
+          import.meta.env.VITE_BACK_SERVER
+        }/admin/freeboard/notice/${delNoticeNo}/delete`
+      )
+      .then((res) => {
+        console.log(res.data);
+
+        if (res.data === 1) {
+          setRefreshToggle(!refreshToggle);
+          Swal.fire({
+            title: "알림",
+            text: "공지사항 삭제가 완료되었습니다.",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [delNoticeNo]);
 
   return (
     <div className="admin-right freeBoard">
@@ -324,7 +349,14 @@ const ContentFreeBoard = () => {
                         </td>
                         <td>{notice.memberNo}</td>
                         <td>
-                          <button className="admin-btn">삭제하기</button>
+                          <button
+                            className="admin-btn"
+                            onClick={() => {
+                              setDelNoticeNo(notice.noticeNo);
+                            }}
+                          >
+                            삭제하기
+                          </button>
                         </td>
                       </tr>
                     );

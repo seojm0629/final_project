@@ -156,34 +156,36 @@ const EventMail = () => {
         </div>
       </div>
 
-      <table className="email-target-table">
-        <thead>
-          <tr>
-            <th colSpan={4}>
-              <div>발송 유저 대상 목록</div>
-            </th>
-          </tr>
-          <tr>
-            <th>회원 번호</th>
-            <th>회원 이름</th>
-            <th>이메일</th>
-            <th>전화번호</th>
-          </tr>
-        </thead>
-        <tbody>
-          {memberList &&
-            memberList.map((m, i) => {
-              return (
-                <tr key={"member-" + i}>
-                  <td>{m.memberNo}</td>
-                  <td>{m.memberName}</td>
-                  <td>{m.memberEmail}</td>
-                  <td>{m.memberPhone}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+      <div className="table-box">
+        <table className="email-target-table">
+          <thead>
+            <tr>
+              <th colSpan={4}>
+                <div>발송 유저 대상 목록</div>
+              </th>
+            </tr>
+            <tr>
+              <th>회원 번호</th>
+              <th>회원 이름</th>
+              <th>이메일</th>
+              <th>전화번호</th>
+            </tr>
+          </thead>
+          <tbody>
+            {memberList &&
+              memberList.map((m, i) => {
+                return (
+                  <tr key={"member-" + i}>
+                    <td>{m.memberNo}</td>
+                    <td>{m.memberName}</td>
+                    <td>{m.memberEmail}</td>
+                    <td>{m.memberPhone}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 };

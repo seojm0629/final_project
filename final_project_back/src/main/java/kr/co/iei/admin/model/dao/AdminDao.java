@@ -110,5 +110,7 @@ public interface AdminDao {
 
 	List<MemberDTO> mailTargetSearch();
 
+	int delFreeNotice(int delNoticeNo);
+
 
 }
