@@ -58,11 +58,13 @@
  		<![CDATA[
 		    SELECT v.vote_no,
 		           v.vote_title,
+		           to_char(v.vote_end_date, 'yyyy-mm-dd HH24:MI') as vote_end_date,
 		           v.member_no,
 		           m.member_nickname
 		    FROM (
 		        SELECT vote_no,
 		               vote_title,
+		               vote_end_date,
 		               member_no
 		        FROM vote_tbl
 		        ORDER BY vote_no DESC
