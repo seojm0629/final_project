@@ -73,12 +73,11 @@ public interface FreeBoardDao {
 	int deleteLike(int memberNo, int freeBoardNo); 
 	FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo);
 
+
 	
 	FreeBoardViewDTO selectView(int memberNo, int freeBoardNo);
 	int insertView(int memberNo, int freeBoardNo, int freeBoardCategoryNo, int freeBoardSubcategoryNo);
 	FreeBoardViewDTO countView(int memberNo, int freeBoardNo); 
-
-
 
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);

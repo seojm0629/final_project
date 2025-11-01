@@ -56,6 +56,8 @@ const Main = () => {
     navigate("/");
   };
 
+  
+
   //--------- 자유게시판 리스트
   const backServer = import.meta.env.VITE_BACK_SERVER;
   // 중고거래 게시판 리스트
@@ -75,6 +77,7 @@ const Main = () => {
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState(1);
 
   dayjs.extend(relativeTime);
+
 
 // 기존 한국어 locale 불러오기
 const locale = {
@@ -113,8 +116,11 @@ dayjs.locale("ko");
       return target.fromNow(); //한국어로 ?? 시간전 표시하기
     };
 
-    
-    
+  
+  
+  
+  
+  
   useEffect(() => {
     axios
       .get(`${backServer}/vote/mainTitle`)
@@ -126,13 +132,17 @@ dayjs.locale("ko");
       });
   },[]);
 
-  useEffect(() => {
-    
+  
 
+  /* 자유게시판 전체 리스트 출력 */
+  useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainTitle`)
       .then((res) => {
-        setFreeBoardList(res.data);
+        if(res.data){
+          setFreeBoardList(res.data);
+          
+        }
         
       })
       .catch((err) => {
@@ -140,6 +150,7 @@ dayjs.locale("ko");
       });
   }, []);
 
+  /* 자유게시판 카테고리별 리스트 출력*/
   useEffect(() => {
     axios
       .get(`${backServer}/freeBoard/mainCategory?freeBoardCategoryNo=1`)
@@ -264,6 +275,7 @@ dayjs.locale("ko");
                 <div className="transaction-board first">
                   <div className="main-board-header">
                     <h4>투표 게시판</h4>
+                    <h5>종료날짜</h5>
                   </div>
 
                   <ul className="main-board-content">
@@ -281,8 +293,8 @@ dayjs.locale("ko");
                                                         return(
                                                             <li key={"nick-" + i} className="main-board-info">
                                                                 <span>{list.memberNickname}</span>
-                                                                <span>1시간전</span>
-                                                                <span>좋아요</span>
+                                                                <span>{list.voteEndDate}</span>
+                                                                
                                                             </li>
                                                         )
                                                     })}

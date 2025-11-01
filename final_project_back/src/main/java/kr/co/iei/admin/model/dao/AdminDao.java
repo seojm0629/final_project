@@ -112,5 +112,7 @@ public interface AdminDao {
 
 	int delFreeNotice(int delNoticeNo);
 
+	int updateNotice(HashMap<String, Object> updateNoticeSet);
+
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.note.controller.NoteController;
 import kr.co.iei.vote.model.dao.VoteDao;
+import kr.co.iei.vote.model.dto.VoteCommentDTO;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
 import kr.co.iei.vote.model.dto.VoteOptionCount;
@@ -85,7 +86,11 @@ public class VoteService {
 	public List<VoteOption> selectVoteOptions(int voteNo) {
 		
 		List<VoteOption> optionList = voteDao.selectVoteOptions(voteNo);
-			
+		
+		
+		// 해당 게시글의 댓글 조회
+		List<VoteCommentDTO> commentList = voteDao.selectVoteCommentList(voteNo);
+		
 		return optionList;
 	}
 	
@@ -132,4 +137,12 @@ public class VoteService {
 		
 		return check;
 	}
+	@Transactional
+	public int commentInsert(VoteCommentDTO voteComment) {
+		int result = voteDao.commentInsert(voteComment);
+		 
+		return result;
+	}
+
+	
 }

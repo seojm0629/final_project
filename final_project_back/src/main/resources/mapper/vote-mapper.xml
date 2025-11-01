@@ -58,11 +58,13 @@
  		<![CDATA[
 		    SELECT v.vote_no,
 		           v.vote_title,
+		           to_char(v.vote_end_date, 'yyyy-mm-dd HH24:MI') as vote_end_date,
 		           v.member_no,
 		           m.member_nickname
 		    FROM (
 		        SELECT vote_no,
 		               vote_title,
+		               vote_end_date,
 		               member_no
 		        FROM vote_tbl
 		        ORDER BY vote_no DESC
@@ -115,5 +117,19 @@
 	<update id="reVote">
 		update vote_result_tbl set vote_option_no = #{voteOptionNo} where vote_no= #{voteNo} and member_no = #{memberNo}
 	</update>
+		
+	<insert id="commentInsert">
+		insert into vote_comment_tbl values( 
+			vote_comment_seq.nextval,
+			#{voteCommentContent},
+			to_char(sysdate, 'yyyy-mm-dd'),
+			#{memberNo},
+			#{voteNo}
+		)
+	</insert>	
+		
+	<select id="selectVoteCommentList">
+		select * from vote_comment_tbl where = #{voteNo}
+	</select>	
 		
 </mapper>

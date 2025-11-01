@@ -134,7 +134,7 @@ const HeaderLink = () => {
     
     navigate("/");
   };
-  console.log(localStorage);
+  
 
   return (
     <ul className="header-user">

@@ -214,6 +214,33 @@ const ContentFreeBoard = () => {
       });
   }, [delNoticeNo]);
 
+  const [noticeIsactive, setNoticeIsactive] = useState();
+  console.log(noticeIsactive);
+
+  useEffect(() => {
+    noticeIsactive &&
+      axios
+        .patch(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/freeboard/notice/${
+            noticeIsactive.noticeNo
+          }/update`,
+          noticeIsactive
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data === 1) {
+            setRefreshToggle(!refreshToggle);
+            Swal.fire({
+              title: "알림",
+              text: "공지사항이 활성화되었습니다.",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [noticeIsactive]);
+
   return (
     <div className="admin-right freeBoard">
       <div className="admin-content-wrap">
@@ -332,8 +359,9 @@ const ContentFreeBoard = () => {
               <tbody>
                 {noticeList &&
                   noticeList.map((notice, i) => {
+                    console.log(notice.noticeIsactive);
                     return (
-                      <tr>
+                      <tr key={"noticeList" + i}>
                         <td>{notice.noticeNo}</td>
                         <td
                           dangerouslySetInnerHTML={{
@@ -343,8 +371,18 @@ const ContentFreeBoard = () => {
                         <td>{notice.noticeDate}</td>
                         <td>{notice.noticeTarget == 1 ? "자유" : "거래"}</td>
                         <td>
-                          <select value={notice.noticeIsactive}>
-                            <option>{notice.noticeIsactive}</option>
+                          <select
+                            defaultValue={notice.noticeIsactive}
+                            onChange={(e) => {
+                              setNoticeIsactive({
+                                isActive: e.target.value,
+                                noticeNo: notice.noticeNo,
+                                memberNo: memberNo,
+                              });
+                            }}
+                          >
+                            <option value="TRUE">TRUE</option>
+                            <option value="FALSE">FALSE</option>
                           </select>
                         </td>
                         <td>{notice.memberNo}</td>

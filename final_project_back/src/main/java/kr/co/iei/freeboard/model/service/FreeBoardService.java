@@ -245,6 +245,7 @@ public class FreeBoardService {
 		return freeBoardLike;
 	}
 
+
 	public FreeBoardViewDTO countView(int memberNo, int freeBoardNo, int freeBoardCategoryNo,
 			int freeBoardSubcategoryNo) {
 		//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지)
@@ -257,5 +258,6 @@ public class FreeBoardService {
 		FreeBoardViewDTO countView = freeBoardDao.countView(memberNo, freeBoardNo);
 		return countView;
 	}
+
 
 }

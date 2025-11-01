@@ -19,9 +19,9 @@ const VoteDetail = () => {
   const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
-  console.log(voteList);
+
   //차트 안에 들어갈 data (찾아보면 더 있음)
-  console.log(values);
+
   const data = {
     labels: voteList.map((item) => item.voteContent), // 투표안한 항목 다보이게 표시
     datasets: [
@@ -30,10 +30,10 @@ const VoteDetail = () => {
         data: values.map((value) => value), //배열의 길이만큼 돌아라 맵을 써서
         backgroundColor: [
           "#e66262ff",
-          "#e9a577ff",
+          "#c99c7eff",
           "#fff493ff",
-          "#cdff93ff",
-          "#5cc584ff",
+          "#b1e278ff",
+          "#657a6dff",
           "#5d8ed8ff",
           "#4d77b6ff",
           "#bd9abaff",
@@ -74,13 +74,13 @@ const VoteDetail = () => {
     axios
       .get(`${backServer}/vote/count/${voteNo}`)
       .then((res) => {
+        console.log(res);
         const a = res.data.map((item, index) => {
           return item.voteContent;
         });
         const b = res.data.map((item, index) => {
           return item.voteOptionCount;
         });
-
         setLabels(a);
         setValues(b);
 
@@ -231,12 +231,25 @@ const VoteDetail = () => {
       }
     });
   };
+
+  const [commentData, setCommentData] = useState({});
+  console.log(commentData);
+
+  const insertComment = () => {
+    axios
+      .post(`${backServer}/vote/comment/insert`, commentData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-
       {vote && vote.memberNo === memberNo && (
         <div className="vote-detail-buttonBox">
           {vote.voteCheck === 0 && (
@@ -245,7 +258,6 @@ const VoteDetail = () => {
           <button onClick={voteDelete}>삭제하기</button>
         </div>
       )}
-
       {vote &&
         (vote.voteCheck === 0 ? ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
           <div className="vote-detail-list">
@@ -285,9 +297,22 @@ const VoteDetail = () => {
             <ul className="vote-detail-ul-end">
               {voteList.map((list, i) => {
                 console.log(voteList);
+                const maxValue = Math.max(...values);
+
+                const style =
+                  maxValue === "0"
+                    ? {
+                        backgroundColor: "orange",
+                        borderRadius: "10px",
+                      }
+                    : undefined;
 
                 return (
-                  <li className="vote-detail-content-end" key={"list" + i}>
+                  <li
+                    className="vote-detail-content-end"
+                    style={style}
+                    key={"list" + i}
+                  >
                     <div className="vote-content-end-div1">
                       {list.voteContent}
                       <span className="detail-checkicon">
@@ -311,6 +336,29 @@ const VoteDetail = () => {
           }}
         />
       </div>
+      <div>
+        <input
+          type="text"
+          onChange={(e) => {
+            setCommentData({
+              memberNo: memberNo,
+              voteCommentContent: e.target.value,
+              voteNo: voteNo,
+            });
+          }}
+        />
+        <button onClick={insertComment}>등록하기</button>
+      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td>닉네임</td>
+            <td>내용</td>
+            <td>좋아요and신고</td>
+            <td>삭제</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.vote.model.dto.VoteCommentDTO;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
 import kr.co.iei.vote.model.dto.VoteOptionCount;
@@ -42,6 +43,10 @@ public interface VoteDao {
 	int checkOption(HashMap<String, Object> voteSet);
 
 	int reVote(VoteResult result);
+
+	int commentInsert(VoteCommentDTO voteComment);
+
+	List<VoteCommentDTO> selectVoteCommentList(int voteNo);
 
 	
 }
