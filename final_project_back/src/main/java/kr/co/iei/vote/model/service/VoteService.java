@@ -86,7 +86,11 @@ public class VoteService {
 	public List<VoteOption> selectVoteOptions(int voteNo) {
 		
 		List<VoteOption> optionList = voteDao.selectVoteOptions(voteNo);
-			
+		
+		
+		// 해당 게시글의 댓글 조회
+		List<VoteCommentDTO> commentList = voteDao.selectVoteCommentList(voteNo);
+		
 		return optionList;
 	}
 	
@@ -133,9 +137,12 @@ public class VoteService {
 		
 		return check;
 	}
-
+	@Transactional
 	public int commentInsert(VoteCommentDTO voteComment) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = voteDao.commentInsert(voteComment);
+		 
+		return result;
 	}
+
+	
 }

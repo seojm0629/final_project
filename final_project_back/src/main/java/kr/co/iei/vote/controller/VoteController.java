@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import kr.co.iei.note.model.service.NoteService;
 import kr.co.iei.vote.model.dto.VoteCommentDTO;
 import kr.co.iei.vote.model.dto.VoteDTO;
 import kr.co.iei.vote.model.dto.VoteOption;
@@ -29,13 +28,11 @@ import kr.co.iei.vote.model.service.VoteService;
 @RequestMapping(value="/vote")
 public class VoteController {
 
-    private final NoteService noteService;
+
 	@Autowired
 	private VoteService voteService;
 
-    VoteController(NoteService noteService) {
-        this.noteService = noteService;
-    }
+
 	
 	@PostMapping
 	public ResponseEntity<Integer> insertVote(@RequestBody VoteDTO vote ) {
@@ -78,16 +75,19 @@ public class VoteController {
 		
 		System.out.println(vote);
 		
+		
 		return ResponseEntity.ok(vote);
 	}
 	
 	@GetMapping(value="/option/{voteNo}") 
-	public ResponseEntity<List<VoteOption>> getVoteOptions(@PathVariable int voteNo) {
+	public ResponseEntity<List<VoteOption>> selectVoteOptions(@PathVariable int voteNo) {
 	   //게시글 안에 있는 목록값 다 가져오기
 		System.out.println("값확인"+voteNo);
 		List<VoteOption> optionList = voteService.selectVoteOptions(voteNo);
 	    
 		System.out.println(optionList);
+
+		
 		
 	    return ResponseEntity.ok(optionList);
 	}
@@ -148,11 +148,11 @@ public class VoteController {
 	
 	@PostMapping(value = "/comment/insert")
 	public ResponseEntity<Integer> commentInsert(@RequestBody VoteCommentDTO voteComment) {
-		System.out.println(voteComment);
+		System.out.println("ddd"+voteComment);
 		
 		int result = voteService.commentInsert(voteComment);
 		
-		return ResponseEntity.ok(0);
+		return ResponseEntity.ok(result);
 		
 	}
 

@@ -237,7 +237,7 @@ const VoteDetail = () => {
 
   const insertComment = () => {
     axios
-      .post(`${backServer}/comment/insert/`, commentData)
+      .post(`${backServer}/vote/comment/insert`, commentData)
       .then((res) => {
         console.log(res);
       })
