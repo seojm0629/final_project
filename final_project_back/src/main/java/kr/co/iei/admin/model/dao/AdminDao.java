@@ -116,5 +116,7 @@ public interface AdminDao {
 
 	List<AdminNoticeDTO> selectActiveNotices();
 
+	List<AdminNoticeDTO> selectVoteActiveNotices();
+
 
 }

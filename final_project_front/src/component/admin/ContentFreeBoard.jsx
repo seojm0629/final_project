@@ -55,6 +55,7 @@ const ContentFreeBoard = () => {
 
   const [insertCate, setInsertCate] = useState();
   const [deleteCate, setDeleteCate] = useState();
+  const [noticeTarget, setNoticeTarget] = useState("1");
 
   console.log(insertCate);
 
@@ -265,13 +266,22 @@ const ContentFreeBoard = () => {
               />
             </div>
             <div className="noticeBox">
+              <div className="form-label">공지 게시판 선택</div>
+              <select
+                value={noticeTarget}
+                onChange={(e) => setNoticeTarget(e.target.value)}
+                className="notice-select"
+              >
+                <option value="1">자유 게시판</option>
+                <option value="2">투표 게시판</option>
+              </select>
               <button
                 className="admin-btn"
                 onClick={() => {
                   setNoticeSet({
                     memberNo: memberNo,
                     noticeContent: noticeValue,
-                    noticeTarget: 1,
+                    noticeTarget: noticeTarget,
                   });
                 }}
               >
@@ -283,7 +293,7 @@ const ContentFreeBoard = () => {
                   setNoticeSet({
                     memberNo: memberNo,
                     noticeContent: noticeValue,
-                    noticeTarget: 1,
+                    noticeTarget: noticeTarget,
                   });
                   noticeAlert(noticeValue);
                 }}
@@ -381,7 +391,7 @@ const ContentFreeBoard = () => {
                           }}
                         ></td>
                         <td>{notice.noticeDate}</td>
-                        <td>{notice.noticeTarget == 1 ? "자유" : "거래"}</td>
+                        <td>{notice.noticeTarget == 1 ? "자유" : "투표"}</td>
                         <td>
                           <select
                             defaultValue={notice.noticeIsactive}
