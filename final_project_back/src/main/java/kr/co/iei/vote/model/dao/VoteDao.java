@@ -48,15 +48,25 @@ public interface VoteDao {
 
 	int commentInsert(VoteCommentDTO voteComment);
 
+
 	int commentLike(HashMap<String, Object> voteCommentLikeSet);
 
 	int memberIsCommentLike(HashMap<String, Object> voteCommentLikeSet);
 
 	int commentLikeCancel(HashMap<String, Object> voteCommentLikeSet);
 
+<<<<<<< HEAD
+	int updateComment(VoteCommentDTO voteComment);
+
+	int deleteComment(int voteCommentNo);
+
+
+
+=======
 	int checkDuplicateCommentReport(HashMap<String, Object> reportData);
 
 	int insertCommentReport(HashMap<String, Object> reportData);
+>>>>>>> 796a9bf716f05729941204d30cf68f0e62958d70
 
 	int checkVoteLike(HashMap<String, Object> likeData);
 
