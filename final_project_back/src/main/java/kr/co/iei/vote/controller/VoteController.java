@@ -73,8 +73,7 @@ public class VoteController {
 		//눌렀던 게시글의 기본정보들 다 가져오기
 		VoteDTO vote = voteService.selectOneVote(voteNo);
 		
-		System.out.println(vote);
-		
+
 		
 		return ResponseEntity.ok(vote);
 	}
@@ -86,7 +85,7 @@ public class VoteController {
 		List<VoteOption> optionList = voteService.selectVoteOptions(voteNo);
 	    
 		System.out.println(optionList);
-
+		
 		
 		
 	    return ResponseEntity.ok(optionList);

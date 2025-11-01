@@ -23,4 +23,5 @@ public class VoteDTO {
 	private String memberNickname;
 	private int voteOk;
 	private int voteTotal;
+	private List<VoteCommentDTO> VoteCommentList;
 }

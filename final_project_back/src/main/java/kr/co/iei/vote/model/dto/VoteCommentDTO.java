@@ -17,4 +17,5 @@ public class VoteCommentDTO {
 	private String voteCommentDate;
 	private int memberNo;
 	private int voteNo;
+	private String memberNickname;
 }

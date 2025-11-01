@@ -128,8 +128,16 @@
 		)
 	</insert>	
 		
-	<select id="selectVoteCommentList">
-		select * from vote_comment_tbl where = #{voteNo}
+	<select id="selectVoteCommentList" resultType="comment">
+		select
+			vote_comment_no,
+			vote_comment_content,
+			to_char(vote_comment_date,'yyyy-mm-dd HH24:MI:SS') as vote_comment_date,
+			member_no,
+			member_nickname,
+			vote_no  from (select * from vote_comment_tbl 
+			left join member_tbl using (member_no))
+			where vote_no = #{voteNo}
 	</select>	
 		
 </mapper>

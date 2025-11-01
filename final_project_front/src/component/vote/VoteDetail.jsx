@@ -7,6 +7,11 @@ import "./voteDetail.css";
 import Swal from "sweetalert2";
 import { Bar, Pie } from "react-chartjs-2";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import dayjs from "dayjs"; // 진원이형이 다운받은 날짜js
+import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
+import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
 const VoteDetail = () => {
   const params = useParams(); //주소값에서 불러오는 파람값
   const voteNo = params.voteNo;
@@ -15,7 +20,7 @@ const VoteDetail = () => {
   const navigate = useNavigate();
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const [selectedOption, setSelectedOption] = useState(null); // 레디오 선택한값 담기
-  const [vote, setVote] = useState(null); // 기본정보 담을 스테이트
+  const [vote, setVote] = useState({ voteCommentList: [] }); // 기본정보 담을 스테이트
   const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
@@ -29,16 +34,16 @@ const VoteDetail = () => {
         label: "비율(%)",
         data: values.map((value) => value), //배열의 길이만큼 돌아라 맵을 써서
         backgroundColor: [
-          "#e66262ff",
-          "#c99c7eff",
-          "#fff493ff",
-          "#b1e278ff",
-          "#657a6dff",
-          "#5d8ed8ff",
-          "#4d77b6ff",
-          "#bd9abaff",
-          "#86718fff",
-          "#796273ff",
+          "#e61616ff",
+          "#e7772bff",
+          "#dac82fff",
+          "#8fd341ff",
+          "#2dc969ff",
+          "#2870dbff",
+          "#1b64d1ff",
+          "#cf2cc2ff",
+          "#9e1ed4ff",
+          "#d617a3ff",
         ],
       },
     ],
@@ -234,6 +239,15 @@ const VoteDetail = () => {
 
   const [commentData, setCommentData] = useState({});
   console.log(commentData);
+  const nowDate = (dateString) => {
+    const now = dayjs();
+    const target = dayjs(dateString);
+    const diffDays = now.diff(target, "day");
+    if (diffDays >= 7) {
+      return target.format("YYYY-MM-DD");
+    }
+    return target.fromNow();
+  };
 
   const insertComment = () => {
     axios
@@ -245,6 +259,7 @@ const VoteDetail = () => {
         console.log(err);
       });
   };
+  console.log(vote.voteCommentList);
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
@@ -336,29 +351,50 @@ const VoteDetail = () => {
           }}
         />
       </div>
-      <div>
-        <input
-          type="text"
-          onChange={(e) => {
-            setCommentData({
-              memberNo: memberNo,
-              voteCommentContent: e.target.value,
-              voteNo: voteNo,
-            });
-          }}
-        />
-        <button onClick={insertComment}>등록하기</button>
+      {/* 댓글 */}
+      <div className="comment-section">
+        <div className="comment-input-area">
+          <input
+            type="text"
+            placeholder="댓글을 남겨주세요."
+            onChange={(e) => {
+              setCommentData({
+                memberNo: memberNo,
+                voteCommentContent: e.target.value,
+                voteNo: voteNo,
+              });
+            }}
+          />
+          <button className="btn comment-submit-btn" onClick={insertComment}>
+            등록
+          </button>
+        </div>
+        <div className="comment-list">
+          {vote.voteCommentList.length === 0 ? (
+            <p className="no-comment">아직 댓글이 없습니다.</p>
+          ) : (
+            vote.voteCommentList?.map((c) => (
+              <div key={c.voteCommentNo} className="comment-item">
+                <div className="comment-top">
+                  <p>{c.memberNickname}</p>
+                  <p className="comment-time">{nowDate(c.voteCommentDate)}</p>
+                </div>
+                <p className="comment-content">{c.voteCommentContent}</p>
+                <div className="comment-actions">
+                  <button className="like-btn">👍</button>
+                  <button className="report-btn">신고</button>
+                  {memberNo === c.memberNo && (
+                    <>
+                      <button className="edit-btn">수정</button>
+                      <button className="delete-btn">삭제</button>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-      <table>
-        <tbody>
-          <tr>
-            <td>닉네임</td>
-            <td>내용</td>
-            <td>좋아요and신고</td>
-            <td>삭제</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   );
 };

@@ -44,9 +44,9 @@ public interface VoteDao {
 
 	int reVote(VoteResult result);
 
-	int commentInsert(VoteCommentDTO voteComment);
-
 	List<VoteCommentDTO> selectVoteCommentList(int voteNo);
+
+	int commentInsert(VoteCommentDTO voteComment);
 
 	
 }
