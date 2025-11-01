@@ -153,4 +153,15 @@ select
 		<delete id="commentLikeCancel">
 		DELETE VOTE_COMMENT_LIKE_TBL WHERE MEMBER_NO=#{memberNo} AND VOTE_COMMENT_NO=#{voteCommentNo}
 		</delete>
+		
+		<select id="checkDuplicateCommentReport" resultType="int">
+		  SELECT COUNT(*) 
+		  FROM VOTE_COMMENT_REPORT_TBL
+		  WHERE VOTE_COMMENT_NO = #{voteCommentNo}
+		    AND MEMBER_NO = #{memberNo}
+		</select>
+		
+		<insert id="insertCommentReport">
+		  INSERT INTO VOTE_COMMENT_REPORT_TBL VALUES(VOTE_COMMEMT_REPORT_SEQ.NEXTVAL, #{reportReason}, SYSDATE, #{memberNo}, #{voteCommentNo})
+		</insert>
 </mapper>

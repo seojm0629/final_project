@@ -299,6 +299,66 @@ const VoteDetail = () => {
         console.log(err);
       });
   };
+  const commentReport = (voteCommentNo) => {
+    if (!memberNo) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 이용 가능한 기능입니다.",
+        icon: "warning",
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: "댓글 신고",
+      input: "text",
+      inputLabel: "신고 사유를 입력하세요.",
+      inputPlaceholder: "예: 욕설, 비방, 스팸 등",
+      showCancelButton: true,
+      confirmButtonText: "신고하기",
+      cancelButtonText: "취소",
+      preConfirm: (reason) => {
+        if (!reason.trim()) {
+          Swal.showValidationMessage("신고 사유를 입력해야 합니다.");
+        }
+        return reason;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const reportData = {
+          voteCommentNo: voteCommentNo,
+          memberNo: memberNo,
+          reportReason: result.value,
+        };
+
+        axios
+          .post(`${backServer}/vote/comment/report`, reportData)
+          .then((res) => {
+            if (res.data === 1) {
+              Swal.fire({
+                title: "신고 완료",
+                text: "댓글 신고가 접수되었습니다.",
+                icon: "success",
+              });
+            } else if (res.data === 0) {
+              Swal.fire({
+                title: "이미 신고한 댓글입니다.",
+                text: "중복 신고는 불가합니다.",
+                icon: "info",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              title: "오류",
+              text: "신고 처리 중 문제가 발생했습니다.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
 
   return (
     <div className="vote-detail-wrap">
@@ -430,7 +490,15 @@ const VoteDetail = () => {
                   >
                     👍 {c.likeCnt}
                   </button>
-                  <button className="report-btn">신고</button>
+
+                  <button
+                    className="report-btn"
+                    onClick={() => {
+                      commentReport(c.voteCommentNo);
+                    }}
+                  >
+                    신고
+                  </button>
                   {memberNo === c.memberNo && (
                     <>
                       <button className="edit-btn">수정</button>

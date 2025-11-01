@@ -54,5 +54,9 @@ public interface VoteDao {
 
 	int commentLikeCancel(HashMap<String, Object> voteCommentLikeSet);
 
+	int checkDuplicateCommentReport(HashMap<String, Object> reportData);
+
+	int insertCommentReport(HashMap<String, Object> reportData);
+
 	
 }

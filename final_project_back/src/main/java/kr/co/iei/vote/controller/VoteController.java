@@ -164,5 +164,12 @@ public class VoteController {
 		int result = voteService.commentLike(voteCommentLikeSet);
 		return ResponseEntity.ok(result);
 	}
+	
+	@PostMapping("/comment/report")
+	public ResponseEntity<Integer> insertCommentReport(@RequestBody HashMap<String, Object> reportData) {
+		System.out.println(reportData);
+	    int result = voteService.insertCommentReport(reportData);
+	    return ResponseEntity.ok(result);
+	}
 
 }
