@@ -48,11 +48,19 @@ public interface VoteDao {
 
 	int commentInsert(VoteCommentDTO voteComment);
 
+<<<<<<< HEAD
 	int commentLike(HashMap<String, Object> voteCommentLikeSet);
 
 	int memberIsCommentLike(HashMap<String, Object> voteCommentLikeSet);
 
 	int commentLikeCancel(HashMap<String, Object> voteCommentLikeSet);
+=======
+	int updateComment(VoteCommentDTO voteComment);
+
+	int deleteComment(int voteCommentNo);
+
+
+>>>>>>> wjsgusdn96tp
 
 	
 }

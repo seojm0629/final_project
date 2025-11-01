@@ -36,14 +36,14 @@ const VoteDetail = () => {
         backgroundColor: [
           "#e61616ff",
           "#e7772bff",
-          "#dac82fff",
-          "#8fd341ff",
-          "#2dc969ff",
-          "#2870dbff",
-          "#1b64d1ff",
+          "#f7e011ff",
+          "#8af70eff",
+          "#16f36bff",
+          "#1c6ee9ff",
+          "#1969e0ff",
           "#cf2cc2ff",
-          "#9e1ed4ff",
-          "#d617a3ff",
+          "#af12f3ff",
+          "#f311b7ff",
         ],
       },
     ],
@@ -249,7 +249,6 @@ const VoteDetail = () => {
     }
     return target.fromNow();
   };
-
   const insertComment = () => {
     axios
       .post(`${backServer}/vote/comment/insert`, commentData)
@@ -264,6 +263,7 @@ const VoteDetail = () => {
   };
   console.log(vote.voteCommentList);
 
+<<<<<<< HEAD
   const commentLike = (voteCommentNo) => {
     const voteCommentLike = {
       voteCommentNo: voteCommentNo,
@@ -294,6 +294,35 @@ const VoteDetail = () => {
             icon: "success",
           });
         }
+=======
+  const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
+  const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호찾기
+
+  // 수정 버튼 눌렀을때 값들 저장하기
+  const voteCommentModify = (comment) => {
+    setModifyCommentNo(comment.voteCommentNo);
+    setModifyFbCommentContent(comment.voteCommentContent);
+  };
+
+  console.log(modifyCommentNo);
+  console.log(modifyFbCommentContent);
+  //수정 저장 눌렀을때 값
+  const updateComment = () => {
+    const modifyData = {
+      voteCommentNo: modifyCommentNo,
+      voteCommentContent: modifyFbCommentContent,
+    };
+    axios
+      .patch(`${backServer}/vote/comment/update`, modifyData)
+      .then((res) => {
+        Swal.fire({
+          title: "수정 완료!",
+          icon: "success",
+        });
+        console.log(res);
+        setRefreshToggle(!refreshToggle);
+        setModifyCommentNo(null);
+>>>>>>> wjsgusdn96tp
       })
       .catch((err) => {
         console.log(err);
@@ -417,7 +446,34 @@ const VoteDetail = () => {
               <div key={c.voteCommentNo} className="comment-item">
                 <div className="comment-top">
                   <p>{c.memberNickname}</p>
-                  <p className="comment-time">{nowDate(c.voteCommentDate)}</p>
+                  {/* 수정 버튼 눌렀을때  로그인했을때 같은 번호일때만 보이기 */}
+                  {modifyCommentNo === c.voteCommentNo ? (
+                    <div className="comment-modifiy-box">
+                      <textarea
+                        type="text"
+                        value={modifyFbCommentContent}
+                        onChange={(e) =>
+                          setModifyFbCommentContent(e.target.value)
+                        }
+                      />
+                      <div className="comment-modifiy-buttonbox">
+                        <button
+                          className="save-btn"
+                          onClick={() => updateComment(c.voteCommentNo)}
+                        >
+                          저장
+                        </button>
+                        <button
+                          className="cancel-btn"
+                          onClick={() => setModifyCommentNo(null)}
+                        >
+                          취소
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <p className="comment-content">{c.voteCommentContent}</p>
                 <div className="comment-actions">
@@ -433,8 +489,49 @@ const VoteDetail = () => {
                   <button className="report-btn">신고</button>
                   {memberNo === c.memberNo && (
                     <>
-                      <button className="edit-btn">수정</button>
-                      <button className="delete-btn">삭제</button>
+                      <button
+                        className="edit-btn"
+                        onClick={() => voteCommentModify(c)}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => {
+                          Swal.fire({
+                            title: "삭제",
+                            text: "댓글을 삭제하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                          }).then((confirm) => {
+                            if (confirm.isConfirmed) {
+                              const voteCommentNo = c.voteCommentNo;
+                              axios
+                                .delete(
+                                  `${backServer}/vote/comment/delete/${voteCommentNo}`
+                                )
+                                .then((res) => {
+                                  console.log(res);
+                                  if (res.data === 1) {
+                                    Swal.fire({
+                                      title: "댓글 삭제 완료",
+                                      text: "댓글 삭제가 완료되었습니다.",
+                                      icon: "success",
+                                    });
+                                    setRefreshToggle(!refreshToggle);
+                                  }
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                });
+                            }
+                          });
+                        }}
+                      >
+                        삭제
+                      </button>
                     </>
                   )}
                 </div>
