@@ -177,5 +177,13 @@ public class VoteService {
 		return memberIsCommentLike;
 	}
 
+	public int insertCommentReport(HashMap<String, Object> reportData) {
+		 int check = voteDao.checkDuplicateCommentReport(reportData);
+		    if (check > 0) {
+		        return 0; // 이미 신고함
+		    }
+		    return voteDao.insertCommentReport(reportData);
+	}
+
 	
 }
