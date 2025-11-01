@@ -58,5 +58,15 @@ public interface VoteDao {
 
 	int insertCommentReport(HashMap<String, Object> reportData);
 
+	int checkVoteLike(HashMap<String, Object> likeData);
+
+	int insertVoteLike(HashMap<String, Object> likeData);
+
+	int deleteVoteLike(HashMap<String, Object> likeData);
+
+	int checkVoteReport(HashMap<String, Object> reportData);
+
+	int insertVoteReport(HashMap<String, Object> reportData);
+
 	
 }
