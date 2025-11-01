@@ -861,11 +861,20 @@
 	SELECT MEMBER_NO,MEMBER_NAME,MEMBER_EMAIL,MEMBER_PHONE FROM MEMBER_TBL WHERE MEMBER_CHECK='Y'
 	</select>
 
-<delete id="delFreeNotice">
-	DELETE NOTICE_ALERT_TBL WHERE NOTICE_NO=#{delNoticeNo}
-</delete>
+	<delete id="delFreeNotice">
+		DELETE NOTICE_ALERT_TBL WHERE NOTICE_NO=#{delNoticeNo}
+	</delete>
+	
+	<update id="updateNotice">
+		UPDATE NOTICE_ALERT_TBL SET NOTICE_ISACTIVE=#{isActive},MEMBER_NO=#{memberNo} WHERE NOTICE_NO=#{noticeNo}
+	</update>
+	
+	<select id="selectActiveNotices">
+	
+	      SELECT NOTICE_NO, NOTICE_CONTENT, NOTICE_DATE, NOTICE_TARGET, MEMBER_NO
+  FROM NOTICE_ALERT_TBL
+  WHERE NOTICE_ISACTIVE = 'TRUE'
+  ORDER BY NOTICE_NO DESC
+	</select>
 
-<update id="updateNotice">
-	UPDATE NOTICE_ALERT_TBL SET NOTICE_ISACTIVE=#{isActive},MEMBER_NO=#{memberNo} WHERE NOTICE_NO=#{noticeNo}
-</update>
 </mapper>

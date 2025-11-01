@@ -43,6 +43,9 @@ const FreeBoardMain = () => {
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [titleState, setTitleState] = useState(""); //url 넘길 state
 
+  const [noticeList, setNoticeList] = useState([]);
+  const [noticeIndex, setNoticeIndex] = useState(0);
+  const [showNotice, setShowNotice] = useState(false);
   const searchTitle = () => {
     setReqPageInfo({ ...reqPageInfo, pageNo: 1 });
     setTitleState(freeBoardTitle);
@@ -74,6 +77,46 @@ const FreeBoardMain = () => {
   const changeTitle = (e) => {
     setFreeBoardTitle(e.target.value);
   };
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/admin/freeboard/notice/active`)
+      .then((res) => {
+        if (res.data.length > 0) {
+          setNoticeList(res.data);
+          setShowNotice(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    console.log(noticeList);
+    if (
+      showNotice &&
+      noticeList.length > 0 &&
+      noticeIndex < noticeList.length
+    ) {
+      const current = noticeList[noticeIndex];
+
+      Swal.fire({
+        title: `공지사항 ${noticeIndex + 1}/${noticeList.length}`,
+        html: current.noticeContent,
+        width: 800,
+        showCancelButton: noticeIndex < noticeList.length - 1,
+        confirmButtonText:
+          noticeIndex < noticeList.length - 1 ? "다음 공지" : "닫기",
+        cancelButtonText: "그만 보기",
+      }).then((result) => {
+        if (result.isConfirmed && noticeIndex < noticeList.length - 1) {
+          setNoticeIndex((prev) => prev + 1);
+        } else {
+          setShowNotice(false);
+        }
+      });
+    }
+  }, [noticeList, noticeIndex, showNotice]);
   return (
     <div className="main-div">
       <div className="main-header">

@@ -460,9 +460,7 @@ const DiffCount = () => {
           </div>
         </div>
         <div className="element">
-          <div className="entireBox-title">
-            전체 게시글 수 (투표 교체 작업 완료)
-          </div>
+          <div className="entireBox-title">전체 게시글 수</div>
           <div className="entireBox-content">{bc} 건</div>
           <div className={bcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
             전일 대비 {bcDiff >= 0 ? `+${bcDiff} ▲` : `${bcDiff} ▼`}

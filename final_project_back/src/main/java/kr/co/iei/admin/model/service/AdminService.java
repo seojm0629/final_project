@@ -218,4 +218,9 @@ public class AdminService {
 		return result;
 	}
 
+	public List<AdminNoticeDTO> selectActiveNotices() {
+		List<AdminNoticeDTO> list = adminDao.selectActiveNotices();
+		return list;
+	}
+
 }

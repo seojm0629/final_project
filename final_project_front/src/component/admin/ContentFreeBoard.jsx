@@ -240,7 +240,14 @@ const ContentFreeBoard = () => {
           console.log(err);
         });
   }, [noticeIsactive]);
-
+  const noticeAlert = () => {
+    Swal.fire({
+      title: `공지사항`,
+      html: noticeValue,
+      width: 800,
+      confirmButtonText: "확인",
+    });
+  };
   return (
     <div className="admin-right freeBoard">
       <div className="admin-content-wrap">
@@ -270,14 +277,19 @@ const ContentFreeBoard = () => {
               >
                 적용
               </button>
-              <BaseModal
-                title="공지사항"
-                content={<NoticeContent noticeValue={noticeValue} />}
-                buttonLabel="미리보기"
-                contentBoxStyle={{ width: "800px", height: "600px" }}
-                end="취소"
-                result={confirm}
-              />
+              <button
+                className="admin-btn"
+                onClick={() => {
+                  setNoticeSet({
+                    memberNo: memberNo,
+                    noticeContent: noticeValue,
+                    noticeTarget: 1,
+                  });
+                  noticeAlert(noticeValue);
+                }}
+              >
+                미리보기
+              </button>
             </div>
           </div>
           <div className="content_box">

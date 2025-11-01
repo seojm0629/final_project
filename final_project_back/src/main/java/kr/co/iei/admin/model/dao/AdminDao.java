@@ -114,5 +114,7 @@ public interface AdminDao {
 
 	int updateNotice(HashMap<String, Object> updateNoticeSet);
 
+	List<AdminNoticeDTO> selectActiveNotices();
+
 
 }
