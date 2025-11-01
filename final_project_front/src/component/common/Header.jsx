@@ -5,7 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { useRecoilState } from "recoil";
-import { loginIdState, memberNoState, memberTypeState } from "../utils/RecoilData";
+import {
+  loginIdState,
+  memberNoState,
+  memberTypeState,
+} from "../utils/RecoilData";
 import Note from "../note/note";
 
 const Header = () => {
@@ -131,10 +135,9 @@ const HeaderLink = () => {
     window.localStorage.removeItem("accessToken");
     window.localStorage.removeItem("refreshToken");
     window.localStorage.removeItem("recoil-persist");
-    
+
     navigate("/");
   };
-  
 
   return (
     <ul className="header-user">

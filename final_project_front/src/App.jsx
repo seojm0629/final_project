@@ -36,7 +36,7 @@ function App() {
           <Route path="/admin" element={<AdminMain />} />
           <Route path="/service/agree" element={<ServiceAgree />} />
           <Route
-            path="/freeBoard/detail/:freeBoardNo"
+            path="/freeBoard/detail/:freeBoardNo/:viewCount"
             element={<FreeBoardDetail></FreeBoardDetail>}
           ></Route>
           <Route

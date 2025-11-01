@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardCommentLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardViewDTO;
@@ -247,13 +248,23 @@ public class FreeBoardController {
 		return ResponseEntity.ok(freeBoardLike);
 	}
 	/* 뷰(view) */
-	@GetMapping(value = "/content/content")
+	@GetMapping(value = "/content/view")
 	public ResponseEntity<FreeBoardViewDTO> countView(@RequestParam int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardCategoryNo, @RequestParam int freeBoardSubcategoryNo){
 		FreeBoardViewDTO freeBoardView = freeBoardService.countView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
 				
 		return ResponseEntity.ok(freeBoardView);		
 	}
-	
-	
+	@GetMapping(value="/detail/commentLike")
+	public ResponseEntity<FreeBoardCommentLikeDTO> commentLike(@RequestParam int memberNo, @RequestParam int fbCommentNo){
+		FreeBoardCommentLikeDTO freeBoardCommentLike = freeBoardService.commentLike(memberNo, fbCommentNo);
+		
+		return ResponseEntity.ok(freeBoardCommentLike);
+	}
+	/*이전글 다음글
+	@GetMapping(value = "/detail/prev")
+	public ResponseEntity<FreeBoardDTO> prevFreeBoard(){
+		FreeBoardDTO freeBoardList = freeBoardService.prevFreeBoard(); 
+		return ResponseEntity.ok(freeBoardList);
+	}*/
 	
 }

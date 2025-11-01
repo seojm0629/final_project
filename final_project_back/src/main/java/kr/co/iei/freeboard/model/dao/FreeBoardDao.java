@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardCommentLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
@@ -77,7 +78,17 @@ public interface FreeBoardDao {
 	
 	FreeBoardViewDTO selectView(int memberNo, int freeBoardNo);
 	int insertView(int memberNo, int freeBoardNo, int freeBoardCategoryNo, int freeBoardSubcategoryNo);
-	FreeBoardViewDTO countView(int memberNo, int freeBoardNo); 
+	FreeBoardViewDTO countView(int memberNo, int freeBoardNo);
+
+	FreeBoardCommentLikeDTO selectCommentLike(int memberNo, int fbCommentNo);
+	int insertCommentLike(int memberNo, int fbCommentNo);
+	int deleteCommentLike(int memberNo, int fbCommentNo);
+	FreeBoardCommentLikeDTO commentLike(int memberNo, int fbCommentNo);
+
+
+
+
+	
 
 
 	//int insertFreeBoardFile(FreeBoardPhotoDTO freeBoardPhoto);

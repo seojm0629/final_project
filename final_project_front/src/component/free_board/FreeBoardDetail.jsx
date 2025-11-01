@@ -24,7 +24,7 @@ const FreeBoardDetail = () => {
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
   const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
-
+  const viewCount = params.viewCount;
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([
     { freeBoardCommentNo: 0 },
@@ -48,11 +48,15 @@ const FreeBoardDetail = () => {
     const saved = localStorage.getItem("like");
     return saved === "true";
   });
+  const [commentLike, setCommentLike] = useState(() => {
+    const commentSaved = localStorage.getItem("commentLike");
+    return commentSaved === "true";
+  });
 
   useEffect(() => {
     localStorage.setItem("like", like);
-  }, [like]);
-
+    localStorage.setItem("commentLike", commentLike);
+  }, [like, commentLike]);
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
@@ -169,11 +173,11 @@ const FreeBoardDetail = () => {
 
   const [toggle, setToggle] = useState(false); //댓글 등록 시 랜더링 state
   useEffect(() => {
-    console.log();
     axios
       .get(`${backServer}/freeBoard/detail/${freeBoardNo}`)
       .then((res) => {
         setFreeBoard(res.data);
+        console.log(res.data);
         setToDate(res.data.freeBoardDate);
         setFreeBoardMemberNo(
           memberNo === res.data.memberNo && res.data.memberNo
@@ -328,6 +332,44 @@ const FreeBoardDetail = () => {
     }
   };
 
+  const likeComment = () => {
+    if (!member) {
+      Swal.fire({
+        title: "로그인",
+        text: "로그인 후 이용해주세요.",
+        icon: "warning",
+      });
+      navigate("/member/login");
+    } else {
+      axios //조회 후 null이면 insert / !null delete
+        .get(
+          `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${fbCommentNo}`
+        )
+        .then((res) => {
+          if (res.data !== "" || res.data !== undefined) {
+            setToggle(!toggle);
+            setCommentLike(!commentLike);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  /*
+  const [fbnum, setFbnum] = useState();
+  const prevBoard = () => {
+    axios
+      .get(`${backServer}/freeBoard/detail/prev/${freeBoardNo}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //navigate(`/freeBoard/detail/${fbnum - 1}`);
+  };
+  */
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -348,7 +390,7 @@ const FreeBoardDetail = () => {
       <div className="detail-view">
         <div className="view">
           <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-          111
+          {viewCount}
         </div>
         <div
           className="heart"
@@ -636,7 +678,13 @@ const FreeBoardDetail = () => {
                   )}
 
                   <div className="comment-sub">
-                    <div className="heart">
+                    <div
+                      className="heart"
+                      onClick={() => {
+                        setFbCommentNo(comment.fbCommentNo);
+                        likeComment;
+                      }}
+                    >
                       <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
                       {comment.cnt}
                     </div>

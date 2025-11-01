@@ -208,10 +208,12 @@ const FreeBoardContent = (props) => {
   const navigate = useNavigate();
   const titleState = props.titleState;
   const [result, setResult] = useState(false); //리스트 조회 결과에 따라 출력
-  const memberNo = useRecoilState(memberNoState);
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   const [freeBoardCategoryNo, setFreeBoardCategoryNo] = useState();
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardNo, setFreeBoardNo] = useState();
+  const [toggle, setToggle] = useState(false);
+
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -265,25 +267,12 @@ const FreeBoardContent = (props) => {
     freeBoardNo,
     freeBoardCategoryNo,
     freeBoardSubcategoryNo,
+    toggle,
   ]);
   /* 상세페이지 view */
-  const [viewCount, setViewCount] = useState();
-  const view = () => {
-    console.log(freeBoardNo);
-    console.log(freeBoardCategoryNo);
-    console.log(freeBoardSubcategoryNo);
-    axios
-      .get(
-        `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${freeBoardNo}&freeBoardCategoryNo=${freeBoardCategoryNo}%freeBoardSubcategoryNo=${freeBoardSubcategoryNo}`
-      )
-      .then((res) => {
-        console.log(res);
-        setViewCount(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [viewCount, setViewCount] = useState(); //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
+
+  console.log(viewCount);
   return (
     <section className="freeBoard-section">
       {result ? (
@@ -299,11 +288,20 @@ const FreeBoardContent = (props) => {
                   borderRight: "1px solid #ccc",
                 }}
                 onClick={() => {
-                  setFreeBoardCategoryNo(list.freeBoardCategoryNo);
-                  setFreeBoardSubcategoryNo(list.freeBoardSubcategoryNo);
-                  setFreeBoardNo(list.freeBoardNo);
-                  view();
-                  navigate(`/freeBoard/detail/${list.freeBoardNo}`);
+                  axios
+                    .get(
+                      `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
+                    )
+                    .then((res) => {
+                      setViewCount(res.data.viewCount);
+                      navigate(
+                        `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
+                      );
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  setToggle(!toggle);
                 }}
               >
                 <div className="board-list-title">
@@ -321,7 +319,7 @@ const FreeBoardContent = (props) => {
                   <div className="view">
                     {/*작성된 게시글을 클릭 시 count(*) */}
                     <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-                    111
+                    {viewCount}
                   </div>
                   <div className="heart">
                     <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
@@ -338,7 +336,20 @@ const FreeBoardContent = (props) => {
                 key={"second" + i}
                 className="board-section"
                 onClick={() => {
-                  navigate(`/freeBoard/detail/${list.freeBoardNo}`);
+                  axios
+                    .get(
+                      `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
+                    )
+                    .then((res) => {
+                      setViewCount(res.data.viewCount);
+                      navigate(
+                        `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
+                      );
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  setToggle(!toggle);
                 }}
               >
                 <div className="board-list-title">
@@ -355,7 +366,7 @@ const FreeBoardContent = (props) => {
                 <div className="view-heart">
                   <div className="view">
                     <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-                    111
+                    {viewCount}
                   </div>
                   <div className="heart">
                     <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>

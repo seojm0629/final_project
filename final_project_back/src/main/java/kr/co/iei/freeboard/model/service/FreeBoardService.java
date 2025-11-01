@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.iei.freeboard.model.dao.FreeBoardDao;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
+import kr.co.iei.freeboard.model.dto.FreeBoardCommentLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardPhotoDTO;
@@ -172,8 +174,6 @@ public class FreeBoardService {
 		return result;
 	}
 	
-	
-	
 	@Transactional
 	public int insertClaim(HashMap<String, Object> fbClaimSet) {
 		//System.out.println("서비스 : "+fbClaimSet.get("freeBoardNo"));
@@ -213,6 +213,7 @@ public class FreeBoardService {
 	@Transactional
 	public int updateComment(FreeBoardCommentDTO freeBoardComment) {
 		int result = freeBoardDao.updateComment(freeBoardComment);
+		
 		return result;
 	}
 
@@ -245,19 +246,39 @@ public class FreeBoardService {
 		return freeBoardLike;
 	}
 
-
+	@Transactional
 	public FreeBoardViewDTO countView(int memberNo, int freeBoardNo, int freeBoardCategoryNo,
 			int freeBoardSubcategoryNo) {
 		//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지)
-		FreeBoardViewDTO selectView = freeBoardDao.selectView(memberNo, freeBoardNo);
+		FreeBoardViewDTO selectOneView = freeBoardDao.selectView(memberNo, freeBoardNo);
 		
 		//조회 후 게시글을 조회한 회원이 없다면 insert만 하도록
-		if(selectView == null) {
+		if(selectOneView == null) {
 			int result = freeBoardDao.insertView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
 		}
-		FreeBoardViewDTO countView = freeBoardDao.countView(memberNo, freeBoardNo);
-		return countView;
+		FreeBoardViewDTO freeBoardView = freeBoardDao.countView(memberNo, freeBoardNo);
+		return freeBoardView;
 	}
+
+	public FreeBoardCommentLikeDTO commentLike(int memberNo, int fbCommentNo) {
+		//좋아요 눌렀는지 확인
+		FreeBoardCommentLikeDTO commentConfirm = freeBoardDao.selectCommentLike(memberNo, fbCommentNo);
+				//System.out.println("selectResult : "+ selectLike);
+				
+				if(commentConfirm == null) {
+					//좋아요가 없으면 insert
+					int insertResult = freeBoardDao.insertCommentLike(memberNo, fbCommentNo);			
+					System.out.println("insertResult : "+ insertResult);	
+				}else {
+					//좋아요를 눌렀으면 delete
+					int deleteResult = freeBoardDao.deleteCommentLike(memberNo, fbCommentNo); 
+					//System.out.println("deleteResult : "+ deleteResult);
+				}
+				FreeBoardCommentLikeDTO freeBoardCommentLike = freeBoardDao.commentLike(memberNo, fbCommentNo);
+				return freeBoardCommentLike;
+	}
+
+	
 
 
 }
