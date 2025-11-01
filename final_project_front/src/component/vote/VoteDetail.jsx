@@ -263,38 +263,6 @@ const VoteDetail = () => {
   };
   console.log(vote.voteCommentList);
 
-<<<<<<< HEAD
-  const commentLike = (voteCommentNo) => {
-    const voteCommentLike = {
-      voteCommentNo: voteCommentNo,
-      memberNo: memberNo,
-    };
-
-    axios
-      .post(
-        `${import.meta.env.VITE_BACK_SERVER}/vote/comment/like`,
-        voteCommentLike
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res.data === 1) {
-          setRefreshToggle(!refreshToggle);
-          Swal.fire({
-            title: "알림",
-            text: `댓글에 좋아요 적용 완료`,
-
-            icon: "success",
-          });
-        } else if (res.data === 0) {
-          setRefreshToggle(!refreshToggle);
-          Swal.fire({
-            title: "알림",
-            text: `댓글에 좋아요 취소 완료`,
-
-            icon: "success",
-          });
-        }
-=======
   const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호찾기
 
@@ -322,7 +290,6 @@ const VoteDetail = () => {
         console.log(res);
         setRefreshToggle(!refreshToggle);
         setModifyCommentNo(null);
->>>>>>> wjsgusdn96tp
       })
       .catch((err) => {
         console.log(err);
