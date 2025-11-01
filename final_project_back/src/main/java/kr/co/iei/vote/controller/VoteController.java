@@ -154,5 +154,21 @@ public class VoteController {
 		return ResponseEntity.ok(result);
 		
 	}
+	@PatchMapping(value = "/comment/update")
+	public ResponseEntity<Integer> updateComment(@RequestBody VoteCommentDTO voteComment) {
+		System.out.println("업데이트 확인"+voteComment);
+		
+		int result = voteService.updateComment(voteComment);
+		
+		return ResponseEntity.ok(result);
+	}
+	@DeleteMapping(value = "/comment/delete/{voteCommentNo}")
+	public ResponseEntity<Integer> deleteComment(@PathVariable int voteCommentNo) {
+		System.out.println("댓글삭제 확인"+ voteCommentNo);
+	
+		int result = voteService.deleteComment(voteCommentNo);
+		
+		return ResponseEntity.ok(result);
+	}
 
 }

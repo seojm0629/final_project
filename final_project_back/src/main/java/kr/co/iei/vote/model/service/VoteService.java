@@ -151,6 +151,18 @@ public class VoteService {
 		
 		 
 	}
+	
+	@Transactional
+	public int updateComment(VoteCommentDTO voteComment) {
+		int result = voteDao.updateComment(voteComment);
+		return result;
+	}
+
+	@Transactional
+	public int deleteComment(int voteCommentNo) {
+		int result = voteDao.deleteComment(voteCommentNo);
+		return result;
+	}
 
 	
 }

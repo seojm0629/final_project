@@ -139,5 +139,16 @@
 			left join member_tbl using (member_no))
 			where vote_no = #{voteNo}
 	</select>	
+	
+	<update id="updateComment">
+		update vote_comment_tbl 
+		set vote_comment_content =  #{voteCommentContent}
+		where vote_comment_no = #{voteCommentNo}
+	</update>
+		
+	<delete id="deleteComment">
+		delete from vote_comment_tbl 
+		where vote_comment_no = #{voteCommentNo}
+	</delete>	
 		
 </mapper>

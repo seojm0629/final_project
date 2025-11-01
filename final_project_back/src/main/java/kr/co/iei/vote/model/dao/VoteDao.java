@@ -48,5 +48,11 @@ public interface VoteDao {
 
 	int commentInsert(VoteCommentDTO voteComment);
 
+	int updateComment(VoteCommentDTO voteComment);
+
+	int deleteComment(int voteCommentNo);
+
+
+
 	
 }
