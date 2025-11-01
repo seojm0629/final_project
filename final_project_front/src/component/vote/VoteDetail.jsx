@@ -69,6 +69,7 @@ const VoteDetail = () => {
       .then((res) => {
         console.log(res);
         setVoteList(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -260,6 +261,43 @@ const VoteDetail = () => {
       });
   };
   console.log(vote.voteCommentList);
+
+  const commentLike = (voteCommentNo) => {
+    const voteCommentLike = {
+      voteCommentNo: voteCommentNo,
+      memberNo: memberNo,
+    };
+
+    axios
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/vote/comment/like`,
+        voteCommentLike
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === 1) {
+          setRefreshToggle(!refreshToggle);
+          Swal.fire({
+            title: "알림",
+            text: `댓글에 좋아요 적용 완료`,
+
+            icon: "success",
+          });
+        } else if (res.data === 0) {
+          setRefreshToggle(!refreshToggle);
+          Swal.fire({
+            title: "알림",
+            text: `댓글에 좋아요 취소 완료`,
+
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
@@ -381,7 +419,15 @@ const VoteDetail = () => {
                 </div>
                 <p className="comment-content">{c.voteCommentContent}</p>
                 <div className="comment-actions">
-                  <button className="like-btn">👍</button>
+                  <button
+                    className="like-btn"
+                    onClick={() => {
+                      console.log("아아");
+                      commentLike(c.voteCommentNo, c.likeCnt);
+                    }}
+                  >
+                    👍 {c.likeCnt}
+                  </button>
                   <button className="report-btn">신고</button>
                   {memberNo === c.memberNo && (
                     <>

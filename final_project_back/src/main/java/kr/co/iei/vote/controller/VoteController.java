@@ -154,5 +154,15 @@ public class VoteController {
 		return ResponseEntity.ok(result);
 		
 	}
+	
+	@PostMapping(value = "/comment/like")
+	public ResponseEntity<Integer> commentLike(@RequestBody VoteCommentDTO voteCommentLike){
+		System.out.println(voteCommentLike);
+		HashMap<String, Object> voteCommentLikeSet = new HashMap<>();
+		voteCommentLikeSet.put("memberNo", voteCommentLike.getMemberNo());
+		voteCommentLikeSet.put("voteCommentNo", voteCommentLike.getVoteCommentNo());
+		int result = voteService.commentLike(voteCommentLikeSet);
+		return ResponseEntity.ok(result);
+	}
 
 }

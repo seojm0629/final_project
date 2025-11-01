@@ -152,5 +152,18 @@ public class VoteService {
 		 
 	}
 
+	@Transactional
+	public int commentLike(HashMap<String, Object> voteCommentLikeSet) {
+		
+		
+		int memberIsCommentLike = voteDao.memberIsCommentLike(voteCommentLikeSet);
+		if(memberIsCommentLike==0) {
+			memberIsCommentLike += voteDao.commentLike(voteCommentLikeSet);
+		}else if(memberIsCommentLike==1) {
+			memberIsCommentLike-= voteDao.commentLikeCancel(voteCommentLikeSet);
+		}
+		return memberIsCommentLike;
+	}
+
 	
 }

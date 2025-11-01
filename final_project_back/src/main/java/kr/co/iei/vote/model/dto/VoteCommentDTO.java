@@ -18,4 +18,5 @@ public class VoteCommentDTO {
 	private int memberNo;
 	private int voteNo;
 	private String memberNickname;
+	private int likeCnt;
 }

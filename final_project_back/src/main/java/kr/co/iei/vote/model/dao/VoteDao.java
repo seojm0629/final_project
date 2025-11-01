@@ -48,5 +48,11 @@ public interface VoteDao {
 
 	int commentInsert(VoteCommentDTO voteComment);
 
+	int commentLike(HashMap<String, Object> voteCommentLikeSet);
+
+	int memberIsCommentLike(HashMap<String, Object> voteCommentLikeSet);
+
+	int commentLikeCancel(HashMap<String, Object> voteCommentLikeSet);
+
 	
 }
