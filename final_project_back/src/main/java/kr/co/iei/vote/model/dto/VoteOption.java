@@ -1,5 +1,7 @@
 package kr.co.iei.vote.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -14,5 +16,4 @@ public class VoteOption {
 	private int voteOptionNo;
 	private String voteContent;
 	private int voteNo;
-	
 }

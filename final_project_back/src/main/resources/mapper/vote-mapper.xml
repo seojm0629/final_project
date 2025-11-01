@@ -128,8 +128,29 @@
 		)
 	</insert>	
 		
-	<select id="selectVoteCommentList">
-		select * from vote_comment_tbl where = #{voteNo}
+	<select id="selectVoteCommentList" resultType="comment">
+		SELECT VOTE_COMMENT_NO,VOTE_COMMENT_CONTENT,VOTE_COMMENT_DATE,MEMBER_NO,MEMBER_NICKNAME,VOTE_NO,NVL(LIKE_CNT,0) LIKE_CNT FROM (
+select
+			vote_comment_no,
+			vote_comment_content,
+			to_char(vote_comment_date,'yyyy-mm-dd HH24:MI:SS') as vote_comment_date,
+			member_no,
+			member_nickname,
+			vote_no  from (select * from vote_comment_tbl 
+			left join member_tbl using (member_no))
+			where vote_no = 1244) LEFT JOIN (SELECT VOTE_COMMENT_NO,COUNT(*) LIKE_CNT FROM VOTE_COMMENT_LIKE_TBL GROUP BY VOTE_COMMENT_NO) USING (VOTE_COMMENT_NO)
 	</select>	
 		
+		<select id="memberIsCommentLike" resultType="int">
+		SELECT COUNT(*) VOTE_LIKE_CNT FROM VOTE_COMMENT_LIKE_TBL WHERE MEMBER_NO=#{memberNo} AND VOTE_COMMENT_NO=#{voteCommentNo}
+		</select>
+		<insert id="commentLike">
+		INSERT INTO VOTE_COMMENT_LIKE_TBL VALUES(
+    #{voteCommentNo},#{memberNo},SYSDATE
+)
+		</insert>
+		
+		<delete id="commentLikeCancel">
+		DELETE VOTE_COMMENT_LIKE_TBL WHERE MEMBER_NO=#{memberNo} AND VOTE_COMMENT_NO=#{voteCommentNo}
+		</delete>
 </mapper>

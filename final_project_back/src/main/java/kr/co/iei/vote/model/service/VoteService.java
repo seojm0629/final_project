@@ -80,16 +80,20 @@ public class VoteService {
 
 		VoteDTO vote = voteDao.selectOneVote(voteNo);
 		
+		
+		//댓글 목록 불러오기
+		List commentList = voteDao.selectVoteCommentList(voteNo);
+		
+		vote.setVoteCommentList(commentList);
+		
 		return vote;
 	}
 
 	public List<VoteOption> selectVoteOptions(int voteNo) {
 		
 		List<VoteOption> optionList = voteDao.selectVoteOptions(voteNo);
-		
-		
-		// 해당 게시글의 댓글 조회
-		List<VoteCommentDTO> commentList = voteDao.selectVoteCommentList(voteNo);
+			
+
 		
 		return optionList;
 	}
@@ -139,9 +143,26 @@ public class VoteService {
 	}
 	@Transactional
 	public int commentInsert(VoteCommentDTO voteComment) {
+
+		
 		int result = voteDao.commentInsert(voteComment);
+			return result;
+		
+		
 		 
-		return result;
+	}
+
+	@Transactional
+	public int commentLike(HashMap<String, Object> voteCommentLikeSet) {
+		
+		
+		int memberIsCommentLike = voteDao.memberIsCommentLike(voteCommentLikeSet);
+		if(memberIsCommentLike==0) {
+			memberIsCommentLike += voteDao.commentLike(voteCommentLikeSet);
+		}else if(memberIsCommentLike==1) {
+			memberIsCommentLike-= voteDao.commentLikeCancel(voteCommentLikeSet);
+		}
+		return memberIsCommentLike;
 	}
 
 	
