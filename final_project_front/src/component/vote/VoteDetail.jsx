@@ -295,6 +295,41 @@ const VoteDetail = () => {
         console.log(err);
       });
   };
+  const commentLike = (voteCommentNo) => {
+    const voteCommentLike = {
+      voteCommentNo: voteCommentNo,
+      memberNo: memberNo,
+    };
+
+    axios
+      .post(
+        `${import.meta.env.VITE_BACK_SERVER}/vote/comment/like`,
+        voteCommentLike
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === 1) {
+          setRefreshToggle(!refreshToggle);
+          Swal.fire({
+            title: "알림",
+            text: `댓글에 좋아요 적용 완료`,
+
+            icon: "success",
+          });
+        } else if (res.data === 0) {
+          setRefreshToggle(!refreshToggle);
+          Swal.fire({
+            title: "알림",
+            text: `댓글에 좋아요 취소 완료`,
+
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const commentReport = (voteCommentNo) => {
     if (!memberNo) {
       Swal.fire({
