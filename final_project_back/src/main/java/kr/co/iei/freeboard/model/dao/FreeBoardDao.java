@@ -75,7 +75,7 @@ public interface FreeBoardDao {
 	FreeBoardLikeDTO countLike(int memberNo, int freeBoardNo);
 
 
-	
+	FreeBoardViewDTO updateViewCount(int freeBoardNo);
 	FreeBoardViewDTO selectView(int memberNo, int freeBoardNo);
 	int insertView(int memberNo, int freeBoardNo, int freeBoardCategoryNo, int freeBoardSubcategoryNo);
 	FreeBoardViewDTO countView(int memberNo, int freeBoardNo);
@@ -84,6 +84,8 @@ public interface FreeBoardDao {
 	int insertCommentLike(int memberNo, int fbCommentNo);
 	int deleteCommentLike(int memberNo, int fbCommentNo);
 	FreeBoardCommentLikeDTO commentLike(int memberNo, int fbCommentNo);
+
+	
 
 
 

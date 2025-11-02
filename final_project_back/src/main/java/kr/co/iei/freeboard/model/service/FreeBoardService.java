@@ -249,15 +249,22 @@ public class FreeBoardService {
 	@Transactional
 	public FreeBoardViewDTO countView(int memberNo, int freeBoardNo, int freeBoardCategoryNo,
 			int freeBoardSubcategoryNo) {
-		//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지)
-		FreeBoardViewDTO selectOneView = freeBoardDao.selectView(memberNo, freeBoardNo);
 		
-		//조회 후 게시글을 조회한 회원이 없다면 insert만 하도록
-		if(selectOneView == null) {
-			int result = freeBoardDao.insertView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
+		if(memberNo == 0) {
+			FreeBoardViewDTO freeBoardView = freeBoardDao.updateViewCount(freeBoardNo);
+			return freeBoardView;
+		}else {
+			//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지)
+			FreeBoardViewDTO selectOneView = freeBoardDao.selectView(memberNo, freeBoardNo);
+			
+			//조회 후 게시글을 조회한 회원이 없다면 insert만 하도록
+			if(selectOneView == null) {
+				int result = freeBoardDao.insertView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
+			}
+			FreeBoardViewDTO freeBoardView = freeBoardDao.countView(memberNo, freeBoardNo);
+			return freeBoardView;
 		}
-		FreeBoardViewDTO freeBoardView = freeBoardDao.countView(memberNo, freeBoardNo);
-		return freeBoardView;
+		
 	}
 
 	public FreeBoardCommentLikeDTO commentLike(int memberNo, int fbCommentNo) {

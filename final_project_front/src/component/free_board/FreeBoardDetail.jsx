@@ -356,20 +356,21 @@ const FreeBoardDetail = () => {
         });
     }
   };
-  /*
+  
   const [fbnum, setFbnum] = useState();
   const prevBoard = () => {
     axios
       .get(`${backServer}/freeBoard/detail/prev/${freeBoardNo}`)
       .then((res) => {
         console.log(res.data);
+        setFbnum(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-    //navigate(`/freeBoard/detail/${fbnum - 1}`);
+    navigate(`/freeBoard/detail/${fbnum - 1}`);
   };
-  */
+  
   return (
     /* 상세페이지  */
     <div className="detail-container">

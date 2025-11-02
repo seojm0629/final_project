@@ -213,7 +213,13 @@ const FreeBoardContent = (props) => {
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardNo, setFreeBoardNo] = useState();
   const [toggle, setToggle] = useState(false);
-
+  const [loginMemberNo, serLoginMemberNo] = useState(() => {
+    const savedMemberNo = localStorage.getItem("loginMemberNo");
+    return savedMemberNo === "true";
+  });
+  useEffect(() => {
+    localStorage.setItem("loginMemberNo", loginMemberNo);
+  }, [loginMemberNo]);
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -271,8 +277,7 @@ const FreeBoardContent = (props) => {
   ]);
   /* 상세페이지 view */
   const [viewCount, setViewCount] = useState(); //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
-
-  console.log(viewCount);
+  console.log(memberNo);
   return (
     <section className="freeBoard-section">
       {result ? (
@@ -293,10 +298,11 @@ const FreeBoardContent = (props) => {
                       `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
                     )
                     .then((res) => {
-                      setViewCount(res.data.viewCount);
+                      //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
                       navigate(
                         `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
                       );
+                      console.log(res.data.viewCount);
                     })
                     .catch((err) => {
                       console.log(err);
@@ -341,7 +347,7 @@ const FreeBoardContent = (props) => {
                       `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
                     )
                     .then((res) => {
-                      setViewCount(res.data.viewCount);
+                      //setViewCount(res.data.viewCount);
                       navigate(
                         `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
                       );
