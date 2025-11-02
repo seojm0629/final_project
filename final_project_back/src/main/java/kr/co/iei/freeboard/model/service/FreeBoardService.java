@@ -154,9 +154,22 @@ public class FreeBoardService {
 		return freeBoard;
 	}
 
-	public List<FreeBoardCommentDTO> selectOneComment(int freeBoardNo) {
-		List<FreeBoardCommentDTO> freeBoardComment = freeBoardDao.selectOneComment(freeBoardNo);
-		return freeBoardComment;
+	public HashMap<String, Object> selectCommentList(int freeBoardNo, int startRow, int endRow, int sideBtnCount, int order) {
+		HashMap<String, Object> commentList = new HashMap<String,Object>(); 
+		commentList.put("freeBoardNo", freeBoardNo);
+		commentList.put("startRow", startRow);
+		commentList.put("endRow", endRow);
+		commentList.put("sideBtnCount", sideBtnCount);
+		commentList.put("order", order);
+		
+		List<FreeBoardCommentDTO> freeboardCommentList = freeBoardDao.totalCommentList(commentList);
+		int totalListCount = freeBoardDao.totalCommentListCount(commentList);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("freeBoardCommentList", freeboardCommentList);
+		map.put("totalListCount", totalListCount);
+		
+		return map;
 	}
 	@Transactional
 	public int insertComment(FreeBoardCommentDTO comment) {
@@ -251,22 +264,22 @@ public class FreeBoardService {
 			int freeBoardSubcategoryNo) {
 		
 		if(memberNo == 0) {
+			//로그인하지 않은 회원이면 조회만 가능하도록 조회수 x 
 			FreeBoardViewDTO freeBoardView = freeBoardDao.updateViewCount(freeBoardNo);
 			return freeBoardView;
 		}else {
-			//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지)
-			FreeBoardViewDTO selectOneView = freeBoardDao.selectView(memberNo, freeBoardNo);
+			//상세페이지 클릭 시 조회한 회원과 게시글 번호를 조회(있는지 없는지 중복체크)
+			List<FreeBoardViewDTO> selectViews = freeBoardDao.selectViewList(memberNo, freeBoardNo);
 			
 			//조회 후 게시글을 조회한 회원이 없다면 insert만 하도록
-			if(selectOneView == null) {
+			if(selectViews == null || selectViews.isEmpty()) {
 				int result = freeBoardDao.insertView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
 			}
 			FreeBoardViewDTO freeBoardView = freeBoardDao.countView(memberNo, freeBoardNo);
 			return freeBoardView;
 		}
-		
 	}
-
+	@Transactional
 	public FreeBoardCommentLikeDTO commentLike(int memberNo, int fbCommentNo) {
 		//좋아요 눌렀는지 확인
 		FreeBoardCommentLikeDTO commentConfirm = freeBoardDao.selectCommentLike(memberNo, fbCommentNo);

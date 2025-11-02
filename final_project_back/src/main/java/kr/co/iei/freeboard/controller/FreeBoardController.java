@@ -151,10 +151,13 @@ public class FreeBoardController {
 		return ResponseEntity.ok(freeBoard);
 	}
 	@GetMapping(value = "/detail/comment")
-	public ResponseEntity<List<FreeBoardCommentDTO>> selectOneComment(@RequestParam int freeBoardNo){
-		List<FreeBoardCommentDTO> freeBoardComment = freeBoardService.selectOneComment(freeBoardNo);
+	public ResponseEntity<HashMap<String, Object>> selectCommentList(@RequestParam int freeBoardNo, @RequestParam int pageNo, @RequestParam int listCnt, @RequestParam int sideBtnCount, @RequestParam int order){
+		int startRow = (pageNo-1)*listCnt+1;
+		int endRow = pageNo * listCnt;
+		
+		HashMap<String, Object> map = freeBoardService.selectCommentList(freeBoardNo, startRow, endRow ,sideBtnCount , order);
 		//System.out.println(freeBoardComment);
-		return ResponseEntity.ok(freeBoardComment);
+		return ResponseEntity.ok(map);
 	}
 
 	@PostMapping(value = "/detail/regist")
@@ -251,7 +254,7 @@ public class FreeBoardController {
 	@GetMapping(value = "/content/view")
 	public ResponseEntity<FreeBoardViewDTO> countView(@RequestParam int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardCategoryNo, @RequestParam int freeBoardSubcategoryNo){
 		FreeBoardViewDTO freeBoardView = freeBoardService.countView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
-				
+		System.out.println(freeBoardView);
 		return ResponseEntity.ok(freeBoardView);		
 	}
 	@GetMapping(value="/detail/commentLike")

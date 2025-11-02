@@ -44,7 +44,6 @@ public interface FreeBoardDao {
 
 	FreeBoardDTO selectOneDetail(int freeBoardNo);
 
-	List<FreeBoardCommentDTO> selectOneComment(int freeBoardNo);
 
 	int insertComment(FreeBoardCommentDTO comment);
 
@@ -76,7 +75,7 @@ public interface FreeBoardDao {
 
 
 	FreeBoardViewDTO updateViewCount(int freeBoardNo);
-	FreeBoardViewDTO selectView(int memberNo, int freeBoardNo);
+	List<FreeBoardViewDTO> selectViewList(int memberNo, int freeBoardNo);
 	int insertView(int memberNo, int freeBoardNo, int freeBoardCategoryNo, int freeBoardSubcategoryNo);
 	FreeBoardViewDTO countView(int memberNo, int freeBoardNo);
 
@@ -84,6 +83,11 @@ public interface FreeBoardDao {
 	int insertCommentLike(int memberNo, int fbCommentNo);
 	int deleteCommentLike(int memberNo, int fbCommentNo);
 	FreeBoardCommentLikeDTO commentLike(int memberNo, int fbCommentNo);
+
+	List<FreeBoardCommentDTO> totalCommentList(HashMap<String, Object> commentList);
+
+	int totalCommentListCount(HashMap<String, Object> commentList);
+
 
 	
 

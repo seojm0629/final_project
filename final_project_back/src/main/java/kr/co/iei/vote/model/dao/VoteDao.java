@@ -60,18 +60,12 @@ public interface VoteDao {
 
 	int deleteComment(int voteCommentNo);
 
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> 5a901fbb6b1e364398940064eefe17c1989027c4
 	int checkDuplicateCommentReport(HashMap<String, Object> reportData);
 
 	int insertCommentReport(HashMap<String, Object> reportData);
 
-<<<<<<< HEAD
-=======
+
 	int checkVoteLike(HashMap<String, Object> likeData);
 
 	int insertVoteLike(HashMap<String, Object> likeData);
@@ -81,7 +75,7 @@ public interface VoteDao {
 	int checkVoteReport(HashMap<String, Object> reportData);
 
 	int insertVoteReport(HashMap<String, Object> reportData);
->>>>>>> 5a901fbb6b1e364398940064eefe17c1989027c4
+
 
 	
 }

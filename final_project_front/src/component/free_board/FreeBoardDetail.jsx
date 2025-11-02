@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { loginIdState, memberNoState } from "../utils/RecoilData";
 import BaseModal from "../utils/BaseModal";
+import PageNavigation from "../utils/PageNavigation";
 
 const FreeBoardDetail = () => {
   const backServer = import.meta.env.VITE_BACK_SERVER;
@@ -42,7 +43,7 @@ const FreeBoardDetail = () => {
 
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
-
+  console.log(freeBoardComment);
   //새로고침 시 좋아요 유지
   const [like, setLike] = useState(() => {
     const saved = localStorage.getItem("like");
@@ -52,6 +53,15 @@ const FreeBoardDetail = () => {
     const commentSaved = localStorage.getItem("commentLike");
     return commentSaved === "true";
   });
+
+  //댓글 페이징 처리
+    const [reqPageInfo, setReqPageInfo] = useState({
+    sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
+    pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
+    listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
+    order: 2, //최신순, 오래된 순
+  });
+  const [totalListCount ,setTotalListCount]= useState();
 
   useEffect(() => {
     localStorage.setItem("like", like);
@@ -190,14 +200,19 @@ const FreeBoardDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}`)
+      .get(`${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}
+        &pageNo=${reqPageInfo.pageNo}
+        &listCnt=${reqPageInfo.listCnt}
+        &sideBtnCount=${reqPageInfo.sideBtnCount}
+        &order=${reqPageInfo.order}`)
       .then((res) => {
-        setFreeBoardComment(res.data);
+        setFreeBoardComment(res.data.freeBoardCommentList);
+        setTotalListCount(res.data.totalListCount);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardNo, fbCommentContent, toggle, modifyFbCommentContent]);
+  }, [freeBoardNo, fbCommentContent, toggle, modifyFbCommentContent, reqPageInfo.pageNo, reqPageInfo.order]);
   const commentResist = () => {
     if (member === null || member === "") {
       Swal.fire({
@@ -332,30 +347,6 @@ const FreeBoardDetail = () => {
     }
   };
 
-  const likeComment = () => {
-    if (!member) {
-      Swal.fire({
-        title: "로그인",
-        text: "로그인 후 이용해주세요.",
-        icon: "warning",
-      });
-      navigate("/member/login");
-    } else {
-      axios //조회 후 null이면 insert / !null delete
-        .get(
-          `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${fbCommentNo}`
-        )
-        .then((res) => {
-          if (res.data !== "" || res.data !== undefined) {
-            setToggle(!toggle);
-            setCommentLike(!commentLike);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
   
   const [fbnum, setFbnum] = useState();
   const prevBoard = () => {
@@ -371,6 +362,7 @@ const FreeBoardDetail = () => {
     navigate(`/freeBoard/detail/${fbnum - 1}`);
   };
   
+
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -495,7 +487,7 @@ const FreeBoardDetail = () => {
       <div className="comment-section">
         <div className="comment-header">
           <span>
-            댓글 {freeBoardComment[0].fbCommentNo !== 0 ? commentCount : 0}
+            댓글 {freeBoardComment.fbCommentNo !== 0 ? commentCount : 0}
           </span>
           <span className="comment-order">
             최신순 <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
@@ -527,14 +519,24 @@ const FreeBoardDetail = () => {
                     fbCommentContent === " " ||
                     fbCommentContent === null)
                 ) {
-                  alert("댓글을 입력해주세요.");
+                  Swal.fire({
+                    title : "댓글 입력",
+                    text: "댓글을 입력해주세요.",
+                    icon: "warning",
+                  })
                 } else {
                   axios
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
                     .then((res) => {
                       console.log(res);
                       if (res.data === 1) {
-                        setFbCommentContent("");
+                        Swal.fire({
+                          title: "등록 완료",
+                          text: "댓글 등록 완료",
+                          icon : "success",
+                        }).then(() => {
+                          setFbCommentContent("");
+                        })
                       }
                     })
                     .catch((err) => {
@@ -683,11 +685,40 @@ const FreeBoardDetail = () => {
                       className="heart"
                       onClick={() => {
                         setFbCommentNo(comment.fbCommentNo);
-                        likeComment;
+                        if (!member) {
+                        Swal.fire({
+                          title: "로그인",
+                          text: "로그인 후 이용해주세요.",
+                          icon: "warning",
+                        });
+                        navigate("/member/login");
+                      } else {
+                        axios //조회 후 null이면 insert / !null delete
+                          .get(
+                            `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${comment.fbCommentNo}`
+                          )
+                          .then((res) => {
+                            if (res.data !== "" || res.data !== undefined) {
+                              setToggle(!toggle);
+                              setCommentLike(!commentLike);
+                              console.log(res.data);
+                              console.log(comment.cnt);
+                              
+                            }
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }
                       }}
-                    >
-                      <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                      {comment.cnt}
+                    >{commentLike && comment.fbCommentNo ? (
+                        <FavoriteOutlinedIcon
+                          style={{ color: "red", userSelect: "none" }}
+                        />
+                      ) : (
+                        <FavoriteBorderOutlinedIcon style={{ userSelect: "none" }} />
+                      )}
+                      {comment.likeCount}
                     </div>
                     <div className="hour">
                       <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
@@ -752,6 +783,16 @@ const FreeBoardDetail = () => {
           </div>
         )}
       </div>
+        <div className="page-navi comment">
+          <PageNavigation
+            reqPageInfo={reqPageInfo}
+            setReqPageInfo={setReqPageInfo}
+            totalListCount={totalListCount}
+            setTotalListCount={setTotalListCount}
+            setFreeBoardComment={setFreeBoardComment}
+            FreeBoardComment={freeBoardComment}
+          ></PageNavigation>
+        </div>
     </div>
   );
 };
