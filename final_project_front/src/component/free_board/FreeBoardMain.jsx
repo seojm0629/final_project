@@ -303,83 +303,67 @@ const FreeBoardContent = (props) => {
         <div className="no-result">검색 결과가 없습니다.</div>
       ) : (
         <div className="board-div">
-          {freeBoardList.map((list, i) => {
-            console.log(list);
-            return i % 2 === 0 ? (
-              <div
-                key={"first" + i}
-                className="board-section"
-                style={{
-                  borderRight: "1px solid #ccc",
-                }}
-                onClick={() => {
-                  navigate(`/freeBoard/detail/${list.freeBoardNo}`);
-                }}
-              >
-                {/*상태넣을꺼*/}
-                <div className="board-list-title">
-                  <div className="board-status">{list.freeBoardNo}</div>
-                  <div className="board-title">{list.freeBoardTitle}</div>
-                </div>
-                <div className="board-content">
-                  <img src={list.freeBoardThumbnail}></img>
-                </div>
-                <div className="nickname-id">
-                  <span>{list.memberNickname}</span>ㆍ
-                  <span>{list.memberId}</span>
-                </div>
-                <div className="view-heart">
-                  <div className="view">
-                    {/*작성된 게시글을 클릭 시 count(*) */}
-                    <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-                    111
-                  </div>
-                  <div className="heart">
-                    <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                    {list.likeCount}
-                  </div>
-                  <div className="hour">
-                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
-                    {nowDate(list.freeBoardDate)}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div
-                key={"second" + i}
-                className="board-section"
-                onClick={() => {
-                  navigate(`/freeBoard/detail/${list.freeBoardNo}`);
-                }}
-              >
-                <div className="board-list-title">
-                  <div className="board-status">{list.freeBoardNo}</div>
-                  <div className="board-title">{list.freeBoardTitle}</div>
-                </div>
-                <div className="board-content">
-                  <img src={list.freeBoardThumbnail}></img>
-                </div>
-                <div className="nickname-id">
-                  <span>{list.memberNickname}</span>ㆍ
-                  <span>{list.memberId}</span>
-                </div>
-                <div className="view-heart">
-                  <div className="view">
-                    <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
-                    111
-                  </div>
-                  <div className="heart">
-                    <FavoriteBorderOutlinedIcon></FavoriteBorderOutlinedIcon>
-                    {list.likeCount}
-                  </div>
-                  <div className="hour">
-                    <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>
-                    {nowDate(list.freeBoardDate)}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          <div className="board-table-wrap">
+            <table className="board-table four-cols">
+              <thead>
+                <tr>
+                  <th style={{ width: "25%" }}>썸네일</th>
+                  <th style={{ width: "35%" }}>제목</th>
+                  <th style={{ width: "15%" }}>작성자</th>
+                  <th style={{ width: "25%" }}>상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                {freeBoardList.map((list) => (
+                  <tr
+                    key={list.freeBoardNo}
+                    className="board-row"
+                    onClick={() =>
+                      navigate(`/freeBoard/detail/${list.freeBoardNo}`)
+                    }
+                  >
+                    <td className="thumb-cell">
+                      {list.freeBoardThumbnail ? (
+                        <img
+                          src={list.freeBoardThumbnail}
+                          alt="thumbnail"
+                          className="thumbnail"
+                          onClick={() =>
+                            navigate(`/freeBoard/detail/${list.freeBoardNo}`)
+                          }
+                        />
+                      ) : (
+                        <div className="thumbnail placeholder" />
+                      )}
+                    </td>
+
+                    <td className="title-cell">
+                      <span className="title-text">{list.freeBoardTitle}</span>
+                    </td>
+
+                    <td className="author-cell">
+                      <span className="nickname">{list.memberNickname}</span>
+                      <span className="gray">({list.memberId})</span>
+                    </td>
+
+                    <td className="states-cell">
+                      <span className="state">
+                        <VisibilityOutlinedIcon className="icon" /> 111
+                      </span>
+                      <span className="state">
+                        <FavoriteBorderOutlinedIcon className="icon" />{" "}
+                        {list.likeCount}
+                      </span>
+                      <span className="state">
+                        <AccessTimeOutlinedIcon className="icon" />{" "}
+                        {nowDate(list.freeBoardDate)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
       <div
