@@ -620,7 +620,7 @@ const VoteDetail = () => {
           }}
         />
       </div>
-      <div>
+      <div className="detail-button-box">
         <button
           className="like-btn"
           onClick={() => {
