@@ -68,8 +68,6 @@ const FreeBoardModify = (props) => {
     const formData = new FormData();
     formData.append("freeBoardCategoryNo", freeBoardCategoryNo);
     formData.append("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
-    console.log(freeBoardCategoryNo);
-    console.log(freeBoardSubcategoryNo);
     formData.append("freeBoardTitle", freeBoardTitle);
     formData.append("memberNo", memberNo);
     formData.append("freeBoardContent", freeBoardContent);

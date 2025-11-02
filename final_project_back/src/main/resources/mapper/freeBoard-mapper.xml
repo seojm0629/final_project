@@ -462,18 +462,5 @@ FROM (
 WHERE FB_NUM BETWEEN 1 AND 10
 	</select>
 	
-	<select id="prevFreeBoard" resultType="freeBoard">
-	SELECT *
-FROM (
-SELECT ROWNUM RNUM, A.* FROM (
-    SELECT *
-    FROM FREE_BOARD_TBL
-    WHERE FREE_BOARD_CATEGORY_NO = #{freeBoardCategoryNo}
-      AND FREE_BOARD_SUBCATEGORY_NO = #{freeBoardSubcategoryNo}
-      AND (FREE_BOARD_NO > #{freeBoardNo})
-    ORDER BY FREE_BOARD_NO DESC) A
-)
-WHERE RNUM = 1
-	</select>
 	
 </mapper>
