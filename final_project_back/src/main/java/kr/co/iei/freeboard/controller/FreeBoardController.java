@@ -252,8 +252,9 @@ public class FreeBoardController {
 	}
 	/* 뷰(view) */
 	@GetMapping(value = "/content/view")
-	public ResponseEntity<FreeBoardViewDTO> countView(@RequestParam int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardCategoryNo, @RequestParam int freeBoardSubcategoryNo){
+	public ResponseEntity<FreeBoardViewDTO> countView(@RequestParam(required = false) int memberNo, @RequestParam int freeBoardNo, @RequestParam int freeBoardCategoryNo, @RequestParam int freeBoardSubcategoryNo){
 		FreeBoardViewDTO freeBoardView = freeBoardService.countView(memberNo, freeBoardNo, freeBoardCategoryNo, freeBoardSubcategoryNo);
+		System.out.println(memberNo);
 		System.out.println(freeBoardView);
 		return ResponseEntity.ok(freeBoardView);		
 	}

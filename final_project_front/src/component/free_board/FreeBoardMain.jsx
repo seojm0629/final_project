@@ -256,13 +256,7 @@ const FreeBoardContent = (props) => {
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardNo, setFreeBoardNo] = useState();
   const [toggle, setToggle] = useState(false);
-  const [loginMemberNo, serLoginMemberNo] = useState(() => {
-    const savedMemberNo = localStorage.getItem("loginMemberNo");
-    return savedMemberNo === "true";
-  });
-  useEffect(() => {
-    localStorage.setItem("loginMemberNo", loginMemberNo);
-  }, [loginMemberNo]);
+  const memberNoRe = memberNo !== "" ? memberNo : 0;
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -319,14 +313,13 @@ const FreeBoardContent = (props) => {
     toggle,
   ]);
   /* 상세페이지 view */
-  const [viewCount, setViewCount] = useState(); //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
   console.log(memberNo);
+  const [viewCount, setViewCount] = useState(); //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
   return (
     <section className="freeBoard-section">
       {result ? (
         <div className="no-result">검색 결과가 없습니다.</div>
       ) : (
-        
         <div className="board-div">
           {/*
           {freeBoardList.map((list, i) => {
@@ -448,25 +441,25 @@ const FreeBoardContent = (props) => {
                     key={list.freeBoardNo}
                     className="board-row"
                     style={{
-                  borderRight: "1px solid #ccc",
-                }}
-                onClick={() => {
-                  axios
-                    .get(
-                      `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
-                    )
-                    .then((res) => {
-                      //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
-                      navigate(
-                        `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
-                      );
-                      console.log(res.data.viewCount);
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                  setToggle(!toggle);
-                }}
+                      borderRight: "1px solid #ccc",
+                    }}
+                    onClick={() => {
+                      axios
+                        .get(
+                          `${backServer}/freeBoard/content/view?memberNo=${memberNoRe}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
+                        )
+                        .then((res) => {
+                          //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
+                          navigate(
+                            `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
+                          );
+                          console.log(res.data.viewCount);
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
+                      setToggle(!toggle);
+                    }}
                   >
                     <td className="thumb-cell">
                       {list.freeBoardThumbnail ? (
@@ -474,7 +467,6 @@ const FreeBoardContent = (props) => {
                           src={list.freeBoardThumbnail}
                           alt="thumbnail"
                           className="thumbnail"
-                          
                         />
                       ) : (
                         <div className="thumbnail placeholder" />
@@ -492,7 +484,7 @@ const FreeBoardContent = (props) => {
 
                     <td className="states-cell">
                       <span className="state">
-                        <VisibilityOutlinedIcon className="icon" /> 
+                        <VisibilityOutlinedIcon className="icon" />
                         {viewCount}
                       </span>
                       <span className="state">

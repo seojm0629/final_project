@@ -29,7 +29,6 @@ const TextEditor = (props) => {
           })
           .then((res) => {
             const imageUrl = `${backServer}/freeBoard/editor/${res.data}`;
-
             const originalImage = `/freeBoard/editor/${res.data}`;
             const editor = editorRef.current.getEditor();
             const range = editor.getSelection();
@@ -60,7 +59,7 @@ const TextEditor = (props) => {
             { indent: "+1" },
             { align: [] },
           ],
-          ["image"],
+          ["image", "link"],
         ],
         handlers: {
           image: imageHandler,

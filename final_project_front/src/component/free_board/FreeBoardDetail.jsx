@@ -53,13 +53,13 @@ const FreeBoardDetail = () => {
   });
 
   //댓글 페이징 처리
-    const [reqPageInfo, setReqPageInfo] = useState({
+  const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
     listCnt: 10, //한 페이지에 몇개 리스트를 보여줄건데? (페이징에서 씀)
     order: 2, //최신순, 오래된 순
   });
-  const [totalListCount ,setTotalListCount]= useState();
+  const [totalListCount, setTotalListCount] = useState();
 
   useEffect(() => {
     localStorage.setItem("like", like);
@@ -198,11 +198,13 @@ const FreeBoardDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}
+      .get(
+        `${backServer}/freeBoard/detail/comment?freeBoardNo=${freeBoardNo}
         &pageNo=${reqPageInfo.pageNo}
         &listCnt=${reqPageInfo.listCnt}
         &sideBtnCount=${reqPageInfo.sideBtnCount}
-        &order=${reqPageInfo.order}`)
+        &order=${reqPageInfo.order}`
+      )
       .then((res) => {
         setFreeBoardComment(res.data.freeBoardCommentList);
         setTotalListCount(res.data.totalListCount);
@@ -210,7 +212,14 @@ const FreeBoardDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [freeBoardNo, fbCommentContent, toggle, modifyFbCommentContent, reqPageInfo.pageNo, reqPageInfo.order]);
+  }, [
+    freeBoardNo,
+    fbCommentContent,
+    toggle,
+    modifyFbCommentContent,
+    reqPageInfo.pageNo,
+    reqPageInfo.order,
+  ]);
   const commentResist = () => {
     if (member === null || member === "") {
       Swal.fire({
@@ -330,7 +339,11 @@ const FreeBoardDetail = () => {
     } else {
       axios //조회 후 null이면 insert / !null delete
         .get(
-          `${backServer}/freeBoard/detail/selectLike?memberNo=${memberNo}&freeBoardNo=${freeBoardNo}&freeBoardSubcategoryNo=${comment.freeBoardSubcategoryNo}&freeBoardCategoryNo=${comment.freeBoardCategoryNo}`
+          `${backServer}/freeBoard/detail/selectLike?memberNo=${
+            memberNo ? memberNo : 0
+          }&freeBoardNo=${freeBoardNo}&freeBoardSubcategoryNo=${
+            comment.freeBoardSubcategoryNo
+          }&freeBoardCategoryNo=${comment.freeBoardCategoryNo}`
         )
         .then((res) => {
           if (res.data !== "" || res.data !== undefined) {
@@ -344,7 +357,6 @@ const FreeBoardDetail = () => {
     }
   };
 
-  
   const [fbnum, setFbnum] = useState();
   const prevBoard = () => {
     axios
@@ -358,7 +370,6 @@ const FreeBoardDetail = () => {
       });
     navigate(`/freeBoard/detail/${fbnum - 1}`);
   };
-  
 
   return (
     /* 상세페이지  */
@@ -407,7 +418,11 @@ const FreeBoardDetail = () => {
       <hr className="detail-line" />
       <div className="detail-main">
         <div className="detail-content">
-          <div className="detail-image-box">{freeBoard.freeBoardThumbnail}</div>
+          <img
+            src={freeBoard.freeBoardThumbnail}
+            alt="thumbnail"
+            className="detail-image-box"
+          ></img>
           <div
             className="detail-freeBoardContent"
             dangerouslySetInnerHTML={{ __html: freeBoard.freeBoardContent }}
@@ -483,18 +498,19 @@ const FreeBoardDetail = () => {
       </div>
       <div className="comment-section">
         <div className="comment-header">
-          <span>
-            댓글 {freeBoardComment[0].totalCommentCount}
-          </span>
-          <span className="comment-order" onClick={() => {
-            {
-            reqPageInfo.order === 2
-              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
-              : setReqPageInfo({ ...reqPageInfo, order: 2 });
-          }
-          }}>
+          <span>댓글 {freeBoardComment[0].totalCommentCount}</span>
+          <span
+            className="comment-order"
+            onClick={() => {
+              {
+                reqPageInfo.order === 2
+                  ? setReqPageInfo({ ...reqPageInfo, order: 1 })
+                  : setReqPageInfo({ ...reqPageInfo, order: 2 });
+              }
+            }}
+          >
             {reqPageInfo.order === 2 ? (
-            <span>최신순</span>
+              <span>최신순</span>
             ) : (
               <span>오래된순</span>
             )}
@@ -528,10 +544,10 @@ const FreeBoardDetail = () => {
                     fbCommentContent === null)
                 ) {
                   Swal.fire({
-                    title : "댓글 입력",
+                    title: "댓글 입력",
                     text: "댓글을 입력해주세요.",
                     icon: "warning",
-                  })
+                  });
                 } else {
                   axios
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
@@ -541,10 +557,10 @@ const FreeBoardDetail = () => {
                         Swal.fire({
                           title: "등록 완료",
                           text: "댓글 등록 완료",
-                          icon : "success",
+                          icon: "success",
                         }).then(() => {
                           setFbCommentContent("");
-                        })
+                        });
                       }
                     })
                     .catch((err) => {
@@ -572,9 +588,9 @@ const FreeBoardDetail = () => {
                 >
                   <div className="comment-report">
                     <div className="comment-writer">
-                    <span>{comment.memberNickname}</span>
-                    <span>{comment.memberId}</span>
-                  </div>
+                      <span>{comment.memberNickname}</span>
+                      <span>{comment.memberId}</span>
+                    </div>
                     <BaseModal
                       title="댓글 신고하기"
                       content={
@@ -617,7 +633,7 @@ const FreeBoardDetail = () => {
                       }
                     />
                   </div>
-                  
+
                   {comment.memberNo === memberNo &&
                     cmtModify === comment.fbCommentNo && (
                       <div className="comment-modify">
@@ -695,37 +711,39 @@ const FreeBoardDetail = () => {
                       onClick={() => {
                         setFbCommentNo(comment.fbCommentNo);
                         if (!member) {
-                        Swal.fire({
-                          title: "로그인",
-                          text: "로그인 후 이용해주세요.",
-                          icon: "warning",
-                        });
-                        navigate("/member/login");
-                      } else {
-                        axios //조회 후 null이면 insert / !null delete
-                          .get(
-                            `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${comment.fbCommentNo}`
-                          )
-                          .then((res) => {
-                            if (res.data !== "" || res.data !== undefined) {
-                              setToggle(!toggle);
-                              setCommentLike(!commentLike);
-                              console.log(res.data);
-                              console.log(comment.cnt);
-                              
-                            }
-                          })
-                          .catch((err) => {
-                            console.log(err);
+                          Swal.fire({
+                            title: "로그인",
+                            text: "로그인 후 이용해주세요.",
+                            icon: "warning",
                           });
-                      }
+                          navigate("/member/login");
+                        } else {
+                          axios //조회 후 null이면 insert / !null delete
+                            .get(
+                              `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${comment.fbCommentNo}`
+                            )
+                            .then((res) => {
+                              if (res.data !== "" || res.data !== undefined) {
+                                setToggle(!toggle);
+                                setCommentLike(!commentLike);
+                                console.log(res.data);
+                                console.log(comment.cnt);
+                              }
+                            })
+                            .catch((err) => {
+                              console.log(err);
+                            });
+                        }
                       }}
-                    >{commentLike && comment.fbCommentNo ? (
+                    >
+                      {commentLike && comment.fbCommentNo ? (
                         <FavoriteOutlinedIcon
                           style={{ color: "red", userSelect: "none" }}
                         />
                       ) : (
-                        <FavoriteBorderOutlinedIcon style={{ userSelect: "none" }} />
+                        <FavoriteBorderOutlinedIcon
+                          style={{ userSelect: "none" }}
+                        />
                       )}
                       {comment.likeCount}
                     </div>
@@ -792,16 +810,16 @@ const FreeBoardDetail = () => {
           </div>
         )}
       </div>
-        <div className="page-navi comment">
-          <PageNavigation
-            reqPageInfo={reqPageInfo}
-            setReqPageInfo={setReqPageInfo}
-            totalListCount={totalListCount}
-            setTotalListCount={setTotalListCount}
-            setFreeBoardComment={setFreeBoardComment}
-            FreeBoardComment={freeBoardComment}
-          ></PageNavigation>
-        </div>
+      <div className="page-navi comment">
+        <PageNavigation
+          reqPageInfo={reqPageInfo}
+          setReqPageInfo={setReqPageInfo}
+          totalListCount={totalListCount}
+          setTotalListCount={setTotalListCount}
+          setFreeBoardComment={setFreeBoardComment}
+          FreeBoardComment={freeBoardComment}
+        ></PageNavigation>
+      </div>
     </div>
   );
 };
