@@ -308,6 +308,11 @@ public class FreeBoardService {
 		return recommendsListInfo;
 	}
 
+	public FreeBoardDTO prevFreeBoard(HashMap<String, Object> currFreeBoard) {
+		FreeBoardDTO prevFreeBoard = freeBoardDao.prevFreeBoard(currFreeBoard);
+		return prevFreeBoard;
+	}
+
 	
 
 

@@ -34,10 +34,20 @@ const TextEditor = (props) => {
             const range = editor.getSelection();
             editor.insertEmbed(range.index, "image", imageUrl);
             editor.setSelection(range.index + 1);
+            setTimeout(() => {
+              //dom 이후 크기 조절
+              const imgTag = editor.root.querySelector(
+                `img[src="${imageUrl}"]`
+              );
+              if (imgTag) {
+                imgTag.style.width = "300px";
+                imgTag.style.height = "auto";
+              }
+            });
             console.log(form);
             console.log(imageUrl);
             if (setFreeBoardThumbnail !== null) {
-              setFreeBoardThumbnail(originalImage);
+              setFreeBoardThumbnail(imageUrl);
             }
           })
           .catch((err) => {
