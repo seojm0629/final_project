@@ -10,6 +10,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import dayjs from "dayjs"; // 진원이형이 다운받은 날짜js
 import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불러오기
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
+import ChartDataLabels from "chartjs-plugin-datalabels"; // 그래프 안에 값 보여주는 임포트
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"; // 위의 값 과 포
+
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels); // 그래프 안 항목 내용들 보여주기
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 const VoteDetail = () => {
@@ -25,29 +29,30 @@ const VoteDetail = () => {
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
 
+  const filteredData = voteList
+    .map((list, i) => ({ label: list.voteContent, value: values[i] }))
+    .filter((item) => item.value > 0); // 0표 항목 제거
   //차트 안에 들어갈 data (찾아보면 더 있음)
-
   const data = {
-    labels: voteList.map((item) => item.voteContent), // 투표안한 항목 다보이게 표시
+    labels: filteredData.map((item) => item.label), // 각 항목의 이름 배열 저장
     datasets: [
       {
-        label: "비율(%)",
-        data: values.map((value) => value), //배열의 길이만큼 돌아라 맵을 써서
+        data: filteredData.map((item) => item.value), // 각 항목의 투표수 배열 저장
         backgroundColor: [
-          "#e61616ff",
-          "#e7772bff",
-          "#f7e011ff",
-          "#8af70eff",
-          "#16f36bff",
-          "#1c6ee9ff",
-          "#1969e0ff",
-          "#cf2cc2ff",
-          "#af12f3ff",
-          "#f311b7ff",
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#8AFF33",
+          "#FF33F6",
+          "#33FFF3",
+          "#FF8F33",
+          "#338AFF",
         ],
+        borderWidth: 1, // 각 조각들의 두께 설정
       },
     ],
   };
+
   const [refreshToggle, setRefreshToggle] = useState(false);
   //눌렀던 게시글의 기본정보들 다 가져오기
   useEffect(() => {
@@ -483,6 +488,7 @@ const VoteDetail = () => {
       }
     });
   };
+
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
@@ -536,15 +542,17 @@ const VoteDetail = () => {
               {voteList.map((list, i) => {
                 console.log(voteList);
                 const maxValue = Math.max(...values);
+                //values[i] 현재항목 득표수 에서 가장 많은 득표수 값
+                //1등 항목 일때 true 를 보내기 // 공동 1등일때도 두개다 보이기  0일땐 색 넣지않게
+                const oneVote = values[i] === maxValue && maxValue > 0;
 
-                const style =
-                  maxValue === "0"
-                    ? {
-                        backgroundColor: "orange",
-                        borderRadius: "10px",
-                      }
-                    : undefined;
-
+                const style = oneVote
+                  ? {
+                      backgroundColor: "#fff3c4", // 연노랑
+                      border: "2px solid #f1c40f", // 금색 테두리
+                      borderRadius: "10px",
+                    }
+                  : {};
                 return (
                   <li
                     className="vote-detail-content-end"
@@ -570,7 +578,45 @@ const VoteDetail = () => {
         <Pie
           data={data}
           options={{
-            scales: {},
+            responsive: true,
+            maintainAspectRatio: false, // 이거 꼭!
+            plugins: {
+              legend: {
+                position: "bottom", // 아래로 이동 (좌우로 늘어남)
+                labels: {
+                  boxWidth: 15,
+                  padding: 15,
+                  font: {
+                    size: 14,
+                  },
+                },
+              },
+              tooltip: {
+                callbacks: {
+                  //마우스 올렸을때 표시되는 툴팁이다!
+                  label: function (context) {
+                    const label = context.label || ""; // 항목 이름
+                    const value = context.formattedValue || 0; //투표 수
+                    return `${label}: ${value}표`; /// 예를 들어서 "항목 A : 1표"
+                  },
+                },
+              },
+              datalabels: {
+                //pie 안쪽에 값 표시하기
+                color: "#fff",
+                font: { weight: "bold", size: 14 },
+                formatter: (value, context) => {
+                  if (value === 0) return ""; // 0이면 텍스트 안보이게하기
+                  const label = context.chart.data.labels[context.dataIndex];
+                  const total = context.chart.data.datasets[0].data.reduce(
+                    (sum, v) => sum + v,
+                    0
+                  );
+                  const percent = ((value / total) * 100).toFixed(1); // 퍼센트 계산용
+                  return `${label}\n(${percent}%)`; // 예 : 항목 A (25.0%);
+                },
+              },
+            },
           }}
         />
       </div>
