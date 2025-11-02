@@ -24,8 +24,9 @@ const FreeBoardDetail = () => {
   //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
-  const freeBoardNo = params.freeBoardNo;
-  const viewCount = params.viewCount; //main content에서 받아온 freeBoardNo
+  const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
+  console.log(params);
+  const viewCount = params.viewCount;
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([
     { freeBoardCommentNo: 0 },
@@ -450,10 +451,13 @@ const FreeBoardDetail = () => {
               recommends.map((recommend, i) => {
                 return (
                   <li
+                    key={"recommend-" + i}
+                    className="recommendsBtn"
                     onClick={() => {
                       navigate(
                         `/freeBoard/detail/${recommend.freeBoardNo}/${viewCount}`
                       );
+                      setToggle(!toggle);
                     }}
                   >
                     {recommend.freeBoardTitle}

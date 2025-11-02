@@ -134,7 +134,7 @@
 		insert into vote_comment_tbl values( 
 			vote_comment_seq.nextval,
 			#{voteCommentContent},
-			to_char(sysdate, 'yyyy-mm-dd'),
+			sysdate,
 			#{memberNo},
 			#{voteNo}
 		)
@@ -151,6 +151,7 @@ select
 			vote_no  from (select * from vote_comment_tbl 
 			left join member_tbl using (member_no))
 			where vote_no = #{voteNo}) LEFT JOIN (SELECT VOTE_COMMENT_NO,COUNT(*) LIKE_CNT FROM VOTE_COMMENT_LIKE_TBL GROUP BY VOTE_COMMENT_NO) USING (VOTE_COMMENT_NO)
+			order by vote_comment_date  desc
 	</select>	
 	
 	<update id="updateComment">

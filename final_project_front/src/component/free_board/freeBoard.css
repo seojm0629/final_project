@@ -936,3 +936,17 @@
   vertical-align: -2px;
   margin-right: 4px;
 }
+
+.detail-main .recommend-box .recommendsBtn {
+  cursor: pointer;
+  padding: 5px 0px;
+}
+
+.detail-main .recommend-box .recommendsBtn:hover {
+  color: #2f4e70;
+  font-weight: 900;
+}
+
+.recommend-box {
+  overflow: auto;
+}
