@@ -24,8 +24,8 @@ const FreeBoardDetail = () => {
   //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
   const params = useParams();
-  const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
-  const viewCount = params.viewCount;
+  const freeBoardNo = params.freeBoardNo;
+  const viewCount = params.viewCount; //main content에서 받아온 freeBoardNo
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([
     { freeBoardCommentNo: 0 },
@@ -265,6 +265,7 @@ const FreeBoardDetail = () => {
           axios
             .delete(`${backServer}/freeBoard/detail/delete/${freeBoardNo}`)
             .then((res) => {
+              console.log(res.data);
               if (res.data === 1) {
                 Swal.fire({
                   title: "삭제 완료",
@@ -521,7 +522,11 @@ const FreeBoardDetail = () => {
       </div>
       <div className="comment-section">
         <div className="comment-header">
-          <span>댓글 {freeBoardComment[0].totalCommentCount}</span>
+          <span>
+            댓글
+            {freeBoardComment[0].totalCommentCount !== 0 &&
+              freeBoardComment[0].totalCommentCount}
+          </span>
           <span
             className="comment-order"
             onClick={() => {
