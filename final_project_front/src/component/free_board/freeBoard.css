@@ -668,7 +668,7 @@
   display: flex;
   justify-content: flex-start;
   width: max-content;
-  gap: 700px;
+  gap: 740px;
   margin: 0px 0px 20px 20px;
 }
 .comment-header span:first-child {
@@ -769,6 +769,10 @@
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
 }
+.comment-item div:first-child{
+  display: flex;
+  align-self: flex-end;
+}
 .comment-report {
   text-align: right;
   color: #d00;
@@ -776,21 +780,25 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 3px;
+  gap: 700px;
   margin-right: 10px;
   margin-top: 10px;
+}
+.comment-writer {
+  display: flex;
+  align-self: flex-start;
+  gap: 7px;
+  font-size: 13px;
+}
+.comment-writer span{
+  color: #003366
 }
 .comment-text {
   margin: 10px 0;
   font-size: 15px;
   line-height: 1.5;
 }
-.comment-writer {
-  display: flex;
-  gap: 5px;
-  font-size: 13px;
-  margin: 10px 0px 0px 15px;
-}
+
 .comment-text {
   display: flex;
   margin-left: 25px;
@@ -823,7 +831,7 @@
 }
 .comment-button {
   text-align: right;
-  margin: 8px 10px 0px 0px;
+  margin-right: 10px;
 }
 .FbClaimConfirmBtn {
   width: 100%;

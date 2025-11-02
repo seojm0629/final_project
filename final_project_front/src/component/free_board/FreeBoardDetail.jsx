@@ -34,7 +34,6 @@ const FreeBoardDetail = () => {
   const [fbCommentNo, setFbCommentNo] = useState();
   const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호
-  const commentCount = freeBoardComment.length;
   const [toDate, setToDate] = useState(); //사용할 시간
 
   const navigate = useNavigate();
@@ -43,7 +42,6 @@ const FreeBoardDetail = () => {
 
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
-  console.log(freeBoardComment);
   //새로고침 시 좋아요 유지
   const [like, setLike] = useState(() => {
     const saved = localStorage.getItem("like");
@@ -320,7 +318,6 @@ const FreeBoardDetail = () => {
         });
     }
   };
-
   /* 좋아요 */
   const clickLike = () => {
     if (!member) {
@@ -487,10 +484,21 @@ const FreeBoardDetail = () => {
       <div className="comment-section">
         <div className="comment-header">
           <span>
-            댓글 {freeBoardComment.fbCommentNo !== 0 ? commentCount : 0}
+            댓글 {freeBoardComment[0].totalCommentCount}
           </span>
-          <span className="comment-order">
-            최신순 <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
+          <span className="comment-order" onClick={() => {
+            {
+            reqPageInfo.order === 2
+              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
+              : setReqPageInfo({ ...reqPageInfo, order: 2 });
+          }
+          }}>
+            {reqPageInfo.order === 2 ? (
+            <span>최신순</span>
+            ) : (
+              <span>오래된순</span>
+            )}
+            <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
           </span>
         </div>
         <div className="comment-input">
@@ -550,7 +558,7 @@ const FreeBoardDetail = () => {
             등록
           </button>
         </div>
-        {freeBoardComment[0].fbCommentNo !== 0 && (
+        {freeBoardComment[0].totalCommentCount !== 0 && (
           <div className="comment-box">
             {freeBoardComment.map((comment, i) => {
               return (
@@ -563,6 +571,10 @@ const FreeBoardDetail = () => {
                   key={"item" + i}
                 >
                   <div className="comment-report">
+                    <div className="comment-writer">
+                    <span>{comment.memberNickname}</span>
+                    <span>{comment.memberId}</span>
+                  </div>
                     <BaseModal
                       title="댓글 신고하기"
                       content={
@@ -605,10 +617,7 @@ const FreeBoardDetail = () => {
                       }
                     />
                   </div>
-                  <div className="comment-writer">
-                    <span>{comment.memberNickname}</span>
-                    <span>{comment.memberId}</span>
-                  </div>
+                  
                   {comment.memberNo === memberNo &&
                     cmtModify === comment.fbCommentNo && (
                       <div className="comment-modify">
