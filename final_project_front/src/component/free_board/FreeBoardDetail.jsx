@@ -44,15 +44,18 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
   //새로고침 시 좋아요 유지
+
   const [like, setLike] = useState(() => {
     const saved = localStorage.getItem("like");
     return saved === "true";
   });
+
   const [commentLike, setCommentLike] = useState(() => {
-    const commentSaved = localStorage.getItem("commentLike");
+    const commentSaved = localStorage.getItem(`commentLike_`);
     return commentSaved === "true";
   });
 
+  const [commentCount, setCommentCount] = useState(0);
   //댓글 페이징 처리
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
@@ -62,10 +65,13 @@ const FreeBoardDetail = () => {
   });
   const [totalListCount, setTotalListCount] = useState();
 
+  console.log(localStorage);
+
   useEffect(() => {
     localStorage.setItem("like", like);
-    localStorage.setItem("commentLike", commentLike);
-  }, [like, commentLike]);
+    localStorage.setItem(`commentLike_`, commentLike);
+  }, [like]);
+
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
@@ -209,6 +215,7 @@ const FreeBoardDetail = () => {
         &order=${reqPageInfo.order}`
       )
       .then((res) => {
+        console.log(res.data);
         setFreeBoardComment(res.data.freeBoardCommentList);
         setTotalListCount(res.data.totalListCount);
       })
@@ -449,6 +456,7 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
+  const [commentSet, SetCommentSet] = useState();
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -841,11 +849,11 @@ const FreeBoardDetail = () => {
                               `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${comment.fbCommentNo}`
                             )
                             .then((res) => {
-                              if (res.data !== "" || res.data !== undefined) {
+                              if (res.data !== "" && res.data !== undefined) {
                                 setToggle(!toggle);
                                 setCommentLike(!commentLike);
-                                console.log(res.data);
-                                console.log(comment.cnt);
+                                setCommentCount(res.data.commentLike);
+                                console.log(res.data.commentLike);
                               }
                             })
                             .catch((err) => {
@@ -854,7 +862,7 @@ const FreeBoardDetail = () => {
                         }
                       }}
                     >
-                      {commentLike && comment.fbCommentNo ? (
+                      {commentLike ? (
                         <FavoriteOutlinedIcon
                           style={{ color: "red", userSelect: "none" }}
                         />
@@ -863,7 +871,7 @@ const FreeBoardDetail = () => {
                           style={{ userSelect: "none" }}
                         />
                       )}
-                      {comment.likeCount}
+                      {comment.commentLikeCount}
                     </div>
                     <div className="hour">
                       <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>

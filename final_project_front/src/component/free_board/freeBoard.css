@@ -113,7 +113,7 @@
 }
 .main-div .free-board {
   width: 95%;
-  height: 89%;
+  height: 94%;
 }
 .main-div .write-div {
   width: 60px;
@@ -142,21 +142,24 @@
   display: flex;
   flex-direction: column;
 }
-.main-div .board-div {
+.board-div {
   width: 100%;
   height: 100%;
-  border: 1px solid #ccc;
+  display: flex;
+  flex-grow: 1;
 }
-.main-div .board-section {
+.board-table-wrap {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-sizing: content-box;
-  border-bottom: 1px solid #ccc;
   transition: box-shadow 0.3s ease-in-out;
   cursor: pointer;
+}
+.board-div td {
+  background-color: #f0f2f5;
 }
 .main-div .board-section:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -928,6 +931,7 @@
 .states-cell {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
   white-space: nowrap;
 }

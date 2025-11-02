@@ -509,17 +509,16 @@ const FreeBoardContent = (props) => {
           </div>
         </div>
       )}
-      <div
-        className="order-div"
-        onClick={() => {
-          {
-            reqPageInfo.order === 2
-              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
-              : setReqPageInfo({ ...reqPageInfo, order: 2 });
-          }
-        }}
-      >
-        <div>
+      <div className="order-div">
+        <div
+          onClick={() => {
+            {
+              reqPageInfo.order === 2
+                ? setReqPageInfo({ ...reqPageInfo, order: 1 })
+                : setReqPageInfo({ ...reqPageInfo, order: 2 });
+            }
+          }}
+        >
           <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
           {reqPageInfo.order === 2 ? (
             <span>최신순</span>
