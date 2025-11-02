@@ -41,7 +41,7 @@ const TextEditor = (props) => {
                 `img[src="${imageUrl}"]`
               );
               if (imgTag) {
-                imgTag.style.width = "300px";
+                imgTag.style.width = "auto";
                 imgTag.style.height = "auto";
               }
               editor.setSelection(range.index + 1);

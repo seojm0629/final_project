@@ -216,7 +216,7 @@ public class FreeBoardController {
 	}
 	@PatchMapping(value = "/modify/fix")
 	public ResponseEntity<Integer> modifyFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto) {
-		if(freeBoardThumbnail != null) {
+		if(freeBoardThumbnail == null) {
 			String savepath = root + "/freeBoard/thumbnail/";
 			String filepath = fileUtil.fileUpload(savepath, freeBoardThumbnail);
 			freeBoard.setFreeBoardThumbnail(filepath);
