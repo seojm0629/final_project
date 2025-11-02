@@ -90,6 +90,8 @@ public interface FreeBoardDao {
 
 	List<FreeBoardDTO> recommends(int freeBoardCategoryNo, int freeBoardSubcategoryNo);
 
+	FreeBoardDTO prevFreeBoard(HashMap<String, Object> currFreeBoard);
+
 
 	
 

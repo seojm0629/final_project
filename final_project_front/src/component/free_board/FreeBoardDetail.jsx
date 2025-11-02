@@ -386,6 +386,24 @@ const FreeBoardDetail = () => {
       });
   }, []);
 
+  const prevFreeBoard = (
+    freeBoardNo,
+    freeBoardCategoryNo,
+    freeBoardSubcategoryNo
+  ) => {
+    axios
+      .get(
+        `${backServer}/freeBoard/detail/${freeBoardCategoryNo}/${freeBoardSubcategoryNo}/${freeBoardNo}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/freeBoard/detail/${res.data.freeBoardNo}/${viewCount}`);
+        setToggle(!toggle);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -519,7 +537,18 @@ const FreeBoardDetail = () => {
           목록으로
         </button>
         <div>
-          <button className="prev-btn">이전글</button>
+          <button
+            className="prev-btn"
+            onClick={() => {
+              prevFreeBoard(
+                freeBoard.freeBoardNo,
+                freeBoard.freeBoardCategoryNo,
+                freeBoard.freeBoardSubcategoryNo
+              );
+            }}
+          >
+            이전글
+          </button>
           <button className="next-btn">다음글</button>
         </div>
       </div>
