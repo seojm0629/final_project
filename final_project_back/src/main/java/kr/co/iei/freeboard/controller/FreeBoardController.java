@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +29,15 @@ import kr.co.iei.freeboard.model.dto.FreeBoardDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardLikeDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardViewDTO;
 import kr.co.iei.freeboard.model.service.FreeBoardService;
+import kr.co.iei.tradeBoard.model.service.TradeBoardService;
 import kr.co.iei.utils.FileUtil;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/freeBoard")
 public class FreeBoardController {
+
+    private final TradeBoardService tradeBoardService;
 	
 	
 	@Autowired
@@ -45,6 +48,11 @@ public class FreeBoardController {
 	
 	@Value("${file.root}")
 	private String root;
+
+
+    FreeBoardController(TradeBoardService tradeBoardService) {
+        this.tradeBoardService = tradeBoardService;
+    }
 
 	
 	@GetMapping(value = "/mainPage")
@@ -277,5 +285,21 @@ public class FreeBoardController {
 		List<FreeBoardDTO> recommends = freeBoardService.recommends(freeBoardNo);
 		return ResponseEntity.ok(recommends);
 	}
+	
+	@GetMapping(value="/detail/{freeBoardCategoryNo}/{freeBoardSubcategoryNo}/{freeBoardNo}")
+	public ResponseEntity<FreeBoardDTO> prevFreeBoardNo(@PathVariable int freeBoardCategoryNo, @PathVariable int freeBoardSubcategoryNo,@PathVariable int freeBoardNo){
+		System.out.println(freeBoardCategoryNo);
+		System.out.println(freeBoardSubcategoryNo);
+		System.out.println(freeBoardNo);
+		HashMap<String, Object> currFreeBoard = new HashMap<>();
+		currFreeBoard.put("freeBoardCategoryNo", freeBoardCategoryNo);
+		currFreeBoard.put("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
+		currFreeBoard.put("freeBoardNo", freeBoardNo);
+		FreeBoardDTO prevFreeBoard = freeBoardService.prevFreeBoard(currFreeBoard);
+		System.out.println(prevFreeBoard);
+		return ResponseEntity.ok(prevFreeBoard);
+		
+	}
+	
 	
 }
