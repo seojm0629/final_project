@@ -124,6 +124,7 @@ const VoteList = () => {
               글작성
             </button>
           )}
+
           <input
             type="radio"
             name="order"
@@ -146,6 +147,17 @@ const VoteList = () => {
             }}
           />
           <label htmlFor="progress">진행중</label>
+          <input
+            type="radio"
+            name="order"
+            id="all"
+            value="2"
+            checked={order === "2"}
+            onChange={(e) => {
+              setOrder(e.target.value);
+            }}
+          />
+          <label htmlFor="all">전체</label>
         </div>
       </div>
       <div className="vote-tbl-box">

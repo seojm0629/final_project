@@ -74,7 +74,6 @@ public class VoteController {
 		VoteDTO vote = voteService.selectOneVote(voteNo);
 		
 
-		
 		return ResponseEntity.ok(vote);
 	}
 	
