@@ -55,6 +55,7 @@ const ContentFreeBoard = () => {
 
   const [insertCate, setInsertCate] = useState();
   const [deleteCate, setDeleteCate] = useState();
+  const [noticeTarget, setNoticeTarget] = useState("1");
 
   console.log(insertCate);
 
@@ -240,7 +241,14 @@ const ContentFreeBoard = () => {
           console.log(err);
         });
   }, [noticeIsactive]);
-
+  const noticeAlert = () => {
+    Swal.fire({
+      title: `공지사항`,
+      html: noticeValue,
+      width: 800,
+      confirmButtonText: "확인",
+    });
+  };
   return (
     <div className="admin-right freeBoard">
       <div className="admin-content-wrap">
@@ -258,26 +266,40 @@ const ContentFreeBoard = () => {
               />
             </div>
             <div className="noticeBox">
+              <div className="form-label">공지 게시판 선택</div>
+              <select
+                value={noticeTarget}
+                onChange={(e) => setNoticeTarget(e.target.value)}
+                className="notice-select"
+              >
+                <option value="1">자유 게시판</option>
+                <option value="2">투표 게시판</option>
+              </select>
               <button
                 className="admin-btn"
                 onClick={() => {
                   setNoticeSet({
                     memberNo: memberNo,
                     noticeContent: noticeValue,
-                    noticeTarget: 1,
+                    noticeTarget: noticeTarget,
                   });
                 }}
               >
                 적용
               </button>
-              <BaseModal
-                title="공지사항"
-                content={<NoticeContent noticeValue={noticeValue} />}
-                buttonLabel="미리보기"
-                contentBoxStyle={{ width: "800px", height: "600px" }}
-                end="취소"
-                result={confirm}
-              />
+              <button
+                className="admin-btn"
+                onClick={() => {
+                  setNoticeSet({
+                    memberNo: memberNo,
+                    noticeContent: noticeValue,
+                    noticeTarget: noticeTarget,
+                  });
+                  noticeAlert(noticeValue);
+                }}
+              >
+                미리보기
+              </button>
             </div>
           </div>
           <div className="content_box">
@@ -369,7 +391,7 @@ const ContentFreeBoard = () => {
                           }}
                         ></td>
                         <td>{notice.noticeDate}</td>
-                        <td>{notice.noticeTarget == 1 ? "자유" : "거래"}</td>
+                        <td>{notice.noticeTarget == 1 ? "자유" : "투표"}</td>
                         <td>
                           <select
                             defaultValue={notice.noticeIsactive}

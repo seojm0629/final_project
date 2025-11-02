@@ -76,8 +76,20 @@
  	</select>
  	
  	<select id="selectOneVote" resultType="vote">
- 	select * from vote_tbl
-	where vote_no = #{voteNo}
+ 	 SELECT 
+    V.*,
+    M.MEMBER_NICKNAME,
+    NVL(LIKE_COUNT, 0) AS LIKE_COUNT
+  FROM 
+    VOTE_TBL V
+    JOIN MEMBER_TBL M ON V.MEMBER_NO = M.MEMBER_NO
+    LEFT JOIN (
+      SELECT VOTE_NO, COUNT(*) AS LIKE_COUNT
+      FROM VOTE_LIKE_TBL
+      GROUP BY VOTE_NO
+    ) L ON V.VOTE_NO = L.VOTE_NO
+  WHERE 
+    V.VOTE_NO = #{voteNo}
  	</select>
  	
  	<select id="selectVoteOptions" resultType="voteOption">
@@ -138,7 +150,7 @@ select
 			member_nickname,
 			vote_no  from (select * from vote_comment_tbl 
 			left join member_tbl using (member_no))
-			where vote_no = 1244) LEFT JOIN (SELECT VOTE_COMMENT_NO,COUNT(*) LIKE_CNT FROM VOTE_COMMENT_LIKE_TBL GROUP BY VOTE_COMMENT_NO) USING (VOTE_COMMENT_NO)
+			where vote_no = #{voteNo}) LEFT JOIN (SELECT VOTE_COMMENT_NO,COUNT(*) LIKE_CNT FROM VOTE_COMMENT_LIKE_TBL GROUP BY VOTE_COMMENT_NO) USING (VOTE_COMMENT_NO)
 	</select>	
 	
 	<update id="updateComment">
@@ -175,4 +187,49 @@ select
 		<insert id="insertCommentReport">
 		  INSERT INTO VOTE_COMMENT_REPORT_TBL VALUES(VOTE_COMMEMT_REPORT_SEQ.NEXTVAL, #{reportReason}, SYSDATE, #{memberNo}, #{voteCommentNo})
 		</insert>
+		
+
+		  <select id="checkVoteLike" resultType="int">
+		    SELECT COUNT(*)
+		    FROM VOTE_LIKE_TBL
+		    WHERE VOTE_NO = #{voteNo}
+		      AND MEMBER_NO = #{memberNo}
+		  </select>
+		
+		  <insert id="insertVoteLike">
+		    INSERT INTO VOTE_LIKE_TBL (
+		      VOTE_NO, MEMBER_NO, VOTE_LIKE_DATE
+		    ) VALUES (
+		      #{voteNo}, #{memberNo}, SYSDATE
+		    )
+		  </insert>
+		
+		  <delete id="deleteVoteLike">
+		    DELETE FROM VOTE_LIKE_TBL
+		    WHERE VOTE_NO = #{voteNo}
+		      AND MEMBER_NO = #{memberNo}
+		  </delete>
+		  
+		  <select id="checkVoteReport" resultType="int">
+		    SELECT COUNT(*)
+		    FROM VOTE_REPORT_TBL
+		    WHERE VOTE_NO = #{voteNo}
+		      AND MEMBER_NO = #{memberNo}
+		  </select>
+		
+		  <insert id="insertVoteReport">
+		    INSERT INTO VOTE_REPORT_TBL (
+		      VOTE_REPORT_NO,
+		      VOTE_REPORT_CONTENT,
+		      VOTE_REPORT_DATE,
+		      MEMBER_NO,
+		      VOTE_NO
+		    ) VALUES (
+		      VOTE_REPORT_SEQ.NEXTVAL,
+		      #{reportReason},
+		      SYSDATE,
+		      #{memberNo},
+		      #{voteNo}
+		    )
+		  </insert>
 </mapper>

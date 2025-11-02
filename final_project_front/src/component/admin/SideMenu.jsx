@@ -82,7 +82,7 @@ const SideMenu = ({ active, setActive }) => {
                 onClick={() => setActive("free-board")}
                 className={active === "free-board" ? "active" : ""}
               >
-                자유 게시판
+                게시판 관리 (공지/카테고리)
               </button>
             </li>
             <li>

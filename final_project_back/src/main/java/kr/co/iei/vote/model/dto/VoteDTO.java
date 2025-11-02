@@ -24,4 +24,5 @@ public class VoteDTO {
 	private int voteOk;
 	private int voteTotal;
 	private List<VoteCommentDTO> VoteCommentList;
+	private int likeCount;
 }

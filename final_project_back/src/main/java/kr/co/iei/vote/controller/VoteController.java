@@ -193,4 +193,22 @@ public class VoteController {
 	    return ResponseEntity.ok(result);
 	}
 
+	@PostMapping(value = "/like")
+	public ResponseEntity<Integer> voteLike(@RequestBody HashMap<String, Object> likeData){
+	    System.out.println("게시글 좋아요 요청: " + likeData);
+	    
+	    int result = voteService.voteLike(likeData);
+	    System.out.println("eeeeeeeeeeeeeeeeee");
+	    System.out.println(result);
+	    return ResponseEntity.ok(result);
+	}
+
+	@PostMapping("/report")
+	public ResponseEntity<Integer> voteReport(@RequestBody HashMap<String, Object> reportData) {
+	    System.out.println("게시글 신고 요청: " + reportData);
+	    
+	    int result = voteService.voteReport(reportData);
+	    
+	    return ResponseEntity.ok(result);
+	}
 }

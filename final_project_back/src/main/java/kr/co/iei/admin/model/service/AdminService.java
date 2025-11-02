@@ -218,4 +218,15 @@ public class AdminService {
 		return result;
 	}
 
+	public List<AdminNoticeDTO> selectActiveNotices() {
+		List<AdminNoticeDTO> list = adminDao.selectActiveNotices();
+		return list;
+	}
+
+	public List<AdminNoticeDTO> selectVoteActiveNotices() {
+		List<AdminNoticeDTO> list = adminDao.selectVoteActiveNotices();
+		System.out.println("여기 서비스 "+list);
+		return list;
+	}
+
 }
