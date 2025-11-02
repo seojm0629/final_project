@@ -158,7 +158,7 @@
 }
 .detail-box {
   width: 100%;
-  height: 100%;
+  height: 350px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -190,11 +190,11 @@
   box-sizing: border-box;
 }
 
-.detail-buttons {
+.detail-buttons.detail {
   display: flex;
   justify-content: center;
   margin-top: 15px;
-  gap: 10px;
+  gap: 50px;
 }
 
 .detail-buttons button {

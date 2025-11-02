@@ -258,7 +258,7 @@ const VoteDetail = () => {
     axios
       .post(`${backServer}/vote/comment/insert`, commentData)
       .then((res) => {
-        console.log(res);
+        setCommentData({ ...commentData, voteCommentContent: "" });
         setRefreshToggle(!refreshToggle);
       })
 
@@ -644,6 +644,7 @@ const VoteDetail = () => {
           <input
             type="text"
             placeholder="댓글을 남겨주세요."
+            value={commentData.voteCommentContent}
             onChange={(e) => {
               setCommentData({
                 memberNo: memberNo,
@@ -692,6 +693,7 @@ const VoteDetail = () => {
                   ) : (
                     ""
                   )}
+                  <div>{nowDate(c.voteCommentDate)}</div>
                 </div>
                 <p className="comment-content">{c.voteCommentContent}</p>
                 <div className="comment-actions">
