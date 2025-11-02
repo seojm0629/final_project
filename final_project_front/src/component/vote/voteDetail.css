@@ -162,6 +162,9 @@
   font-size: 14px;
   color: #666;
 }
+.comment-item div:first-child {
+  display: flex;
+}
 
 .comment-actions {
   margin-top: 8px;
