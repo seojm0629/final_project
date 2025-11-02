@@ -769,7 +769,7 @@
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
 }
-.comment-item div:first-child{
+.comment-item div:first-child {
   display: flex;
   align-self: flex-end;
 }
@@ -790,8 +790,8 @@
   gap: 7px;
   font-size: 13px;
 }
-.comment-writer span{
-  color: #003366
+.comment-writer span {
+  color: #003366;
 }
 .comment-text {
   margin: 10px 0;
@@ -929,4 +929,18 @@
   font-size: 16px;
   vertical-align: -2px;
   margin-right: 4px;
+}
+
+.detail-main .recommend-box .recommendsBtn {
+  cursor: pointer;
+  padding: 5px 0px;
+}
+
+.detail-main .recommend-box .recommendsBtn:hover {
+  color: #2f4e70;
+  font-weight: 900;
+}
+
+.recommend-box {
+  overflow: auto;
 }
