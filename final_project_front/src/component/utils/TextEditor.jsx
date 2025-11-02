@@ -31,6 +31,7 @@ const TextEditor = (props) => {
             const imageUrl = `${backServer}/freeBoard/editor/${res.data}`;
             const originalImage = `/freeBoard/editor/${res.data}`;
             const editor = editorRef.current.getEditor();
+
             const range = editor.getSelection();
             editor.insertEmbed(range.index, "image", imageUrl);
             editor.setSelection(range.index + 1);
@@ -43,6 +44,7 @@ const TextEditor = (props) => {
                 imgTag.style.width = "300px";
                 imgTag.style.height = "auto";
               }
+              editor.setSelection(range.index + 1);
             });
             console.log(form);
             console.log(imageUrl);
