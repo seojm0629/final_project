@@ -173,14 +173,13 @@ const Note = () => {
             text: "쪽지를 보냈습니다.",
             icon: "success",
           });
-
           setNote({ noteId: "", noteContent: "" });
         }
       })
       .catch((err) => {
         Swal.fire({
           title: "전송 실패",
-          text: "쪽지 전송 중 오류가 발생했습니다.",
+          text: "상대방의 아이디를 찾을 수 없습니다.",
           icon: "error",
         });
       });
@@ -451,7 +450,7 @@ const Note = () => {
             <div className="detail-content-box">
               {selectedContent.noteContent}
             </div>
-            <div className="detail-buttons">
+            <div className="detail-buttons detail">
               {selectMenu === "send" && (
                 <button
                   onClick={() => {
