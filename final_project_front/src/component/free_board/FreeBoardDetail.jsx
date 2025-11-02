@@ -5,7 +5,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -371,6 +371,20 @@ const FreeBoardDetail = () => {
     navigate(`/freeBoard/detail/${fbnum - 1}`);
   };
 
+  const [recommends, setRecommends] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/freeBoard/detail/${freeBoardNo}/recommends`)
+      .then((res) => {
+        console.log(res.data);
+        setRecommends(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -431,11 +445,20 @@ const FreeBoardDetail = () => {
         <div className="recommend-box">
           <div className="recommend-title">추천글</div>
           <ul>
-            <li>추천글 제목</li>
-            <li>추천글 제목</li>
-            <li>추천글 제목</li>
-            <li>추천글 제목</li>
-            <li>추천글 제목</li>
+            {recommends &&
+              recommends.map((recommend, i) => {
+                return (
+                  <li
+                    onClick={() => {
+                      navigate(
+                        `/freeBoard/detail/${recommend.freeBoardNo}/${viewCount}`
+                      );
+                    }}
+                  >
+                    {recommend.freeBoardTitle}
+                  </li>
+                );
+              })}
           </ul>
         </div>
       </div>

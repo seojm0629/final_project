@@ -298,6 +298,16 @@ public class FreeBoardService {
 				return freeBoardCommentLike;
 	}
 
+	public List<FreeBoardDTO> recommends(int freeBoardNo) {
+		// 1. 카테고리 넘버, 서브 카테고리 넘버 조회하기
+		FreeBoardDTO info = freeBoardDao.selectOneBoard(freeBoardNo);
+		System.out.println(info);
+		
+		List<FreeBoardDTO> recommendsListInfo = freeBoardDao.recommends(info.getFreeBoardCategoryNo(),info.getFreeBoardSubcategoryNo());
+		System.out.println(recommendsListInfo);
+		return recommendsListInfo;
+	}
+
 	
 
 
