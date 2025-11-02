@@ -88,6 +88,8 @@ public interface FreeBoardDao {
 
 	int totalCommentListCount(HashMap<String, Object> commentList);
 
+	List<FreeBoardDTO> recommends(int freeBoardCategoryNo, int freeBoardSubcategoryNo);
+
 
 	
 

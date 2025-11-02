@@ -430,6 +430,38 @@
 	</select>
 	 -->
 	
+	<select id="recommends" resultType="freeBoard">
+		SELECT *
+FROM (
+    SELECT ROWNUM FB_NUM, A.*
+    FROM (
+        SELECT *
+        FROM (
+            SELECT *
+            FROM (
+                SELECT
+                    FREE_BOARD_NO,
+                    FREE_BOARD_SUBCATEGORY_NO,
+                    FREE_BOARD_CATEGORY_NO,
+                    FREE_BOARD_TITLE,
+                    MEMBER_NO,
+                    FREE_BOARD_DATE,
+                    NVL(LIKE_COUNT, 0) LIKE_COUNT
+                FROM FREE_BOARD_TBL
+                LEFT JOIN (
+                    SELECT FREE_BOARD_NO, COUNT(*) LIKE_COUNT
+                    FROM FB_LIKE_TBL
+                    GROUP BY FREE_BOARD_NO
+                ) USING (FREE_BOARD_NO)
+                WHERE FREE_BOARD_CATEGORY_NO = 2
+                  AND FREE_BOARD_SUBCATEGORY_NO = 7
+            )
+            ORDER BY LIKE_COUNT DESC
+        )
+    ) A
+)
+WHERE FB_NUM BETWEEN 1 AND 10
+	</select>
 	
 	
 </mapper>

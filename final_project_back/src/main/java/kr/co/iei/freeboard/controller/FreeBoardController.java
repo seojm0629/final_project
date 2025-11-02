@@ -270,4 +270,11 @@ public class FreeBoardController {
 		return ResponseEntity.ok(freeBoardList);
 	}*/
 	
+	@GetMapping(value="/detail/{freeBoardNo}/recommends")
+	public ResponseEntity<List<FreeBoardDTO>> recommends(@PathVariable int freeBoardNo){
+		System.out.println(freeBoardNo);
+		List<FreeBoardDTO> recommends = freeBoardService.recommends(freeBoardNo);
+		return ResponseEntity.ok(recommends);
+	}
+	
 }
