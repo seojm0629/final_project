@@ -268,6 +268,7 @@ const FreeBoardDetail = () => {
           axios
             .delete(`${backServer}/freeBoard/detail/delete/${freeBoardNo}`)
             .then((res) => {
+              console.log(res.data);
               if (res.data === 1) {
                 Swal.fire({
                   title: "삭제 완료",
@@ -611,7 +612,11 @@ const FreeBoardDetail = () => {
       </div>
       <div className="comment-section">
         <div className="comment-header">
-          <span>댓글 {freeBoardComment[0].totalCommentCount}</span>
+          <span>
+            댓글
+            {freeBoardComment[0].totalCommentCount !== 0 &&
+              freeBoardComment[0].totalCommentCount}
+          </span>
           <span
             className="comment-order"
             onClick={() => {

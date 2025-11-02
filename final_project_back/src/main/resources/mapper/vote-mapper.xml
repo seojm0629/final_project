@@ -38,7 +38,10 @@
 	                        , vote_check 
 	                        from member_tbl
 	                        join vote_tbl using(member_no)
-                            <if test="order != 3">
+							<if test="order == 1">
+							where vote_check = #{order}
+							</if>
+							<if test="order == 0">
 							where vote_check = #{order}
 							</if>
 	                        )A

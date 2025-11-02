@@ -664,7 +664,7 @@ const VoteDetail = () => {
             vote.voteCommentList?.map((c) => (
               <div key={c.voteCommentNo} className="comment-item">
                 <div className="comment-top">
-                  <p>{c.memberNickname}</p>
+                  <div>{c.memberNickname}</div>
                   {/* 수정 버튼 눌렀을때  로그인했을때 같은 번호일때만 보이기 */}
                   {modifyCommentNo === c.voteCommentNo ? (
                     <div className="comment-modifiy-box">

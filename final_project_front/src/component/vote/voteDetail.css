@@ -161,6 +161,7 @@
   justify-content: space-between;
   font-size: 14px;
   color: #666;
+  width: 100%;
 }
 
 .comment-actions {
