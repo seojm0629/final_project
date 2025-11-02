@@ -172,3 +172,14 @@
   margin-right: 8px;
   font-size: 14px;
 }
+
+.detail-button-box {
+  display: flex;
+  gap: 100px;
+  padding-top: 50px;
+}
+.detail-button-box > button {
+  width: 50px;
+  height: 30px;
+  cursor: pointer;
+}
