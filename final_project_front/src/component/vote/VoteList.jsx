@@ -41,7 +41,9 @@ const VoteList = () => {
   };
 
   const todayDate = dayjs().$y + "-" + (dayjs().$M + 1) + "-" + dayjs().$D; //날짜 형변환
-
+  const [noticeList, setNoticeList] = useState([]);
+  const [noticeIndex, setNoticeIndex] = useState(0);
+  const [showNotice, setShowNotice] = useState(false);
   useEffect(() => {
     axios
       .get(
@@ -57,6 +59,47 @@ const VoteList = () => {
       });
   }, [reqPageInfo, order, memberNo]);
 
+  useEffect(() => {
+    axios
+      .get(`${backServer}/admin/vote/notice/active`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.length > 0) {
+          setNoticeList(res.data);
+          setShowNotice(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(noticeList);
+    if (
+      showNotice &&
+      noticeList.length > 0 &&
+      noticeIndex < noticeList.length
+    ) {
+      const current = noticeList[noticeIndex];
+
+      Swal.fire({
+        title: `공지사항 ${noticeIndex + 1}/${noticeList.length}`,
+        html: current.noticeContent,
+        width: 800,
+        showCancelButton: noticeIndex < noticeList.length - 1,
+        confirmButtonText:
+          noticeIndex < noticeList.length - 1 ? "다음 공지" : "닫기",
+        cancelButtonText: "그만 보기",
+      }).then((result) => {
+        if (result.isConfirmed && noticeIndex < noticeList.length - 1) {
+          setNoticeIndex((prev) => prev + 1);
+        } else {
+          setShowNotice(false);
+        }
+      });
+    }
+  }, [noticeList, noticeIndex, showNotice]);
   return (
     <div className="vote-main-wrap">
       <div className="vote-name-box">

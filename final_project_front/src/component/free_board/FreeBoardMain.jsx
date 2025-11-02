@@ -43,6 +43,9 @@ const FreeBoardMain = () => {
   const [freeBoardList, setFreeBoardList] = useState([]);
   const [titleState, setTitleState] = useState(""); //url 넘길 state
 
+  const [noticeList, setNoticeList] = useState([]);
+  const [noticeIndex, setNoticeIndex] = useState(0);
+  const [showNotice, setShowNotice] = useState(false);
   const searchTitle = () => {
     setReqPageInfo({ ...reqPageInfo, pageNo: 1 });
     setTitleState(freeBoardTitle);
@@ -74,6 +77,46 @@ const FreeBoardMain = () => {
   const changeTitle = (e) => {
     setFreeBoardTitle(e.target.value);
   };
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/admin/freeboard/notice/active`)
+      .then((res) => {
+        if (res.data.length > 0) {
+          setNoticeList(res.data);
+          setShowNotice(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    console.log(noticeList);
+    if (
+      showNotice &&
+      noticeList.length > 0 &&
+      noticeIndex < noticeList.length
+    ) {
+      const current = noticeList[noticeIndex];
+
+      Swal.fire({
+        title: `공지사항 ${noticeIndex + 1}/${noticeList.length}`,
+        html: current.noticeContent,
+        width: 800,
+        showCancelButton: noticeIndex < noticeList.length - 1,
+        confirmButtonText:
+          noticeIndex < noticeList.length - 1 ? "다음 공지" : "닫기",
+        cancelButtonText: "그만 보기",
+      }).then((result) => {
+        if (result.isConfirmed && noticeIndex < noticeList.length - 1) {
+          setNoticeIndex((prev) => prev + 1);
+        } else {
+          setShowNotice(false);
+        }
+      });
+    }
+  }, [noticeList, noticeIndex, showNotice]);
   return (
     <div className="main-div">
       <div className="main-header">
@@ -283,7 +326,9 @@ const FreeBoardContent = (props) => {
       {result ? (
         <div className="no-result">검색 결과가 없습니다.</div>
       ) : (
+        
         <div className="board-div">
+          {/*
           {freeBoardList.map((list, i) => {
             return i % 2 === 0 ? (
               <div
@@ -323,7 +368,7 @@ const FreeBoardContent = (props) => {
                 </div>
                 <div className="view-heart">
                   <div className="view">
-                    {/*작성된 게시글을 클릭 시 count(*) */}
+                    {/*작성된 게시글을 클릭 시 count(*) 
                     <VisibilityOutlinedIcon></VisibilityOutlinedIcon>
                     {viewCount}
                   </div>
@@ -386,6 +431,84 @@ const FreeBoardContent = (props) => {
               </div>
             );
           })}
+          */}
+          <div className="board-table-wrap">
+            <table className="board-table four-cols">
+              <thead>
+                <tr>
+                  <th style={{ width: "25%" }}>썸네일</th>
+                  <th style={{ width: "35%" }}>제목</th>
+                  <th style={{ width: "15%" }}>작성자</th>
+                  <th style={{ width: "25%" }}>상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                {freeBoardList.map((list) => (
+                  <tr
+                    key={list.freeBoardNo}
+                    className="board-row"
+                    style={{
+                  borderRight: "1px solid #ccc",
+                }}
+                onClick={() => {
+                  axios
+                    .get(
+                      `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
+                    )
+                    .then((res) => {
+                      //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
+                      navigate(
+                        `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
+                      );
+                      console.log(res.data.viewCount);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  setToggle(!toggle);
+                }}
+                  >
+                    <td className="thumb-cell">
+                      {list.freeBoardThumbnail ? (
+                        <img
+                          src={list.freeBoardThumbnail}
+                          alt="thumbnail"
+                          className="thumbnail"
+                          
+                        />
+                      ) : (
+                        <div className="thumbnail placeholder" />
+                      )}
+                    </td>
+
+                    <td className="title-cell">
+                      <span className="title-text">{list.freeBoardTitle}</span>
+                    </td>
+
+                    <td className="author-cell">
+                      <span className="nickname">{list.memberNickname}</span>
+                      <span className="gray">({list.memberId})</span>
+                    </td>
+
+                    <td className="states-cell">
+                      <span className="state">
+                        <VisibilityOutlinedIcon className="icon" /> 
+                        {viewCount}
+                      </span>
+                      <span className="state">
+                        <FavoriteBorderOutlinedIcon className="icon" />
+                        {list.likeCount}
+                      </span>
+                      <span className="state">
+                        <AccessTimeOutlinedIcon className="icon" />
+                        {nowDate(list.freeBoardDate)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
       <div

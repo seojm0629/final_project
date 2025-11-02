@@ -162,5 +162,18 @@ public class AdminController {
 		System.out.println(result);
 		return ResponseEntity.ok(result);
 	}
+	@GetMapping("freeboard/notice/active")
+	public ResponseEntity<List<AdminNoticeDTO>> getActiveNotices() {
+	    List<AdminNoticeDTO> list = adminService.selectActiveNotices();
+	    return ResponseEntity.ok(list);
+	}
 	
+	@GetMapping("vote/notice/active")
+	public ResponseEntity<List<AdminNoticeDTO>> getVoteActiveNotices() {
+		System.out.println("호출 확인");
+	    List<AdminNoticeDTO> list = adminService.selectVoteActiveNotices();
+	    System.out.println("호출 확인2");
+	    System.out.println(list);
+	    return ResponseEntity.ok(list);
+	}
 }

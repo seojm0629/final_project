@@ -151,6 +151,18 @@ public class VoteService {
 		
 		 
 	}
+	
+	@Transactional
+	public int updateComment(VoteCommentDTO voteComment) {
+		int result = voteDao.updateComment(voteComment);
+		return result;
+	}
+
+	@Transactional
+	public int deleteComment(int voteCommentNo) {
+		int result = voteDao.deleteComment(voteCommentNo);
+		return result;
+	}
 
 	@Transactional
 	public int commentLike(HashMap<String, Object> voteCommentLikeSet) {
@@ -163,6 +175,42 @@ public class VoteService {
 			memberIsCommentLike-= voteDao.commentLikeCancel(voteCommentLikeSet);
 		}
 		return memberIsCommentLike;
+	}
+
+	@Transactional
+	public int insertCommentReport(HashMap<String, Object> reportData) {
+		 int check = voteDao.checkDuplicateCommentReport(reportData);
+		    if (check > 0) {
+		        return 0; // 이미 신고함
+		    }
+		    return voteDao.insertCommentReport(reportData);
+	}
+
+	@Transactional
+	public int voteLike(HashMap<String, Object> likeData) {
+	    int check = voteDao.checkVoteLike(likeData); // 이미 눌렀는지 확인
+	    System.out.println("dddddddddddddddddd");
+	    System.out.println(check);
+	    int result = 0;
+
+	    if (check == 0) {
+	        result = voteDao.insertVoteLike(likeData);
+	    } else {
+	        result = voteDao.deleteVoteLike(likeData);
+	        if(result==1) {
+	        	result++;
+	        }
+	    }
+	    return result;
+	}
+
+	@Transactional
+	public int voteReport(HashMap<String, Object> reportData) {
+		 int check = voteDao.checkVoteReport(reportData);
+		    if (check > 0) {
+		        return 0; // 이미 신고한 경우
+		    }
+		    return voteDao.insertVoteReport(reportData);
 	}
 
 	

@@ -36,14 +36,14 @@ const VoteDetail = () => {
         backgroundColor: [
           "#e61616ff",
           "#e7772bff",
-          "#dac82fff",
-          "#8fd341ff",
-          "#2dc969ff",
-          "#2870dbff",
-          "#1b64d1ff",
+          "#f7e011ff",
+          "#8af70eff",
+          "#16f36bff",
+          "#1c6ee9ff",
+          "#1969e0ff",
           "#cf2cc2ff",
-          "#9e1ed4ff",
-          "#d617a3ff",
+          "#af12f3ff",
+          "#f311b7ff",
         ],
       },
     ],
@@ -249,7 +249,6 @@ const VoteDetail = () => {
     }
     return target.fromNow();
   };
-
   const insertComment = () => {
     axios
       .post(`${backServer}/vote/comment/insert`, commentData)
@@ -264,6 +263,38 @@ const VoteDetail = () => {
   };
   console.log(vote.voteCommentList);
 
+  const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
+  const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호찾기
+
+  // 수정 버튼 눌렀을때 값들 저장하기
+  const voteCommentModify = (comment) => {
+    setModifyCommentNo(comment.voteCommentNo);
+    setModifyFbCommentContent(comment.voteCommentContent);
+  };
+
+  console.log(modifyCommentNo);
+  console.log(modifyFbCommentContent);
+  //수정 저장 눌렀을때 값
+  const updateComment = () => {
+    const modifyData = {
+      voteCommentNo: modifyCommentNo,
+      voteCommentContent: modifyFbCommentContent,
+    };
+    axios
+      .patch(`${backServer}/vote/comment/update`, modifyData)
+      .then((res) => {
+        Swal.fire({
+          title: "수정 완료!",
+          icon: "success",
+        });
+        console.log(res);
+        setRefreshToggle(!refreshToggle);
+        setModifyCommentNo(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const commentLike = (voteCommentNo) => {
     const voteCommentLike = {
       voteCommentNo: voteCommentNo,
@@ -299,7 +330,159 @@ const VoteDetail = () => {
         console.log(err);
       });
   };
+  const commentReport = (voteCommentNo) => {
+    if (!memberNo) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 이용 가능한 기능입니다.",
+        icon: "warning",
+      });
+      return;
+    }
 
+    Swal.fire({
+      title: "댓글 신고",
+      input: "text",
+      inputLabel: "신고 사유를 입력하세요.",
+      inputPlaceholder: "예: 욕설, 비방, 스팸 등",
+      showCancelButton: true,
+      confirmButtonText: "신고하기",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const reportData = {
+          voteCommentNo: voteCommentNo,
+          memberNo: memberNo,
+          reportReason: result.value,
+        };
+
+        axios
+          .post(`${backServer}/vote/comment/report`, reportData)
+          .then((res) => {
+            if (res.data === 1) {
+              Swal.fire({
+                title: "신고 완료",
+                text: "댓글 신고가 접수되었습니다.",
+                icon: "success",
+              });
+            } else if (res.data === 0) {
+              Swal.fire({
+                title: "이미 신고한 댓글입니다.",
+                text: "중복 신고는 불가합니다.",
+                icon: "info",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              title: "오류",
+              text: "신고 처리 중 문제가 발생했습니다.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+
+  const voteLike = () => {
+    if (!memberNo) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 이용 가능한 기능입니다.",
+        icon: "warning",
+      });
+      return;
+    }
+
+    const likeData = {
+      voteNo: voteNo,
+      memberNo: memberNo,
+    };
+
+    axios
+      .post(`${backServer}/vote/like`, likeData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "좋아요!",
+            text: "투표 게시글에 좋아요가 추가되었습니다.",
+            icon: "success",
+          });
+        } else if (res.data === 2) {
+          Swal.fire({
+            title: "좋아요 취소",
+            text: "좋아요가 취소되었습니다.",
+            icon: "info",
+          });
+        }
+        setRefreshToggle(!refreshToggle); // 새로고침
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "오류",
+          text: "좋아요 처리 중 오류가 발생했습니다.",
+          icon: "error",
+        });
+      });
+  };
+
+  const voteReport = () => {
+    if (!memberNo) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 이용 가능한 기능입니다.",
+        icon: "warning",
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: "게시글 신고",
+      input: "text",
+      inputLabel: "신고 사유를 입력하세요.",
+      inputPlaceholder: "예: 욕설, 스팸, 부적절한 내용 등",
+      showCancelButton: true,
+      confirmButtonText: "신고하기",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const reportData = {
+          voteNo: voteNo,
+          memberNo: memberNo,
+          reportReason: result.value,
+        };
+
+        axios
+          .post(`${backServer}/vote/report`, reportData)
+          .then((res) => {
+            if (res.data === 1) {
+              Swal.fire({
+                title: "신고 완료",
+                text: "게시글 신고가 접수되었습니다.",
+                icon: "success",
+              });
+            } else if (res.data === 0) {
+              Swal.fire({
+                title: "이미 신고한 게시글입니다.",
+                text: "중복 신고는 불가합니다.",
+                icon: "info",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              title: "오류",
+              text: "신고 처리 중 문제가 발생했습니다.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
   return (
     <div className="vote-detail-wrap">
       <div className="vote-detail-title">
@@ -391,6 +574,24 @@ const VoteDetail = () => {
           }}
         />
       </div>
+      <div>
+        <button
+          className="like-btn"
+          onClick={() => {
+            voteLike();
+          }}
+        >
+          👍{vote.likeCount}
+        </button>
+        <button
+          className="report-btn"
+          onClick={() => {
+            voteReport();
+          }}
+        >
+          신고
+        </button>
+      </div>
       {/* 댓글 */}
       <div className="comment-section">
         <div className="comment-input-area">
@@ -417,7 +618,34 @@ const VoteDetail = () => {
               <div key={c.voteCommentNo} className="comment-item">
                 <div className="comment-top">
                   <p>{c.memberNickname}</p>
-                  <p className="comment-time">{nowDate(c.voteCommentDate)}</p>
+                  {/* 수정 버튼 눌렀을때  로그인했을때 같은 번호일때만 보이기 */}
+                  {modifyCommentNo === c.voteCommentNo ? (
+                    <div className="comment-modifiy-box">
+                      <textarea
+                        type="text"
+                        value={modifyFbCommentContent}
+                        onChange={(e) =>
+                          setModifyFbCommentContent(e.target.value)
+                        }
+                      />
+                      <div className="comment-modifiy-buttonbox">
+                        <button
+                          className="save-btn"
+                          onClick={() => updateComment(c.voteCommentNo)}
+                        >
+                          저장
+                        </button>
+                        <button
+                          className="cancel-btn"
+                          onClick={() => setModifyCommentNo(null)}
+                        >
+                          취소
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <p className="comment-content">{c.voteCommentContent}</p>
                 <div className="comment-actions">
@@ -430,11 +658,60 @@ const VoteDetail = () => {
                   >
                     👍 {c.likeCnt}
                   </button>
-                  <button className="report-btn">신고</button>
+
+                  <button
+                    className="report-btn"
+                    onClick={() => {
+                      commentReport(c.voteCommentNo);
+                    }}
+                  >
+                    신고
+                  </button>
                   {memberNo === c.memberNo && (
                     <>
-                      <button className="edit-btn">수정</button>
-                      <button className="delete-btn">삭제</button>
+                      <button
+                        className="edit-btn"
+                        onClick={() => voteCommentModify(c)}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => {
+                          Swal.fire({
+                            title: "삭제",
+                            text: "댓글을 삭제하시겠습니까?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                          }).then((confirm) => {
+                            if (confirm.isConfirmed) {
+                              const voteCommentNo = c.voteCommentNo;
+                              axios
+                                .delete(
+                                  `${backServer}/vote/comment/delete/${voteCommentNo}`
+                                )
+                                .then((res) => {
+                                  console.log(res);
+                                  if (res.data === 1) {
+                                    Swal.fire({
+                                      title: "댓글 삭제 완료",
+                                      text: "댓글 삭제가 완료되었습니다.",
+                                      icon: "success",
+                                    });
+                                    setRefreshToggle(!refreshToggle);
+                                  }
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                });
+                            }
+                          });
+                        }}
+                      >
+                        삭제
+                      </button>
                     </>
                   )}
                 </div>
