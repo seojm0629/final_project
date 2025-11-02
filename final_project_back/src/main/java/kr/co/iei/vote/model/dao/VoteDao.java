@@ -61,6 +61,10 @@ public interface VoteDao {
 	int deleteComment(int voteCommentNo);
 
 
+
+
+
+
 	int checkDuplicateCommentReport(HashMap<String, Object> reportData);
 
 	int insertCommentReport(HashMap<String, Object> reportData);

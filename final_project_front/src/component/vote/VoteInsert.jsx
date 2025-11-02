@@ -68,7 +68,7 @@ const VoteInsert = () => {
         });
       });
   };
-
+  const today = new Date().toISOString().split("T")[0]; // 오늘 날짜 구하기
   return (
     <div className="vote-insert-box">
       <div className="vote-insert-title">
@@ -133,6 +133,7 @@ const VoteInsert = () => {
           <input
             type="date"
             value={endDate}
+            min={today}
             onChange={(e) => setEndDate(e.target.value)}
           ></input>
           <input

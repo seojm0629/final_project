@@ -1,20 +1,24 @@
 .vote-insert-box {
-  height: 800px;
+  min-height: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 20px 0;
 }
 .vote-insert-title {
-  font-size: 1rem;
-
+  font-size: 1.2rem;
+  font-weight: bold;
   height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .vote-insert-content-box {
   width: 700px;
-  height: 600px;
-  border: 2px solid black;
+  min-height: 600px;
+  border: 3px solid rgb(37, 15, 15);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,10 +46,10 @@
 }
 .vote-list-title > input {
   width: 400px;
-  height: 20px;
   padding: 10px;
-  border: none;
   border-radius: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 .vote-list-box {
   width: 500px;
@@ -67,11 +71,17 @@
 }
 
 .delete-button {
-  margin: 10px;
+  padding: 6px 10px;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
+  background-color: #d9534f;
+  color: white;
+  font-weight: bold;
 }
-
+.delete-button:hover {
+  background-color: #c9302c;
+}
 .vote-date-box {
   display: flex;
   justify-content: center;
@@ -80,33 +90,60 @@
   height: 50px;
 }
 .vote-addbutton > button {
-  width: 100px;
-  height: 25px;
+  width: 120px;
+  height: 35px;
   cursor: pointer;
   color: white;
   background-color: #2f4e70;
-  border-radius: 5px;
+  border-radius: 8px;
   border: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.vote-addbutton > button:hover {
+  background-color: #1f3550;
+}
+.vote-date-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 50px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.vote-date-box-title {
+  font-weight: bold;
+  font-size: 1rem;
 }
 
+.vote-date-box input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 .check-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 100px;
-  width: 300px;
-  height: 100px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .check-box > button {
-  width: 100px;
-  height: 30px;
+  width: 120px;
+  height: 40px;
   background-color: #2f4e70;
   border-radius: 10px;
   color: white;
   border: none;
   cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
+.check-box > button:hover {
+  background-color: #1f3550;
+}
 .vote-date-box-title {
   font-weight: bold;
 }

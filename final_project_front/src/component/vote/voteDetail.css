@@ -80,9 +80,8 @@
   background-color: #136bd6;
 }
 .vote-result-graph {
-  width: 600px;
-  height: 500px;
-  margin: 10px;
+  width: 400px;
+  height: 600px;
 }
 .vote-detail-buttonBox {
   width: 800px;
@@ -128,7 +127,7 @@
 }
 
 .detail-checkicon {
-  color: blue;
+  color: rgb(25, 25, 223);
   display: flex;
 }
 
