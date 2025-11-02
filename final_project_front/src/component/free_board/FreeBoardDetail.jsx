@@ -182,6 +182,8 @@ const FreeBoardDetail = () => {
 
   const [toggle, setToggle] = useState(false); //댓글 등록 시 랜더링 state
   useEffect(() => {
+    console.log("아아 들어옴");
+    console.log(freeBoardNo);
     axios
       .get(`${backServer}/freeBoard/detail/${freeBoardNo}`)
       .then((res) => {
@@ -391,12 +393,54 @@ const FreeBoardDetail = () => {
     freeBoardCategoryNo,
     freeBoardSubcategoryNo
   ) => {
+    console.log(freeBoardNo);
+    console.log(freeBoardCategoryNo);
+    console.log(freeBoardSubcategoryNo);
     axios
       .get(
         `${backServer}/freeBoard/detail/${freeBoardCategoryNo}/${freeBoardSubcategoryNo}/${freeBoardNo}`
       )
       .then((res) => {
         console.log(res.data);
+        if (res.data.freeBoardNo === undefined) {
+          Swal.fire({
+            title: "경고",
+            text: `이전 글이 없습니다.`,
+
+            icon: "success",
+          });
+          return;
+        }
+        navigate(`/freeBoard/detail/${res.data.freeBoardNo}/${viewCount}`);
+        setToggle(!toggle);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const nextFreeBoard = (
+    freeBoardNo,
+    freeBoardCategoryNo,
+    freeBoardSubcategoryNo
+  ) => {
+    console.log(freeBoardNo);
+    console.log(freeBoardCategoryNo);
+    console.log(freeBoardSubcategoryNo);
+    axios
+      .get(
+        `${backServer}/freeBoard/detail/next/${freeBoardCategoryNo}/${freeBoardSubcategoryNo}/${freeBoardNo}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.freeBoardNo === undefined) {
+          Swal.fire({
+            title: "경고",
+            text: `다음 글이 없습니다.`,
+
+            icon: "success",
+          });
+          return;
+        }
         navigate(`/freeBoard/detail/${res.data.freeBoardNo}/${viewCount}`);
         setToggle(!toggle);
       })
@@ -540,6 +584,7 @@ const FreeBoardDetail = () => {
           <button
             className="prev-btn"
             onClick={() => {
+              console.log(freeBoard);
               prevFreeBoard(
                 freeBoard.freeBoardNo,
                 freeBoard.freeBoardCategoryNo,
@@ -549,7 +594,19 @@ const FreeBoardDetail = () => {
           >
             이전글
           </button>
-          <button className="next-btn">다음글</button>
+          <button
+            className="next-btn"
+            onClick={() => {
+              console.log(freeBoard);
+              nextFreeBoard(
+                freeBoard.freeBoardNo,
+                freeBoard.freeBoardCategoryNo,
+                freeBoard.freeBoardSubcategoryNo
+              );
+            }}
+          >
+            다음글
+          </button>
         </div>
       </div>
       <div className="comment-section">

@@ -92,6 +92,8 @@ public interface FreeBoardDao {
 
 	FreeBoardDTO prevFreeBoard(HashMap<String, Object> currFreeBoard);
 
+	FreeBoardDTO nextFreeBoard(HashMap<String, Object> currFreeBoard);
+
 
 	
 

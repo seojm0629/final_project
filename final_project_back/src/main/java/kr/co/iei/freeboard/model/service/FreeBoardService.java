@@ -313,6 +313,11 @@ public class FreeBoardService {
 		return prevFreeBoard;
 	}
 
+	public FreeBoardDTO nextFreeBoard(HashMap<String, Object> currFreeBoard) {
+		FreeBoardDTO nextFreeBoard = freeBoardDao.nextFreeBoard(currFreeBoard);
+		return nextFreeBoard;
+	}
+
 	
 
 

@@ -301,5 +301,20 @@ public class FreeBoardController {
 		
 	}
 	
+	@GetMapping(value="/detail/next/{freeBoardCategoryNo}/{freeBoardSubcategoryNo}/{freeBoardNo}")
+	public ResponseEntity<FreeBoardDTO> nextFreeBoardNo(@PathVariable int freeBoardCategoryNo, @PathVariable int freeBoardSubcategoryNo,@PathVariable int freeBoardNo){
+		System.out.println(freeBoardCategoryNo);
+		System.out.println(freeBoardSubcategoryNo);
+		System.out.println(freeBoardNo);
+		HashMap<String, Object> currFreeBoard = new HashMap<>();
+		currFreeBoard.put("freeBoardCategoryNo", freeBoardCategoryNo);
+		currFreeBoard.put("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
+		currFreeBoard.put("freeBoardNo", freeBoardNo);
+		FreeBoardDTO nextFreeBoard = freeBoardService.nextFreeBoard(currFreeBoard);
+		System.out.println(nextFreeBoard);
+		return ResponseEntity.ok(nextFreeBoard);
+		
+	}
+	
 	
 }

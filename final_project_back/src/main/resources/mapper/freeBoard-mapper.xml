@@ -470,10 +470,24 @@ SELECT ROWNUM RNUM, A.* FROM (
     FROM FREE_BOARD_TBL
     WHERE FREE_BOARD_CATEGORY_NO = #{freeBoardCategoryNo}
       AND FREE_BOARD_SUBCATEGORY_NO = #{freeBoardSubcategoryNo}
-      AND (FREE_BOARD_NO > #{freeBoardNo})
-    ORDER BY FREE_BOARD_NO DESC) A
+      AND (FREE_BOARD_NO <![CDATA[<]]> #{freeBoardNo})
+    ORDER BY FREE_BOARD_NO desc) A
 )
-WHERE RNUM = 1
+WHERE RNUM =1
+	</select>
+	
+	<select id="nextFreeBoard" resultType="freeBoard">
+SELECT *
+FROM (
+SELECT ROWNUM RNUM, A.* FROM (
+    SELECT *
+    FROM FREE_BOARD_TBL
+    WHERE FREE_BOARD_CATEGORY_NO = #{freeBoardCategoryNo}
+      AND FREE_BOARD_SUBCATEGORY_NO = #{freeBoardSubcategoryNo}
+      AND (FREE_BOARD_NO <![CDATA[>]]> #{freeBoardNo})
+    ORDER BY FREE_BOARD_NO asc) A
+)
+WHERE RNUM =1
 	</select>
 	
 </mapper>
