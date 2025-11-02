@@ -152,17 +152,17 @@ const VoteList = () => {
         <table className="vote-tbl">
           <thead>
             <tr className="vote-tr">
-              <th style={{ width: "3%" }}></th>
+              <th style={{ width: "6%" }}>오늘작성글</th>
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
-                  width: "34%",
+                  width: "38%",
                 }}
               >
                 제목
               </th>
               <th style={{ width: "3%" }}>투표</th>
-              <th style={{ width: "9%" }}></th>
+              <th style={{ width: "3%" }}></th>
               <th style={{ width: "10%" }}>투표상황</th>
               <th style={{ width: "15%" }}>시작날짜</th>
               <th style={{ width: "15%" }}>종료날짜</th>

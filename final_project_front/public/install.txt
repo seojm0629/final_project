@@ -43,3 +43,6 @@ npm install react-daum-postcode
 
 2025-10-29 09:55 이진원
 npm i xlsx --save
+
+2025-11-02 15:10 전현우
+npm install chartjs-plugin-datalabels
