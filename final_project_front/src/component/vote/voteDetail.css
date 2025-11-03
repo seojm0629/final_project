@@ -56,6 +56,12 @@
 .vote-label {
   cursor: pointer;
 }
+.vote-radio:checked + .vote-label {
+  background-color: #1468d6; /* 원하는 색상 */
+  color: white;
+  border-radius: 5px;
+}
+
 .vote-detail-button-box {
   width: 100%;
   display: flex;
@@ -186,4 +192,26 @@
 
 .win-icon {
   color: rgb(255, 238, 0);
+}
+
+.comment-modifiy-box {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+.comment-modifiy-buttonbox {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+.comment-modifiy-buttonbox > button {
+  border: none;
+  background-color: #1468d6;
+  font-weight: bold;
+  color: #eee;
+  border-radius: 3px;
+  width: 40px;
+}
+.modifiy-text {
+  resize: none;
 }
