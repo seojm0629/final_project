@@ -641,6 +641,7 @@ const VoteDetail = () => {
                   {modifyCommentNo === c.voteCommentNo ? (
                     <div className="comment-modifiy-box">
                       <textarea
+                        className="modifiy-text"
                         type="text"
                         value={modifyFbCommentContent}
                         onChange={(e) =>
