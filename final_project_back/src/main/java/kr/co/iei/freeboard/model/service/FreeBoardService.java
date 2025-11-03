@@ -284,7 +284,7 @@ public class FreeBoardService {
 		//좋아요 눌렀는지 확인
 		FreeBoardCommentLikeDTO commentConfirm = freeBoardDao.selectCommentLike(memberNo, fbCommentNo);
 				//System.out.println("selectResult : "+ selectLike);
-				
+				System.out.println(commentConfirm);
 				if(commentConfirm == null) {
 					//좋아요가 없으면 insert
 					int insertResult = freeBoardDao.insertCommentLike(memberNo, fbCommentNo);			

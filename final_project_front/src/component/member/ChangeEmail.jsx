@@ -189,8 +189,10 @@ const ChangeEmail = () => {
                 }));
                 
                 Swal.fire({
-                    title : "비밀번호 수정 완료",
+                    title : "이메일 수정 완료",
                     icon : "success",
+                }).then(()=>{
+                    window.location.reload();
                 })
                 setShowCodeInput(false);
                 setIsVerified(false);

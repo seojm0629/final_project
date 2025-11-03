@@ -272,12 +272,6 @@ public class FreeBoardController {
 		
 		return ResponseEntity.ok(freeBoardCommentLike);
 	}
-	/*이전글 다음글
-	@GetMapping(value = "/detail/prev")
-	public ResponseEntity<FreeBoardDTO> prevFreeBoard(){
-		FreeBoardDTO freeBoardList = freeBoardService.prevFreeBoard(); 
-		return ResponseEntity.ok(freeBoardList);
-	}*/
 	
 	@GetMapping(value="/detail/{freeBoardNo}/recommends")
 	public ResponseEntity<List<FreeBoardDTO>> recommends(@PathVariable int freeBoardNo){

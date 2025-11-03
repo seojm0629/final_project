@@ -14,4 +14,5 @@ public class FreeBoardCommentLikeDTO {
 	private int memberNo;
 	private int fbCommentNo;
 	private String fbCommentLikeDate;
+	private int commentLike;
 }

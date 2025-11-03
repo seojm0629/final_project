@@ -25,6 +25,6 @@ public class FreeBoardCommentDTO {
 	private String memberNickname;
 	private String memberId;
 	private int cnt;
-	private int likeCount;
 	private int totalCommentCount;
+	private int commentLikeCount;
 }
