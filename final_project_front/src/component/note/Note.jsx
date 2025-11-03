@@ -18,7 +18,7 @@ import { noteModalState } from "../utils/RecoilData";
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
 
-const Note = () => {
+const Note = (props) => {
   const memberId = useRecoilValue(loginIdState); // 사용자 ID
   const memberType = useRecoilValue(memberTypeState); // 사용자 타입
   const [receiveListNote, setReceiveListNote] = useState([]); // 보낸 쪽지리스트
@@ -30,6 +30,7 @@ const Note = () => {
   const [selectNoteNos, setSelectNoteNos] = useState([]); // 삭제할 선택된 노트번호들 배열
   const [noteModal, setNoteModal] = useRecoilState(noteModalState);
   const [radioCheck, setRadioCheck] = useState("");
+
   // 기존 모달 열기 부분 대신 아래로 수정
   useEffect(() => {
     if (noteModal.isOpen) {
@@ -121,7 +122,7 @@ const Note = () => {
 
   const [note, setNote] = useState({
     // 입력받을 아이디,내용 함수 생성
-    noteId: "",
+    noteId: props ? props.noteId : "",
     noteContent: "",
   });
   const inputData = (e) => {

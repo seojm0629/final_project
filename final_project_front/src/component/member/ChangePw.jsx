@@ -27,6 +27,8 @@ const ChangePw = () => {
         setMemberPwRe(e.target.value);
     }
 
+    
+
     //기존 비밀번호 확인 
     const checkPw = () => {      
         axios
@@ -60,9 +62,10 @@ const ChangePw = () => {
                         icon : "success",
                     })
                     .then(()=>{
-                        setIsAuth(flase);
+                        setIsAuth(false);
                         setMember({...member, memberPw : ""})
                         setMemberPwRe("");
+                        window.location.reload();
                         
                     })
                 }
@@ -77,6 +80,7 @@ const ChangePw = () => {
                 icon : "warning",
             })
         }
+        
     }
 
     return(
