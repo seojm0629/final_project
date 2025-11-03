@@ -494,7 +494,6 @@ const FreeBoardDetail = () => {
           style={{ cursor: "pointer" }}
           onClick={() => {
             clickLike();
-            setLike(!like);
           }}
         >
           {!like ? (
@@ -869,8 +868,6 @@ const FreeBoardDetail = () => {
                             .then((res) => {
                               if (res.data !== "" && res.data !== undefined) {
                                 setToggle(!toggle);
-                                setCommentLike(!commentLike);
-                                setCommentCount(res.data.commentLike);
                                 setCommentLike((prev) => ({
                                   ...prev,
                                   [comment.fbCommentNo]:
