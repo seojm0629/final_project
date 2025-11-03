@@ -329,6 +329,7 @@ const ContentMember = () => {
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
     const BanModalContent = () => {
+      const today = new Date().toISOString().split("T")[0];
       return (
         <div className="adminModal ban-modal">
           <div className="adminModal titleText">
@@ -352,12 +353,15 @@ const ContentMember = () => {
             <div>
               <div className="adminModal subtitleText">날짜를 선택해주세요</div>
             </div>
-            <DatePicker
+            <input
+              type="date"
               value={dateValue}
+              min={today}
               onChange={(newValue) => {
                 setDateValue(newValue);
               }}
-            />
+            ></input>
+
             <div>
               <div className="adminModal subtitleText">시간을 선택해주세요</div>
             </div>
