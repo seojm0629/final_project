@@ -257,6 +257,9 @@ body {
 
 .main-board-content > div > li {
   margin-bottom: 15px;
+  white-space: nowrap;        
+  overflow: hidden;           
+  text-overflow: ellipsis; 
 }
 
 .main-board-content > div > li > span {
