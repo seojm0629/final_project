@@ -58,10 +58,7 @@ const ContentBoard = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
   useEffect(() => {
-    //console.log("updateMemberType");
-    //console.log("리스트 가져오기 시작");
     setMemberLoading(true);
-    //console.log(updateMemberType !== undefined);
     updateMemberType !== undefined &&
       axios
         .patch(
@@ -80,11 +77,6 @@ const ContentBoard = () => {
               }`
             )
             .then((res) => {
-              //console.log(res.data.pageList);
-              //console.log(res.data.totalListCount);
-              //console.log("확인");
-              //console.log(userDetailInfo);
-              //console.log(userDetailInfo.length);
               setMemberList(res.data.pageList);
               setTotalListCount(res.data.totalListCount);
             })
@@ -99,7 +91,6 @@ const ContentBoard = () => {
               icon: "success",
             }).then((result) => {
               if (result.isConfirmed) {
-                //console.log("리스트 가져오기 끝");
                 setMemberLoading(false);
               }
             });
@@ -120,9 +111,6 @@ const ContentBoard = () => {
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
   //■■■■■■■■■■■■ 여기서부터 ■■■■■■■■■■■■
   useEffect(() => {
-    //console.log("pageInfo : ");
-    //console.log(reqPageInfo);
-    console.log("리스트 가져오기 시작");
     setMemberLoading(true);
 
     axios
@@ -134,14 +122,8 @@ const ContentBoard = () => {
         }&searchType=${reqPageInfo.searchType}&listCnt=${reqPageInfo.listCnt}`
       )
       .then((res) => {
-        //console.log(res.data.pageList);
-        //console.log(res.data.totalListCount);
-        //console.log("확인");
-        //console.log(userDetailInfo);
-        //console.log(userDetailInfo.length);
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
-        console.log("리스트 가져오기 끝");
         setMemberLoading(false);
       })
       .catch((err) => {

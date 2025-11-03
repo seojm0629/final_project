@@ -22,7 +22,7 @@ public interface VoteDao {
 
 	List<VoteDTO> selectVoteList(HashMap<String, Object> voteList);
 	
-	int totalListCount(HashMap<String, Object> voteList);
+	int totalListCount(int order);
 
 	List<VoteDTO> mainTitle(int limit);
 

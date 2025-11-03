@@ -21,7 +21,7 @@ const VoteList = () => {
   const [voteAlready, setVoteAlready] = useState(false); // 멤버가 투표한 게시글 확인값 0 / 1
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
-  console.log(memberNo);
+
   // 필수: 페이지 정보 (프론트에서 바로 세팅)
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 몇 개의 버튼을 보여줄지
@@ -50,32 +50,25 @@ const VoteList = () => {
         `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}&order=${order}&memberNo=${memberNo}`
       )
       .then((res) => {
-        console.log(res.data);
         setTotalListCount(res.data.totalListCount); //받아오는 총 게시물 수
         setVoteList(res.data.selectVoteList); // 받아오는 게시물 수를 배열에 저장
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [reqPageInfo, order, memberNo]);
 
   useEffect(() => {
     axios
       .get(`${backServer}/admin/vote/notice/active`)
       .then((res) => {
-        console.log(res.data);
         if (res.data.length > 0) {
           setNoticeList(res.data);
           setShowNotice(true);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
-    console.log(noticeList);
     if (
       showNotice &&
       noticeList.length > 0 &&
@@ -164,20 +157,19 @@ const VoteList = () => {
         <table className="vote-tbl">
           <thead>
             <tr className="vote-tr">
-              <th style={{ width: "6%" }}>오늘작성글</th>
               <th style={{ width: "10%" }}>작성자</th>
               <th
                 style={{
-                  width: "38%",
+                  width: "45%",
                 }}
               >
                 제목
               </th>
-              <th style={{ width: "3%" }}>투표</th>
-              <th style={{ width: "3%" }}></th>
+              <th style={{ width: "5%" }}>참여인원</th>
+              <th style={{ width: "6%" }}>투표참여</th>
               <th style={{ width: "10%" }}>투표상황</th>
-              <th style={{ width: "15%" }}>시작날짜</th>
-              <th style={{ width: "15%" }}>종료날짜</th>
+              <th style={{ width: "13%" }}>시작날짜</th>
+              <th style={{ width: "13%" }}>종료날짜</th>
             </tr>
           </thead>
           <tbody className="vote-tbody">
@@ -191,18 +183,6 @@ const VoteList = () => {
               voteList.map((list, i) => {
                 return (
                   <tr key={"list-" + i}>
-                    {todayDate ===
-                    dayjs(list.voteDate).$y +
-                      "-" +
-                      (dayjs(list.voteDate).$M + 1) +
-                      "-" +
-                      dayjs(list.voteDate).$D ? (
-                      <td className="new-icon">
-                        <FiberNewIcon></FiberNewIcon>
-                      </td>
-                    ) : (
-                      <td></td>
-                    )}
                     <td>{list.memberNickname}</td>
                     <td
                       className="td-title"
@@ -210,20 +190,34 @@ const VoteList = () => {
                         cursor: "pointer",
                         textAlign: "left",
                         paddingLeft: "50px",
+                        display: "flex",
+                        gap: "5px",
                       }}
                       onClick={() => {
                         navigate(`/vote/VoteDetail/${list.voteNo}`);
                       }}
                     >
-                      {list.voteTitle}
+                      {list.voteTitle}{" "}
+                      {todayDate ===
+                      dayjs(list.voteDate).$y +
+                        "-" +
+                        (dayjs(list.voteDate).$M + 1) +
+                        "-" +
+                        dayjs(list.voteDate).$D ? (
+                        <td className="new-icon">
+                          <FiberNewIcon></FiberNewIcon>
+                        </td>
+                      ) : (
+                        ""
+                      )}
                     </td>
-                    <td>{list.voteTotal}표</td>
+                    <td>{list.voteTotal}명</td>
                     {list.voteOk === 1 && member !== "" ? (
                       <td className="check-icon">
                         <CheckCircleIcon />
                       </td>
                     ) : (
-                      <td>
+                      <td className="check-no">
                         <CheckCircleOutlineIcon />
                       </td>
                     )}

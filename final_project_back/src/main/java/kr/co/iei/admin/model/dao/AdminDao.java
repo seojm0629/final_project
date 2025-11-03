@@ -118,5 +118,7 @@ public interface AdminDao {
 
 	List<AdminNoticeDTO> selectVoteActiveNotices();
 
+	int getMemberType(int memberNo);
+
 
 }
