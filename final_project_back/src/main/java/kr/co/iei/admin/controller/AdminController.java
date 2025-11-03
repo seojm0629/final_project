@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.admin.model.dto.AdminMemberDTO;
 import kr.co.iei.admin.model.dto.AdminNoticeDTO;
-import kr.co.iei.admin.model.dto.AdminStatisticsDTO;
 
 import kr.co.iei.admin.model.service.AdminService;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -34,91 +33,58 @@ public class AdminController {
 	
 	@GetMapping(value="memberList")
 	public ResponseEntity<HashMap<String, Object>> memberList(@RequestParam int order, @RequestParam int pageNo, @RequestParam String searchText,@RequestParam String searchType,@RequestParam int listCnt){
-		//System.out.println("정렬 : "+order);
-		//System.out.println("페이지번호 : "+pageNo);
-		//System.out.println("검색어 : "+searchText);
-		//System.out.println("검색타입 : "+searchType);
-		//System.out.println("리스트개수 : "+listCnt);
-		//System.out.println("검색어 비교 : "+(searchText==""));
-		//시작 번호
-		//1페이지를 요청하면 1번부터 10번
-		//2페이지 -> 11번부터 20번
-		//3페이지를 요청하면 31번부터 40번
 		int startRow = (pageNo-1)*listCnt+1;
 		int endRow = pageNo * listCnt;
-		//리스트랑 토탈 리스트 카운트 받아야 함
 		HashMap<String, Object> memberMap =adminService.memberList(startRow,endRow,searchType,searchText,order);  
-		
-		//System.out.println(memberMap);
 		return ResponseEntity.ok(memberMap);
 	}
 	
 	@PatchMapping(value="memberTypeUpdate")
 	public ResponseEntity<Integer> memberTypeUpdate(@RequestBody AdminMemberDTO m){
-		//System.out.println(m);
-		
 		int result = adminService.memberTypeUpdate(m);
-		
-		//System.out.println(m);
-		//System.out.println(result);
 		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping(value="memberDetail")
 	public ResponseEntity<HashMap<String, Object>> memberDetail(@RequestParam int memberNo, @RequestParam int pageNo, @RequestParam int listCnt){
-		
 		int startRow = (pageNo-1)*listCnt+1;
 		int endRow = pageNo * listCnt;
 		HashMap<String, Object> userDetailBoard = adminService.memberDetail(memberNo,startRow,endRow);
-		//System.out.println(memberNo);
 		return ResponseEntity.ok(userDetailBoard);
 	}
 	
 	@PostMapping(value="memberBan")
 	public ResponseEntity<Integer> memberBan(@RequestBody HashMap<String, String> banSet){
-		//System.out.println(banSet);
 		int result = adminService.memberBan(banSet);
-		//System.out.println(result);
 		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping(value="statistics")
 	public ResponseEntity<HashMap<String, Object>> statistics(@RequestParam String selectCriteria,@RequestParam(required = false) String startDate,@RequestParam(required = false) String endDate){
-		System.out.println(selectCriteria);
-		System.out.println(startDate);
-		System.out.println(endDate);
 		HashMap<String, Object> map = adminService.statistics(selectCriteria,startDate, endDate);
-
-
-		//System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 	
 	@PostMapping(value="insertFreeCate")
 	public ResponseEntity<Integer> insertFreeCate(@RequestBody HashMap<String, Object> insertCateSet) {
-		//System.out.println(insertCateSet);
 		int result = adminService.insertFreeCate(insertCateSet);
 		return ResponseEntity.ok(result);
 	}
 	
 	@PostMapping(value="insertNotice")
 	public ResponseEntity<List<AdminNoticeDTO>> insertNotice(@RequestBody HashMap<String, Object> insertNoticeSet){
-		//System.out.println(insertNoticeSet);
 		List<AdminNoticeDTO> selectAllNotice = adminService.insertNotice(insertNoticeSet);
-		//System.out.println(selectAllNotice);
 		return ResponseEntity.ok(selectAllNotice);
 	}
 	
 	@GetMapping(value="selectAllNotice")
 	public ResponseEntity<List<AdminNoticeDTO>> selectAllNotice(){
 		List<AdminNoticeDTO> selectAllNotice = adminService.selectAllNotice();
-		System.out.println(selectAllNotice);
 		return ResponseEntity.ok(selectAllNotice);
 	}
 	
 	@DeleteMapping(value="{delCate}")
 	public ResponseEntity<Integer> deleteFreeCate(@PathVariable String delCate){
-		System.out.println("delteFreeCate 호출됨");
 		int result = adminService.deleteFreeCate(delCate);
 		return ResponseEntity.ok(result);
 	}
@@ -126,11 +92,6 @@ public class AdminController {
 	@DeleteMapping(value="freeboard")
 	public ResponseEntity<Integer> deleteFreeCate2(@RequestParam String delCate,@RequestParam String subCate){
 		int cateMainNo = adminService.searchMainNo(delCate);
-		//여기서 메인 넘버 조회하고
-		//삭제로 넘어가야함
-		System.out.println("delCate2 호출됨");
-		System.out.println(cateMainNo);
-		System.out.println(subCate);
 		HashMap<String, Object> delCateSet = new HashMap<>();
 		delCateSet.put("main", cateMainNo);
 		delCateSet.put("sub", subCate);
@@ -141,25 +102,19 @@ public class AdminController {
 	
 	@GetMapping(value="mailTargetSearch")
 	public ResponseEntity<List<MemberDTO>> mailTargetSearch(){
-		System.out.println("호출 확인");
 		List<MemberDTO> memberList = adminService.mailTargetSearch();
 		return ResponseEntity.ok(memberList);
 	}
 	
 	@DeleteMapping(value="freeboard/notice/{delNoticeNo}/delete")
 	public ResponseEntity<Integer> delFreeNotice(@PathVariable int delNoticeNo){
-		System.out.println(delNoticeNo);
 		int result = adminService.delFreeNotice(delNoticeNo);
-		System.out.println("공지 삭제 결과 확인 : "+result);
 		return ResponseEntity.ok(result);
 	}
 	
 	@PatchMapping(value="freeboard/notice/{noticeNo}/update")
 	public ResponseEntity<Integer> updateNotice(@PathVariable int noticeNo,@RequestBody HashMap<String, Object> updateNoticeSet){
-		System.out.println(noticeNo);
-		System.out.println(updateNoticeSet);
 		int result = adminService.updateNotice(updateNoticeSet);
-		System.out.println(result);
 		return ResponseEntity.ok(result);
 	}
 	@GetMapping("freeboard/notice/active")
@@ -170,17 +125,12 @@ public class AdminController {
 	
 	@GetMapping("vote/notice/active")
 	public ResponseEntity<List<AdminNoticeDTO>> getVoteActiveNotices() {
-		System.out.println("호출 확인");
 	    List<AdminNoticeDTO> list = adminService.selectVoteActiveNotices();
-	    System.out.println("호출 확인2");
-	    System.out.println(list);
 	    return ResponseEntity.ok(list);
 	}
 	@GetMapping("selectOneMember/{memberNo}")
 	public ResponseEntity<Integer> getMemberType(@PathVariable int memberNo){
-		System.out.println(memberNo);
 		int memberType = adminService.getMemberType(memberNo);
-		System.out.println(memberType);
 		return ResponseEntity.ok(memberType);
 	}
 }

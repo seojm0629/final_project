@@ -24,8 +24,6 @@ public class AdminService {
 
 	public HashMap<String, Object> memberList(int startRow, int endRow, String searchType, String searchText,
 			int order) {
-		// List<AdminMemberDTO> list = adminDao.memberList(order,reqPage,search);
-		// 일단 기본 10개만 조회해보기
 		HashMap<String, Object> listInfo = new HashMap<>();
 		listInfo.put("startRow", startRow);
 		listInfo.put("endRow", endRow);
@@ -36,7 +34,6 @@ public class AdminService {
 		List<AdminMemberDTO> pageList = adminDao.memberList(listInfo);
 		int totalListCount = adminDao.totalListCount(listInfo);
 
-		System.out.println(pageList);
 		HashMap<String, Object> memberMap = new HashMap<>();
 		memberMap.put("pageList", pageList);
 		memberMap.put("totalListCount", totalListCount);
@@ -52,7 +49,6 @@ public class AdminService {
 	public HashMap<String, Object> memberDetail(int memberNo, int startRow, int endRow) {
 		List<AdminMemberDetailDTO> memberDetail = adminDao.memberDetail(memberNo, startRow, endRow);
 		int totalListCount = adminDao.memberDetailTotalCount(memberNo);
-		System.out.println(memberDetail);
 		HashMap<String, Object> memberMap = new HashMap<>();
 		memberMap.put("memberDetail", memberDetail);
 		memberMap.put("totalListCount", totalListCount);
@@ -138,14 +134,12 @@ public class AdminService {
 		System.out.println(insertCateSet.get("categoryAddText"));
 		int result = 0;
 		if (insertCateSet.get("categoryAddText") != "") {
-
 			int count = adminDao.searchFreeCate(insertCateSet.get("categoryAddText"));
 			int searchFreeCateNo = 0;
 
 			if (count == 1) {
 				searchFreeCateNo = adminDao.searchFreeCateNo(insertCateSet.get("categoryAddText"));
 				insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
-				System.out.println("searchFreeCateNo : " + searchFreeCateNo);
 			}
 
 			if (count == 1) {
@@ -157,8 +151,6 @@ public class AdminService {
 				insertCateSet.put("searchFreeCateNo", searchFreeCateNo);
 				result += adminDao.insertSubFreeCate(insertCateSet);
 			}
-			System.out.println(result);
-
 		}
 		return result;
 	}
@@ -170,29 +162,24 @@ public class AdminService {
 		if (result == 1) {
 			selectAllNotice = adminDao.selectAllNotice();
 		}
-		System.out.println(selectAllNotice);
 		return selectAllNotice;
 	}
 
 	public List<AdminNoticeDTO> selectAllNotice() {
 		List<AdminNoticeDTO> selectAllNotice = new ArrayList<>();
 		selectAllNotice = adminDao.selectAllNotice();
-		System.out.println(selectAllNotice);
 		return selectAllNotice;
 	}
 
 	@Transactional
 	public int deleteFreeCate(String delCate) {
-		System.out.println(delCate);
 		int result = adminDao.deleteFreeCate(delCate);
 		return result;
 	}
 
 	@Transactional
 	public int deleteFreeCate2(HashMap<String, Object> delCateSet) {
-		System.out.println("실제삭제 : " + delCateSet);
 		int result = adminDao.deleteFreeCate2(delCateSet);
-		System.out.println(result);
 		return result;
 	}
 
@@ -225,13 +212,11 @@ public class AdminService {
 
 	public List<AdminNoticeDTO> selectVoteActiveNotices() {
 		List<AdminNoticeDTO> list = adminDao.selectVoteActiveNotices();
-		System.out.println("여기 서비스 "+list);
 		return list;
 	}
 
 	public int getMemberType(int memberNo) {
 		int memberType = adminDao.getMemberType(memberNo);
-		
 		return memberType;
 	}
 
