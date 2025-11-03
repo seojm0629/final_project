@@ -43,8 +43,7 @@ public class VoteService {
 
 	@Transactional
 	public HashMap<String, Object> voteList(int startRow, int endRow, int sideBtnCount, int order, int memberNo) {
-		System.out.println("서비스에서 오더값 확인" + order);
-		System.out.println("서비스에서 멤버번호 확인" + memberNo);
+
 		int voteCheck = voteDao.updateVoteCheck(); // 종료일 비교해서 0 에서 1로 바꾸기
 		
 		HashMap<String, Object> voteList = new HashMap<String,Object>();
@@ -61,9 +60,8 @@ public class VoteService {
 		HashMap<String , Object> map = new HashMap<String,Object>();
 		map.put("selectVoteList", selectVoteList);
 		map.put("totalListCount", totalListCount);
-		
-		System.out.println("투표게시판 맵값 확인" + map);
-		
+
+
 		return map;
 	}
 
@@ -109,7 +107,7 @@ public class VoteService {
 	public List<VoteOptionCount> selectOptionCount(int voteNo) {
 		
 		List<VoteOptionCount> voteOptionCount = voteDao.selectOptionCount(voteNo);
-		System.out.println("투표옵션카운트확인"+ voteOptionCount + voteNo);
+
 		return voteOptionCount;
 	}
 	
@@ -189,8 +187,7 @@ public class VoteService {
 	@Transactional
 	public int voteLike(HashMap<String, Object> likeData) {
 	    int check = voteDao.checkVoteLike(likeData); // 이미 눌렀는지 확인
-	    System.out.println("dddddddddddddddddd");
-	    System.out.println(check);
+
 	    int result = 0;
 
 	    if (check == 0) {

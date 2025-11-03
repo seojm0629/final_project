@@ -21,7 +21,7 @@ const VoteList = () => {
   const [voteAlready, setVoteAlready] = useState(false); // 멤버가 투표한 게시글 확인값 0 / 1
   const backServer = import.meta.env.VITE_BACK_SERVER;
   const navigate = useNavigate();
-  console.log(memberNo);
+
   // 필수: 페이지 정보 (프론트에서 바로 세팅)
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 몇 개의 버튼을 보여줄지
@@ -50,32 +50,25 @@ const VoteList = () => {
         `${backServer}/vote?pageNo=${reqPageInfo.pageNo}&listCnt=${reqPageInfo.listCnt}&sideBtnCount=${reqPageInfo.sideBtnCount}&order=${order}&memberNo=${memberNo}`
       )
       .then((res) => {
-        console.log(res.data);
         setTotalListCount(res.data.totalListCount); //받아오는 총 게시물 수
         setVoteList(res.data.selectVoteList); // 받아오는 게시물 수를 배열에 저장
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [reqPageInfo, order, memberNo]);
 
   useEffect(() => {
     axios
       .get(`${backServer}/admin/vote/notice/active`)
       .then((res) => {
-        console.log(res.data);
         if (res.data.length > 0) {
           setNoticeList(res.data);
           setShowNotice(true);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
-    console.log(noticeList);
     if (
       showNotice &&
       noticeList.length > 0 &&

@@ -35,7 +35,6 @@ const VoteInsert = () => {
     const newList = [...voteList];
     newList[index] = value;
     setVoteList(newList);
-    console.log(newList);
   };
   //확인 누를때 값 저장
   const insertSubmit = () => {
@@ -45,8 +44,6 @@ const VoteInsert = () => {
       voteContent: voteList,
       voteEndDate: endDate + endTime,
     };
-
-    console.log(voteData);
 
     axios
       .post(`${backServer}/vote`, voteData)

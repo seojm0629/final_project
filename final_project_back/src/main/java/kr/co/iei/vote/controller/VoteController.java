@@ -36,7 +36,7 @@ public class VoteController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> insertVote(@RequestBody VoteDTO vote ) {
-		System.out.println("제목확인" + vote);
+
 		int result = voteService.insertVote(vote);
 		
 		
@@ -50,8 +50,7 @@ public class VoteController {
 		//pageNo: 한 페이지에 나타낼 수 있는 버튼 수
 		//listCnt : 한 페이지에 넣을 게시글 수
 		//sidebtnCount : 한 페이지에서 나타내는 버튼 수중에 가운데 버튼을 기준으로 양 옆에 나타내고싶은 버튼 수
-		System.out.println("오더값확인"+order);
-		System.out.println("멤버번호확인" + memberNo);
+
 		// 서버측 컨트롤러 혹은 서비스에서 startRow, endRow 계산 (계산식은 아래와 같음)
 		int startRow = (pageNo-1)*listCnt+1;
 		int endRow = pageNo * listCnt;
@@ -80,10 +79,10 @@ public class VoteController {
 	@GetMapping(value="/option/{voteNo}") 
 	public ResponseEntity<List<VoteOption>> selectVoteOptions(@PathVariable int voteNo) {
 	   //게시글 안에 있는 목록값 다 가져오기
-		System.out.println("값확인"+voteNo);
+
 		List<VoteOption> optionList = voteService.selectVoteOptions(voteNo);
 	    
-		System.out.println(optionList);
+
 		
 		
 		
@@ -92,7 +91,7 @@ public class VoteController {
 	
 	@PostMapping(value = "/result")
 	public ResponseEntity<Integer> insertResultVote(@RequestBody VoteResult result) {
-		System.out.println("리절트 값 확인" +  result);
+	
 	
 		int voteResult = voteService.insertResultVote(result);
 		
@@ -102,7 +101,7 @@ public class VoteController {
 	@GetMapping(value= "/count/{voteNo}")
 	public ResponseEntity<List<VoteOptionCount>> selectOptionCount(@PathVariable int voteNo ) {
 		
-		System.out.println("옵션카운트에서 거래글번호 받아오기값 "+ voteNo);
+
 		
 		List<VoteOptionCount> optionCount = voteService.selectOptionCount(voteNo);
 		
@@ -112,7 +111,7 @@ public class VoteController {
 		
 	@DeleteMapping(value="/{voteNo}")
 	public ResponseEntity<Integer> deleteVote(@PathVariable int voteNo) {
-		System.out.println("딜리트 번호확인" + voteNo);
+
 		
 		int result = voteService.deleteVote(voteNo);
 		
@@ -129,7 +128,7 @@ public class VoteController {
 	}
 	@GetMapping(value="/checkOption/{voteNo}/{memberNo}")
 	public ResponseEntity<Integer> checkOption(@PathVariable int voteNo, @PathVariable int memberNo){
-		System.out.println("옵션체크" + voteNo + memberNo);
+
 		int result = voteService.checkOption(voteNo,memberNo);
 		
 		return ResponseEntity.ok(result);
@@ -137,7 +136,7 @@ public class VoteController {
 	}
 	@PatchMapping(value = "/reVote")
 	public ResponseEntity<Integer> reVote(@RequestBody VoteResult result) {
-		System.out.println("리절트 값 확인dddddddddddddddddddd" +  result);
+
 	
 		int voteResult = voteService.reVote(result);
 		
@@ -146,8 +145,7 @@ public class VoteController {
 	
 	@PostMapping(value = "/comment/insert")
 	public ResponseEntity<Integer> commentInsert(@RequestBody VoteCommentDTO voteComment) {
-		System.out.println("ddd"+voteComment);
-		
+
 		int result = voteService.commentInsert(voteComment);
 		
 		return ResponseEntity.ok(result);
@@ -157,7 +155,7 @@ public class VoteController {
 	
 	@PostMapping(value = "/comment/like")
 	public ResponseEntity<Integer> commentLike(@RequestBody VoteCommentDTO voteCommentLike){
-		System.out.println(voteCommentLike);
+
 		HashMap<String, Object> voteCommentLikeSet = new HashMap<>();
 		voteCommentLikeSet.put("memberNo", voteCommentLike.getMemberNo());
 		voteCommentLikeSet.put("voteCommentNo", voteCommentLike.getVoteCommentNo());
@@ -168,7 +166,7 @@ public class VoteController {
 	
 	@PatchMapping(value = "/comment/update")
 	public ResponseEntity<Integer> updateComment(@RequestBody VoteCommentDTO voteComment) {
-		System.out.println("업데이트 확인"+voteComment);
+
 		
 		int result = voteService.updateComment(voteComment);
 		
@@ -177,7 +175,7 @@ public class VoteController {
 	
 	@DeleteMapping(value = "/comment/delete/{voteCommentNo}")
 	public ResponseEntity<Integer> deleteComment(@PathVariable int voteCommentNo) {
-		System.out.println("댓글삭제 확인"+ voteCommentNo);
+
 	
 		int result = voteService.deleteComment(voteCommentNo);
 		
@@ -187,24 +185,23 @@ public class VoteController {
 	
 	@PostMapping("/comment/report")
 	public ResponseEntity<Integer> insertCommentReport(@RequestBody HashMap<String, Object> reportData) {
-		System.out.println(reportData);
+
 	    int result = voteService.insertCommentReport(reportData);
 	    return ResponseEntity.ok(result);
 	}
 
 	@PostMapping(value = "/like")
 	public ResponseEntity<Integer> voteLike(@RequestBody HashMap<String, Object> likeData){
-	    System.out.println("게시글 좋아요 요청: " + likeData);
+
 	    
 	    int result = voteService.voteLike(likeData);
-	    System.out.println("eeeeeeeeeeeeeeeeee");
-	    System.out.println(result);
+
 	    return ResponseEntity.ok(result);
 	}
 
 	@PostMapping("/report")
 	public ResponseEntity<Integer> voteReport(@RequestBody HashMap<String, Object> reportData) {
-	    System.out.println("게시글 신고 요청: " + reportData);
+
 	    
 	    int result = voteService.voteReport(reportData);
 	    

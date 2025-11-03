@@ -70,12 +70,9 @@ const VoteDetail = () => {
     axios
       .get(`${backServer}/vote/${voteNo}`)
       .then((res) => {
-        console.log(res);
         setVote(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [refreshToggle]);
   //리스트 항목 가져오는 엑시오스
 
@@ -83,20 +80,15 @@ const VoteDetail = () => {
     axios
       .get(`${backServer}/vote/option/${voteNo}`)
       .then((res) => {
-        console.log(res);
         setVoteList(res.data);
-        console.log(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
     axios
       .get(`${backServer}/vote/count/${voteNo}`)
       .then((res) => {
-        console.log(res);
         const a = res.data.map((item, index) => {
           return item.voteContent;
         });
@@ -105,13 +97,8 @@ const VoteDetail = () => {
         });
         setLabels(a);
         setValues(b);
-
-        console.log(a);
-        console.log(b);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [refreshToggle]);
 
   const [defaultCheck, setDefaultCheck] = useState();
@@ -119,21 +106,15 @@ const VoteDetail = () => {
     axios
       .get(`${backServer}/vote/checkOption/${voteNo}/${memberNo}`)
       .then((res) => {
-        console.log(res);
         setDefaultCheck(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
-  console.log(defaultCheck);
 
   const optionChange = (e) => {
-    console.log(e.target.value);
     //라디오 버튼클릭시 선택한 옵션을 저장하기
     setSelectedOption(e.target.value);
   };
-  console.log(selectedOption);
 
   //투표하기 버튼 눌렀을때
   const voteResult = () => {
@@ -185,16 +166,13 @@ const VoteDetail = () => {
       axios
         .patch(`${backServer}/vote/reVote`, resultData)
         .then((res) => {
-          console.log(res.data);
           Swal.fire({
             title: "재투표 완료",
             icon: "success",
           });
           setRefreshToggle(!refreshToggle);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
   };
   const voteDelete = () => {
@@ -219,9 +197,7 @@ const VoteDetail = () => {
             }
             navigate("/vote/list");
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       }
     });
   };
@@ -247,15 +223,13 @@ const VoteDetail = () => {
             }
             navigate("/vote/list");
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       }
     });
   };
 
   const [commentData, setCommentData] = useState({});
-  console.log(commentData);
+
   const nowDate = (dateString) => {
     const now = dayjs();
     const target = dayjs(dateString);
@@ -273,11 +247,8 @@ const VoteDetail = () => {
         setRefreshToggle(!refreshToggle);
       })
 
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
-  console.log(vote.voteCommentList);
 
   const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호찾기
@@ -288,8 +259,6 @@ const VoteDetail = () => {
     setModifyFbCommentContent(comment.voteCommentContent);
   };
 
-  console.log(modifyCommentNo);
-  console.log(modifyFbCommentContent);
   //수정 저장 눌렀을때 값
   const updateComment = () => {
     const modifyData = {
@@ -303,13 +272,11 @@ const VoteDetail = () => {
           title: "수정 완료!",
           icon: "success",
         });
-        console.log(res);
+
         setRefreshToggle(!refreshToggle);
         setModifyCommentNo(null);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const commentLike = (voteCommentNo) => {
     const voteCommentLike = {
@@ -323,7 +290,6 @@ const VoteDetail = () => {
         voteCommentLike
       )
       .then((res) => {
-        console.log(res.data);
         if (res.data === 1) {
           setRefreshToggle(!refreshToggle);
           Swal.fire({
@@ -342,9 +308,7 @@ const VoteDetail = () => {
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const commentReport = (voteCommentNo) => {
     if (!memberNo) {
@@ -390,7 +354,6 @@ const VoteDetail = () => {
             }
           })
           .catch((err) => {
-            console.log(err);
             Swal.fire({
               title: "오류",
               text: "신고 처리 중 문제가 발생했습니다.",
@@ -419,7 +382,6 @@ const VoteDetail = () => {
     axios
       .post(`${backServer}/vote/like`, likeData)
       .then((res) => {
-        console.log(res.data);
         if (res.data === 1) {
           Swal.fire({
             title: "좋아요!",
@@ -436,7 +398,6 @@ const VoteDetail = () => {
         setRefreshToggle(!refreshToggle); // 새로고침
       })
       .catch((err) => {
-        console.log(err);
         Swal.fire({
           title: "오류",
           text: "좋아요 처리 중 오류가 발생했습니다.",
@@ -489,7 +450,6 @@ const VoteDetail = () => {
             }
           })
           .catch((err) => {
-            console.log(err);
             Swal.fire({
               title: "오류",
               text: "신고 처리 중 문제가 발생했습니다.",
@@ -551,7 +511,6 @@ const VoteDetail = () => {
             <div className="vote-detail-list-title">종료된 투표입니다.</div>
             <ul className="vote-detail-ul-end">
               {voteList.map((list, i) => {
-                console.log(voteList);
                 const maxValue = Math.max(...values);
                 //values[i] 현재항목 득표수 에서 가장 많은 득표수 값
                 //1등 항목 일때 true 를 보내기 // 공동 1등일때도 두개다 보이기  0일땐 색 넣지않게
@@ -711,7 +670,6 @@ const VoteDetail = () => {
                   <button
                     className="like-btn"
                     onClick={() => {
-                      console.log("아아");
                       commentLike(c.voteCommentNo, c.likeCnt);
                     }}
                   >
@@ -752,7 +710,6 @@ const VoteDetail = () => {
                                   `${backServer}/vote/comment/delete/${voteCommentNo}`
                                 )
                                 .then((res) => {
-                                  console.log(res);
                                   if (res.data === 1) {
                                     Swal.fire({
                                       title: "댓글 삭제 완료",
@@ -762,9 +719,7 @@ const VoteDetail = () => {
                                     setRefreshToggle(!refreshToggle);
                                   }
                                 })
-                                .catch((err) => {
-                                  console.log(err);
-                                });
+                                .catch((err) => {});
                             }
                           });
                         }}
