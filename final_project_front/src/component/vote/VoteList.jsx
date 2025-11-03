@@ -192,6 +192,7 @@ const VoteList = () => {
                         paddingLeft: "50px",
                         display: "flex",
                         gap: "5px",
+                        height: "29px",
                       }}
                       onClick={() => {
                         navigate(`/vote/VoteDetail/${list.voteNo}`);
