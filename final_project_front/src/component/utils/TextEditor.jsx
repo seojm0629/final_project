@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
-import "react-quill/dist/quill.snow.css";
 Quill.register("modules/ImageResize", ImageResize);
+import "react-quill/dist/quill.snow.css";
 import "../free_board/freeBoard.css";
+
 const TextEditor = (props) => {
   const data = props.data;
   const setData = props.setData;
@@ -41,7 +42,7 @@ const TextEditor = (props) => {
                 `img[src="${imageUrl}"]`
               );
               if (imgTag) {
-                imgTag.style.width = "auto";
+                imgTag.style.maxWidth = "200px";
                 imgTag.style.height = "auto";
               }
               editor.setSelection(range.index + 1);
@@ -58,6 +59,33 @@ const TextEditor = (props) => {
       }
     };
   };
+  useEffect(() => {
+    const editor = editorRef.current.getEditor();
+    if (!editor) {
+      return;
+    }
+    // 현재 이미지 추출
+    const getImageList = () =>
+      Array.from(editor.root.querySelectorAll("img")).map((img) =>
+        img.getAttribute("src")
+      );
+    let currentImages = getImageList();
+    editor.on("text-change", () => {
+      const newImages = getImageList();
+      // 삭제된 이미지 감지
+      const deletedImages = currentImages.filter(
+        (src) => !newImages.includes(src)
+      );
+      deletedImages.forEach((src) => {
+        const filename = src.split("/").pop();
+        axios
+          .delete(`${backServer}/freeBoard/image/${filename}`)
+          .then((res) => console.log(res))
+          .catch((err) => console.error(err));
+      });
+      currentImages = newImages;
+    });
+  }, [backServer]);
   const modules = useMemo(() => {
     return {
       toolbar: {

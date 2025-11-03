@@ -1,5 +1,9 @@
 .logo-img {
   filter: brightness(0) invert(1); /*로고 색 반전*/
+  transition: transform 0.3s ease;
+}
+.logo-img:hover {
+  transform: scale(1.05);
 }
 .wrap {
   width: 100%;
@@ -11,9 +15,12 @@
   align-items: center;
   height: 100px;
   background-color: #2f4e70;
-  padding: 10px 20px;
+  padding: 10px 20px 0px 40px;
   margin-bottom: 50px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .logo-wrap {
   display: flex;
   align-items: center;
@@ -26,6 +33,31 @@
 }
 .navi-menu {
   display: flex;
+  gap: 250px;
+}
+.navi-menu .navi-item {
+  margin: 0 20px;
+  transition: transform 0.3s ease;
+}
+.navi-menu .navi-item:hover {
+  transform: translateY(-3px);
+}
+.navi-item a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+.navi-item a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #d4e1f0;
+  transition: width 0.3s ease;
+}
+.navi-item a:hover::after {
+  width: 100%;
 }
 .home {
   margin-right: 250px;
@@ -96,11 +128,19 @@
   color: #fff;
   text-decoration: none;
   font-size: 16px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 .header-user a:hover {
   color: #d4e1f0;
+  transform: scale(1.1);
+  color: #a6c7e8;
 }
-
+.header-user svg {
+  transition: transform 0.3s ease;
+}
+.header-user svg:hover {
+  transform: rotate(15deg) scale(1.1);
+}
 body {
   min-height: 100vh;
   display: flex;
@@ -123,6 +163,9 @@ body {
 }
 
 /* 메인페이지 */
+.main-content {
+  border-left: 0.1px solid #2f4e70;
+}
 .main-content-wrap {
   display: flex;
 }
@@ -162,15 +205,12 @@ body {
   font-size: 20px;
 }
 
-
-.main-board-header{
+.main-board-header {
   display: flex;
   justify-content: space-between;
   align-items: end;
   padding-right: 35px;
-  
 }
-
 
 .main-board-list {
   width: 900px;
@@ -196,7 +236,6 @@ body {
   background-color: #f5f8fb;
 }
 
-
 .main-board-title {
   width: 150px;
   height: 380px;
@@ -204,7 +243,6 @@ body {
 .main-board-like {
   width: 240px;
   height: 380px;
-  
 }
 
 .main-board-content {
@@ -222,6 +260,9 @@ body {
 
 .main-board-content > div > li {
   margin-bottom: 15px;
+  white-space: nowrap;        
+  overflow: hidden;           
+  text-overflow: ellipsis; 
 }
 
 .main-board-content > div > li > span {
@@ -236,8 +277,6 @@ body {
   margin-right: 10px;
   padding-bottom: 2.5px;
 }
-
-
 
 .transaction-list-right {
   display: flex;

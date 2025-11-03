@@ -1,5 +1,6 @@
 package kr.co.iei.freeboard.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,6 +124,22 @@ public class FreeBoardController {
 		String savepath = root+"/freeBoard/editor/";
 		String filepath = fileUtil.fileUpload(savepath, image);
 		return ResponseEntity.ok(filepath);
+	}
+	//TextEditor에서 이미지 삭제(미구현)
+	@DeleteMapping("/image/{filename}")
+	public ResponseEntity<String> deleteEditorImage(@PathVariable String filename) {
+	    String savePath = root + "/freeBoard/editor/";
+	    File targetFile = new File(savePath + filename);
+	    
+	    if (targetFile.exists()) {
+	        if (targetFile.delete()) {
+	            return ResponseEntity.ok("이미지 삭제 성공");
+	        } else {
+	            return ResponseEntity.status(500).body("이미지 삭제 실패");
+	        }
+	    } else {
+	        return ResponseEntity.status(404).body("파일이 존재하지 않습니다");
+	    }
 	}
 	@PostMapping(value = "/boardWrite")
 	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto){
@@ -272,12 +289,6 @@ public class FreeBoardController {
 		
 		return ResponseEntity.ok(freeBoardCommentLike);
 	}
-	/*이전글 다음글
-	@GetMapping(value = "/detail/prev")
-	public ResponseEntity<FreeBoardDTO> prevFreeBoard(){
-		FreeBoardDTO freeBoardList = freeBoardService.prevFreeBoard(); 
-		return ResponseEntity.ok(freeBoardList);
-	}*/
 	
 	@GetMapping(value="/detail/{freeBoardNo}/recommends")
 	public ResponseEntity<List<FreeBoardDTO>> recommends(@PathVariable int freeBoardNo){

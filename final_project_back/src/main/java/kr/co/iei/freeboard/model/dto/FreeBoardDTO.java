@@ -28,5 +28,5 @@ public class FreeBoardDTO {
 	private String freeBoardThumbnail;
 	private List<FreeBoardPhotoDTO> freeBoardPhotoList;  
 	private int[] delFileNo;
-	
+	private int viewCount;
 }

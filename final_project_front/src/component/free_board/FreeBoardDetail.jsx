@@ -4,8 +4,8 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-
-import { Link, useNavigate, useParams } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -44,15 +44,22 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
   //새로고침 시 좋아요 유지
+
   const [like, setLike] = useState(() => {
     const saved = localStorage.getItem("like");
     return saved === "true";
   });
+  // 좋아요를 누르면 로컬스토리지에 저장된 commentLike를 객체로 만듦
   const [commentLike, setCommentLike] = useState(() => {
-    const commentSaved = localStorage.getItem("commentLike");
-    return commentSaved === "true";
+    const commentSaved = localStorage.getItem(`commentLike`);
+    return commentSaved ? JSON.parse(commentSaved) : {}; //commentSaved 객체 변경
   });
-
+  //commentLike를 json형태로 만든 후 commentLike를 로컬스토리지에 저장(set)
+  useEffect(() => {
+    localStorage.setItem("like", like);
+    localStorage.setItem("commentLike", JSON.stringify(commentLike)); //commentLike를 Json으로 변경후 localStorage에 저장
+  }, [like, commentLike]);
+  const [commentCount, setCommentCount] = useState(0);
   //댓글 페이징 처리
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
@@ -62,10 +69,6 @@ const FreeBoardDetail = () => {
   });
   const [totalListCount, setTotalListCount] = useState();
 
-  useEffect(() => {
-    localStorage.setItem("like", like);
-    localStorage.setItem("commentLike", commentLike);
-  }, [like, commentLike]);
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
@@ -209,6 +212,7 @@ const FreeBoardDetail = () => {
         &order=${reqPageInfo.order}`
       )
       .then((res) => {
+        console.log(res.data);
         setFreeBoardComment(res.data.freeBoardCommentList);
         setTotalListCount(res.data.totalListCount);
       })
@@ -229,15 +233,24 @@ const FreeBoardDetail = () => {
         title: "로그인",
         text: "로그인 후 이용해주세요.",
         icon: "warning",
+        confirmButtonText: "확인",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
       }).then(() => {
         navigate("/member/login");
       });
+      return;
     }
-    if (
-      member !== null &&
-      (fbCommentContent === "" || fbCommentContent === null)
-    ) {
-      alert("댓글을 입력해주세요.");
+    if (fbCommentContent === "" || fbCommentContent === null) {
+      Swal.fire({
+        title: "댓글 입력",
+        text: "댓글을 입력해주세요",
+        icon: "warning",
+        confirmButtonText: "확인",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+      return;
     } else {
       axios
         .post(`${backServer}/freeBoard/detail/regist`, comment)
@@ -360,21 +373,6 @@ const FreeBoardDetail = () => {
         });
     }
   };
-
-  const [fbnum, setFbnum] = useState();
-  const prevBoard = () => {
-    axios
-      .get(`${backServer}/freeBoard/detail/prev/${freeBoardNo}`)
-      .then((res) => {
-        console.log(res.data);
-        setFbnum(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    navigate(`/freeBoard/detail/${fbnum - 1}`);
-  };
-
   const [recommends, setRecommends] = useState();
 
   useEffect(() => {
@@ -449,6 +447,7 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
+  const [commentSet, SetCommentSet] = useState();
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -480,8 +479,12 @@ const FreeBoardDetail = () => {
           }}
         >
           {like ? (
-            <FavoriteOutlinedIcon
-              style={{ color: "red", userSelect: "none" }}
+            <FavoriteIcon
+              style={{
+                color: "red",
+                userSelect: "none",
+                fill: "#ff2b2b",
+              }}
             />
           ) : (
             <FavoriteBorderOutlinedIcon style={{ userSelect: "none" }} />
@@ -646,39 +649,38 @@ const FreeBoardDetail = () => {
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
+                e.preventDefault();
                 if (member === null || member === "") {
                   Swal.fire({
                     title: "로그인",
                     text: "로그인 후 이용해주세요.",
                     icon: "warning",
+                    confirmButtonText: "확인",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
                   }).then(() => {
                     navigate("/member/login");
                   });
-                }
-                if (
-                  member !== null &&
-                  (fbCommentContent === "" ||
-                    fbCommentContent === " " ||
-                    fbCommentContent === null)
+                  return;
+                } else if (
+                  fbCommentContent === "" ||
+                  fbCommentContent === null
                 ) {
                   Swal.fire({
                     title: "댓글 입력",
-                    text: "댓글을 입력해주세요.",
+                    text: "댓글을 입력해주세요",
                     icon: "warning",
+                    confirmButtonText: "확인",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
                   });
+                  return;
                 } else {
                   axios
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
                     .then((res) => {
-                      console.log(res);
                       if (res.data === 1) {
-                        Swal.fire({
-                          title: "등록 완료",
-                          text: "댓글 등록 완료",
-                          icon: "success",
-                        }).then(() => {
-                          setFbCommentContent("");
-                        });
+                        setFbCommentContent("");
                       }
                     })
                     .catch((err) => {
@@ -688,7 +690,12 @@ const FreeBoardDetail = () => {
               }
             }}
           />
-          <button className="comment-submit" onClick={commentResist}>
+          <button
+            className="comment-submit"
+            onClick={() => {
+              commentResist();
+            }}
+          >
             등록
           </button>
         </div>
@@ -841,11 +848,15 @@ const FreeBoardDetail = () => {
                               `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${comment.fbCommentNo}`
                             )
                             .then((res) => {
-                              if (res.data !== "" || res.data !== undefined) {
+                              if (res.data !== "" && res.data !== undefined) {
                                 setToggle(!toggle);
                                 setCommentLike(!commentLike);
-                                console.log(res.data);
-                                console.log(comment.cnt);
+                                setCommentCount(res.data.commentLike);
+                                setCommentLike((prev) => ({
+                                  ...prev,
+                                  [comment.fbCommentNo]:
+                                    !prev[comment.fbCommentNo],
+                                }));
                               }
                             })
                             .catch((err) => {
@@ -854,16 +865,20 @@ const FreeBoardDetail = () => {
                         }
                       }}
                     >
-                      {commentLike && comment.fbCommentNo ? (
-                        <FavoriteOutlinedIcon
-                          style={{ color: "red", userSelect: "none" }}
+                      {commentLike[comment.fbCommentNo] ? (
+                        <FavoriteIcon
+                          style={{
+                            color: "red",
+                            userSelect: "none",
+                            fill: "#ff2b2b",
+                          }}
                         />
                       ) : (
                         <FavoriteBorderOutlinedIcon
                           style={{ userSelect: "none" }}
                         />
                       )}
-                      {comment.likeCount}
+                      {comment.commentLikeCount}
                     </div>
                     <div className="hour">
                       <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>

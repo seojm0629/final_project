@@ -9,6 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MemberDetail from "./MemberDetail";
 import Button from "@mui/material/Button";
 import BaseModal from "../utils/BaseModal";
+import Note from "../note/Note";
 import {
   DatePicker,
   DateTimePicker,
@@ -329,6 +330,7 @@ const ContentMember = () => {
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
     const BanModalContent = () => {
+      const today = new Date().toISOString().split("T")[0];
       return (
         <div className="adminModal ban-modal">
           <div className="adminModal titleText">
@@ -352,12 +354,15 @@ const ContentMember = () => {
             <div>
               <div className="adminModal subtitleText">날짜를 선택해주세요</div>
             </div>
-            <DatePicker
+            <input
+              type="date"
               value={dateValue}
+              min={today}
               onChange={(newValue) => {
                 setDateValue(newValue);
               }}
-            />
+            ></input>
+
             <div>
               <div className="adminModal subtitleText">시간을 선택해주세요</div>
             </div>
@@ -456,6 +461,9 @@ const ContentMember = () => {
           ) : (
             `${m.isBen}`
           )}
+        </td>
+        <td>
+          <Note noteId={m.memberId}></Note>
         </td>
         <td>
           <button
@@ -688,6 +696,7 @@ const ContentMember = () => {
                   </TableSortLabel>
                 </th>
                 {/* MEMBER_BEN_TBL */}
+                <th>쪽지</th>
                 <th>상세 보기</th>
               </tr>
             </thead>

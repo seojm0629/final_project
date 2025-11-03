@@ -32,7 +32,6 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [refreshToggle, setRefreshToggle] = useState(true); // 관리자 페이지에서 하위 카테고리 추가 시
-  const [freeBoardContent, setFreeBoardContent] = useState("");
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
@@ -256,13 +255,7 @@ const FreeBoardContent = (props) => {
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardNo, setFreeBoardNo] = useState();
   const [toggle, setToggle] = useState(false);
-  const [loginMemberNo, serLoginMemberNo] = useState(() => {
-    const savedMemberNo = localStorage.getItem("loginMemberNo");
-    return savedMemberNo === "true";
-  });
-  useEffect(() => {
-    localStorage.setItem("loginMemberNo", loginMemberNo);
-  }, [loginMemberNo]);
+
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -319,7 +312,8 @@ const FreeBoardContent = (props) => {
     toggle,
   ]);
   /* 상세페이지 view */
-  const [viewCount, setViewCount] = useState(); //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
+  //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
+  const [viewCount, setViewCount] = useState();
   console.log(memberNo);
   return (
     <section className="freeBoard-section">
@@ -450,12 +444,20 @@ const FreeBoardContent = (props) => {
                       borderRight: "1px solid #ccc",
                     }}
                     onClick={() => {
+                      const detailUrl =
+                        memberNo !== ""
+                          ? `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
+                          : `${backServer}/freeBoard/content/view?memberNo=${0}&freeBoardNo=${
+                              list.freeBoardNo
+                            }&freeBoardCategoryNo=${
+                              list.freeBoardCategoryNo
+                            }&freeBoardSubcategoryNo=${
+                              list.freeBoardSubcategoryNo
+                            }`;
                       axios
-                        .get(
-                          `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
-                        )
+                        .get(detailUrl)
                         .then((res) => {
-                          //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
+                          setViewCount(res.data.viewCount); //content페이지에서 띄울 count
                           navigate(
                             `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
                           );
@@ -491,7 +493,7 @@ const FreeBoardContent = (props) => {
                     <td className="states-cell">
                       <span className="state">
                         <VisibilityOutlinedIcon className="icon" />
-                        {viewCount}
+                        {list.viewCount}
                       </span>
                       <span className="state">
                         <FavoriteBorderOutlinedIcon className="icon" />
@@ -509,17 +511,16 @@ const FreeBoardContent = (props) => {
           </div>
         </div>
       )}
-      <div
-        className="order-div"
-        onClick={() => {
-          {
-            reqPageInfo.order === 2
-              ? setReqPageInfo({ ...reqPageInfo, order: 1 })
-              : setReqPageInfo({ ...reqPageInfo, order: 2 });
-          }
-        }}
-      >
-        <div>
+      <div className="order-div">
+        <div
+          onClick={() => {
+            {
+              reqPageInfo.order === 2
+                ? setReqPageInfo({ ...reqPageInfo, order: 1 })
+                : setReqPageInfo({ ...reqPageInfo, order: 2 });
+            }
+          }}
+        >
           <ImportExportOutlinedIcon></ImportExportOutlinedIcon>
           {reqPageInfo.order === 2 ? (
             <span>최신순</span>
