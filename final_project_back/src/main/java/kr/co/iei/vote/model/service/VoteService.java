@@ -55,7 +55,7 @@ public class VoteService {
 		voteList.put("memberNo", memberNo);
 		
 		List<VoteDTO> selectVoteList = voteDao.selectVoteList(voteList);// 리스트 출력
-		int totalListCount = voteDao.totalListCount(voteList); // 리스트 갯수의 총 합
+		int totalListCount = voteDao.totalListCount(order); // 리스트 갯수의 총 합
 		
 		//구한 값들을 해쉬맵으로 다시 넣어서 리턴값 보내기
 		HashMap<String , Object> map = new HashMap<String,Object>();
