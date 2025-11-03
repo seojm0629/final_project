@@ -29,26 +29,37 @@ const VoteDetail = () => {
   const [labels, setLabels] = useState([]);
   const [values, setValues] = useState([]);
 
-  const filteredData = voteList
-    .map((list, i) => ({ label: list.voteContent, value: values[i] }))
-    .filter((item) => item.value > 0); // 0표 항목 제거
+  // 모든 항목의 값이 0인지 확인하는 값
+  const voteZero = values.every((v) => v === 0);
+
+  // 투표를 안했을때도 그래프 보이게
+  const filteredData = voteZero
+    ? [{ label: "투표가 없습니다", value: 1 }] // 모든 항목이 0일 때 임시 데이터 넣는값
+    : voteList.map((list, i) => ({
+        label: list.voteContent,
+        value: values[i] || 0, // 값이 undefined면 0으로 처리 이게없으면 모든항목들이 다보임
+      }));
   //차트 안에 들어갈 data (찾아보면 더 있음)
   const data = {
     labels: filteredData.map((item) => item.label), // 각 항목의 이름 배열 저장
     datasets: [
       {
-        data: filteredData.map((item) => item.value), // 각 항목의 투표수 배열 저장
-        backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#8AFF33",
-          "#FF33F6",
-          "#33FFF3",
-          "#FF8F33",
-          "#338AFF",
-        ],
-        borderWidth: 1, // 각 조각들의 두께 설정
+        data: filteredData.map((item) => item.value),
+        backgroundColor: voteZero
+          ? ["#e0e0e0"] // 모든 값이 0일 때 회색 표시
+          : [
+              "#FF6B6B", // 선명한 빨강
+              "#FFD93D", // 밝은 노랑
+              "#6BCB77", // 연두
+              "#4D96FF", // 파랑
+              "#9D4EDD", // 보라
+              "#FF8C42", // 주황
+              "#5BC0EB", // 하늘
+              "#FDE74C", // 레몬
+              "#9BC53D", // 라임
+              "#E55934", // 벽돌색
+            ],
+        borderWidth: 1, // 각 조각들 두께설정
       },
     ],
   };
