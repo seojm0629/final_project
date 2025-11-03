@@ -343,25 +343,36 @@ const ContentMember = () => {
                 정지 사유를 입력하세요
               </div>
             </div>
-            <input
-              type="text"
-              placeholder="욕설 사용으로 50일 정지"
+            <select
               value={banReason}
-              onChange={(e) => {
-                setBanReason(e.target.value);
-              }}
-            ></input>
+              onChange={(e) => setBanReason(e.target.value)}
+              className="ban-select-box"
+            >
+              <option value="">-- 정지 사유를 선택하세요 --</option>
+              <option value="욕설 및 비속어 사용">욕설 및 비속어 사용</option>
+              <option value="반복적인 도배 및 광고성 게시글">
+                반복적인 도배 및 광고성 게시글
+              </option>
+              <option value="타인 비방 및 명예훼손">
+                타인 비방 및 명예훼손
+              </option>
+              <option value="불법 프로그램(핵, 매크로 등) 사용">
+                불법 프로그램(핵, 매크로 등) 사용
+              </option>
+              <option value="부적절한 닉네임 또는 프로필">
+                부적절한 닉네임 또는 프로필
+              </option>
+            </select>
             <div>
               <div className="adminModal subtitleText">날짜를 선택해주세요</div>
             </div>
-            <input
-              type="date"
+            <DatePicker
               value={dateValue}
-              min={today}
+              minDate={dayjs()}
               onChange={(newValue) => {
                 setDateValue(newValue);
               }}
-            ></input>
+            />
 
             <div>
               <div className="adminModal subtitleText">시간을 선택해주세요</div>
@@ -432,27 +443,19 @@ const ContentMember = () => {
                           setIsModalOpen(false);
                           setBenMode(false);
                         }}
+                        style={{
+                          border: "none",
+                          cursor: "pointer",
+                          fontWeight: "900",
+                          backgroundColor: "transparent",
+                          fontSize: "0.9rem",
+                        }}
                       >
                         취소
                       </button>
                     </div>
                   }
                   result={confirm}
-                />
-              </button>
-
-              <button
-                onClick={() => {
-                  setIsModalOpen(true);
-                }}
-              >
-                <BaseModal
-                  title="벤모드"
-                  content={<div>회원을 선택하시겠습니까?</div>}
-                  buttonLabel="선택"
-                  contentBoxStyle={{ width: "800px", height: "500px" }}
-                  end={"닫기버튼이름"}
-                  result={"확인버튼"}
                 />
               </button>
             </div>
