@@ -144,14 +144,18 @@ const MemberInfo = (props) => {
                             title : "수정 완료",
                             text : "닉네임이 수정되었습니다.",
                             icon : "success",
+                        }).then(()=>{
+                            window.location.reload();
+
                         })
+
                     }
                     
                 })
                 .catch((err)=>{
                     if(err){
                         alert("중복된 아이디입니다. 다시 시도해주세요.");
-                    
+                        window.location.reload();
                     }
                 })
             }
@@ -192,6 +196,7 @@ const MemberInfo = (props) => {
 
 const MemberAccount = (props) => {
     const memberId = props.memberId;
+    
     return(
         <div className="mypage-account-wrap tab-menu">
             <div className="account-title mypage-title">
