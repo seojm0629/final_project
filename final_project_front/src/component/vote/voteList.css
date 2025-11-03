@@ -74,8 +74,9 @@
   vertical-align: middle;
 }
 .new-icon {
-  color: red;
+  color: #eb5d5d;
 }
+
 .td-title:hover {
   color: #1565c0;
   font-weight: 700;
@@ -89,5 +90,8 @@
   font-size: 0.9rem;
 }
 .check-icon {
-  color: blue;
+  color: #4d96ff;
+}
+.check-no {
+  color: #e0e0e0;
 }
