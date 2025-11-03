@@ -477,6 +477,9 @@
   margin: 50px auto;
   color: #1e1e1e;
 }
+.detail-container .page-nav {
+  margin-right: 280px;
+}
 .detail-path {
   color: #7a7a7a;
   font-size: 14px;
@@ -784,24 +787,26 @@
   align-self: flex-end;
 }
 .comment-report {
+  width: 880px;
   text-align: right;
   color: #d00;
   font-size: 13px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  gap: 700px;
   margin-right: 10px;
   margin-top: 10px;
 }
 .comment-writer {
   display: flex;
+  width: max-content;
   align-self: flex-start;
   gap: 7px;
   font-size: 13px;
 }
 .comment-writer span {
   color: #003366;
+  width: max-content;
 }
 .comment-text {
   margin: 10px 0;

@@ -15,7 +15,7 @@
   align-items: center;
   height: 100px;
   background-color: #2f4e70;
-  padding: 10px 20px;
+  padding: 10px 20px 0px 40px;
   margin-bottom: 50px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -33,7 +33,7 @@
 }
 .navi-menu {
   display: flex;
-  gap: 200px;
+  gap: 250px;
 }
 .navi-menu .navi-item {
   margin: 0 20px;
@@ -163,6 +163,9 @@ body {
 }
 
 /* 메인페이지 */
+.main-content {
+  border-left: 0.1px solid #2f4e70;
+}
 .main-content-wrap {
   display: flex;
 }

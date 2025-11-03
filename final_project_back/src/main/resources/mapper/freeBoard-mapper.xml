@@ -184,63 +184,63 @@
 	 <select id="totalCommentList" resultType = "freeBoardComment">
 	 
 	 select * from (
-select *
-		from (
-		    select rownum as pnum, t.*
-		    from (
-		        select 
-		            total.*,
-		            (select count(*) 
-		                from fb_comment_tbl 
-		                where free_board_no = #{freeBoardNo}
-		            ) as total_comment_count
-		        from (
-		            select * 
-		            from (
-		                select * 
-		                from (
-		                    select 
-		                        a.free_board_no,
-		                        b.fb_comment_no,
-		                        b.fb_comment_content,
-		                        a.free_board_date,
-		                        b.fb_comment_date,
-		                        b.member_no,
-		                        count(b.fb_comment_no) as comment_count
-		                    from free_board_tbl a 
-		                    left join fb_comment_tbl b 
-		                        on a.free_board_no = b.free_board_no
-		                    group by 
-		                        a.free_board_no, 
-		                        b.fb_comment_no, 
-		                        b.fb_comment_content,
-		                        a.free_board_date, 
-		                        b.fb_comment_date, 
-		                        b.member_no
-		                ) 
-		                left join (
-		                    select 
-		                        member_no,
-		                        member_nickname,
-		                        member_id 
-		                    from member_tbl
-		                ) using (member_no)
-		            )
-		            left join (
-		                select 
-		                    fb_comment_no,
-		                    count(*) as cnt 
-		                from fb_comment_tbl 
-		                group by fb_comment_no
-		            ) using (fb_comment_no)
-		            where free_board_no = #{freeBoardNo}
+		select *
+				from (
+				    select rownum as pnum, t.*
+				    from (
+				        select 
+				            total.*,
+				            (select count(*) 
+				                from fb_comment_tbl 
+				                where free_board_no = #{freeBoardNo}
+				            ) as total_comment_count
+					        from (
+					            select * 
+					            from (
+					                select * 
+					                from (
+					                    select 
+					                        a.free_board_no,
+					                        b.fb_comment_no,
+					                        b.fb_comment_content,
+					                        a.free_board_date,
+					                        b.fb_comment_date,
+					                        b.member_no,
+					                        count(b.fb_comment_no) as comment_count
+					                    from free_board_tbl a 
+					                    left join fb_comment_tbl b 
+					                        on a.free_board_no = b.free_board_no
+					                    group by 
+					                        a.free_board_no, 
+					                        b.fb_comment_no, 
+					                        b.fb_comment_content,
+					                        a.free_board_date, 
+					                        b.fb_comment_date, 
+					                        b.member_no
+					                ) 
+					                left join (
+					                    select 
+					                        member_no,
+					                        member_nickname,
+					                        member_id 
+					                    from member_tbl
+					                ) using (member_no)
+					            )
+				            left join (
+				                select 
+				                    fb_comment_no,
+				                    count(*) as cnt 
+				                from fb_comment_tbl 
+				                group by fb_comment_no
+				            ) using (fb_comment_no)
+				            where free_board_no = #{freeBoardNo}
                     <if test="order == 2">
 		            	order by fb_comment_no desc
 		            </if>
 		            <if test="order == 1">
 		            	order by fb_comment_no asc
 		            </if>
-                    ) total
+                 ) total
 		    ) t
 		) 
 		where pnum between #{startRow} and #{endRow}) left join (select fb_comment_no,count(*) comment_like_count from fbc_like_tbl group by (fb_comment_no)) using(fb_comment_no)

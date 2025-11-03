@@ -4,8 +4,8 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import ImportExportOutlinedIcon from "@mui/icons-material/ImportExportOutlined";
-
-import { Link, useNavigate, useParams } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -49,12 +49,16 @@ const FreeBoardDetail = () => {
     const saved = localStorage.getItem("like");
     return saved === "true";
   });
-
+  // 좋아요를 누르면 로컬스토리지에 저장된 commentLike를 객체로 만듦
   const [commentLike, setCommentLike] = useState(() => {
-    const commentSaved = localStorage.getItem(`commentLike_`);
-    return commentSaved === "true";
+    const commentSaved = localStorage.getItem(`commentLike`);
+    return commentSaved ? JSON.parse(commentSaved) : {}; //commentSaved 객체 변경
   });
-
+  //commentLike를 json형태로 만든 후 commentLike를 로컬스토리지에 저장(set)
+  useEffect(() => {
+    localStorage.setItem("like", like);
+    localStorage.setItem("commentLike", JSON.stringify(commentLike)); //commentLike를 Json으로 변경후 localStorage에 저장
+  }, [like, commentLike]);
   const [commentCount, setCommentCount] = useState(0);
   //댓글 페이징 처리
   const [reqPageInfo, setReqPageInfo] = useState({
@@ -64,13 +68,6 @@ const FreeBoardDetail = () => {
     order: 2, //최신순, 오래된 순
   });
   const [totalListCount, setTotalListCount] = useState();
-
-  console.log(localStorage);
-
-  useEffect(() => {
-    localStorage.setItem("like", like);
-    localStorage.setItem(`commentLike_`, commentLike);
-  }, [like]);
 
   useEffect(() => {
     if (fbClaimSet === undefined) {
@@ -376,21 +373,6 @@ const FreeBoardDetail = () => {
         });
     }
   };
-
-  const [fbnum, setFbnum] = useState();
-  const prevBoard = () => {
-    axios
-      .get(`${backServer}/freeBoard/detail/prev/${freeBoardNo}`)
-      .then((res) => {
-        console.log(res.data);
-        setFbnum(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    navigate(`/freeBoard/detail/${fbnum - 1}`);
-  };
-
   const [recommends, setRecommends] = useState();
 
   useEffect(() => {
@@ -497,8 +479,12 @@ const FreeBoardDetail = () => {
           }}
         >
           {like ? (
-            <FavoriteOutlinedIcon
-              style={{ color: "red", userSelect: "none" }}
+            <FavoriteIcon
+              style={{
+                color: "red",
+                userSelect: "none",
+                fill: "#ff2b2b",
+              }}
             />
           ) : (
             <FavoriteBorderOutlinedIcon style={{ userSelect: "none" }} />
@@ -866,7 +852,11 @@ const FreeBoardDetail = () => {
                                 setToggle(!toggle);
                                 setCommentLike(!commentLike);
                                 setCommentCount(res.data.commentLike);
-                                console.log(res.data.commentLike);
+                                setCommentLike((prev) => ({
+                                  ...prev,
+                                  [comment.fbCommentNo]:
+                                    !prev[comment.fbCommentNo],
+                                }));
                               }
                             })
                             .catch((err) => {
@@ -875,9 +865,13 @@ const FreeBoardDetail = () => {
                         }
                       }}
                     >
-                      {commentLike ? (
-                        <FavoriteOutlinedIcon
-                          style={{ color: "red", userSelect: "none" }}
+                      {commentLike[comment.fbCommentNo] ? (
+                        <FavoriteIcon
+                          style={{
+                            color: "red",
+                            userSelect: "none",
+                            fill: "#ff2b2b",
+                          }}
                         />
                       ) : (
                         <FavoriteBorderOutlinedIcon

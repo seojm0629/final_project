@@ -255,13 +255,7 @@ const FreeBoardContent = (props) => {
   const [freeBoardSubcategoryNo, setFreeBoardSubcategoryNo] = useState();
   const [freeBoardNo, setFreeBoardNo] = useState();
   const [toggle, setToggle] = useState(false);
-  const [loginMemberNo, serLoginMemberNo] = useState(() => {
-    const savedMemberNo = localStorage.getItem("loginMemberNo");
-    return savedMemberNo === "true";
-  });
-  useEffect(() => {
-    localStorage.setItem("loginMemberNo", loginMemberNo);
-  }, [loginMemberNo]);
+
   const nowDate = (dateString) => {
     const now = dayjs(); //현재 날짜/시간 가져오는 함수
     const target = dayjs(dateString); // 날짜를 dayjs 형식으로 변환하기
@@ -318,7 +312,8 @@ const FreeBoardContent = (props) => {
     toggle,
   ]);
   /* 상세페이지 view */
-  const [viewCount, setViewCount] = useState(); //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
+  //처음 렌더링될 때 axios가 실행되지 않아서 viewCount에 들어 있지 않음
+  const [viewCount, setViewCount] = useState();
   console.log(memberNo);
   return (
     <section className="freeBoard-section">
@@ -462,7 +457,7 @@ const FreeBoardContent = (props) => {
                       axios
                         .get(detailUrl)
                         .then((res) => {
-                          //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
+                          setViewCount(res.data.viewCount); //content페이지에서 띄울 count
                           navigate(
                             `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
                           );
@@ -498,7 +493,7 @@ const FreeBoardContent = (props) => {
                     <td className="states-cell">
                       <span className="state">
                         <VisibilityOutlinedIcon className="icon" />
-                        {viewCount}
+                        {list.viewCount}
                       </span>
                       <span className="state">
                         <FavoriteBorderOutlinedIcon className="icon" />
