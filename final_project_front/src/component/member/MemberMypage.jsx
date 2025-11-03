@@ -124,6 +124,7 @@ const MemberInfo = (props) => {
     const memberId = props.memberId;
     const setMember = props.setMember;
     
+    const navigate = useNavigate();
     
     const changeNickname = () => {
         Swal.fire({
@@ -147,12 +148,20 @@ const MemberInfo = (props) => {
                     }
                     
                 })
+                .catch((err)=>{
+                    if(err){
+                        alert("중복된 아이디입니다. 다시 시도해주세요.");
+                    
+                    }
+                })
             }
+            
 
         })
         .catch((err)=>{
             console.log(err);
         })
+        
     }
 
     
