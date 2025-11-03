@@ -236,15 +236,24 @@ const FreeBoardDetail = () => {
         title: "로그인",
         text: "로그인 후 이용해주세요.",
         icon: "warning",
+        confirmButtonText: "확인",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
       }).then(() => {
         navigate("/member/login");
       });
+      return;
     }
-    if (
-      member !== null &&
-      (fbCommentContent === "" || fbCommentContent === null)
-    ) {
-      alert("댓글을 입력해주세요.");
+    if (fbCommentContent === "" || fbCommentContent === null) {
+      Swal.fire({
+        title: "댓글 입력",
+        text: "댓글을 입력해주세요",
+        icon: "warning",
+        confirmButtonText: "확인",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+      return;
     } else {
       axios
         .post(`${backServer}/freeBoard/detail/regist`, comment)
@@ -654,39 +663,38 @@ const FreeBoardDetail = () => {
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
+                e.preventDefault();
                 if (member === null || member === "") {
                   Swal.fire({
                     title: "로그인",
                     text: "로그인 후 이용해주세요.",
                     icon: "warning",
+                    confirmButtonText: "확인",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
                   }).then(() => {
                     navigate("/member/login");
                   });
-                }
-                if (
-                  member !== null &&
-                  (fbCommentContent === "" ||
-                    fbCommentContent === " " ||
-                    fbCommentContent === null)
+                  return;
+                } else if (
+                  fbCommentContent === "" ||
+                  fbCommentContent === null
                 ) {
                   Swal.fire({
                     title: "댓글 입력",
-                    text: "댓글을 입력해주세요.",
+                    text: "댓글을 입력해주세요",
                     icon: "warning",
+                    confirmButtonText: "확인",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
                   });
+                  return;
                 } else {
                   axios
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
                     .then((res) => {
-                      console.log(res);
                       if (res.data === 1) {
-                        Swal.fire({
-                          title: "등록 완료",
-                          text: "댓글 등록 완료",
-                          icon: "success",
-                        }).then(() => {
-                          setFbCommentContent("");
-                        });
+                        setFbCommentContent("");
                       }
                     })
                     .catch((err) => {
@@ -696,7 +704,12 @@ const FreeBoardDetail = () => {
               }
             }}
           />
-          <button className="comment-submit" onClick={commentResist}>
+          <button
+            className="comment-submit"
+            onClick={() => {
+              commentResist();
+            }}
+          >
             등록
           </button>
         </div>

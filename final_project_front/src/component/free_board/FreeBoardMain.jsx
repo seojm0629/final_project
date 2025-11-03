@@ -32,7 +32,6 @@ const FreeBoardMain = () => {
   const [freeBoardTitle, setFreeBoardTitle] = useState("");
   const [member, setMember] = useRecoilState(loginIdState); // 로그인된 memberId, memberType
   const [refreshToggle, setRefreshToggle] = useState(true); // 관리자 페이지에서 하위 카테고리 추가 시
-  const [freeBoardContent, setFreeBoardContent] = useState("");
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
     pageNo: 1, //몇번째 페이지를 요청하는데? (페이징에서 씀)
@@ -450,10 +449,18 @@ const FreeBoardContent = (props) => {
                       borderRight: "1px solid #ccc",
                     }}
                     onClick={() => {
+                      const detailUrl =
+                        memberNo !== ""
+                          ? `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
+                          : `${backServer}/freeBoard/content/view?memberNo=${0}&freeBoardNo=${
+                              list.freeBoardNo
+                            }&freeBoardCategoryNo=${
+                              list.freeBoardCategoryNo
+                            }&freeBoardSubcategoryNo=${
+                              list.freeBoardSubcategoryNo
+                            }`;
                       axios
-                        .get(
-                          `${backServer}/freeBoard/content/view?memberNo=${memberNo}&freeBoardNo=${list.freeBoardNo}&freeBoardCategoryNo=${list.freeBoardCategoryNo}&freeBoardSubcategoryNo=${list.freeBoardSubcategoryNo}`
-                        )
+                        .get(detailUrl)
                         .then((res) => {
                           //setViewCount(res.data.viewCount); //content페이지에서 띄울 count
                           navigate(
