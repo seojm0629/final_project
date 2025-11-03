@@ -41,24 +41,38 @@
 	</select>
 	
 	<select id="totalBoardList" resultType = "freeBoard">
-		select * from
-    		(select rownum as fbnum, fb.* from
-            	(select f.*, m.member_nickname, m.member_id, (select count(*) from fb_like_tbl where free_board_no=f.free_board_no) as like_count
-                from free_board_tbl f
-            left join member_tbl m on (f.member_no = m.member_no)
-            
-            <if test="order == 2">
-            	order by free_board_no desc
-            </if>
-    		<if test="order == 1">
-    			order by free_board_no asc
-    		</if>
-            ) fb
-            <if test="selected != null">
-            	where free_board_subcategory_no = #{selected}
-            </if>
-            )
-        where fbnum between #{startRow} and #{endRow}
+		select fc.*
+			from (
+			    select rownum as fbnum, fb.*
+			    from (
+			        select f.*,
+			               m.member_nickname,
+			               m.member_id,
+			               (select count(*) 
+			                from fb_like_tbl 
+			                where free_board_no = f.free_board_no) as like_count,
+			               nvl(fd.view_count, 0) as view_count
+			        from free_board_tbl f
+			        left join member_tbl m 
+			               on f.member_no = m.member_no
+			        left join (
+			            select free_board_no, count(*) as view_count
+			            from free_board_view_tbl
+			            group by free_board_no
+			        ) fd 
+			            on f.free_board_no = fd.free_board_no
+			        <if test="selected != null">
+            			where f.free_board_subcategory_no = #{selected}
+            		</if>
+			        <if test="order == 2">
+		            	order by f.free_board_no desc
+		            </if>
+		    		<if test="order == 1">
+		    			order by f.free_board_no asc
+		    		</if>
+			    ) fb
+			) fc
+		where fbnum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="totalListCount" resultType="int">
@@ -495,5 +509,8 @@ SELECT ROWNUM RNUM, A.* FROM (
 )
 WHERE RNUM =1
 	</select>
-	
+
+	<select id="selectThumb" resultType = "freeBoard">
+		select free_board_thumbnail from free_board_tbl where free_board_no = #{freeBoardNo}
+	</select>	
 </mapper>

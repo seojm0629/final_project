@@ -162,6 +162,14 @@
 .board-div td {
   background-color: #f0f2f5;
 }
+
+.board-div .author-cell span {
+  display: flex;
+  justify-content: center;
+}
+.board-div .author-cell span:first-child {
+  margin-bottom: 10px;
+}
 .main-div .board-section:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateX(-2px) translateY(-2px); /* 호버 시 살짝 위로 이동하는 효과 */

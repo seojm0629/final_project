@@ -39,6 +39,18 @@ const FreeBoardModify = (props) => {
   //수정할 데이터 저장 후 MenuItem에 넣을  default 값
   const [freeBoardSubcategory, setFreeBoardSubcategory] = useState();
   const [freeBoardCategory, setFreeBoardCategory] = useState();
+  useEffect(() => {
+    axios
+      .get(`${backServer}/freeBoard/modify/thumb?freeBoardNo=${freeBoardNo}`)
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.data.freeBoardThumbnail);
+        setFreeBoardThumbnail(res.data.freeBoardThumbnail);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [freeBoardNo]);
   const modifyFreeBoard = () => {
     if (
       freeBoardCategoryNo === undefined ||
@@ -65,11 +77,13 @@ const FreeBoardModify = (props) => {
       });
       return;
     }
+    console.log(freeBoardThumbnail);
+
+    console.log(freeBoardContent);
+    console.log(freeBoardTitle);
     const formData = new FormData();
     formData.append("freeBoardCategoryNo", freeBoardCategoryNo);
     formData.append("freeBoardSubcategoryNo", freeBoardSubcategoryNo);
-    console.log(freeBoardCategoryNo);
-    console.log(freeBoardSubcategoryNo);
     formData.append("freeBoardTitle", freeBoardTitle);
     formData.append("memberNo", memberNo);
     formData.append("freeBoardContent", freeBoardContent);

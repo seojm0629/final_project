@@ -191,8 +191,10 @@ public class FreeBoardController {
 		int result = freeBoardService.insertComment(comment);
 		return ResponseEntity.ok(result);
 	}
+
 	@GetMapping(value = "/modify")//수정할 게시글 정보 가져옴
 	public ResponseEntity<FreeBoardDTO> selectOneBoard(@RequestParam int freeBoardNo){
+		
 		FreeBoardDTO freeBoard = freeBoardService.selectOneBoard(freeBoardNo);
 		return ResponseEntity.ok(freeBoard);
 	}
@@ -230,6 +232,11 @@ public class FreeBoardController {
 	public ResponseEntity<FreeBoardCategoryDTO> selectCateNo(@RequestParam String freeBoardCategory, @RequestParam String freeBoardSubcategory){
 		FreeBoardCategoryDTO freeBoardCate = freeBoardService.selectCateNo(freeBoardCategory, freeBoardSubcategory); 
 		return ResponseEntity.ok(freeBoardCate);
+	}
+	@GetMapping(value = "/modify/thumb")
+	public ResponseEntity<FreeBoardDTO> selectThumb(@RequestParam int freeBoardNo){
+		FreeBoardDTO freeThumb = freeBoardService.selectThumb(freeBoardNo);
+		return ResponseEntity.ok(freeThumb);
 	}
 	@PatchMapping(value = "/modify/fix")
 	public ResponseEntity<Integer> modifyFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto) {

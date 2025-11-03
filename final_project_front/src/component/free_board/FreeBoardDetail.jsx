@@ -478,7 +478,7 @@ const FreeBoardDetail = () => {
             setLike(!like);
           }}
         >
-          {like ? (
+          {!like ? (
             <FavoriteIcon
               style={{
                 color: "red",

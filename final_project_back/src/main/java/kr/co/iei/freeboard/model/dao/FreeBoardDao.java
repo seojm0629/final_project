@@ -94,6 +94,8 @@ public interface FreeBoardDao {
 
 	FreeBoardDTO nextFreeBoard(HashMap<String, Object> currFreeBoard);
 
+	FreeBoardDTO selectThumb(int freeBoardNo);
+
 
 	
 

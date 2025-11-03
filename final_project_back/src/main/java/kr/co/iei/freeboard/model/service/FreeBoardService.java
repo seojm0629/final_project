@@ -96,6 +96,7 @@ public class FreeBoardService {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("boardList", boardList);
+		System.out.println(boardList);
 		map.put("totalListCount", totalListCount);
 		
 		return map;
@@ -219,6 +220,7 @@ public class FreeBoardService {
 	@Transactional
 	public int modifyFreeBoard(FreeBoardDTO freeBoard) {
 		//FreeBoardDTO board = freeBoardDao.selectOneBoard(freeBoard.getFreeBoardNo());
+		
 		int result = freeBoardDao.modifyFreeBoard(freeBoard);
 		
 		return result;
@@ -316,6 +318,11 @@ public class FreeBoardService {
 	public FreeBoardDTO nextFreeBoard(HashMap<String, Object> currFreeBoard) {
 		FreeBoardDTO nextFreeBoard = freeBoardDao.nextFreeBoard(currFreeBoard);
 		return nextFreeBoard;
+	}
+
+	public FreeBoardDTO selectThumb(int freeBoardNo) {
+		FreeBoardDTO freeThumb = freeBoardDao.selectThumb(freeBoardNo);
+		return freeThumb;
 	}
 
 	

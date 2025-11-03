@@ -122,7 +122,6 @@ const FreeBoardMain = () => {
         <div className="search-div">
           <div className="search-menu">
             <span>자유게시판</span>
-            <KeyboardDoubleArrowDownIcon></KeyboardDoubleArrowDownIcon>
           </div>
           <form
             onSubmit={(e) => {
@@ -461,7 +460,7 @@ const FreeBoardContent = (props) => {
                           navigate(
                             `/freeBoard/detail/${list.freeBoardNo}/${res.data.viewCount}`
                           );
-                          console.log(res.data.viewCount);
+                          console.log(res.data);
                         })
                         .catch((err) => {
                           console.log(err);
