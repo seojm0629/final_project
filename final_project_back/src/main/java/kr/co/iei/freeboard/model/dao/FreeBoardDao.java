@@ -95,6 +95,7 @@ public interface FreeBoardDao {
 	FreeBoardDTO nextFreeBoard(HashMap<String, Object> currFreeBoard);
 
 	FreeBoardDTO selectThumb(int freeBoardNo);
+	int isLike(HashMap<String, Object> isLikeSet);
 
 
 	

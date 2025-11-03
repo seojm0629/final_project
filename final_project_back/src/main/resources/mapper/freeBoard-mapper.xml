@@ -513,4 +513,9 @@ WHERE RNUM =1
 	<select id="selectThumb" resultType = "freeBoard">
 		select free_board_thumbnail from free_board_tbl where free_board_no = #{freeBoardNo}
 	</select>	
+	
+	<select id="isLike" resultType="int">
+	SELECT COUNT(*) FROM FB_LIKE_TBL WHERE FREE_BOARD_NO=#{freeBoardNo} AND MEMBER_NO=#{memberNo}
+	</select>
+	
 </mapper>
