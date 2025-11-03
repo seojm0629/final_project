@@ -496,4 +496,8 @@ SELECT ROWNUM RNUM, A.* FROM (
 WHERE RNUM =1
 	</select>
 	
+	<select id="isLike" resultType="int">
+	SELECT COUNT(*) FROM FB_LIKE_TBL WHERE FREE_BOARD_NO=#{freeBoardNo} AND MEMBER_NO=#{memberNo}
+	</select>
+	
 </mapper>

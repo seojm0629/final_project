@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.admin.model.service.AdminService;
 import kr.co.iei.freeboard.model.dto.FreeBoardCategoryDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentDTO;
 import kr.co.iei.freeboard.model.dto.FreeBoardCommentLikeDTO;
@@ -325,6 +326,17 @@ public class FreeBoardController {
 		System.out.println(nextFreeBoard);
 		return ResponseEntity.ok(nextFreeBoard);
 		
+	}
+	
+	@GetMapping(value="/isLike/{memberNo}/{freeBoardNo}")
+	public ResponseEntity<String> isLike(@PathVariable int memberNo, @PathVariable int freeBoardNo){
+		System.out.println(memberNo);
+		System.out.println(freeBoardNo);
+		String result = freeBoardService.isLike(memberNo,freeBoardNo);
+		System.out.println("dddddddddddd");
+		System.out.println(result);
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	

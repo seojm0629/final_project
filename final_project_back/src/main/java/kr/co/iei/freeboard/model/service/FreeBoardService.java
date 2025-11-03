@@ -318,6 +318,20 @@ public class FreeBoardService {
 		return nextFreeBoard;
 	}
 
+	public String isLike(int memberNo, int freeBoardNo) {
+		HashMap<String, Object> isLikeSet = new HashMap<>();
+		isLikeSet.put("memberNo", memberNo);
+		isLikeSet.put("freeBoardNo", freeBoardNo);
+		int result = freeBoardDao.isLike(isLikeSet);
+		String resultBoolean = null;
+		if(result==1) {
+			resultBoolean="true";
+		}else {
+			resultBoolean="false";
+		}
+		return resultBoolean;
+	}
+
 	
 
 
