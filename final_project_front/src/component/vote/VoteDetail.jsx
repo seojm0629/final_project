@@ -12,7 +12,7 @@ import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
 import ChartDataLabels from "chartjs-plugin-datalabels"; // 그래프 안에 값 보여주는 임포트
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"; // 위의 값 과 포
-
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels); // 그래프 안 항목 내용들 보여주기
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
@@ -518,8 +518,9 @@ const VoteDetail = () => {
 
                 const style = oneVote
                   ? {
-                      backgroundColor: "#fff3c4", // 연노랑
-                      border: "2px solid #f1c40f", // 금색 테두리
+                      padding: "0px 5px",
+                      background: "linear-gradient(135deg, #a5b4fc, #c7d2fe)", // 파스텔 그라데이션
+                      border: "2px solid #FFD700", // 금색 포인트
                       borderRadius: "10px",
                     }
                   : {};
@@ -530,6 +531,7 @@ const VoteDetail = () => {
                     key={"list" + i}
                   >
                     <div className="vote-content-end-div1">
+                      {oneVote && <EmojiEventsIcon className="win-icon" />}
                       {list.voteContent}
                       <span className="detail-checkicon">
                         {defaultCheck === list.voteOptionNo && (
