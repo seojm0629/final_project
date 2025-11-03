@@ -607,13 +607,10 @@
 }
 .detail-image-box {
   max-width: 300px;
-  max-height: 300px;
-  overflow: visible;
   border: 1px solid #ccc;
   text-align: center;
   line-height: 250px;
   color: #aaa;
-  object-fit: cover;
   border-radius: 8px;
   display: block;
   margin: 0 auto 20px;

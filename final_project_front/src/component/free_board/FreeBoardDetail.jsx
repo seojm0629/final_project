@@ -518,13 +518,15 @@ const FreeBoardDetail = () => {
       <hr className="detail-line" />
       <div className="detail-main">
         <div className="detail-content">
+          {freeBoard.freeBoardThumbnail !== null ||  freeBoard.freeBoardThumbnail !== undefined &&
           <img
             src={freeBoard.freeBoardThumbnail}
             alt="thumbnail"
             className="detail-image-box"
           ></img>
+          }
           <div
-            className="detail-freeBoardContent"
+            className={freeBoard.freeBoardThumbnail !== null || freeBoard.freeBoardThumbnail !== undefined ? "detail-freeBoardContent-margin" : "detail-freeBoardContent"}
             dangerouslySetInnerHTML={{ __html: freeBoard.freeBoardContent }}
           ></div>
         </div>
@@ -573,7 +575,7 @@ const FreeBoardDetail = () => {
           }
           buttonLabel={
             <span>
-              <ReportGmailerrorredIcon className="report-icon" />
+              <ReportGmailerrorredIcon className="report-icon" style={{width: "22px", height: "22px"}}/>
               신고하기
             </span>
           }
@@ -700,6 +702,10 @@ const FreeBoardDetail = () => {
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
                     .then((res) => {
                       if (res.data === 1) {
+                        Swal.fire({
+                          title: "댓글 등록 완료",
+                          icon: "success",
+                        })
                         setFbCommentContent("");
                       }
                     })
@@ -756,7 +762,7 @@ const FreeBoardDetail = () => {
                       }
                       buttonLabel={
                         <span>
-                          <ReportGmailerrorredIcon className="report-icon" />
+                          <ReportGmailerrorredIcon className="report-icon" style={{width: "20px", height : "20px"}}/>
                           신고하기
                         </span>
                       }
@@ -853,6 +859,7 @@ const FreeBoardDetail = () => {
                   <div className="comment-sub">
                     <div
                       className="heart"
+                      style={{cursor : "pointer"}}
                       onClick={() => {
                         setFbCommentNo(comment.fbCommentNo);
                         if (!member) {
@@ -869,12 +876,12 @@ const FreeBoardDetail = () => {
                             )
                             .then((res) => {
                               if (res.data !== "" && res.data !== undefined) {
-                                setToggle(!toggle);
-                                setCommentLike((prev) => ({
-                                  ...prev,
+                                setCommentLike((p) => ({
+                                  ...p,
                                   [comment.fbCommentNo]:
-                                    !prev[comment.fbCommentNo],
+                                    !p[comment.fbCommentNo],
                                 }));
+                                setToggle(!toggle);
                               }
                             })
                             .catch((err) => {
