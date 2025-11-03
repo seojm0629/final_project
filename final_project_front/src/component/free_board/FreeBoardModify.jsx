@@ -189,6 +189,7 @@ const FreeBoardModify = (props) => {
         setFreeBoardContent(res1.data.freeBoardContent);
         setFreeBoardCategoryNo(res1.data.freeBoardCategoryNo);
         setFreeBoardSubcategoryNo(res1.data.freeBoardSubcategoryNo);
+        setFreeBoardThumbnail(res1.data.freeBoardThumbnail);
         axios
           .get(
             `${backServer}/freeBoard/modify/cate?freeBoardSubcategoryNo=${res1.data.freeBoardSubcategoryNo}&freeBoardCategoryNo=${res1.data.freeBoardCategoryNo}`

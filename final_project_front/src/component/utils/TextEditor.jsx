@@ -44,7 +44,29 @@ const TextEditor = (props) => {
               if (imgTag) {
                 imgTag.style.maxWidth = "200px";
                 imgTag.style.height = "auto";
+                imgTag.style.position = "relative";
               }
+              const deleteBtn = document.createElement("button");
+              deleteBtn.innerText = "×";
+              deleteBtn.style.position = "absolute";
+              deleteBtn.style.top = "0";
+              deleteBtn.style.right = "0";
+              deleteBtn.style.background = "rgba(0,0,0,0.5)";
+              deleteBtn.style.color = "#fff";
+              deleteBtn.style.border = "none";
+              deleteBtn.style.cursor = "pointer";
+              deleteBtn.style.fontSize = "14px";
+              deleteBtn.style.borderRadius = "50%";
+              deleteBtn.style.width = "20px";
+              deleteBtn.style.height = "20px";
+
+              // 이미지 wrapper 생성
+              const wrapper = document.createElement("span");
+              wrapper.style.position = "relative";
+              wrapper.style.display = "inline-block";
+              imgTag.parentNode.insertBefore(wrapper, imgTag);
+              wrapper.appendChild(imgTag);
+              wrapper.appendChild(deleteBtn);
               editor.setSelection(range.index + 1);
             });
             console.log(form);
