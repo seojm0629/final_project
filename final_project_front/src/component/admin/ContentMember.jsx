@@ -9,6 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MemberDetail from "./MemberDetail";
 import Button from "@mui/material/Button";
 import BaseModal from "../utils/BaseModal";
+import Note from "../note/Note";
 import {
   DatePicker,
   DateTimePicker,
@@ -462,6 +463,9 @@ const ContentMember = () => {
           )}
         </td>
         <td>
+          <Note noteId={m.memberId}></Note>
+        </td>
+        <td>
           <button
             onClick={() => {
               reqUserInfo(m);
@@ -692,6 +696,7 @@ const ContentMember = () => {
                   </TableSortLabel>
                 </th>
                 {/* MEMBER_BEN_TBL */}
+                <th>쪽지</th>
                 <th>상세 보기</th>
               </tr>
             </thead>

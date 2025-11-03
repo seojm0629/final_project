@@ -46,7 +46,7 @@
   width: 7%;
 }
 .admin .member-table .row td:nth-of-type(2) {
-  width: 13%;
+  width: 10%;
 }
 .admin .member-table .row td:nth-of-type(3) {
   width: 15%;
@@ -70,10 +70,24 @@
   width: 7%;
 }
 .admin .member-table .row td:nth-of-type(10) {
-  width: 13%;
+  width: 11%;
 }
 .admin .member-table .row td:nth-of-type(11) {
   width: 5%;
+}
+.admin .member-table .row td:nth-of-type(12) {
+  width: 5%;
+}
+
+.admin .member-table .row td:nth-of-type(11) button {
+  background-color: #24568f;
+  width: 40px;
+  border-radius: 15px;
+}
+
+.admin .member-table .row td:nth-of-type(11) > div > div {
+  display: flex;
+  justify-content: center;
 }
 
 .admin .member-table .row button:hover {
