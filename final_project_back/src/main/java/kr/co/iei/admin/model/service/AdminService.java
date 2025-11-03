@@ -229,4 +229,10 @@ public class AdminService {
 		return list;
 	}
 
+	public int getMemberType(int memberNo) {
+		int memberType = adminDao.getMemberType(memberNo);
+		
+		return memberType;
+	}
+
 }

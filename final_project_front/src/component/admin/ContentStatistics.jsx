@@ -3,12 +3,19 @@ import "./contentStatistics.css";
 import { Bar, Line, Pie } from "react-chartjs-2";
 import dayjs from "dayjs";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { memberNoState, memberTypeState } from "../utils/RecoilData";
 
 //메인 컴포넌트 위치 ▼
 const ContentStatistics = () => {
   //chartjs 참고 문서 위치
   // 'https://react-chartjs-2.js.org/docs/working-with-datasets'
   //메인 컴포넌트는 월간/주간/일간에 대한 정보를 가지고 있는다.
+
+  const [memberNo, setMemberNo] = useRecoilState(memberNoState);
+
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  console.log(memberType);
 
   const searchCriteria = ["5년", "1년", "1개월", "기타"];
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
@@ -411,6 +418,8 @@ const ChartTemplate = (props) => {
 };
 
 const DiffCount = () => {
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
+  console.log(memberType);
   const [ru, setRu] = useState(0);
   const [bc, setBc] = useState(0);
   const [bcc, setBcc] = useState(0);
@@ -473,13 +482,15 @@ const DiffCount = () => {
             전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
           </div>
         </div>
-        <div className="element">
-          <div className="entireBox-title">전체 탈퇴 유저 수</div>
-          <div className="entireBox-content">{wc}명</div>
-          <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
-            전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
+        {memberType && memberType === 1 && (
+          <div className="element">
+            <div className="entireBox-title">전체 탈퇴 유저 수</div>
+            <div className="entireBox-content">{wc}명</div>
+            <div className={wcDiff >= 0 ? "entireBox-plus" : "entireBox-minus"}>
+              전일 대비 {wcDiff >= 0 ? `+${wcDiff} ▲` : `${wcDiff} ▼`}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

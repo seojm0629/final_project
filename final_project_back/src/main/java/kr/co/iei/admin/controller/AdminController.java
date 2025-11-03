@@ -176,4 +176,11 @@ public class AdminController {
 	    System.out.println(list);
 	    return ResponseEntity.ok(list);
 	}
+	@GetMapping("selectOneMember/{memberNo}")
+	public ResponseEntity<Integer> getMemberType(@PathVariable int memberNo){
+		System.out.println(memberNo);
+		int memberType = adminService.getMemberType(memberNo);
+		System.out.println(memberType);
+		return ResponseEntity.ok(memberType);
+	}
 }
