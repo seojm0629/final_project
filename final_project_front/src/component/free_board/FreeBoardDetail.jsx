@@ -44,15 +44,18 @@ const FreeBoardDetail = () => {
   const [fbClaimSet, setFbClaimSet] = useState();
   const [fbcClaimSet, setFbcClaimSet] = useState();
   //새로고침 시 좋아요 유지
+
   const [like, setLike] = useState(() => {
     const saved = localStorage.getItem("like");
     return saved === "true";
   });
+
   const [commentLike, setCommentLike] = useState(() => {
-    const commentSaved = localStorage.getItem("commentLike");
+    const commentSaved = localStorage.getItem(`commentLike_`);
     return commentSaved === "true";
   });
 
+  const [commentCount, setCommentCount] = useState(0);
   //댓글 페이징 처리
   const [reqPageInfo, setReqPageInfo] = useState({
     sideBtnCount: 3, // 현재 페이지 양옆에 버튼을 몇개 둘껀데?
@@ -62,10 +65,13 @@ const FreeBoardDetail = () => {
   });
   const [totalListCount, setTotalListCount] = useState();
 
+  console.log(localStorage);
+
   useEffect(() => {
     localStorage.setItem("like", like);
-    localStorage.setItem("commentLike", commentLike);
-  }, [like, commentLike]);
+    localStorage.setItem(`commentLike_`, commentLike);
+  }, [like]);
+
   useEffect(() => {
     if (fbClaimSet === undefined) {
       return;
@@ -209,6 +215,7 @@ const FreeBoardDetail = () => {
         &order=${reqPageInfo.order}`
       )
       .then((res) => {
+        console.log(res.data);
         setFreeBoardComment(res.data.freeBoardCommentList);
         setTotalListCount(res.data.totalListCount);
       })
@@ -229,15 +236,24 @@ const FreeBoardDetail = () => {
         title: "로그인",
         text: "로그인 후 이용해주세요.",
         icon: "warning",
+        confirmButtonText: "확인",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
       }).then(() => {
         navigate("/member/login");
       });
+      return;
     }
-    if (
-      member !== null &&
-      (fbCommentContent === "" || fbCommentContent === null)
-    ) {
-      alert("댓글을 입력해주세요.");
+    if (fbCommentContent === "" || fbCommentContent === null) {
+      Swal.fire({
+        title: "댓글 입력",
+        text: "댓글을 입력해주세요",
+        icon: "warning",
+        confirmButtonText: "확인",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+      return;
     } else {
       axios
         .post(`${backServer}/freeBoard/detail/regist`, comment)
@@ -449,6 +465,7 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
+  const [commentSet, SetCommentSet] = useState();
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -646,39 +663,38 @@ const FreeBoardDetail = () => {
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
+                e.preventDefault();
                 if (member === null || member === "") {
                   Swal.fire({
                     title: "로그인",
                     text: "로그인 후 이용해주세요.",
                     icon: "warning",
+                    confirmButtonText: "확인",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
                   }).then(() => {
                     navigate("/member/login");
                   });
-                }
-                if (
-                  member !== null &&
-                  (fbCommentContent === "" ||
-                    fbCommentContent === " " ||
-                    fbCommentContent === null)
+                  return;
+                } else if (
+                  fbCommentContent === "" ||
+                  fbCommentContent === null
                 ) {
                   Swal.fire({
                     title: "댓글 입력",
-                    text: "댓글을 입력해주세요.",
+                    text: "댓글을 입력해주세요",
                     icon: "warning",
+                    confirmButtonText: "확인",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
                   });
+                  return;
                 } else {
                   axios
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
                     .then((res) => {
-                      console.log(res);
                       if (res.data === 1) {
-                        Swal.fire({
-                          title: "등록 완료",
-                          text: "댓글 등록 완료",
-                          icon: "success",
-                        }).then(() => {
-                          setFbCommentContent("");
-                        });
+                        setFbCommentContent("");
                       }
                     })
                     .catch((err) => {
@@ -688,7 +704,12 @@ const FreeBoardDetail = () => {
               }
             }}
           />
-          <button className="comment-submit" onClick={commentResist}>
+          <button
+            className="comment-submit"
+            onClick={() => {
+              commentResist();
+            }}
+          >
             등록
           </button>
         </div>
@@ -841,11 +862,11 @@ const FreeBoardDetail = () => {
                               `${backServer}/freeBoard/detail/commentLike?memberNo=${memberNo}&fbCommentNo=${comment.fbCommentNo}`
                             )
                             .then((res) => {
-                              if (res.data !== "" || res.data !== undefined) {
+                              if (res.data !== "" && res.data !== undefined) {
                                 setToggle(!toggle);
                                 setCommentLike(!commentLike);
-                                console.log(res.data);
-                                console.log(comment.cnt);
+                                setCommentCount(res.data.commentLike);
+                                console.log(res.data.commentLike);
                               }
                             })
                             .catch((err) => {
@@ -854,7 +875,7 @@ const FreeBoardDetail = () => {
                         }
                       }}
                     >
-                      {commentLike && comment.fbCommentNo ? (
+                      {commentLike ? (
                         <FavoriteOutlinedIcon
                           style={{ color: "red", userSelect: "none" }}
                         />
@@ -863,7 +884,7 @@ const FreeBoardDetail = () => {
                           style={{ userSelect: "none" }}
                         />
                       )}
-                      {comment.likeCount}
+                      {comment.commentLikeCount}
                     </div>
                     <div className="hour">
                       <AccessTimeOutlinedIcon></AccessTimeOutlinedIcon>

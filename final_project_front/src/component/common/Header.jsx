@@ -27,7 +27,7 @@ const Header = () => {
 };
 
 const MainNavi = () => {
-  const [naviDown, setNaviDown] = useState(null);
+  //const [naviDown, setNaviDown] = useState(null);
   const menuRef = useRef(null);
   const downMenu = (menu) => {
     setNaviDown(naviDown === menu ? null : menu);
@@ -52,67 +52,10 @@ const MainNavi = () => {
             <Link to="/">HOME</Link>
           </button>
         </li>
-        <li className="navi-item trade">
-          <button
-            className="board-btn"
-            onClick={() => {
-              downMenu("trade");
-            }}
-            ref={menuRef}
-          >
-            <Link>중고거래 게시판</Link>
-            {naviDown === "trade" ? (
-              <KeyboardDoubleArrowDownIcon></KeyboardDoubleArrowDownIcon>
-            ) : (
-              <KeyboardDoubleArrowRightIcon></KeyboardDoubleArrowRightIcon>
-            )}
-          </button>
-          {naviDown === "trade" ? (
-            <ul className="navi-down" ref={menuRef}>
-              <li>
-                <Link to="/tradeBoard/list">메인페이지</Link>
-              </li>
-              {/*임의로 넣어놓음*/}
-              <li>
-                <Link to="/">상세페이지</Link>
-              </li>
-              <li>
-                <Link to="/">문의하기</Link>
-              </li>
-            </ul>
-          ) : null}
-        </li>
         <li className="navi-item free">
-          <button
-            className="board-btn"
-            onClick={() => {
-              downMenu("free");
-            }}
-            ref={menuRef}
-          >
-            <Link>자유게시판</Link>
-            {naviDown === "free" ? (
-              <KeyboardDoubleArrowDownIcon></KeyboardDoubleArrowDownIcon>
-            ) : (
-              <KeyboardDoubleArrowRightIcon></KeyboardDoubleArrowRightIcon>
-            )}
+          <button className="board-btn">
+            <Link to="/freeBoard/content">자유게시판</Link>
           </button>
-          {naviDown === "free" ? (
-            <ul className="navi-down" ref={menuRef}>
-              <li>
-                <Link to="/freeBoard/content">메인페이지</Link>
-              </li>
-              <li>
-                <Link to="/">취업</Link>
-              </li>
-              <li>
-                <Link to="/">게임</Link>
-              </li>
-              <li>
-                <Link to="/">잡담</Link>
-              </li>
-            </ul>
-          ) : null}
         </li>
         <li className="navi-item vote">
           <Link to="/vote/list">투표게시판</Link>
