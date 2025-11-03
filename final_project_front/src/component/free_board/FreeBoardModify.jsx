@@ -35,7 +35,8 @@ const FreeBoardModify = (props) => {
   const menus = props.menus;
   const param = useParams();
   const freeBoardNo = param.freeBoardNo; //상세페이지에서 파라미터로 보냄
-
+  console.log(freeBoardThumbnail);
+  console.log(freeBoardNo);
   //수정할 데이터 저장 후 MenuItem에 넣을  default 값
   const [freeBoardSubcategory, setFreeBoardSubcategory] = useState();
   const [freeBoardCategory, setFreeBoardCategory] = useState();
@@ -91,6 +92,15 @@ const FreeBoardModify = (props) => {
     console.log(formData);
     if (freeBoardThumbnail !== null) {
       formData.append("freeBoardThumbnail", freeBoardThumbnail);
+    } else {
+      axios
+        .patch(`${backServer}/freeBoard/image/${freeBoardNo}`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     axios
       .patch(`${backServer}/freeBoard/modify/fix`, formData, {

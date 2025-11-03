@@ -303,10 +303,10 @@ public class FreeBoardService {
 	public List<FreeBoardDTO> recommends(int freeBoardNo) {
 		// 1. 카테고리 넘버, 서브 카테고리 넘버 조회하기
 		FreeBoardDTO info = freeBoardDao.selectOneBoard(freeBoardNo);
-		System.out.println(info);
+		System.out.println("info"+ info);
 		
 		List<FreeBoardDTO> recommendsListInfo = freeBoardDao.recommends(info.getFreeBoardCategoryNo(),info.getFreeBoardSubcategoryNo());
-		System.out.println(recommendsListInfo);
+		System.out.println("리스트"+recommendsListInfo);
 		return recommendsListInfo;
 	}
 
@@ -336,6 +336,12 @@ public class FreeBoardService {
 			resultBoolean="false";
 		}
 		return resultBoolean;
+	}
+	@Transactional
+	public int deleteImg(int freeBoardNo) {
+		int result = freeBoardDao.deleteImg(freeBoardNo);
+		
+		return result;
 	}
 
 	

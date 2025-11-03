@@ -126,22 +126,44 @@ public class FreeBoardController {
 		String filepath = fileUtil.fileUpload(savepath, image);
 		return ResponseEntity.ok(filepath);
 	}
-	//TextEditor에서 이미지 삭제(미구현)
+	//TextEditor에서 이미지 삭제
 	@DeleteMapping("/image/{filename}")
 	public ResponseEntity<String> deleteEditorImage(@PathVariable String filename) {
-	    String savePath = root + "/freeBoard/editor/";
-	    File targetFile = new File(savePath + filename);
-	    
-	    if (targetFile.exists()) {
-	        if (targetFile.delete()) {
-	            return ResponseEntity.ok("이미지 삭제 성공");
-	        } else {
-	            return ResponseEntity.status(500).body("이미지 삭제 실패");
+	    try {
+	        // URL 인코딩되어 들어오는 경우를 대비해 디코딩
+	        String decodedFilename = java.net.URLDecoder.decode(filename, java.nio.charset.StandardCharsets.UTF_8);
+	        
+	        // 저장 경로
+	        String savePath = root + "/freeBoard/editor/";
+	        File targetFile = new File(savePath + decodedFilename);
+	        
+	        // 디버그용 로그
+	        System.out.println("[DELETE] 요청된 이미지 파일: " + targetFile.getAbsolutePath());
+
+	        if (!targetFile.exists()) {
+	            return ResponseEntity.status(404).body("파일이 존재하지 않습니다: " + decodedFilename);
 	        }
-	    } else {
-	        return ResponseEntity.status(404).body("파일이 존재하지 않습니다");
+
+	        // 삭제 시도
+	        boolean deleted = targetFile.delete();
+	        if (deleted) {
+	            return ResponseEntity.ok("이미지 삭제 성공: " + decodedFilename);
+	        } else {
+	            return ResponseEntity.status(500).body("이미지 삭제 실패: " + decodedFilename);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(500).body("서버 오류: " + e.getMessage());
 	    }
 	}
+	//TextEditor 이미지 입력 후 delete
+	@PatchMapping(value = "/image/{freeBoardNo}")
+	public ResponseEntity<Integer> deleteImg(@PathVariable int freeBoardNo){
+		System.out.println("yeah" + freeBoardNo);
+		int result = freeBoardService.deleteImg(freeBoardNo);
+		return ResponseEntity.ok(result);
+	}
+	
 	@PostMapping(value = "/boardWrite")
 	public ResponseEntity<Integer> insertFreeBoard(@ModelAttribute FreeBoardDTO freeBoard, @ModelAttribute MultipartFile freeBoardThumbnail, @ModelAttribute MultipartFile[] freeBoardPhoto){
 		//root : freeBoard 폴더 -> thumbnail폴더 안쪽
@@ -300,8 +322,9 @@ public class FreeBoardController {
 	
 	@GetMapping(value="/detail/{freeBoardNo}/recommends")
 	public ResponseEntity<List<FreeBoardDTO>> recommends(@PathVariable int freeBoardNo){
-		System.out.println(freeBoardNo);
+		System.out.println("회원 번호"+freeBoardNo);
 		List<FreeBoardDTO> recommends = freeBoardService.recommends(freeBoardNo);
+		System.out.println("ㅇㅇㅇㅇㅇ" + recommends);
 		return ResponseEntity.ok(recommends);
 	}
 	

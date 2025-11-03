@@ -162,7 +162,6 @@ const FreeBoardDetail = () => {
     memberNo: memberNo,
     fbCommentContent: fbCommentContent,
   };
-
   dayjs.extend(relativeTime);
 
   // 기존 한국어 locale 불러오기
@@ -404,7 +403,7 @@ const FreeBoardDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [freeBoardNo]);
 
   const prevFreeBoard = (
     freeBoardNo,
@@ -466,18 +465,20 @@ const FreeBoardDetail = () => {
         console.log(err);
       });
   };
-  const [commentSet, SetCommentSet] = useState();
+  console.log(freeBoard);
   return (
     /* 상세페이지  */
     <div className="detail-container">
-      <div className="detail-path">홈 &gt; 취업게시판 &gt; 직장인</div>
+      <div className="detail-path">홈 &gt; 자유게시판 &gt; 직장인</div>
       <div className="detail-title-section">
         <div className="detail-title">{freeBoard.freeBoardTitle}</div>
         {freeBoardMemberNo && (
           <div className="detail-buttonBox">
+            {/*
             <button className="modify-btn" onClick={freeBoardModify}>
               수정
             </button>
+            */}
             <button className="delete-btn" onClick={freeBoardDelete}>
               삭제
             </button>
@@ -496,7 +497,7 @@ const FreeBoardDetail = () => {
             clickLike();
           }}
         >
-          {!like ? (
+          {like ? (
             <FavoriteIcon
               style={{
                 color: "red",
@@ -532,6 +533,7 @@ const FreeBoardDetail = () => {
           <ul>
             {recommends &&
               recommends.map((recommend, i) => {
+                console.log(recommend);
                 return (
                   <li
                     key={"recommend-" + i}
