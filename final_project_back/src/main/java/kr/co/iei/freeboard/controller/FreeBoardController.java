@@ -114,6 +114,7 @@ public class FreeBoardController {
 
 		return ResponseEntity.ok(subList);
 	}
+	
 	@GetMapping(value="/mainCategory")
 	public ResponseEntity<List<FreeBoardDTO>> mainCategory(@RequestParam int freeBoardCategoryNo){
 		List<FreeBoardDTO> list = freeBoardService.mainCategory(freeBoardCategoryNo);
@@ -126,6 +127,13 @@ public class FreeBoardController {
 		String filepath = fileUtil.fileUpload(savepath, image);
 		return ResponseEntity.ok(filepath);
 	}
+	@GetMapping(value = "/detail/freeBoardcate")
+	public ResponseEntity<FreeBoardCategoryDTO> selectCate(@RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
+		FreeBoardCategoryDTO freeBoardCate = freeBoardService.selectCate(freeBoardSubcategoryNo, freeBoardCategoryNo);
+		System.out.println("freeBoard : " + freeBoardCate);
+		return ResponseEntity.ok(freeBoardCate);
+	}
+	/*
 	//TextEditor에서 이미지 삭제
 	@DeleteMapping("/image/{filename}")
 	public ResponseEntity<String> deleteEditorImage(@PathVariable String filename) {
@@ -156,6 +164,7 @@ public class FreeBoardController {
 	        return ResponseEntity.status(500).body("서버 오류: " + e.getMessage());
 	    }
 	}
+	*/
 	//TextEditor 이미지 입력 후 delete
 	@PatchMapping(value = "/image/{freeBoardNo}")
 	public ResponseEntity<Integer> deleteImg(@PathVariable int freeBoardNo){
@@ -214,7 +223,7 @@ public class FreeBoardController {
 		int result = freeBoardService.insertComment(comment);
 		return ResponseEntity.ok(result);
 	}
-
+	
 	@GetMapping(value = "/modify")//수정할 게시글 정보 가져옴
 	public ResponseEntity<FreeBoardDTO> selectOneBoard(@RequestParam int freeBoardNo){
 		

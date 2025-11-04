@@ -102,7 +102,10 @@ const ContentFreeBoard = () => {
           setNoticeList(res.data);
         })
         .catch((err) => {
-          navigate("/pageerror");
+          Swal.fire({
+            title: "경고",
+            text: "공지사항을 입력하세요",
+          });
         });
   }, [noticeSet]);
 
