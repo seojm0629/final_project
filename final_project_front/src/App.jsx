@@ -19,6 +19,7 @@ import TradeBoardWrite from "./component/trade_board/TradeBoardWrite";
 import VoteDetail from "./component/vote/VoteDetail";
 import FreeBoardDetail from "./component/free_board/FreeBoardDetail";
 import EventMail from "./component/member/EventMail";
+import PageError from "./component/common/PageError";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
           <Route path="/vote/voteDetail/:voteNo" element={<VoteDetail />} />
           <Route path="/tradeBoard/write" element={<TradeBoardWrite />} />
+          <Route path="/pageerror" element={<PageError />} />
         </Routes>
         <Footer></Footer>
       </main>

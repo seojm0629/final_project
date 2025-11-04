@@ -15,6 +15,7 @@ import relativeTime from "dayjs/plugin/relativeTime"; // 상대 시간 확장불
 import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
 import { MenuList } from "@mui/material";
 import { noteModalState } from "../utils/RecoilData";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(relativeTime); // 상대 시간 플러그인 확장
 dayjs.locale("ko"); // 한국어 로케일 설정
 
@@ -30,6 +31,7 @@ const Note = (props) => {
   const [selectNoteNos, setSelectNoteNos] = useState([]); // 삭제할 선택된 노트번호들 배열
   const [noteModal, setNoteModal] = useRecoilState(noteModalState);
   const [radioCheck, setRadioCheck] = useState("");
+  const navigate = useNavigate();
 
   // 기존 모달 열기 부분 대신 아래로 수정
   useEffect(() => {
@@ -49,8 +51,6 @@ const Note = (props) => {
         ? checkSelect.filter((id) => id !== noteNo)
         : [...checkSelect, noteNo];
 
-      console.log("현재 선택된 쪽지번호:", newList);
-
       return newList;
     });
   };
@@ -60,20 +60,15 @@ const Note = (props) => {
     if (checked) {
       const allIds = list.map((note) => note.noteNo);
       setSelectNoteNos(allIds);
-      console.log("전체 선택된것:", allIds);
     } else {
       setSelectNoteNos([]);
-      console.log("전체 선택 해제");
     }
   };
 
   //삭제 버튼 클릭 시 axios 요청하기
   const deleteNotes = () => {
-    console.log("삭제 요청할 쪽지번호확인:", selectNoteNos);
     //삭제 실행햇을때 불러오는 값들이 0이 아니고 1이므로 반대로 값을 줘야함
     const deleteType = selectMenu === "send" ? "receive" : "send";
-
-    console.log("요청한 타입", deleteType);
 
     if (selectNoteNos.length === 0) {
       Swal.fire({
@@ -105,6 +100,7 @@ const Note = (props) => {
             text: "쪽지 삭제 중 오류가 발생했습니다.",
             icon: "error",
           });
+          navigate("/pageerror");
         });
     }
   };
@@ -131,7 +127,6 @@ const Note = (props) => {
     const value = e.target.value;
     const newNote = { ...note, [name]: value };
     setNote(newNote);
-    console.log(newNote);
   };
 
   const sendNote = () => {
@@ -183,6 +178,7 @@ const Note = (props) => {
           text: "상대방의 아이디를 찾을 수 없습니다.",
           icon: "error",
         });
+        navigate("/pageerror");
       });
   };
 
@@ -191,18 +187,16 @@ const Note = (props) => {
     setSelectMenu(menu); //클릭했을때 함수 변경용
     setDetailContent(false);
     setSelectedContent(null);
-    console.log("memberId in menuClick:", memberId);
+
     if (menu === "send") {
       //받은 메시지 리스트목록이라서 보낸사람아이디로 나오게
       axios
         .get(`${backServer}/note/received/${memberId}`)
         .then((res) => {
-          console.log("서버 응답(res.data):", res.data);
-          console.log("받은쪽지 리스트:", res.data);
           setReceiveListNote(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
     }
     if (menu === "receive") {
@@ -210,11 +204,10 @@ const Note = (props) => {
       axios
         .get(`${backServer}/note/send/${memberId}`)
         .then((res) => {
-          console.log("보낸쪽지 리스트:", res.data);
           setSendListNote(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
     }
   };
@@ -320,7 +313,6 @@ const Note = (props) => {
                     </tr>
                   ) : (
                     receiveListNote.map((receive, i) => {
-                      console.log(receive);
                       return (
                         <tr key={"receive-" + i}>
                           <td>
@@ -338,11 +330,9 @@ const Note = (props) => {
                                   .patch(
                                     `${backServer}/note/content?noteNo=${receive.noteNo}`
                                   )
-                                  .then((res) => {
-                                    console.log(res);
-                                  })
+                                  .then((res) => {})
                                   .catch((err) => {
-                                    console.log(err);
+                                    navigate("/pageerror");
                                   });
                               }
                               setSelectedContent(receive);

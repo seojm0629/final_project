@@ -130,7 +130,12 @@
 	</update>
 	
 	<select id="checkOption" resultType="int">
-		select vote_option_no from vote_result_tbl where vote_no = #{voteNo} and member_no = #{memberNo}
+	select decode(cnt,1,(select vote_option_no from vote_result_tbl where vote_no = #{voteNo} and member_no = #{memberNo}),0,cnt) vote_option_no from
+(select count(*) cnt from
+(select vote_option_no from vote_result_tbl where vote_no = #{voteNo} and member_no = #{memberNo}))
+	
+		
+
 	</select>
 	
 	<update id="reVote">

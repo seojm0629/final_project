@@ -98,7 +98,7 @@ const MemberJoin = (props) => {
             
         })
         .catch((err)=>{
-            console.log(err);
+            alert("이메일 형식이 올바르지 않습니다.");
         })
     }
 
@@ -187,7 +187,7 @@ const MemberJoin = (props) => {
                 }
             })
             .catch((err)=>{
-                console.log("idCheck : ", err);
+                alert("입력한 아이디를 다시 확인해주세요.")
             })
         } else {
             setIdCheck(2);
@@ -207,7 +207,7 @@ const MemberJoin = (props) => {
                 }
             })
             .catch((err)=>{
-                console.log(err);
+                alert("입력한 닉네임을 다시 확인해주세요.")
             })
         } else {
             setNickNameCheck(2);
@@ -230,7 +230,7 @@ const MemberJoin = (props) => {
                 }
             })
             .catch((err)=>{
-                console.log(err);
+                alert("입력한 전화번호를 다시 확인해주세요.")
             })
         } else {
             setPhoneNoCheck(2);
@@ -286,7 +286,11 @@ const MemberJoin = (props) => {
                 
             })
             .catch((err)=>{
-                console.log(err);
+                Swal.fire({
+                    title : "회원가입 실패",
+                    text : "빈칸이 없는지 확인해주세요.",
+                    icon : "info",
+                })
             })
             
         } else {

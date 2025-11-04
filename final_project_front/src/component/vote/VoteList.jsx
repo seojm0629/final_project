@@ -53,7 +53,9 @@ const VoteList = () => {
         setTotalListCount(res.data.totalListCount); //받아오는 총 게시물 수
         setVoteList(res.data.selectVoteList); // 받아오는 게시물 수를 배열에 저장
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, [reqPageInfo, order, memberNo]);
 
   useEffect(() => {
@@ -65,7 +67,9 @@ const VoteList = () => {
           setShowNotice(true);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, []);
 
   useEffect(() => {

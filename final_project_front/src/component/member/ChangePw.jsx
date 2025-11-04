@@ -46,7 +46,10 @@ const ChangePw = () => {
             }
         })
         .catch((err)=>{
-            console.log(err);
+            Swal.fire({
+                title : "비밀번호 확인",
+                icon : "warning",
+            })
         })
     }
 
@@ -71,7 +74,11 @@ const ChangePw = () => {
                 }
             })
             .catch((err)=>{
-                console.log(err);
+                Swal.fire({
+                title : "비밀번호 변경 실패",
+                text : "입력한 비밀번호를 확인해주세요.",
+                icon : "warning",
+            })
             })
         } else {
             Swal.fire({
