@@ -191,7 +191,11 @@ const VoteDetail = () => {
           setRefreshToggle(!refreshToggle);
         })
         .catch((err) => {
-          navigate("/pageerror");
+          Swal.fire({
+            title: "이미 투표한 항목입니다.",
+            text: "다른 항목을 고르세요",
+            icon: "error",
+          });
         });
     }
   };
