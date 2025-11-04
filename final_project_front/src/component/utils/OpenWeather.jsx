@@ -7,7 +7,7 @@ const OpenWeather = () => {
     const [weather, setWeather] = useState(null);
     const [dayYN, setDayYN] = useState(true);
     const [city, setCity] = useState("");
-    const cities = ["seoul", "busan"]
+    const cities = ["seoul", "incheon", "busan"]
     
 
     const apiKey = "0fe2985439b43837084388bfd8faf780";
@@ -103,7 +103,7 @@ const WeatherButton = ( {cities, setCity }) => {
 
     return(
         <div className="weather-buttons">
-            <Button variant="primary" onClick={()=>setCity("")}>내 위치</Button>
+            
             {
                 cities.map((city, idx) => {
                     return <Button key={"idx- " + idx} variant="primary" onClick={() => setCity(city)}>{city}</Button>
