@@ -20,8 +20,11 @@ import VoteDetail from "./component/vote/VoteDetail";
 import FreeBoardDetail from "./component/free_board/FreeBoardDetail";
 import EventMail from "./component/member/EventMail";
 import PageError from "./component/common/PageError";
+import { memberTypeState } from "./component/utils/RecoilData";
+import { useRecoilState } from "recoil";
 
 function App() {
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
   return (
     <div className="wrap">
       <Header></Header>
@@ -34,7 +37,12 @@ function App() {
           <Route path="/member/*" element={<MemberMypage />} />
 
           <Route path="/member/event" element={<EventMail />} />
-          <Route path="/admin" element={<AdminMain />} />
+          <Route
+            path="/admin"
+            element={
+              memberType && memberType === 1 ? <AdminMain /> : <PageError />
+            }
+          />
           <Route path="/service/agree" element={<ServiceAgree />} />
           <Route
             path="/freeBoard/detail/:freeBoardNo/:viewCount"
