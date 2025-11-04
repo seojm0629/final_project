@@ -26,7 +26,6 @@ const FreeBoardDetail = () => {
 
   const params = useParams();
   const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
-  console.log(params);
   const viewCount = params.viewCount;
   const [freeBoard, setFreeBoard] = useState({});
   const [freeBoardComment, setFreeBoardComment] = useState([
@@ -466,17 +465,20 @@ const FreeBoardDetail = () => {
         navigate("/pageerror");
       });
   };
+  console.log(freeBoard);
+  useEffect(() => {
+    axios
+      .get(
+        `${backServer}/freeBoard/detail/freeBoardcate?freeBoardNo=${freeBoardNo}`
+      )
+      .then((res) => {
+        setFreeBoardCategory(res.data.freeBoardCategory);
+      })
+      .catch((err) => {
+        navigate("/pageerror");
+      });
+  }, [freeBoardNo]);
 
-  axios
-    .get(
-      `${backServer}/freeBoard/detail/freeBoardcate?freeBoardSubcategoryNo=${freeBoard.freeBoardSubcategoryNo}&freeBoardCategoryNo=${freeBoard.freeBoardCategoryNo}`
-    )
-    .then((res) => {
-      setFreeBoardCategory(res.data.freeBoardCategory);
-    })
-    .catch((err) => {
-      navigate("/pageerror");
-    });
   return (
     /* 상세페이지  */
     <div className="detail-container">
@@ -540,6 +542,7 @@ const FreeBoardDetail = () => {
           )}
           <div
             className="detail-freeBoardContent"
+            style={{ marginLeft: "10px" }}
             dangerouslySetInnerHTML={{ __html: freeBoard.freeBoardContent }}
           ></div>
         </div>

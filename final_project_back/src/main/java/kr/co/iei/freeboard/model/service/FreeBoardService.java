@@ -344,8 +344,8 @@ public class FreeBoardService {
 		return result;
 	}
 
-	public FreeBoardCategoryDTO selectCate(int freeBoardCategoryNo, int freeBoardSubcategoryNo) {
-		FreeBoardCategoryDTO freeBoardCate = freeBoardDao.selectCategory(freeBoardSubcategoryNo, freeBoardCategoryNo);
+	public FreeBoardCategoryDTO oneCate(int freeBoardNo) {
+		FreeBoardCategoryDTO freeBoardCate = freeBoardDao.oneCate(freeBoardNo);
 		return freeBoardCate;
 	}
 

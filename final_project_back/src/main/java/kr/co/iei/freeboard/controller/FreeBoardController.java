@@ -128,8 +128,8 @@ public class FreeBoardController {
 		return ResponseEntity.ok(filepath);
 	}
 	@GetMapping(value = "/detail/freeBoardcate")
-	public ResponseEntity<FreeBoardCategoryDTO> selectCate(@RequestParam int freeBoardSubcategoryNo, @RequestParam int freeBoardCategoryNo){
-		FreeBoardCategoryDTO freeBoardCate = freeBoardService.selectCate(freeBoardSubcategoryNo, freeBoardCategoryNo);
+	public ResponseEntity<FreeBoardCategoryDTO> oneCate(@RequestParam int freeBoardNo){
+		FreeBoardCategoryDTO freeBoardCate = freeBoardService.oneCate(freeBoardNo);
 		System.out.println("freeBoard : " + freeBoardCate);
 		return ResponseEntity.ok(freeBoardCate);
 	}
