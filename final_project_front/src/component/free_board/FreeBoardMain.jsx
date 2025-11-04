@@ -138,7 +138,11 @@ const FreeBoardMain = () => {
               value={freeBoardTitle}
               onChange={changeTitle}
             />
-            <ManageSearchIcon></ManageSearchIcon>
+            <ManageSearchIcon
+              onClick={() => {
+                searchTitle();
+              }}
+            ></ManageSearchIcon>
           </form>
         </div>
 
