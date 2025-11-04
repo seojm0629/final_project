@@ -63,6 +63,7 @@ const VoteInsert = () => {
           text: "항목을 모두 채우세요.",
           icon: "error",
         });
+        navigate("/pageerror");
       });
   };
   const today = new Date().toISOString().split("T")[0]; // 오늘 날짜 구하기

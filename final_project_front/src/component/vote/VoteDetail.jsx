@@ -27,7 +27,6 @@ const VoteDetail = () => {
   const [vote, setVote] = useState({ voteCommentList: [] }); // 기본정보 담을 스테이트
   const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
   const [labels, setLabels] = useState([]);
-  const [values, setValues] = useState([]);
 
   // 모든 항목의 값이 0인지 확인하는 값
   const voteZero = values.every((v) => v === 0);
@@ -72,7 +71,9 @@ const VoteDetail = () => {
       .then((res) => {
         setVote(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, [refreshToggle]);
   //리스트 항목 가져오는 엑시오스
 
@@ -82,7 +83,9 @@ const VoteDetail = () => {
       .then((res) => {
         setVoteList(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, []);
 
   useEffect(() => {
@@ -108,7 +111,9 @@ const VoteDetail = () => {
       .then((res) => {
         setDefaultCheck(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, []);
 
   const optionChange = (e) => {
@@ -160,6 +165,7 @@ const VoteDetail = () => {
             text: "이미 투표에 참여하셨습니다.",
             icon: "error",
           });
+          navigate("/pageerror");
         });
     } else {
       //재투표 엑시오스
@@ -172,7 +178,9 @@ const VoteDetail = () => {
           });
           setRefreshToggle(!refreshToggle);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          navigate("/pageerror");
+        });
     }
   };
   const voteDelete = () => {
@@ -197,7 +205,9 @@ const VoteDetail = () => {
             }
             navigate("/vote/list");
           })
-          .catch((err) => {});
+          .catch((err) => {
+            navigate("/pageerror");
+          });
       }
     });
   };
@@ -223,7 +233,9 @@ const VoteDetail = () => {
             }
             navigate("/vote/list");
           })
-          .catch((err) => {});
+          .catch((err) => {
+            navigate("/pageerror");
+          });
       }
     });
   };
@@ -247,7 +259,9 @@ const VoteDetail = () => {
         setRefreshToggle(!refreshToggle);
       })
 
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   };
 
   const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
@@ -276,7 +290,9 @@ const VoteDetail = () => {
         setRefreshToggle(!refreshToggle);
         setModifyCommentNo(null);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   };
   const commentLike = (voteCommentNo) => {
     const voteCommentLike = {
@@ -308,7 +324,9 @@ const VoteDetail = () => {
           });
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   };
   const commentReport = (voteCommentNo) => {
     if (!memberNo) {
@@ -359,6 +377,7 @@ const VoteDetail = () => {
               text: "신고 처리 중 문제가 발생했습니다.",
               icon: "error",
             });
+            navigate("/pageerror");
           });
       }
     });
@@ -403,6 +422,7 @@ const VoteDetail = () => {
           text: "좋아요 처리 중 오류가 발생했습니다.",
           icon: "error",
         });
+        navigate("/pageerror");
       });
   };
 
@@ -455,6 +475,7 @@ const VoteDetail = () => {
               text: "신고 처리 중 문제가 발생했습니다.",
               icon: "error",
             });
+            navigate("/pageerror");
           });
       }
     });
@@ -722,7 +743,9 @@ const VoteDetail = () => {
                                     setRefreshToggle(!refreshToggle);
                                   }
                                 })
-                                .catch((err) => {});
+                                .catch((err) => {
+                                  navigate("/pageerror");
+                                });
                             }
                           });
                         }}
