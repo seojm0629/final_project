@@ -878,10 +878,12 @@ const FreeBoardDetail = () => {
                     ></div>
                   )}
 
-                  <div className="comment-sub">
+                  <div
+                    className="comment-sub"
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
                     <div
                       className="heart"
-                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         setFbCommentNo(comment.fbCommentNo);
                         if (!member) {
