@@ -12,13 +12,10 @@ import BaseModal from "../utils/BaseModal";
 const ContentFreeBoard = () => {
   const [noticeValue, setNoticeValue] = useState("");
   const [refreshToggle, setRefreshToggle] = useState(true);
-  console.log(noticeValue);
 
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   const [memberId, setMemberId] = useRecoilState(loginIdState);
-  console.log(memberNoState);
-  console.log(memberNo);
-  console.log(memberId);
+
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -49,36 +46,32 @@ const ContentFreeBoard = () => {
   ];
 
   const [categoryAddText, setCategoryAddText] = useState("");
-  console.log(categoryAddText);
+
   const [subCategoryAddText, setSubCategoryAddText] = useState("");
-  console.log(subCategoryAddText);
 
   const [insertCate, setInsertCate] = useState();
   const [deleteCate, setDeleteCate] = useState();
   const [noticeTarget, setNoticeTarget] = useState("1");
 
-  console.log(insertCate);
-
   useEffect(() => {
-    axios
-      .post(
-        `${import.meta.env.VITE_BACK_SERVER}/admin/insertFreeCate`,
-        insertCate
-      )
-      .then((res) => {
-        console.log(res.data);
+    insertCate &&
+      axios
+        .post(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/insertFreeCate`,
+          insertCate
+        )
+        .then((res) => {
+          setRefreshToggle(!refreshToggle);
+          Swal.fire({
+            title: "알림",
+            text: `카테고리 추가가 완료되었습니다.`,
 
-        setRefreshToggle(!refreshToggle);
-        Swal.fire({
-          title: "알림",
-          text: `카테고리 추가가 완료되었습니다.`,
-
-          icon: "success",
+            icon: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, [insertCate]);
 
   const [noticeSet, setNoticeSet] = useState();
@@ -91,7 +84,6 @@ const ContentFreeBoard = () => {
     axios
       .get(`${import.meta.env.VITE_BACK_SERVER}/admin/selectAllNotice`)
       .then((res) => {
-        console.log(res.data);
         setNoticeList(res.data);
       })
       .catch((err) => {
@@ -99,17 +91,19 @@ const ContentFreeBoard = () => {
       });
   }, [refreshToggle]);
   useEffect(() => {
-    axios
-      .post(`${import.meta.env.VITE_BACK_SERVER}/admin/insertNotice`, noticeSet)
-      .then((res) => {
-        console.log(res.data);
-        setNoticeList(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    noticeSet &&
+      axios
+        .post(
+          `${import.meta.env.VITE_BACK_SERVER}/admin/insertNotice`,
+          noticeSet
+        )
+        .then((res) => {
+          setNoticeList(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }, [noticeSet]);
-  console.log(noticeList);
 
   useEffect(() => {
     if (deleteCate === undefined) {
@@ -126,7 +120,6 @@ const ContentFreeBoard = () => {
         cancelButtonText: "아니요",
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log("하위까지 모두 삭제");
           //여기서 메인 카테고리 삭제 로직 돌려야함
           axios
             .delete(
@@ -135,7 +128,6 @@ const ContentFreeBoard = () => {
               }`
             )
             .then((res) => {
-              console.log(res.data);
               if (res.data === 1) {
                 setRefreshToggle(!refreshToggle);
                 Swal.fire({
@@ -151,7 +143,7 @@ const ContentFreeBoard = () => {
       });
     } else if (categoryAddText && subCategoryAddText) {
       //여기서 메인/서브 카테고리 삭제 로직 돌려야 함
-      console.log("입력된 메인/서브 카테고리 값 삭제");
+
       //1. 입력된 값을 서버에 전송하고
       axios
         .delete(
@@ -160,7 +152,6 @@ const ContentFreeBoard = () => {
           }/admin/freeboard?delCate=${categoryAddText}&subCate=${subCategoryAddText}`
         )
         .then((res) => {
-          console.log(res.data);
           if (res.data === 1) {
             setRefreshToggle(!refreshToggle);
             Swal.fire({
@@ -193,30 +184,28 @@ const ContentFreeBoard = () => {
   const [delNoticeNo, setDelNoticeNo] = useState();
 
   useEffect(() => {
-    axios
-      .delete(
-        `${
-          import.meta.env.VITE_BACK_SERVER
-        }/admin/freeboard/notice/${delNoticeNo}/delete`
-      )
-      .then((res) => {
-        console.log(res.data);
-
-        if (res.data === 1) {
-          setRefreshToggle(!refreshToggle);
-          Swal.fire({
-            title: "알림",
-            text: "공지사항 삭제가 완료되었습니다.",
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    delNoticeNo &&
+      axios
+        .delete(
+          `${
+            import.meta.env.VITE_BACK_SERVER
+          }/admin/freeboard/notice/${delNoticeNo}/delete`
+        )
+        .then((res) => {
+          if (res.data === 1) {
+            setRefreshToggle(!refreshToggle);
+            Swal.fire({
+              title: "알림",
+              text: "공지사항 삭제가 완료되었습니다.",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }, [delNoticeNo]);
 
   const [noticeIsactive, setNoticeIsactive] = useState();
-  console.log(noticeIsactive);
 
   useEffect(() => {
     noticeIsactive &&
@@ -228,7 +217,6 @@ const ContentFreeBoard = () => {
           noticeIsactive
         )
         .then((res) => {
-          console.log(res.data);
           if (res.data === 1) {
             setRefreshToggle(!refreshToggle);
             Swal.fire({
@@ -381,7 +369,6 @@ const ContentFreeBoard = () => {
               <tbody>
                 {noticeList &&
                   noticeList.map((notice, i) => {
-                    console.log(notice.noticeIsactive);
                     return (
                       <tr key={"noticeList" + i}>
                         <td>{notice.noticeNo}</td>

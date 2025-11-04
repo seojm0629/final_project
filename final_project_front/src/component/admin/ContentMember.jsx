@@ -134,7 +134,7 @@ const ContentMember = () => {
   useEffect(() => {
     //console.log("pageInfo : ");
     //console.log(reqPageInfo);
-    console.log("리스트 가져오기 시작");
+
     setMemberLoading(true);
 
     axios
@@ -153,7 +153,7 @@ const ContentMember = () => {
         //console.log(userDetailInfo.length);
         setMemberList(res.data.pageList);
         setTotalListCount(res.data.totalListCount);
-        console.log("리스트 가져오기 끝");
+
         setMemberLoading(false);
       })
       .catch((err) => {
@@ -258,8 +258,6 @@ const ContentMember = () => {
 
   const [userDetailInfo, setUserDetailInfo] = useState({});
   const reqUserInfo = (member) => {
-    console.log("reqUser");
-    console.log(member);
     setUserDetailInfo({ ...userDetailInfo, member: member });
     setReqDetailPageInfo({ ...reqDetailPageInfo, pageNo: 1 });
   };
@@ -282,13 +280,8 @@ const ContentMember = () => {
     );
 
     const confirmData = () => {
-      console.log(m);
-      console.log(dateValue);
-      console.log(dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D);
       //const banText =
       //  dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D;
-      console.log(timeValue);
-      console.log(timeValue.$H + ":" + timeValue.$m + ":" + timeValue.$s);
 
       const banText =
         dateValue.$y +
@@ -302,18 +295,16 @@ const ContentMember = () => {
         timeValue.$m +
         ":" +
         timeValue.$s;
-      console.log(banText);
-      console.log(banReason);
+
       const banSet = {
         memberNo: m.memberNo,
         memberBenFinishDate: banText,
         memberBanContent: banReason,
       };
-      console.log(banSet);
+
       axios
         .post(`${import.meta.env.VITE_BACK_SERVER}/admin/memberBan`, banSet)
         .then((res) => {
-          console.log(res.data);
           Swal.fire({
             title: "알림",
             text: `해당 이용자 정지되었습니다.`,
@@ -325,7 +316,6 @@ const ContentMember = () => {
           setTimeValue(dayjs());
           setBanReason("");
           setReqListToggle(!reqListToggle);
-          console.log(reqListToggle);
         });
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -415,11 +405,9 @@ const ContentMember = () => {
         </td>
         <td
           onMouseOver={() => {
-            console.log(isModalOpen);
             setBenMode(true);
           }}
           onMouseOut={() => {
-            console.log(isModalOpen);
             !isModalOpen && setBenMode(false);
           }}
           key={"claim-" + m.memberNo}

@@ -15,7 +15,6 @@ const ContentStatistics = () => {
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
 
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  console.log(memberType);
 
   const searchCriteria = ["5년", "1년", "1개월", "기타"];
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
@@ -165,7 +164,6 @@ const ContentStatistics = () => {
         //console.log(res.data.accessionCounts);
         const results = res.data.accessionCounts;
 
-        console.log(res.data);
         setRu(res.data.ru);
         setBc(res.data.bc);
         setBcc(res.data.bcc);
@@ -419,7 +417,6 @@ const ChartTemplate = (props) => {
 
 const DiffCount = () => {
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-  console.log(memberType);
   const [ru, setRu] = useState(0);
   const [bc, setBc] = useState(0);
   const [bcc, setBcc] = useState(0);
