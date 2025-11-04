@@ -136,7 +136,7 @@ public class VoteController {
 	}
 	@PatchMapping(value = "/reVote")
 	public ResponseEntity<Integer> reVote(@RequestBody VoteResult result) {
-
+		System.out.println("dddddddddddddddd"+result);
 	
 		int voteResult = voteService.reVote(result);
 		
