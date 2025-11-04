@@ -813,7 +813,7 @@ const FreeBoardDetail = () => {
                     />
                   </div>
 
-                  {comment.memberNo === memberNo &&
+                  {(memberType === 1 || comment.memberNo === memberNo) &&
                     cmtModify === comment.fbCommentNo && (
                       <div className="comment-modify">
                         <textarea
