@@ -2,6 +2,7 @@ import { Box, Modal } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import "../member/findModal.css";
+import Swal from "sweetalert2";
 
 const style = {
     position: 'absolute',
@@ -94,7 +95,11 @@ const FindPwModal = () => {
                 
             })
             .catch((err)=>{
-                console.log(err);
+                Swal.fire({
+                    title : "비밀번호 찾기 실패",
+                    text : "입력한 정보를 확인해주세요.",
+                    icon: "info",
+                })
             })
         }
     }
