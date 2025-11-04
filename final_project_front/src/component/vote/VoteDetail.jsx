@@ -158,6 +158,8 @@ const VoteDetail = () => {
     };
 
     if (defaultCheck === undefined) {
+      console.log("defalut1", defaultCheck);
+      console.log(resultData);
       axios //결과 테이블에 인설트 완료
         .post(`${backServer}/vote/result`, resultData)
         .then((res) => {
@@ -166,6 +168,7 @@ const VoteDetail = () => {
             icon: "success",
           });
           setRefreshToggle(!refreshToggle);
+          setDefaultCheck(resultData.voteOptionNo);
         })
         .catch((err) => {
           Swal.fire({
@@ -177,6 +180,7 @@ const VoteDetail = () => {
         });
     } else {
       //재투표 엑시오스
+      console.log("defalut2", defaultCheck);
       axios
         .patch(`${backServer}/vote/reVote`, resultData)
         .then((res) => {

@@ -10,7 +10,7 @@ const VoteInsert = () => {
   const memberNo = useRecoilValue(memberNoState); // 사용자 ID
   const [voteTitle, setVoteTitle] = useState("");
   const [voteList, setVoteList] = useState(["", ""]); //기본 2개항목 생성
-  const [endDate, setEndDate] = useState(""); //끝나는 날짜 받기
+
   const [endTime, setEndTime] = useState(""); //끝나는 시간 받기
   const navigate = useNavigate();
 
@@ -63,10 +63,10 @@ const VoteInsert = () => {
           text: "항목을 모두 채우세요.",
           icon: "error",
         });
-        navigate("/pageerror");
       });
   };
   const today = new Date().toISOString().split("T")[0]; // 오늘 날짜 구하기
+  const [endDate, setEndDate] = useState(today); //끝나는 날짜 받기
   return (
     <div className="vote-insert-box">
       <div className="vote-insert-title">

@@ -99,6 +99,10 @@ public interface FreeBoardDao {
 
 	int deleteImg(int freeBoardNo);
 
+	FreeBoardCategoryDTO oneCate(int freeBoardNo);
+
+	
+
 
 	
 
