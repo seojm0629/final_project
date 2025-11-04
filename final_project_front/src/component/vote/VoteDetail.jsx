@@ -272,7 +272,11 @@ const VoteDetail = () => {
       })
 
       .catch((err) => {
-        navigate("/pageerror");
+        Swal.fire({
+          title: "에러",
+          text: "빈칸은 등록할 수 없습니다.",
+          icon: "error",
+        });
       });
   };
 
@@ -669,18 +673,20 @@ const VoteDetail = () => {
             vote.voteCommentList?.map((c) => (
               <div key={c.voteCommentNo} className="comment-item">
                 <div className="comment-top">
-                  <div>{c.memberNickname}</div>
+                  <div className="commemt-nickname">{c.memberNickname}</div>
                   {/* 수정 버튼 눌렀을때  로그인했을때 같은 번호일때만 보이기 */}
                   {modifyCommentNo === c.voteCommentNo ? (
                     <div className="comment-modifiy-box">
-                      <textarea
-                        className="modifiy-text"
-                        type="text"
-                        value={modifyFbCommentContent}
-                        onChange={(e) =>
-                          setModifyFbCommentContent(e.target.value)
-                        }
-                      />
+                      <div className="textarea-box">
+                        <textarea
+                          className="modifiy-text"
+                          type="text"
+                          value={modifyFbCommentContent}
+                          onChange={(e) =>
+                            setModifyFbCommentContent(e.target.value)
+                          }
+                        />
+                      </div>
                       <div className="comment-modifiy-buttonbox">
                         <button
                           className="save-btn"
