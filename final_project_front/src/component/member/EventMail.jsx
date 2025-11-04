@@ -62,7 +62,7 @@ const EventMail = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          alert("이메일 전송을 실패하였습니다.");
         });
     }
   };
@@ -93,7 +93,7 @@ const EventMail = () => {
         setMemberList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        alert("회원 정보를 조회할 수 없습니다.");
       });
   }, []);
 

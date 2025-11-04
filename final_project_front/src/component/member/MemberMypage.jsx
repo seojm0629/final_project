@@ -47,7 +47,7 @@ const MemberMypage = () => {
                 setMember(res.data);
             })
             .catch((err)=>{
-                console.log(err);
+                console.log("에러 발생");
             })    
     },[memberId]);
     const navigate = useNavigate();

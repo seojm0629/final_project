@@ -26,7 +26,7 @@ const ChangeEmail = () => {
             }
         })
         .catch((err)=>{
-            console.log(err);
+            alert("해당 정보를 찾을 수 없습니다.");
         })
     },[])
 
@@ -115,7 +115,7 @@ const ChangeEmail = () => {
             
         })
         .catch((err)=>{
-            console.log(err);
+            alert("이메일 형식 및 입력 정보를 확인해주세요");
         })
     }
 
@@ -202,7 +202,11 @@ const ChangeEmail = () => {
             }
         })
         .catch((err)=>{
-            console.log(err);
+            Swal.fire({
+                title : "이메일 입력 오류",
+                text : "존재하는 이메일이 아닙니다.",
+                icon : "warning",
+            })
         })
     }
 
