@@ -97,6 +97,8 @@ public interface FreeBoardDao {
 	FreeBoardDTO selectThumb(int freeBoardNo);
 	int isLike(HashMap<String, Object> isLikeSet);
 
+	int deleteImg(int freeBoardNo);
+
 
 	
 

@@ -70,7 +70,7 @@ const FreeBoardMain = () => {
         setMenus(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, []);
   const changeTitle = (e) => {
@@ -87,7 +87,7 @@ const FreeBoardMain = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, []);
   useEffect(() => {
@@ -297,8 +297,8 @@ const FreeBoardContent = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
         setResult(true);
+        navigate("/pageerror");
       });
   }, [
     reqPageInfo.order,
@@ -342,7 +342,7 @@ const FreeBoardContent = (props) => {
                       console.log(res.data.viewCount);
                     })
                     .catch((err) => {
-                      console.log(err);
+                      navigate("/pageerror");
                     });
                   setToggle(!toggle);
                 }}
@@ -390,7 +390,7 @@ const FreeBoardContent = (props) => {
                       );
                     })
                     .catch((err) => {
-                      console.log(err);
+                      navigate("/pageerror");
                     });
                   setToggle(!toggle);
                 }}
@@ -463,7 +463,7 @@ const FreeBoardContent = (props) => {
                           console.log(res.data);
                         })
                         .catch((err) => {
-                          console.log(err);
+                          navigate("/pageerror");
                         });
                       setToggle(!toggle);
                     }}
@@ -563,7 +563,7 @@ const FreeBoardSideMenuMap = (props) => {
         setMenus(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [toggle]);
   return (

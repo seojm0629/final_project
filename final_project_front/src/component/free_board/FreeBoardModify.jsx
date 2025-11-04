@@ -35,7 +35,8 @@ const FreeBoardModify = (props) => {
   const menus = props.menus;
   const param = useParams();
   const freeBoardNo = param.freeBoardNo; //상세페이지에서 파라미터로 보냄
-
+  console.log(freeBoardThumbnail);
+  console.log(freeBoardNo);
   //수정할 데이터 저장 후 MenuItem에 넣을  default 값
   const [freeBoardSubcategory, setFreeBoardSubcategory] = useState();
   const [freeBoardCategory, setFreeBoardCategory] = useState();
@@ -48,7 +49,7 @@ const FreeBoardModify = (props) => {
         setFreeBoardThumbnail(res.data.freeBoardThumbnail);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [freeBoardNo]);
   const modifyFreeBoard = () => {
@@ -91,6 +92,15 @@ const FreeBoardModify = (props) => {
     console.log(formData);
     if (freeBoardThumbnail !== null) {
       formData.append("freeBoardThumbnail", freeBoardThumbnail);
+    } else {
+      axios
+        .patch(`${backServer}/freeBoard/image/${freeBoardNo}`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          navigate("/pageerror");
+        });
     }
     axios
       .patch(`${backServer}/freeBoard/modify/fix`, formData, {
@@ -104,7 +114,7 @@ const FreeBoardModify = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   };
 
@@ -121,7 +131,7 @@ const FreeBoardModify = (props) => {
             console.log(res.data);
           })
           .catch((err) => {
-            console.log(err);
+            navigate("/pageerror");
           });
     }
   }, [freeBoardCategory]);
@@ -134,7 +144,7 @@ const FreeBoardModify = (props) => {
         setMemberNo(res.data.memberNo);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [memberId]);
 

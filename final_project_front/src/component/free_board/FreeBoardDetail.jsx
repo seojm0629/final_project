@@ -23,6 +23,7 @@ const FreeBoardDetail = () => {
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
+
   const params = useParams();
   const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
   console.log(params);
@@ -64,7 +65,7 @@ const FreeBoardDetail = () => {
       setLike(res.data);
     })
     .catch((err) => {
-      console.log(err);
+      navigate("/pageerror");
     });
   console.log(like);
 
@@ -162,7 +163,6 @@ const FreeBoardDetail = () => {
     memberNo: memberNo,
     fbCommentContent: fbCommentContent,
   };
-
   dayjs.extend(relativeTime);
 
   // 기존 한국어 locale 불러오기
@@ -217,7 +217,7 @@ const FreeBoardDetail = () => {
         );
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [freeBoardNo, toggle]);
 
@@ -236,7 +236,7 @@ const FreeBoardDetail = () => {
         setTotalListCount(res.data.totalListCount);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [
     freeBoardNo,
@@ -279,7 +279,7 @@ const FreeBoardDetail = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
     }
   };
@@ -314,12 +314,12 @@ const FreeBoardDetail = () => {
               }
             })
             .catch((err) => {
-              console.log(err);
+              navigate("/pageerror");
             });
         }
       })
       .catch(() => {
-        console.log(err);
+        navigate("/pageerror");
       });
   };
   const [cmtModify, setCmtModify] = useState(null); // 댓글 수정버튼 클릭 시 해당 회원만 보이게
@@ -359,7 +359,7 @@ const FreeBoardDetail = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
     }
   };
@@ -388,7 +388,7 @@ const FreeBoardDetail = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
     }
   };
@@ -402,9 +402,9 @@ const FreeBoardDetail = () => {
         setRecommends(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
-  }, []);
+  }, [freeBoardNo]);
 
   const prevFreeBoard = (
     freeBoardNo,
@@ -433,7 +433,7 @@ const FreeBoardDetail = () => {
         setToggle(!toggle);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   };
   const nextFreeBoard = (
@@ -463,21 +463,23 @@ const FreeBoardDetail = () => {
         setToggle(!toggle);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   };
-  const [commentSet, SetCommentSet] = useState();
+  axios.get();
   return (
     /* 상세페이지  */
     <div className="detail-container">
-      <div className="detail-path">홈 &gt; 취업게시판 &gt; 직장인</div>
+      <div className="detail-path">홈 &gt; 자유게시판 &gt; 직장인</div>
       <div className="detail-title-section">
         <div className="detail-title">{freeBoard.freeBoardTitle}</div>
         {freeBoardMemberNo && (
           <div className="detail-buttonBox">
+            {/*
             <button className="modify-btn" onClick={freeBoardModify}>
               수정
             </button>
+            */}
             <button className="delete-btn" onClick={freeBoardDelete}>
               삭제
             </button>
@@ -496,7 +498,7 @@ const FreeBoardDetail = () => {
             clickLike();
           }}
         >
-          {!like ? (
+          {like ? (
             <FavoriteIcon
               style={{
                 color: "red",
@@ -517,11 +519,13 @@ const FreeBoardDetail = () => {
       <hr className="detail-line" />
       <div className="detail-main">
         <div className="detail-content">
-          <img
-            src={freeBoard.freeBoardThumbnail}
-            alt="thumbnail"
-            className="detail-image-box"
-          ></img>
+          {freeBoard.freeBoardThumbnail !== null && (
+            <img
+              src={freeBoard.freeBoardThumbnail}
+              alt="thumbnail"
+              className="detail-image-box"
+            ></img>
+          )}
           <div
             className="detail-freeBoardContent"
             dangerouslySetInnerHTML={{ __html: freeBoard.freeBoardContent }}
@@ -532,6 +536,7 @@ const FreeBoardDetail = () => {
           <ul>
             {recommends &&
               recommends.map((recommend, i) => {
+                console.log(recommend);
                 return (
                   <li
                     key={"recommend-" + i}
@@ -571,7 +576,10 @@ const FreeBoardDetail = () => {
           }
           buttonLabel={
             <span>
-              <ReportGmailerrorredIcon className="report-icon" />
+              <ReportGmailerrorredIcon
+                className="report-icon"
+                style={{ width: "22px", height: "22px" }}
+              />
               신고하기
             </span>
           }
@@ -698,11 +706,15 @@ const FreeBoardDetail = () => {
                     .post(`${backServer}/freeBoard/detail/regist`, comment)
                     .then((res) => {
                       if (res.data === 1) {
+                        Swal.fire({
+                          title: "댓글 등록 완료",
+                          icon: "success",
+                        });
                         setFbCommentContent("");
                       }
                     })
                     .catch((err) => {
-                      console.log(err);
+                      navigate("/pageerror");
                     });
                 }
               }
@@ -754,7 +766,10 @@ const FreeBoardDetail = () => {
                       }
                       buttonLabel={
                         <span>
-                          <ReportGmailerrorredIcon className="report-icon" />
+                          <ReportGmailerrorredIcon
+                            className="report-icon"
+                            style={{ width: "20px", height: "20px" }}
+                          />
                           신고하기
                         </span>
                       }
@@ -817,7 +832,7 @@ const FreeBoardDetail = () => {
                                     }
                                   })
                                   .catch((err) => {
-                                    console.log(err);
+                                    navigate("/pageerror");
                                   });
                               }
                             }
@@ -851,6 +866,7 @@ const FreeBoardDetail = () => {
                   <div className="comment-sub">
                     <div
                       className="heart"
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         setFbCommentNo(comment.fbCommentNo);
                         if (!member) {
@@ -867,16 +883,16 @@ const FreeBoardDetail = () => {
                             )
                             .then((res) => {
                               if (res.data !== "" && res.data !== undefined) {
-                                setToggle(!toggle);
-                                setCommentLike((prev) => ({
-                                  ...prev,
+                                setCommentLike((p) => ({
+                                  ...p,
                                   [comment.fbCommentNo]:
-                                    !prev[comment.fbCommentNo],
+                                    !p[comment.fbCommentNo],
                                 }));
+                                setToggle(!toggle);
                               }
                             })
                             .catch((err) => {
-                              console.log(err);
+                              navigate("/pageerror");
                             });
                         }
                       }}
@@ -943,7 +959,7 @@ const FreeBoardDetail = () => {
                                     }
                                   })
                                   .catch((err) => {
-                                    console.log(err);
+                                    navigate("/pageerror");
                                   });
                               }
                             });

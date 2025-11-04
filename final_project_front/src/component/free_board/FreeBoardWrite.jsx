@@ -93,7 +93,7 @@ const FreeBoardWrite = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   };
   useEffect(() => {
@@ -105,7 +105,7 @@ const FreeBoardWrite = (props) => {
         setMemberNo(res.data.memberNo);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [memberId]);
   useEffect(() => {
@@ -116,7 +116,7 @@ const FreeBoardWrite = (props) => {
         //freeBoard State에 들어갈 상위 카테고리 NO
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [cate]);
   const handleChange = (e) => {
