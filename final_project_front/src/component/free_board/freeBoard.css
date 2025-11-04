@@ -783,7 +783,7 @@
   flex-direction: column;
   margin-top: 8px;
   border-top: 1px solid #ccc;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   gap: 10px;
 }
 .end {
