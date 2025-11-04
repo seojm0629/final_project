@@ -474,7 +474,7 @@ const DiffCount = () => {
             전일 대비 {bccDiff >= 0 ? `+${bccDiff} ▲` : `${bccDiff} ▼`}
           </div>
         </div>
-        {memberType && memberType === 1 && (
+        {memberType === 1 && (
           <div className="element">
             <div className="entireBox-title">전체 탈퇴 유저 수</div>
             <div className="entireBox-content">{wc}명</div>
