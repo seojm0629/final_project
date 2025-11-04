@@ -112,9 +112,16 @@ const VoteDetail = () => {
     axios
       .get(`${backServer}/vote/checkOption/${voteNo}/${memberNo}`)
       .then((res) => {
-        setDefaultCheck(res.data);
+        console.log(res.data);
+        if (res.data === 0) {
+          setDefaultCheck(undefined);
+        } else {
+          setDefaultCheck(res.data);
+        }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, []);
 
   const optionChange = (e) => {
