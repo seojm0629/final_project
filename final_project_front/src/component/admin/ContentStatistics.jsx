@@ -376,12 +376,6 @@ const ContentStatistics = () => {
             />
           </div>
         </div>
-        <div className="placeholder">
-          <div>
-            (후순위) 가입자 수 → 첫 게시글 조회 인원 수 → 첫 게시글 or 댓글 작성
-            인원 수
-          </div>
-        </div>
       </div>
     </div>
   );
