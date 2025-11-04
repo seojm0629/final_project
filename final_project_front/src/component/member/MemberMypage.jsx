@@ -19,7 +19,8 @@ const MemberMypage = () => {
     const communityRef = useRef(null);
     const noticeRef = useRef(null);
     const etcRef = useRef(null);
-
+    const navigate = useNavigate();
+    
     //스크롤 이동 함수
     const scroll = (ref) => {
         if(ref.current){
@@ -47,10 +48,9 @@ const MemberMypage = () => {
                 setMember(res.data);
             })
             .catch((err)=>{
-                console.log("에러 발생");
+                navigate("/pageerror");
             })    
     },[memberId]);
-    const navigate = useNavigate();
     const agree = () => {
         navigate("/service/agree");
     }
@@ -163,7 +163,7 @@ const MemberInfo = (props) => {
 
         })
         .catch((err)=>{
-            console.log(err);
+            navigate("/pageerror");
         })
         
     }
@@ -247,6 +247,7 @@ const MemberCommunity = (props) => {
 }
 
 const MemberNotice = (props) => {
+    const navigate = useNavigate();
     const agree = props.agree;
     const memberId = props.memberId;
     const [memberCheck, setMemberCheck] = useState("N");
@@ -269,12 +270,13 @@ const MemberNotice = (props) => {
 
         })
         .catch((err)=>{
-            console.log(err);
+            navigate("/pageerror");
         })
 
     }, [memberId])
 
     const promotionAgree = (e) =>{
+        const navigate = useNavigate();
         const name = e.target.name;
         const checked = e.target.checked;
         const updated = {...promotionCheck, [name] : checked};
@@ -296,7 +298,7 @@ const MemberNotice = (props) => {
                     
         })
         .catch((err)=>{
-            console.log(err);
+            navigate("/pageerror");
         })
 
     }
@@ -412,7 +414,7 @@ const MemberEtc = (props) => {
                     }
                 })
                 .catch((err)=>{
-                    console.log(err);
+                    navigate("/pageerror");
                 })
 
             }

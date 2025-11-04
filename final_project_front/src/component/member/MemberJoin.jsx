@@ -98,7 +98,8 @@ const MemberJoin = (props) => {
             
         })
         .catch((err)=>{
-            alert("이메일 형식이 올바르지 않습니다.");
+            navigate("/pageerror");
+            
         })
     }
 
