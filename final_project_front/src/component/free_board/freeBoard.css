@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
 }
+.main-side {
+  margin-right: 5px;
+}
 .main-div .main-wrap {
   display: flex;
 
@@ -613,7 +616,7 @@
   color: #aaa;
   border-radius: 8px;
   display: block;
-  margin: 0 auto 20px;
+  margin-left: 20px;
 }
 .detail-buttons {
   display: flex;
@@ -964,4 +967,7 @@
 
 .recommend-box {
   overflow: auto;
+}
+.no-result {
+  text-align: center;
 }

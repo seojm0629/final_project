@@ -49,7 +49,7 @@ const FreeBoardModify = (props) => {
         setFreeBoardThumbnail(res.data.freeBoardThumbnail);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [freeBoardNo]);
   const modifyFreeBoard = () => {
@@ -99,7 +99,7 @@ const FreeBoardModify = (props) => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
     }
     axios
@@ -114,7 +114,7 @@ const FreeBoardModify = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   };
 
@@ -131,7 +131,7 @@ const FreeBoardModify = (props) => {
             console.log(res.data);
           })
           .catch((err) => {
-            console.log(err);
+            navigate("/pageerror");
           });
     }
   }, [freeBoardCategory]);
@@ -144,7 +144,7 @@ const FreeBoardModify = (props) => {
         setMemberNo(res.data.memberNo);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [memberId]);
 
