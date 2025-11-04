@@ -8,6 +8,7 @@ import { FreeBoardSideMenuMap } from "../free_board/FreeBoardMain";
 import axios from "axios";
 import Swal from "sweetalert2";
 import BaseModal from "../utils/BaseModal";
+import { useNavigate } from "react-router-dom";
 
 const ContentFreeBoard = () => {
   const [noticeValue, setNoticeValue] = useState("");
@@ -15,7 +16,7 @@ const ContentFreeBoard = () => {
 
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   const [memberId, setMemberId] = useRecoilState(loginIdState);
-
+  const navigate = useNavigate();
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -70,7 +71,7 @@ const ContentFreeBoard = () => {
           });
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
   }, [insertCate]);
 
@@ -87,7 +88,7 @@ const ContentFreeBoard = () => {
         setNoticeList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [refreshToggle]);
   useEffect(() => {
@@ -101,7 +102,7 @@ const ContentFreeBoard = () => {
           setNoticeList(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
   }, [noticeSet]);
 
@@ -137,7 +138,7 @@ const ContentFreeBoard = () => {
               }
             })
             .catch((err) => {
-              console.log(err);
+              navigate("/pageerror");
             });
         }
       });
@@ -165,6 +166,7 @@ const ContentFreeBoard = () => {
             title: "알림",
             text: "값이 잘못 입력되었습니다. 다시 입력하세요",
           });
+          navigate("/pageerror");
         });
       //2. 카테고리 번호를 리턴 받아오기
       //3. 카테고리 번호가 두개 모두 존재하면
@@ -201,7 +203,7 @@ const ContentFreeBoard = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
   }, [delNoticeNo]);
 
@@ -226,7 +228,7 @@ const ContentFreeBoard = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/pageerror");
         });
   }, [noticeIsactive]);
   const noticeAlert = () => {
