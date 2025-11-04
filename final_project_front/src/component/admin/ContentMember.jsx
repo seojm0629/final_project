@@ -20,6 +20,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
 
 const ContentMember = () => {
   const [memberList, setMemberList] = useState([]);
@@ -29,6 +30,7 @@ const ContentMember = () => {
     XLSX.utils.book_append_sheet(wb, listToXlsx, "Sheet1"); //새로운 파일로 저장하는 부분
     XLSX.writeFile(wb, "memberList.xlsx");
   };
+  const navigate = useNavigate();
   const [reqPageInfo, setReqPageInfo] = useState({
     order: 2, //어떤 정렬을 요청할건데??
     // 1: 회원 번호 오름차순
@@ -101,7 +103,7 @@ const ContentMember = () => {
               setTotalListCount(res.data.totalListCount);
             })
             .catch((err) => {
-              console.log(err);
+              navigate("/pageerror");
             });
           if (res.data === 1) {
             Swal.fire({
@@ -118,13 +120,13 @@ const ContentMember = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           Swal.fire({
             title: "경고",
             text: `등급 변경 실패되었습니다.`,
 
             icon: "error",
           });
+          navigate("/pageerror");
         });
   }, [updateMemberType]);
 
@@ -157,7 +159,7 @@ const ContentMember = () => {
         setMemberLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [reqPageInfo, reqListToggle]);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
@@ -488,7 +490,7 @@ const ContentMember = () => {
         setDetailTotalCount(res.data.totalListCount);
         setDetailLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => navigate("/pageerror"));
   }, [userDetailInfo, reqDetailPageInfo.pageNo, reqDetailPageInfo.listCnt]);
   const hasMember = userDetailInfo && userDetailInfo.member != null;
   /*

@@ -13,6 +13,7 @@ import {
   MultiSectionDigitalClock,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useNavigate } from "react-router-dom";
 
 const ContentBoard = () => {
   const [memberList, setMemberList] = useState([]);
@@ -45,7 +46,7 @@ const ContentBoard = () => {
   });
 
   const [totalListCount, setTotalListCount] = useState(0);
-
+  const navigate = useNavigate();
   const [memberLoading, setMemberLoading] = useState(false); // 회원 리스트 로딩
   const [detailLoading, setDetailLoading] = useState(false);
   const [updateMemberType, setUpdateMemberType] = useState();
@@ -81,7 +82,7 @@ const ContentBoard = () => {
               setTotalListCount(res.data.totalListCount);
             })
             .catch((err) => {
-              console.log(err);
+              navigate("/pageerror");
             });
           if (res.data === 1) {
             Swal.fire({
@@ -104,6 +105,7 @@ const ContentBoard = () => {
 
             icon: "error",
           });
+          navigate("/pageerror");
         });
   }, [updateMemberType]);
 
@@ -252,14 +254,6 @@ const ContentBoard = () => {
     );
 
     const confirmData = () => {
-      console.log(m);
-      console.log(dateValue);
-      console.log(dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D);
-      //const banText =
-      //  dateValue.$y + "-" + (dateValue.$M + 1) + "-" + dateValue.$D;
-      console.log(timeValue);
-      console.log(timeValue.$H + ":" + timeValue.$m + ":" + timeValue.$s);
-
       const banText =
         dateValue.$y +
         "-" +
@@ -272,18 +266,16 @@ const ContentBoard = () => {
         timeValue.$m +
         ":" +
         timeValue.$s;
-      console.log(banText);
-      console.log(banReason);
+
       const banSet = {
         memberNo: m.memberNo,
         memberBenFinishDate: banText,
         memberBanContent: banReason,
       };
-      console.log(banSet);
+
       axios
         .post(`${import.meta.env.VITE_BACK_SERVER}/admin/memberBan`, banSet)
         .then((res) => {
-          console.log(res.data);
           Swal.fire({
             title: "알림",
             text: `해당 이용자 정지되었습니다.`,
@@ -295,7 +287,6 @@ const ContentBoard = () => {
           setTimeValue(dayjs());
           setBanReason("");
           setReqListToggle(!reqListToggle);
-          console.log(reqListToggle);
         });
     };
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -370,11 +361,9 @@ const ContentBoard = () => {
         </td>
         <td
           onMouseOver={() => {
-            console.log(isModalOpen);
             setBenMode(true);
           }}
           onMouseOut={() => {
-            console.log(isModalOpen);
             !isModalOpen && setBenMode(false);
           }}
           key={"claim-" + m.memberNo}

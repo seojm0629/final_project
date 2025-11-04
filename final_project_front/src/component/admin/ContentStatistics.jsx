@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { memberNoState, memberTypeState } from "../utils/RecoilData";
+import { useNavigate } from "react-router-dom";
 
 //메인 컴포넌트 위치 ▼
 const ContentStatistics = () => {
@@ -15,7 +16,7 @@ const ContentStatistics = () => {
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
 
   const [memberType, setMemberType] = useRecoilState(memberTypeState);
-
+  const navigate = useNavigate();
   const searchCriteria = ["5년", "1년", "1개월", "기타"];
   const [selectCriteria, setSelectCriteria] = useState(searchCriteria[1]);
 
@@ -226,7 +227,7 @@ const ContentStatistics = () => {
       })
 
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [selectCriteria, startDate, endDate, refreshToggle]);
   /* **************************************************************** */
@@ -451,7 +452,7 @@ const DiffCount = () => {
         setWcDiff(res.data.wcDiffDay);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [selectCriteria]);
 
