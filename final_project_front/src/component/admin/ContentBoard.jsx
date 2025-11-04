@@ -98,7 +98,6 @@ const ContentBoard = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
           Swal.fire({
             title: "경고",
             text: `등급 변경 실패되었습니다.`,
@@ -129,7 +128,7 @@ const ContentBoard = () => {
         setMemberLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/pageerror");
       });
   }, [reqPageInfo, reqListToggle]);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
@@ -449,7 +448,7 @@ const ContentBoard = () => {
         setDetailTotalCount(res.data.totalListCount);
         setDetailLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => navigate("/pageerror"));
   }, [userDetailInfo, reqDetailPageInfo.pageNo, reqDetailPageInfo.listCnt]);
   const hasMember = userDetailInfo && userDetailInfo.member != null;
   /*
