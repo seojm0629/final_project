@@ -188,8 +188,9 @@
 
 .comment-modifiy-buttonbox {
   display: flex;
-  justify-content: center;
-  gap: 100px;
+  justify-content: right;
+  gap: 30px;
+  margin-top: 20px;
 }
 .comment-modifiy-buttonbox > button {
   border: none;
@@ -211,13 +212,14 @@
 .comment-modifiy-box {
   display: flex;
   flex-direction: column;
-  margin-left: 600px;
+  width: 900px;
   position: absolute;
 }
 .modifiy-text {
   resize: none;
   border: none;
-  width: 250px;
+  width: 100%;
+  height: 60px;
 }
 .textarea-box {
   width: 100%;
