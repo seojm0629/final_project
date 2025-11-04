@@ -493,19 +493,18 @@ const FreeBoardDetail = () => {
       </div>
       <div className="detail-title-section">
         <div className="detail-title">{freeBoard.freeBoardTitle}</div>
-        {memberType === 1 ||
-          (freeBoardMemberNo && (
-            <div className="detail-buttonBox">
-              {/*
+        {(memberType === 1 || freeBoardMemberNo) && (
+          <div className="detail-buttonBox">
+            {/*
             <button className="modify-btn" onClick={freeBoardModify}>
               수정
             </button>
             */}
-              <button className="delete-btn" onClick={freeBoardDelete}>
-                삭제
-              </button>
-            </div>
-          ))}
+            <button className="delete-btn" onClick={freeBoardDelete}>
+              삭제
+            </button>
+          </div>
+        )}
       </div>
       <div className="detail-view">
         <div className="view">
@@ -941,59 +940,58 @@ const FreeBoardDetail = () => {
                       {nowDate(comment.fbCommentDate)}
                     </div>
                   </div>
-                  {memberType === 1 ||
-                    (comment.memberNo === memberNo &&
-                      cmtModify !== comment.fbCommentNo && (
-                        <div className="comment-button">
-                          <button
-                            className="modify-btn"
-                            onClick={() => {
-                              setCommentNo(comment.fbCommentNo);
-                              modifyComment(comment.fbCommentNo);
-                              setModifyCommentNo(comment.fbCommentNo);
-                            }}
-                          >
-                            수정
-                          </button>
-                          <button
-                            className="delete-btn"
-                            onClick={() => {
-                              Swal.fire({
-                                title: "삭제",
-                                text: "댓글을 삭제하시겠습니까?",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonText: "확인",
-                                cancelButtonText: "취소",
-                              }).then((confirm) => {
-                                if (confirm.isConfirmed) {
-                                  axios
-                                    .delete(
-                                      `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
-                                    )
-                                    .then((res) => {
-                                      console.log(res);
-                                      if (res.data === 1) {
-                                        Swal.fire({
-                                          title: "댓글 삭제 완료",
-                                          text: "댓글 삭제가 완료되었습니다.",
-                                          icon: "success",
-                                        }).then(() => {
-                                          setToggle(!toggle);
-                                        });
-                                      }
-                                    })
-                                    .catch((err) => {
-                                      navigate("/pageerror");
-                                    });
-                                }
-                              });
-                            }}
-                          >
-                            삭제
-                          </button>
-                        </div>
-                      ))}
+                  {(memberType === 1 || comment.memberNo === memberNo) &&
+                    cmtModify !== comment.fbCommentNo && (
+                      <div className="comment-button">
+                        <button
+                          className="modify-btn"
+                          onClick={() => {
+                            setCommentNo(comment.fbCommentNo);
+                            modifyComment(comment.fbCommentNo);
+                            setModifyCommentNo(comment.fbCommentNo);
+                          }}
+                        >
+                          수정
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => {
+                            Swal.fire({
+                              title: "삭제",
+                              text: "댓글을 삭제하시겠습니까?",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonText: "확인",
+                              cancelButtonText: "취소",
+                            }).then((confirm) => {
+                              if (confirm.isConfirmed) {
+                                axios
+                                  .delete(
+                                    `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
+                                  )
+                                  .then((res) => {
+                                    console.log(res);
+                                    if (res.data === 1) {
+                                      Swal.fire({
+                                        title: "댓글 삭제 완료",
+                                        text: "댓글 삭제가 완료되었습니다.",
+                                        icon: "success",
+                                      }).then(() => {
+                                        setToggle(!toggle);
+                                      });
+                                    }
+                                  })
+                                  .catch((err) => {
+                                    navigate("/pageerror");
+                                  });
+                              }
+                            });
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    )}
                 </div>
               );
             })}
