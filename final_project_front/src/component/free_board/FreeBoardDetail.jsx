@@ -13,7 +13,11 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko.js";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
-import { loginIdState, memberNoState } from "../utils/RecoilData";
+import {
+  loginIdState,
+  memberNoState,
+  memberTypeState,
+} from "../utils/RecoilData";
 import BaseModal from "../utils/BaseModal";
 import PageNavigation from "../utils/PageNavigation";
 
@@ -23,7 +27,7 @@ const FreeBoardDetail = () => {
   const [memberNo, setMemberNo] = useRecoilState(memberNoState);
   //const [freeBoardCommentMemberNo, setFreeBoardCommentMemberNo] = useState(); //댓글 작성자
   const [freeBoardMemberNo, setFreeBoardMemberNo] = useState(); //게시글 작성자
-
+  const [memberType, setMemberType] = useRecoilState(memberTypeState);
   const params = useParams();
   const freeBoardNo = params.freeBoardNo; //main content에서 받아온 freeBoardNo
   const viewCount = params.viewCount;
@@ -37,6 +41,7 @@ const FreeBoardDetail = () => {
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호
   const [toDate, setToDate] = useState(); //사용할 시간
   const [freeBoardCategory, setFreeBoardCategory] = useState("");
+  const [freeBoardSubCategory, setFreeBoardSubcategory] = useState("");
   const navigate = useNavigate();
   const [fbClaimReason, setFbClaimReason] = useState();
   const [fbcClaimReason, setFbcClaimReason] = useState();
@@ -473,6 +478,7 @@ const FreeBoardDetail = () => {
       )
       .then((res) => {
         setFreeBoardCategory(res.data.freeBoardCategory);
+        setFreeBoardSubcategory(res.data.freeBoardSubcategory);
       })
       .catch((err) => {
         navigate("/pageerror");
@@ -483,22 +489,23 @@ const FreeBoardDetail = () => {
     /* 상세페이지  */
     <div className="detail-container">
       <div className="detail-path">
-        홈 &gt; 자유게시판 &gt; {freeBoardCategory}
+        홈 &gt; 자유게시판 &gt; {freeBoardCategory} &gt; {freeBoardSubCategory}
       </div>
       <div className="detail-title-section">
         <div className="detail-title">{freeBoard.freeBoardTitle}</div>
-        {freeBoardMemberNo && (
-          <div className="detail-buttonBox">
-            {/*
+        {memberType === 1 ||
+          (freeBoardMemberNo && (
+            <div className="detail-buttonBox">
+              {/*
             <button className="modify-btn" onClick={freeBoardModify}>
               수정
             </button>
             */}
-            <button className="delete-btn" onClick={freeBoardDelete}>
-              삭제
-            </button>
-          </div>
-        )}
+              <button className="delete-btn" onClick={freeBoardDelete}>
+                삭제
+              </button>
+            </div>
+          ))}
       </div>
       <div className="detail-view">
         <div className="view">
@@ -934,58 +941,59 @@ const FreeBoardDetail = () => {
                       {nowDate(comment.fbCommentDate)}
                     </div>
                   </div>
-                  {comment.memberNo === memberNo &&
-                    cmtModify !== comment.fbCommentNo && (
-                      <div className="comment-button">
-                        <button
-                          className="modify-btn"
-                          onClick={() => {
-                            setCommentNo(comment.fbCommentNo);
-                            modifyComment(comment.fbCommentNo);
-                            setModifyCommentNo(comment.fbCommentNo);
-                          }}
-                        >
-                          수정
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => {
-                            Swal.fire({
-                              title: "삭제",
-                              text: "댓글을 삭제하시겠습니까?",
-                              icon: "warning",
-                              showCancelButton: true,
-                              confirmButtonText: "확인",
-                              cancelButtonText: "취소",
-                            }).then((confirm) => {
-                              if (confirm.isConfirmed) {
-                                axios
-                                  .delete(
-                                    `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
-                                  )
-                                  .then((res) => {
-                                    console.log(res);
-                                    if (res.data === 1) {
-                                      Swal.fire({
-                                        title: "댓글 삭제 완료",
-                                        text: "댓글 삭제가 완료되었습니다.",
-                                        icon: "success",
-                                      }).then(() => {
-                                        setToggle(!toggle);
-                                      });
-                                    }
-                                  })
-                                  .catch((err) => {
-                                    navigate("/pageerror");
-                                  });
-                              }
-                            });
-                          }}
-                        >
-                          삭제
-                        </button>
-                      </div>
-                    )}
+                  {memberType === 1 ||
+                    (comment.memberNo === memberNo &&
+                      cmtModify !== comment.fbCommentNo && (
+                        <div className="comment-button">
+                          <button
+                            className="modify-btn"
+                            onClick={() => {
+                              setCommentNo(comment.fbCommentNo);
+                              modifyComment(comment.fbCommentNo);
+                              setModifyCommentNo(comment.fbCommentNo);
+                            }}
+                          >
+                            수정
+                          </button>
+                          <button
+                            className="delete-btn"
+                            onClick={() => {
+                              Swal.fire({
+                                title: "삭제",
+                                text: "댓글을 삭제하시겠습니까?",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "확인",
+                                cancelButtonText: "취소",
+                              }).then((confirm) => {
+                                if (confirm.isConfirmed) {
+                                  axios
+                                    .delete(
+                                      `${backServer}/freeBoard/detail/deleteComment/${comment.fbCommentNo}`
+                                    )
+                                    .then((res) => {
+                                      console.log(res);
+                                      if (res.data === 1) {
+                                        Swal.fire({
+                                          title: "댓글 삭제 완료",
+                                          text: "댓글 삭제가 완료되었습니다.",
+                                          icon: "success",
+                                        }).then(() => {
+                                          setToggle(!toggle);
+                                        });
+                                      }
+                                    })
+                                    .catch((err) => {
+                                      navigate("/pageerror");
+                                    });
+                                }
+                              });
+                            }}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ))}
                 </div>
               );
             })}
