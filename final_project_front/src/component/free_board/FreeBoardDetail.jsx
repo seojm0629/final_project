@@ -37,7 +37,7 @@ const FreeBoardDetail = () => {
   const [modifyFbCommentContent, setModifyFbCommentContent] = useState(""); //수정할 댓글 입력
   const [modifyCommentNo, setModifyCommentNo] = useState(); //댓글 수정 시 해당 번호
   const [toDate, setToDate] = useState(); //사용할 시간
-
+  const [freeBoardCategory, setFreeBoardCategory] = useState("");
   const navigate = useNavigate();
   const [fbClaimReason, setFbClaimReason] = useState();
   const [fbcClaimReason, setFbcClaimReason] = useState();
@@ -466,11 +466,23 @@ const FreeBoardDetail = () => {
         navigate("/pageerror");
       });
   };
-  axios.get();
+
+  axios
+    .get(
+      `${backServer}/freeBoard/detail/freeBoardcate?freeBoardSubcategoryNo=${freeBoard.freeBoardSubcategoryNo}&freeBoardCategoryNo=${freeBoard.freeBoardCategoryNo}`
+    )
+    .then((res) => {
+      setFreeBoardCategory(res.data.freeBoardCategory);
+    })
+    .catch((err) => {
+      navigate("/pageerror");
+    });
   return (
     /* 상세페이지  */
     <div className="detail-container">
-      <div className="detail-path">홈 &gt; 자유게시판 &gt; 직장인</div>
+      <div className="detail-path">
+        홈 &gt; 자유게시판 &gt; {freeBoardCategory}
+      </div>
       <div className="detail-title-section">
         <div className="detail-title">{freeBoard.freeBoardTitle}</div>
         {freeBoardMemberNo && (
