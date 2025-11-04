@@ -114,9 +114,7 @@ const VoteDetail = () => {
       .then((res) => {
         setDefaultCheck(res.data);
       })
-      .catch((err) => {
-        navigate("/pageerror");
-      });
+      .catch((err) => {});
   }, []);
 
   const optionChange = (e) => {

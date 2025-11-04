@@ -124,15 +124,14 @@ public class VoteService {
 	}
 
 	public int checkOption(int voteNo, int memberNo) {
-System.out.println("ddddddddddddddddddddddddddddd");
+
 		HashMap<String, Object> voteSet = new HashMap<>();
 		voteSet.put("voteNo", voteNo);
 		voteSet.put("memberNo", memberNo);
 		
 		int result = voteDao.checkOption(voteSet);
 		
-		System.out.println("확인"+result);
-		
+
 		
 		return result;
 	}
