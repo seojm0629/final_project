@@ -1,6 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { loginIdState, memberNoState } from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  loginIdState,
+  memberNoState,
+  memberTypeState,
+} from "../utils/RecoilData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./voteDetail.css";
@@ -13,10 +17,12 @@ import "dayjs/locale/ko"; // 한국어 로케일 임포트하기
 import ChartDataLabels from "chartjs-plugin-datalabels"; // 그래프 안에 값 보여주는 임포트
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"; // 위의 값 과 포
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels); // 그래프 안 항목 내용들 보여주기
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 const VoteDetail = () => {
+  const memberType = useRecoilValue(memberTypeState); // 사용자 타입
   const params = useParams(); //주소값에서 불러오는 파람값
   const voteNo = params.voteNo;
   const [memberNo, setMemberNo] = useRecoilState(memberNoState); // 로그인된 memberNo
@@ -506,14 +512,15 @@ const VoteDetail = () => {
       <div className="vote-detail-title">
         <h3>투표 상세보기</h3>
       </div>
-      {vote && vote.memberNo === memberNo && (
-        <div className="vote-detail-buttonBox">
-          {vote.voteCheck === 0 && (
-            <button onClick={voteEndDate}>투표종료</button>
-          )}
-          <button onClick={voteDelete}>삭제하기</button>
-        </div>
-      )}
+      {(vote && vote.memberNo === memberNo) ||
+        (memberType === 1 && (
+          <div className="vote-detail-buttonBox">
+            {vote.voteCheck === 0 && (
+              <button onClick={voteEndDate}>투표종료</button>
+            )}
+            <button onClick={voteDelete}>삭제하기</button>
+          </div>
+        ))}
       {vote &&
         (vote.voteCheck === 0 ? ( // 홈페이지가 표시될때 기본값이 비어있어서 오류가 나기에 조건 걸기 값이 있을떼 표시하기
           <div className="vote-detail-list">
@@ -730,7 +737,7 @@ const VoteDetail = () => {
                   >
                     신고
                   </button>
-                  {memberNo === c.memberNo && (
+                  {(memberNo === c.memberNo || memberType === 1) && (
                     <>
                       <button
                         className="edit-btn"
