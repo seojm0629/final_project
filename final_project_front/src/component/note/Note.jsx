@@ -178,7 +178,6 @@ const Note = (props) => {
           text: "상대방의 아이디를 찾을 수 없습니다.",
           icon: "error",
         });
-        navigate("/pageerror");
       });
   };
 

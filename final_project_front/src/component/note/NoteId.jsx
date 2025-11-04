@@ -98,7 +98,6 @@ const NoteId = () => {
             text: "쪽지 삭제 중 오류가 발생했습니다.",
             icon: "error",
           });
-          navigate("/pageerror");
         });
     }
   };
