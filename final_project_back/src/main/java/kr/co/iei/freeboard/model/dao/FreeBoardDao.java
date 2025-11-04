@@ -99,6 +99,8 @@ public interface FreeBoardDao {
 
 	int deleteImg(int freeBoardNo);
 
+	
+
 
 	
 

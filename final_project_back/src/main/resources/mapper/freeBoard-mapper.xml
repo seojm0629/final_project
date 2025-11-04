@@ -521,4 +521,5 @@
 	<update id="deleteImg">
 		update free_board_tbl set free_board_thumbnail = null where free_board_no = #{freeBoardNo}
 	</update>	
+	
 </mapper>

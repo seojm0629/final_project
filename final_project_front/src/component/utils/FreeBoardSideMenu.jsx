@@ -52,10 +52,7 @@ const FreeBoardSideMenu = (props) => {
                   <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
                 )}
               </span>
-              <div
-                className={`menu-down ${naviDown === i ? "active" : ""}`}
-                
-              >
+              <div className={`menu-down ${naviDown === i ? "active" : ""}`}>
                 {m.freeBoardSubcategory.map((n, i) => {
                   return (
                     <ul
@@ -67,10 +64,12 @@ const FreeBoardSideMenu = (props) => {
                     >
                       {i % 2 === 0 && (
                         <ul
-                          className={`side-submenu ${subClick === n ? "active" : ""}`}
+                          className={`side-submenu ${
+                            subClick === n ? "active-submenu" : ""
+                          }`}
                           onClick={() => {
                             setSelected(m.freeBoardSubcategory[i + 1]);
-                            setSubClick("active-submenu");
+                            setSubClick(n);
                           }}
                         >
                           <li>
@@ -80,7 +79,7 @@ const FreeBoardSideMenu = (props) => {
                                 marginRight: "10px",
                               }}
                             ></CircleOutlinedIcon>
-                            <span >{n}</span>
+                            <span>{n}</span>
                           </li>
                         </ul>
                       )}
