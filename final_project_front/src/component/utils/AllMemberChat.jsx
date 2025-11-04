@@ -133,7 +133,7 @@ const AllMemberChat = () => {
                                     </p>
                                 ) : chat.type === "out" ? (
                                     <p className="chat-info">
-                                        <span>{chat.memberNickname}</span>님이 퇴장.
+                                        <span>{chat.memberNickname} 님 퇴장.</span>
                                     </p>
                                 ) : (
                                     <div
