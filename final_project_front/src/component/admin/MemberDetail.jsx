@@ -2,8 +2,6 @@ import PageNavigation from "../utils/PageNavigation";
 import "./memberDetail.css";
 import Button from "@mui/material/Button";
 const MemberDetail = (props) => {
-  console.log("주고난 후");
-  console.log(props);
   const reqPageInfo = props.reqPageInfo;
   const setReqPageInfo = props.setReqPageInfo;
   const userDetailInfo = props.userDetailInfo;
@@ -36,7 +34,6 @@ const MemberDetail = (props) => {
 
   //console.log(test.substring(0, 4));
 
-  console.log(userDetailBoard);
   return (
     <div className="memberDetail">
       <div className={"detailLeft"}>

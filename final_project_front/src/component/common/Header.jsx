@@ -10,7 +10,7 @@ import {
   memberNoState,
   memberTypeState,
 } from "../utils/RecoilData";
-import Note from "../note/note";
+import Note from "../note/Note";
 
 const Header = () => {
   return (

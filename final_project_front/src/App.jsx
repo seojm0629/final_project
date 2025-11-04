@@ -52,6 +52,7 @@ function App() {
           <Route path="/vote/voteInsert" element={<VoteInsert />} />
           <Route path="/vote/voteDetail/:voteNo" element={<VoteDetail />} />
           <Route path="/tradeBoard/write" element={<TradeBoardWrite />} />
+          <Route path="/error" element={<Error />} />
         </Routes>
         <Footer></Footer>
       </main>
