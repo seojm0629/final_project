@@ -27,6 +27,7 @@ const VoteDetail = () => {
   const [vote, setVote] = useState({ voteCommentList: [] }); // 기본정보 담을 스테이트
   const [voteList, setVoteList] = useState([]); //항목 리스트 담을 스테이트
   const [labels, setLabels] = useState([]);
+  const [values, setValues] = useState([]);
 
   // 모든 항목의 값이 0인지 확인하는 값
   const voteZero = values.every((v) => v === 0);
@@ -101,7 +102,9 @@ const VoteDetail = () => {
         setLabels(a);
         setValues(b);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        navigate("/pageerror");
+      });
   }, [refreshToggle]);
 
   const [defaultCheck, setDefaultCheck] = useState();
