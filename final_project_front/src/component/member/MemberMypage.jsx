@@ -275,8 +275,8 @@ const MemberNotice = (props) => {
 
     }, [memberId])
 
+    
     const promotionAgree = (e) =>{
-        const navigate = useNavigate();
         const name = e.target.name;
         const checked = e.target.checked;
         const updated = {...promotionCheck, [name] : checked};
@@ -291,6 +291,7 @@ const MemberNotice = (props) => {
             if(res.data === 1){
                 if(memberCheck === "Y"){
                     alert("홍보 및 이벤트 이메일 수신 동의하셨습니다.");
+                    
                 } else {
                     alert("홍보 및 이벤트 이메일 수신 동의를 해제하셨습니다.");
                 }
@@ -298,7 +299,7 @@ const MemberNotice = (props) => {
                     
         })
         .catch((err)=>{
-            navigate("/pageerror");
+            
         })
 
     }
