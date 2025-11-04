@@ -159,7 +159,10 @@ const ContentMember = () => {
         setMemberLoading(false);
       })
       .catch((err) => {
-        navigate("/pageerror");
+        Swal.fire({
+          title: "경고",
+          text: "해당하는 회원이 없습니다.",
+        });
       });
   }, [reqPageInfo, reqListToggle]);
   //■■■■■■■■■■■■ 이까지는 ■■■■■■■■■■■■
