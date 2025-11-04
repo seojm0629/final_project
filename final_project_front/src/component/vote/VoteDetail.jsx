@@ -272,7 +272,11 @@ const VoteDetail = () => {
       })
 
       .catch((err) => {
-        navigate("/pageerror");
+        Swal.fire({
+          title: "에러",
+          text: "빈칸은 등록할 수 없습니다.",
+          icon: "error",
+        });
       });
   };
 
