@@ -35,7 +35,7 @@ const Main = () => {
         setMember(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("회원정보 조회 불가");
       });
   }, []);
 
@@ -128,7 +128,7 @@ dayjs.locale("ko");
         setVoteBoardList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("투표 리스트 출력 불가");
       });
   },[]);
 
@@ -146,7 +146,7 @@ dayjs.locale("ko");
         
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 메인 리스트 출력불가");
       });
   }, []);
 
@@ -158,7 +158,7 @@ dayjs.locale("ko");
         setFreeBoardWorkList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 직장 리스트 출력불가")
       });
 
     axios
@@ -167,7 +167,7 @@ dayjs.locale("ko");
         setFreeBoardGameList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 게임 리스트 출력불가")
       });
 
     axios
@@ -176,7 +176,7 @@ dayjs.locale("ko");
         setFreeBoardRoutineList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 일상 리스트 출력불가")
       });
 
     axios
@@ -185,7 +185,7 @@ dayjs.locale("ko");
         setFreeBoardHobbyList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 취미 리스트 출력불가")
       });
 
     axios
@@ -194,7 +194,7 @@ dayjs.locale("ko");
         setFreeBoardInfoList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 정보 리스트 출력불가");
       });
 
     axios
@@ -203,7 +203,7 @@ dayjs.locale("ko");
         setFreeBoardHumorList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 유머 리스트 출력불가");
       });
   }, []);
 
@@ -214,7 +214,7 @@ dayjs.locale("ko");
         setTradeBoardList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("자유게시판 거래 리스트 출력불가")
       });
   }, []);
   return (

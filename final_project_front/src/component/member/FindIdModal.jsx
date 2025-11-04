@@ -2,6 +2,7 @@ import { Box, Modal } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import "../member/findModal.css";
+import Swal from "sweetalert2";
 
 const style = {
     position: 'absolute',
@@ -70,7 +71,11 @@ const FindIdModal = () => {
                 
             })
             .catch((err)=>{
-                console.log(err);
+                Swal.fire({
+                title : "입력 정보 확인",
+                text : "아이디를 찾을 수 없습니다..",
+                icon : "info",
+            })
             })
         } else {
             Swal.fire({
@@ -179,7 +184,9 @@ const FindIdModal = () => {
                         <div className="result-modal-wrap">
                             <div className="result-modal">
                                 <div className="member-close-button">
-                                    <button onClick={handleClose}>x</button>
+                                    <button onClick={handleClose}>
+                                        
+                                    </button>
                                 </div>
 
                                 <div className="member-modal-title-name">
