@@ -33,7 +33,7 @@
 }
 .navi-menu {
   display: flex;
-  gap: 250px;
+  gap: 100px;
 }
 .navi-menu .navi-item {
   margin: 0 20px;
