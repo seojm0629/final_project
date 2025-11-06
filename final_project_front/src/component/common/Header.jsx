@@ -52,6 +52,9 @@ const MainNavi = () => {
             <Link to="/">HOME</Link>
           </button>
         </li>
+        <li className="navi-item vote">
+          <a href="/notice/list">공지사항</a>
+        </li>
         <li className="navi-item free">
           <button className="board-btn">
             <Link to="/freeBoard/content">자유게시판</Link>

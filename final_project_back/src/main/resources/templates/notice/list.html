@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>공지사항</title>
+<style>
+.notice-table {
+	width: 100%;
+	margin-top: 24px;
+}
+
+.notice-table th {
+	background-color: #f7f7f7;
+	font-weight: 900;
+	padding: 12px;
+	border-bottom: 1px solid #ddd;
+}
+
+.notice-table td {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.notice-title {
+	cursor: pointer;
+	color: #222222;
+	text-decoration: none;
+}
+
+.notice-title:hover {
+	text-decoration: underline;
+	color: #0077cc;
+}
+</style>
+</head>
+<body>
+
+	<h1>공지사항</h1>
+
+	<table class="notice-table">
+		<thead>
+			<tr>
+				<th style="width: 60px;">No</th>
+				<th>내용</th>
+				<th style="width: 150px;">작성일</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="n : ${list}">
+				<td th:text="${n.noticeNo}"></td>
+				<td><a class="notice-title" th:utext="${n.noticeContent}"></a>
+				</td>
+				<td th:text="${n.noticeDate}"></td>
+			</tr>
+
+			<tr th:if="${#lists.isEmpty(list)}">
+				<td colspan="3" style="text-align: center; padding: 20px;">공지사항이
+					없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
