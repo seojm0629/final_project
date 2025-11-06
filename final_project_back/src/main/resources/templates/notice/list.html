@@ -30,10 +30,32 @@
 	text-decoration: underline;
 	color: #0077cc;
 }
+
+.page-actions {
+	display: flex;
+	margin: 8px 0 16px;
+}
+
+.btn {
+	display: inline-block;
+	padding: 8px 14px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	text-decoration: none;
+	background-color: #fff;
+	color: #222;
+}
+
+.btn:hover {
+	background-color: #f5f5f5;
+	border-color: #ccc;
+}
 </style>
 </head>
 <body>
-
+	<div class="page-actions">
+		<a href="http://localhost:5173/" class="btn">홈으로</a>
+	</div>
 	<h1>공지사항</h1>
 
 	<table class="notice-table">

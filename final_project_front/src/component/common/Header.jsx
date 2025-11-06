@@ -53,7 +53,7 @@ const MainNavi = () => {
           </button>
         </li>
         <li className="navi-item vote">
-          <a href="/notice/list">공지사항(관리자 전용)</a>
+          <a href="/notice/list">공지사항</a>
         </li>
         <li className="navi-item free">
           <button className="board-btn">
