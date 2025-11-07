@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회사 소개</title>
+<style>
+body {
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	background-color: #f0f2f5;
+	align-items: center;
+
+}
+
+.header-wrap {
+	width: 100%;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	padding: 0 32px;
+	background-color: #2f4e70;
+	margin-bottom: 40px;
+	justify-content: center;
+}
+
+.header-menu {
+	display: flex;
+	align-items: center;
+	gap: 100px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.header-item a {
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 500;
+	transition: 0.25s;
+}
+
+.header-item a:hover {
+	color: #d8e9ff;
+}
+
+.company-wrap {
+	width: 1000px;
+	background: #ffffff;
+	padding: 40px 60px;
+	border-radius: 16px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	margin-bottom: 60px;
+}
+
+.section-title {
+	font-size: 28px;
+	font-weight: 800;
+	color: #2f4e70;
+	margin-top: 40px;
+	margin-bottom: 24px;
+}
+
+.team-list {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.member-row {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	background: #fafafa;
+	padding: 16px 20px;
+	border-radius: 12px;
+	border: 1px solid #e5e5e5;
+}
+
+.member-photo {
+	width: 120px;
+	height: auto;
+	border-radius: 50%;
+
+}
+
+.member-text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.member-name {
+	font-size: 18px;
+	font-weight: 600;
+	color: #2f4e70;
+}
+
+.member-role {
+	font-size: 14px;
+	color: #444;
+}
+</style>
+</head>
+<body>
+
+	<nav class="header-wrap">
+		<ul class="header-menu">
+			<li class="header-item home"><a href="http://localhost:5173/">HOME</a></li>
+			<li class="header-item"><a
+				href="http://localhost:9999/ssr/noticeList">공지사항</a></li>
+			<li class="header-item"><a
+				href="http://localhost:5173/freeBoard/content">자유게시판</a></li>
+			<li class="header-item"><a
+				href="http://localhost:5173/vote/list">투표게시판</a></li>
+			<li class="header-item"><a
+				href="http://localhost:9999/ssr/company">개발진 소개</a></li>
+			<li class="header-item"><a
+				href="http://localhost:9999/ssr/service">서비스 소개</a></li>
+		</ul>
+	</nav>
+
+	<div class="company-wrap">
+
+		<h2 class="section-title">01. Talk & Deal 이란?</h2>
+		<p>사용자가 원하는 정보를 습득하고 서로 공유할 수 있는 커뮤니티 플랫폼</p>
+
+		<h2 class="section-title">02. 팀원 소개</h2>
+		<div class="team-list">
+
+			<div class="member-row">
+				<img th:src="@{/image/jinwon.jpg}" src="/image/jinwon.jpg"
+					class="member-photo">
+				<div class="member-text">
+					<div class="member-name">이진원 (팀장)</div>
+					<div class="member-role">
+						<ul class="contribution-list">
+							<li>CSR(React) + SSR(Thymeleaf) 혼합 아키텍처 설계 및 공지/소개 페이지 SSR
+								적용</li>
+							<li>회원 관리 / 등급 변경 / 정지 처리 / 상세 활동 내역 조회 기능 전체 설계 및 구현</li>
+							<li>회원별 게시글/댓글/투표 활동 데이터를 통합 조회하는 복합 SQL 작성 (여러 테이블 JOIN +
+								UNION ALL)</li>
+							<li>게시판 신고/좋아요/활동 통계 데이터를 집계하기 위한 GROUP BY 기반 집계 SQL 구현</li>
+							<li>관리자 검색/정렬/필터 UI를 위한 MyBatis 동적 SQL
+								구조 설계</li>
+							<li>다중 테이블 데이터 조회 시, 서브쿼리 구조 최적화 및 ROWNUM 기반 페이징 처리 경험</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="member-row">
+				<div class="member-text">
+					<div class="member-name">이용재</div>
+					<div class="member-role">
+						<ul class="contribution-list">
+							<li>카테고리별 게시글 목록 출력</li>
+							<li>카테고리별 게시글 작성 기능 구현</li>
+							<li>자유 게시판 CRUD 구현</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="member-row">
+				<div class="member-text">
+					<div class="member-name">서정민</div>
+					<div class="member-role">
+						<ul class="contribution-list">
+							<li>회원 탈퇴 기능 구현</li>
+							<li>회원가입 정규 표현식 구현</li>
+							<li>비밀번호, 닉네임, 이메일 구현</li>
+							<li>회원 정보 수정 구현</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="member-row">
+				<div class="member-text">
+					<div class="member-name">전현우</div>
+					<div class="member-role">
+						<ul class="contribution-list">
+							<li>투표 기능 및 쪽지 기능 개발</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

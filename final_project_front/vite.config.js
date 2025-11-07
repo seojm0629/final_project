@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       // SSR 페이지(타임리프)만 백엔드로 전달
-      "/notice": { target: "http://localhost:9999", changeOrigin: true },
+      "/ssr": { target: "http://localhost:9999", changeOrigin: true },
     },
   },
 });

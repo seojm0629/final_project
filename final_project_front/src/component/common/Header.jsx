@@ -53,7 +53,7 @@ const MainNavi = () => {
           </button>
         </li>
         <li className="navi-item vote">
-          <a href="/notice/list">공지사항</a>
+          <a href="http://localhost:9999/ssr/noticeList">공지사항</a>
         </li>
         <li className="navi-item free">
           <button className="board-btn">
@@ -64,10 +64,10 @@ const MainNavi = () => {
           <Link to="/vote/list">투표게시판</Link>
         </li>
         <li className="navi-item vote">
-          <a href="/notice/list">회사 소개</a>
+          <a href="http://localhost:9999/ssr/company">개발진 소개</a>
         </li>
         <li className="navi-item vote">
-          <a href="/notice/list">서비스 소개</a>
+          <a href="http://localhost:9999/ssr/service">서비스 소개</a>
         </li>
       </ul>
     </nav>

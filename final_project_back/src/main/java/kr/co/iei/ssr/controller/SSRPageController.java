@@ -1,4 +1,4 @@
-package kr.co.iei.notice.controller;
+package kr.co.iei.ssr.controller;
 
 import java.util.List;
 
@@ -9,21 +9,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.iei.notice.model.dto.NoticeDTO;
-import kr.co.iei.notice.model.service.NoticeService;
+import kr.co.iei.ssr.model.service.SSRPageService;
 
 @Controller
-@RequestMapping(value="/notice")
-public class NoticeController {
+@RequestMapping(value="/ssr")
+public class SSRPageController {
 	
 	@Autowired
-	private NoticeService noticeService;
+	private SSRPageService ssrPageService;
 	
-	@GetMapping(value="/list")
+	@GetMapping(value="/noticeList")
 	public String noticeListPage(Model model) {
 		System.out.println("호출 확인하기");
-		List<NoticeDTO> list = noticeService.getNoticeList();
+		List<NoticeDTO> list = ssrPageService.getNoticeList();
 		model.addAttribute("list",list);
-		return "notice/list";
+		return "ssr/noticeList";
+	}
+	
+	@GetMapping(value="/company")
+	public String companyPage() {
+		System.out.println("회사소개 호출");
+		return "ssr/company";
 	}
 	
 }
