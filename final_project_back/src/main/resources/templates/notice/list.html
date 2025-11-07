@@ -6,67 +6,86 @@
 .notice-table {
 	width: 100%;
 	margin-top: 24px;
+	border: 1px solid #ccc;
+	border-spacing: 0;
 }
 
 .notice-table th {
-	background-color: #f7f7f7;
+	background-color: #2f4e70;
 	font-weight: 900;
 	padding: 12px;
-	border-bottom: 1px solid #ddd;
+	color: #fff;
+	border: 1px solid #ddd;
+}
+
+.notice-table td:nth-of-type(1) {
+	text-align: center;
+	background-color: #2f4e70;
+	color: #fff;
 }
 
 .notice-table td {
 	padding: 10px;
-	border-bottom: 1px solid #eee;
+	border: 1px solid #ddd;
+	
 }
 
 .notice-title {
 	cursor: pointer;
 	color: #222222;
 	text-decoration: none;
-	
 }
 
 .notice-title:hover {
 	text-decoration: underline;
 	color: #0077cc;
 }
-body{
-margin:0}
+
+body {
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	background-color: #f0f2f5;
+	align-items: center;
+}
+
 .header-wrap {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  padding: 0 32px;
-  background-color: #2f4e70;
-  margin : 0 auto;
-  margin-bottom: 40px;
-  justify-content:center;
- 
+	width: 100%;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	padding: 0 32px;
+	background-color: #2f4e70;
+	margin: 0 auto;
+	margin-bottom: 40px;
+	justify-content: center;
 }
 
 .header-menu {
-  display: flex;
-  align-items: center;
-  gap: 100px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+	display: flex;
+	align-items: center;
+	gap: 100px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .header-item a {
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 500;
-  transition: 0.25s;
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 500;
+	transition: 0.25s;
 }
 
 .header-item a:hover {
-  color: #d8e9ff;
+	color: #d8e9ff;
 }
 
+.notice-wrap {
+	width: 1000px;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -77,36 +96,40 @@ margin:0}
 			<li class="header-item"><a href="/notice/list">공지사항 (SSR)</a></li>
 			<li class="header-item"><a
 				href="http://localhost:5173/freeBoard/content">자유게시판</a></li>
-			<li class="header-item"><a href="http://localhost:5173/vote/list">투표게시판</a></li>
+			<li class="header-item"><a
+				href="http://localhost:5173/vote/list">투표게시판</a></li>
 			<li class="header-item"><a href="/company/about">회사 소개 (SSR)</a></li>
-			<li class="header-item"><a href="/service/about">서비스 소개 (SSR)</a></li>
+			<li class="header-item"><a href="/service/about">서비스 소개
+					(SSR)</a></li>
 		</ul>
 	</nav>
-	<h1>공지사항</h1>
+	<div class="notice-wrap">
+		<h1>공지사항</h1>
+		<div style="text-align:left"><a href="http://localhost:5173/admin"  style="display:inline-block; padding:8px 12px; border:1px solid #ddd; border-radius:8px; text-decoration:none; color:#222;">관리자 페이지로 이동</a><p style="color:#f55;">*해당 버튼은 관리자만 이용 가능합니다.</p></div>
+		<table class="notice-table">
+			<thead>
+				<tr>
+					<th style="width: 60px;">No</th>
+					<th>내용</th>
+					<th style="width: 150px;">작성일</th>
+				</tr>
+			</thead>
 
-	<table class="notice-table">
-		<thead>
-			<tr>
-				<th style="width: 60px;">No</th>
-				<th>내용</th>
-				<th style="width: 150px;">작성일</th>
-			</tr>
-		</thead>
+			<tbody>
+				<tr th:each="n : ${list}">
+					<td th:text="${n.noticeNo}"></td>
+					<td th:utext="${n.noticeContent}"></a>
+					</td>
+					<td th:text="${n.noticeDate}"></td>
+				</tr>
 
-		<tbody>
-			<tr th:each="n : ${list}">
-				<td th:text="${n.noticeNo}"></td>
-				<td><a class="notice-title" th:utext="${n.noticeContent}"></a>
-				</td>
-				<td th:text="${n.noticeDate}"></td>
-			</tr>
-
-			<tr th:if="${#lists.isEmpty(list)}">
-				<td colspan="3" style="text-align: center; padding: 20px;">공지사항이
-					없습니다.</td>
-			</tr>
-		</tbody>
-	</table>
+				<tr th:if="${#lists.isEmpty(list)}">
+					<td colspan="3" style="text-align: center; padding: 20px;">공지사항이
+						없습니다.</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 </html>
