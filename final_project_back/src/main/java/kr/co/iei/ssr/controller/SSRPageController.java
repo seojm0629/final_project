@@ -32,4 +32,10 @@ public class SSRPageController {
 		return "ssr/company";
 	}
 	
+	@GetMapping(value="/service")
+	public String servicePage() {
+		System.out.println("회사소개 호출");
+		return "ssr/service";
+	}
+	
 }
